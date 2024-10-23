@@ -61,7 +61,10 @@ struct AddImageAACView: View {
                     navigateFromImage: .constant(true),
                     selectedSymbolName: .constant(""),
                     selectedImage: $selectedImage,
-                    categoryColor: .constant("#000000"), selectedColumnIndex: $selectedColumnIndex
+                    categoryColor: .constant("#000000"), selectedColumnIndex: $selectedColumnIndex,
+                    selectedColumnIndexValue: .constant(2), // Pass column index
+                    selectedRowIndexValue: .constant(2),
+                    showAACSettings: .constant(true)
                 ),
                 isActive: $navigateToAddButton
             ) {

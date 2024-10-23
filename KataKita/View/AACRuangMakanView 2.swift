@@ -41,18 +41,8 @@ struct AACRuangMakanView: View {
     @State private var isSetting: Bool = false
     @Environment(\.dismiss) var dismiss
     
-    // Update columnsData to include an additional String for font color
-//    @State private var columnsData: [[(String, String, String, String)]] = [
-//        [("person.fill", "saya", "#FFEBAF", "#000000"), ("person.fill", "kamu", "#FFEBAF", "#000000"), ("person.fill", "dia", "#FFEBAF", "#000000"), ("person.fill", "kita", "#FFEBAF", "#000000"), ("person.fill", "mama", "#FFEBAF", "#000000"), ("person.fill", "papa", "#FFEBAF", "#000000")],
-//        [("person.fill", "apa", "#A77DFF", "#000000"), ("person.fill", "dimana", "#A77DFF", "#000000"), ("person.fill", "siapa", "#A77DFF", "#000000")],
-//        [("person.fill", "suka", "#FFB0C7", "#000000"), ("person.fill", "tidak suka", "#FFB0C7", "#000000"), ("person.fill", "mau", "#FFB0C7", "#000000"), ("person.fill", "tidak mau", "#FFB0C7", "#000000"), ("person.fill", "tolong", "#FFB0C7", "#000000")],
-//        [("person.fill", "makan", "#CFF0C8", "#000000"), ("person.fill", "minum", "#CFF0C8", "#000000"), ("person.fill", "putar", "#CFF0C8", "#000000"), ("person.fill", "buka", "#CFF0C8", "#000000"), ("person.fill", "tutup", "#CFF0C8", "#000000")],
-//        [("person.fill", "masukkan", "#CFF0C8", "#000000"), ("person.fill", "ambil", "#CFF0C8", "#000000"), ("person.fill", "kunyah", "#CFF0C8", "#000000"), ("person.fill", "potong", "#CFF0C8", "#000000"), ("person.fill", "buang", "#CFF0C8", "#000000")],
-//        [("person.fill", "dingin", "#D4F3FF", "#000000"), ("person.fill", "panas", "#D4F3FF", "#000000"), ("person.fill", "asin", "#D4F3FF", "#000000"), ("person.fill", "manis", "#D4F3FF", "#000000")],
-//        [("person.fill", "sendok", "#F2B95C", "#000000"), ("person.fill", "garpu", "#F2B95C", "#000000"), ("person.fill", "piring", "#F2B95C", "#000000"), ("person.fill", "mangkok", "#F2B95C", "#000000"), ("person.fill", "gelas", "#F2B95C", "#000000")],
-//        [("person.fill", "di", "#FFFFFF", "#000000"), ("person.fill", "ke", "#FFFFFF", "#000000"), ("person.fill", "dan", "#FFFFFF", "#000000")],
-//        [("person.fill", "hitam", "#000000", "#000000"), ("person.fill", "cokelat", "#835737", "#835737"), ("person.fill", "oranye", "#E9AE50", "#E9AE50"), ("person.fill", "merah", "#E54646", "#E54646"), ("person.fill", "ungu", "#B378D8", "#B378D8"), ("person.fill", "pink", "#EDB0DC", "#EDB0DC"), ("person.fill", "biru", "#889AE4", "#889AE4"), ("person.fill", "hijau", "#B7D273", "#B7D273"), ("person.fill", "kuning", "#EFDB76", "#EFDB76")]
-//    ]
+    @State private var selectedColumnIndexValue: Int = -1
+    @State private var selectedRowIndexValue: Int = -1
     
     let columns = [
         GridItem(.flexible()),
@@ -499,6 +489,8 @@ struct AACRuangMakanView: View {
                                                 action: {
                                                     selectedCategoryColor = bgColor
                                                     selectedColumnIndex = viewModel.cards[columnIndex]
+                                                    selectedColumnIndexValue = columnIndex
+                                                    selectedRowIndexValue = rowIndex
                                                     showAACSettings = true
                                                 }
                                             )
@@ -515,46 +507,50 @@ struct AACRuangMakanView: View {
                     .padding(.leading,screenWidth * (25/1376.0))
                 }
                 VStack{
-//                    ZStack {
-//                        Rectangle()
-//                            .fill(Color(hex: "#EEEEEE", transparency: 1))
-//                            .frame(width: screenWidth * (90/1376.0),height: screenHeight * (90/1032.0))
-//                            .cornerRadius(20)
-//                            .shadow(radius: 5,x: 3,y:4)
-//
-//                        CustomButton(
-//                            icon: "pencil",
-//                            width: Int(screenWidth * (50/1376.0)),
-//                            height: Int(screenHeight * (50/1032.0)),
-//                            font: Int(screenWidth * (40/1376.0)),
-//                            iconWidth: Int(screenWidth * (40/1376.0)),
-//                            iconHeight: Int(screenHeight * (40/1032.0)),
-//                            bgColor: "#000000",
-//                            bgTransparency: 0,
-//                            fontColor: "#696767",
-//                            fontTransparency: 1.0,
-//                            cornerRadius: 20,
-//                            isSystemImage: true,
-//                            action:{
-//                                //                                showAACSettings = true
-//                                handlePencilPress()
-//                            }
-//                        )
-//
-//                    }
-//                    .sheet(isPresented: $showAACSettings) {
-//
-//                        AddButtonAACView(
-//                            viewModel: AACRuangMakanViewModel(),
-//                            navigateTooAddImage: CallAACSettingsView.$navigateTooAddImage,
-//                            selectedSymbolImage: CallAACSettingsView.$selectedSymbolImage,
-//                            navigateFromSymbols: CallAACSettingsView.$navigateFromSymbols,
-//                            navigateFromImage: CallAACSettingsView.$navigateFromImage,
-//                            selectedSymbolName: CallAACSettingsView.$selectedSymbolName,
-//                            selectedImage: .constant(nil),
-//                            categoryColor: $selectedCategoryColor, selectedColumnIndex: $selectedColumnIndex
-//                        )
-//                    }
+                    ZStack {
+                        Rectangle()
+                            .fill(Color(hex: "#EEEEEE", transparency: 1))
+                            .frame(width: screenWidth * (90/1376.0),height: screenHeight * (90/1032.0))
+                            .cornerRadius(20)
+                            .shadow(radius: 5,x: 3,y:4)
+
+                        CustomButton(
+                            icon: "pencil",
+                            width: Int(screenWidth * (50/1376.0)),
+                            height: Int(screenHeight * (50/1032.0)),
+                            font: Int(screenWidth * (40/1376.0)),
+                            iconWidth: Int(screenWidth * (40/1376.0)),
+                            iconHeight: Int(screenHeight * (40/1032.0)),
+                            bgColor: "#000000",
+                            bgTransparency: 0,
+                            fontColor: "#696767",
+                            fontTransparency: 1.0,
+                            cornerRadius: 20,
+                            isSystemImage: true,
+                            action:{
+                                //                                showAACSettings = true
+                                handlePencilPress()
+                            }
+                        )
+
+                    }
+                    .sheet(isPresented: $showAACSettings) {
+
+                        AddButtonAACView(
+                            viewModel: viewModel,
+                            navigateTooAddImage: CallAACSettingsView.$navigateTooAddImage,
+                            selectedSymbolImage: CallAACSettingsView.$selectedSymbolImage,
+                            navigateFromSymbols: CallAACSettingsView.$navigateFromSymbols,
+                            navigateFromImage: CallAACSettingsView.$navigateFromImage,
+                            selectedSymbolName: CallAACSettingsView.$selectedSymbolName,
+                            selectedImage: .constant(nil),
+                            categoryColor: $selectedCategoryColor,
+                            selectedColumnIndex: $selectedColumnIndex,
+                            selectedColumnIndexValue: $selectedColumnIndexValue, // Pass column index
+                            selectedRowIndexValue: $selectedRowIndexValue,
+                            showAACSettings: $showAACSettings
+                        )
+                    }
                     
                     
                     
