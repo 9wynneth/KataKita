@@ -475,11 +475,11 @@ struct AACRuangMakanView: View {
                                             // Show the CustomButton if showPlusButton is true
                                             CustomButton(
                                                 text: "+",
-                                                width: Int(screenWidth * (100/1376.0)),
-                                                height: Int(screenHeight * (100/1032.0)),
-                                                font: Int(screenWidth * (18/1376.0)),
-                                                iconWidth: Int(screenWidth * (50/1376.0)),
-                                                iconHeight: Int(screenHeight * (50/1032.0)),
+                                                width: Int(screenWidth * (110/1376.0)),
+                                                height: Int(screenHeight * (110/1032.0)),
+                                                font: Int(screenWidth * (28/1376.0)),
+                                                iconWidth: Int(screenWidth * (75/1376.0)),
+                                                iconHeight: Int(screenHeight * (75/1032.0)),
                                                 bgColor: bgColor,
                                                 bgTransparency: 1.0,
                                                 fontColor: fontColor,
