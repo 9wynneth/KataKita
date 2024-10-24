@@ -520,7 +520,7 @@ struct AACRuangMakanView: View {
                     }
                     .sheet(isPresented: $showAACSettings) {
 
-                        AddButtonAACView(
+                        AddButtonAACRuangMakanView(
                             viewModel: viewModel,
                             navigateTooAddImage: CallAACSettingsView.$navigateTooAddImage,
                             selectedSymbolImage: CallAACSettingsView.$selectedSymbolImage,

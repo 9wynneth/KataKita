@@ -52,25 +52,25 @@ struct AddImageAACView: View {
                 }
             }
         )
-        .background(
-            NavigationLink(
-                destination: AddButtonAACView(
-                    viewModel: viewModel, navigateTooAddImage: .constant(false),
-                    selectedSymbolImage: .constant(""),
-                    navigateFromSymbols: .constant(false),
-                    navigateFromImage: .constant(true),
-                    selectedSymbolName: .constant(""),
-                    selectedImage: $selectedImage,
-                    categoryColor: .constant("#000000"), selectedColumnIndex: $selectedColumnIndex,
-                    selectedColumnIndexValue: .constant(2), // Pass column index
-                    selectedRowIndexValue: .constant(2),
-                    showAACSettings: .constant(true)
-                ),
-                isActive: $navigateToAddButton
-            ) {
-                EmptyView()
-            }
-        )
+//        .background(
+//            NavigationLink(
+//                destination: AddButtonAACView(
+//                    viewModel: viewModel, navigateTooAddImage: .constant(false),
+//                    selectedSymbolImage: .constant(""),
+//                    navigateFromSymbols: .constant(false),
+//                    navigateFromImage: .constant(true),
+//                    selectedSymbolName: .constant(""),
+//                    selectedImage: $selectedImage,
+//                    categoryColor: .constant("#000000"), selectedColumnIndex: $selectedColumnIndex,
+//                    selectedColumnIndexValue: .constant(2), // Pass column index
+//                    selectedRowIndexValue: .constant(2),
+//                    showAACSettings: .constant(true)
+//                ),
+//                isActive: $navigateToAddButton
+//            ) {
+//                EmptyView()
+//            }
+//        )
     }
 }
 

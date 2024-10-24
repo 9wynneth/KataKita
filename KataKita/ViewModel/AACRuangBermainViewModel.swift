@@ -1,9 +1,3 @@
-//
-//  AACRuangBelajarTestViewModel.swift
-//  KataKita
-//
-//  Created by Lisandra Nicoline on 21/10/24.
-//
 
 import SwiftUI
 

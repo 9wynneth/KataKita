@@ -161,7 +161,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		9B78DD182CBDA3860069DBC5 /* AACSettingsView */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = AACSettingsView; sourceTree = "<group>"; };
+		9B78DD182CBDA3860069DBC5 /* AddButtonAAC */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = AddButtonAAC; sourceTree = "<group>"; };
 		9B78DD312CBE10B20069DBC5 /* Model */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Model; sourceTree = "<group>"; };
 		9B78DD322CBE10C50069DBC5 /* ViewModel */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ViewModel; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -195,7 +195,7 @@
 			isa = PBXGroup;
 			children = (
 				1EA096462CC2AF1F00B76917 /* AACMenuView.swift */,
-				9B78DD182CBDA3860069DBC5 /* AACSettingsView */,
+				9B78DD182CBDA3860069DBC5 /* AddButtonAAC */,
 				1E5863832CB6C0840080373A /* ActivitySequenceView.swift */,
 				9B78DD0C2CB74C510069DBC5 /* HomePageView.swift */,
 				9B78DD162CBC89850069DBC5 /* SettingsView.swift */,
@@ -374,7 +374,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				9B78DD182CBDA3860069DBC5 /* AACSettingsView */,
+				9B78DD182CBDA3860069DBC5 /* AddButtonAAC */,
 				9B78DD312CBE10B20069DBC5 /* Model */,
 				9B78DD322CBE10C50069DBC5 /* ViewModel */,
 			);
