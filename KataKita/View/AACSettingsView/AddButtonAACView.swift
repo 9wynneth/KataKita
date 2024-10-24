@@ -122,10 +122,6 @@ struct AddButtonAACView: View {
                     
                 }
             )
-                
-            NavigationLink(destination: cekVMview(viewModel: viewModel), isActive: $navigateToCekVMView) {
-                EmptyView()
-            }
         }
         .onAppear {
             print("View appeared, showingAddImageView: \(showingAddImageView)")
