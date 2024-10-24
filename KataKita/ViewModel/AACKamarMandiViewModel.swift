@@ -14,6 +14,7 @@ class AACKamarMandiViewModel: ObservableObject {
         [("di", "di", "#FFFFFF", "#000000"), ("ke", "ke", "#FFFFFF", "#000000"), ("dan", "dan", "#FFFFFF", "#000000")],
         [("person.fill", "hitam", "#000000", "#000000"), ("person.fill", "cokelat", "#835737", "#835737"), ("person.fill", "oranye", "#E9AE50", "#E9AE50"), ("person.fill", "merah", "#E54646", "#E54646"), ("person.fill", "ungu", "#B378D8", "#B378D8"), ("person.fill", "pink", "#EDB0DC", "#EDB0DC"), ("person.fill", "biru", "#889AE4", "#889AE4"), ("person.fill", "hijau", "#B7D273", "#B7D273"), ("person.fill", "kuning", "#EFDB76", "#EFDB76")]
     ]
+
     init() {
         loadCardsData()
     }

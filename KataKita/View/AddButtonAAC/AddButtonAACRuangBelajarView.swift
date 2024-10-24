@@ -1,6 +1,6 @@
 import SwiftUI
-struct AddButtonAACView: View {
-    @ObservedObject var viewModel: AACRuangMakanViewModel
+struct AddButtonAACRuangBelajarView: View {
+    @ObservedObject var viewModel: AACRuangBelajarViewModel
     @State private var textToSpeak: String = ""
     @State private var showingAddImageView = false
     @State private var navigatesFromImage = false
@@ -111,7 +111,7 @@ struct AddButtonAACView: View {
                 }
             }
             .navigationDestination(isPresented: $showingAddImageView) {
-                AddImageAACView(viewModel: viewModel)
+               // AddImageAACView(viewModel: viewModel)
             }
             .navigationBarItems(
                 trailing: Button("Done") {

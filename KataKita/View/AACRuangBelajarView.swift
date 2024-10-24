@@ -13,9 +13,9 @@ struct AACRuangBelajarView: View {
     @State private var selectedColumnIndex: [Card] = []
     
     @StateObject private var boardModel = AACBoardModel()
-   // @EnvironmentObject var viewModel = AACRuangBelajarViewModel
+    @EnvironmentObject var viewModel: AACRuangBelajarViewModel
     
-    @ObservedObject var viewModel = AACRuangBelajarViewModel()
+  //  @ObservedObject var viewModel = AACRuangBelajarViewModel()
     
     @State private var selectedButton: [Card] = []
     @State private var isHome: Bool = false
@@ -517,20 +517,20 @@ struct AACRuangBelajarView: View {
                     }
                     .sheet(isPresented: $showAACSettings) {
 
-//                        AddButtonAACView(
-//                            viewModel: viewModel,
-//                            navigateTooAddImage: CallAACSettingsView.$navigateTooAddImage,
-//                            selectedSymbolImage: CallAACSettingsView.$selectedSymbolImage,
-//                            navigateFromSymbols: CallAACSettingsView.$navigateFromSymbols,
-//                            navigateFromImage: CallAACSettingsView.$navigateFromImage,
-//                            selectedSymbolName: CallAACSettingsView.$selectedSymbolName,
-//                            selectedImage: .constant(nil),
-//                            categoryColor: $selectedCategoryColor,
-//                            selectedColumnIndex: $selectedColumnIndex,
-//                            selectedColumnIndexValue: $selectedColumnIndexValue, // Pass column index
-//                            selectedRowIndexValue: $selectedRowIndexValue,
-//                            showAACSettings: $showAACSettings
-//                        )
+                        AddButtonAACRuangBelajarView(
+                            viewModel: viewModel,
+                            navigateTooAddImage: CallAACSettingsView.$navigateTooAddImage,
+                            selectedSymbolImage: CallAACSettingsView.$selectedSymbolImage,
+                            navigateFromSymbols: CallAACSettingsView.$navigateFromSymbols,
+                            navigateFromImage: CallAACSettingsView.$navigateFromImage,
+                            selectedSymbolName: CallAACSettingsView.$selectedSymbolName,
+                            selectedImage: .constant(nil),
+                            categoryColor: $selectedCategoryColor,
+                            selectedColumnIndex: $selectedColumnIndex,
+                            selectedColumnIndexValue: $selectedColumnIndexValue, // Pass column index
+                            selectedRowIndexValue: $selectedRowIndexValue,
+                            showAACSettings: $showAACSettings
+                        )
                     }
                     
                     
