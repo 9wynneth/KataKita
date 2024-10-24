@@ -115,11 +115,11 @@ struct AddButtonAACRuangBelajarView: View {
             }
             .navigationBarItems(
                 trailing: Button("Done") {
-                    print("Done button pressed")
-                    handleDoneAction()
-                   // navigateToCekVMView = true
-                    showAACSettings = false
-                    
+                    if !textToSpeak.isEmpty {
+                        handleDoneAction()
+                       // navigateToCekVMView = true
+                        showAACSettings = false
+                    }
                 }
             )
         }
