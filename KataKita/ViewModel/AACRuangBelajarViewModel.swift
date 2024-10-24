@@ -77,4 +77,27 @@ class AACRuangBelajarViewModel: ObservableObject {
 
         print("Updated cards data: \(cards)")
     }
+    
+    func deleteCard(columnIndex: Int, rowIndex: Int) {
+        // Check if the specified row exists
+        if rowIndex < cards.count {
+            // Check if the specified column exists in the selected row
+            if columnIndex < cards[rowIndex].count {
+                // Remove the card from the specified position
+                cards[rowIndex].remove(at: columnIndex)
+                
+                // If the row becomes empty, remove the row as well
+                if cards[rowIndex].isEmpty {
+                    cards.remove(at: rowIndex)
+                }
+            }
+        }
+        
+        // Trigger SwiftUI to recognize the change
+        objectWillChange.send()
+        self.cards = cards
+
+        print("Updated cards data after deletion: \(cards)")
+    }
+
 }
