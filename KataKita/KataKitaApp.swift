@@ -58,7 +58,7 @@ struct KataKitaApp: App {
 
     var body: some Scene {
         WindowGroup {
-            HomePageView()
+            CardsRuangMakanView()
                 .onAppear {
                     // Dummy Data
                     self.scheduleManager.schedules = [
