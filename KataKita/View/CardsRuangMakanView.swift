@@ -256,3 +256,6 @@ struct CardsRuangMakanView: View {
 
 }
 
+#Preview {
+    CardsRuangMakanView()
+}
