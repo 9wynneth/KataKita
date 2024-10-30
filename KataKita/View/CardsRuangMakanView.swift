@@ -28,6 +28,8 @@ struct CardsRuangMakanView: View {
     @State private var selectedColumnIndexValue: Int = -1
     @State private var selectedRowIndexValue: Int = -1
     
+    @Binding var isLesson: Bool
+
     let columns = [
         GridItem(.flexible()),
         GridItem(.flexible()),
@@ -109,7 +111,7 @@ struct CardsRuangMakanView: View {
                                                 iconWidth: Int(screenWidth * (85/1376.0)),
                                                 iconHeight: Int(screenHeight * (85/1032.0)),
                                                 bgColor: card.category.color,
-                                                bgTransparency: 1.0,
+                                                bgTransparency: isLesson ? 0.3 : 0.70,
                                                 fontColor: card.category.fontColor,
                                                 fontTransparency: 1.0,
                                                 cornerRadius: 10,
@@ -188,6 +190,8 @@ struct CardsRuangMakanView: View {
                     .padding(.leading,screenWidth * (3/1376.0))
                     .padding(.trailing,screenWidth * (58/1376.0))
                 }
+                .frame(width: 1350, height: screenHeight * 0.6
+                )
                 
             }
             
@@ -195,9 +199,8 @@ struct CardsRuangMakanView: View {
                 print(UIScreen.main.bounds.width)
                 print(UIScreen.main.bounds.height)
             }
-            
+            Spacer()
         }
-        .background(Color(hex: "#F7F5F0", transparency: 1))
         .navigationBarBackButtonHidden(true)
         NavigationLink (destination: SettingsView(), isActive: $isSetting
         ){
@@ -256,6 +259,6 @@ struct CardsRuangMakanView: View {
 
 }
 
-#Preview {
-    CardsRuangMakanView()
-}
+//#Preview {
+//    CardsRuangMakanView()
+//}
