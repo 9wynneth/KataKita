@@ -15,6 +15,9 @@ struct AACView: View {
     let templateWidth = 1366.0
     let templateHeight = 1024.0
     
+    @State private var isLesson  = false
+
+    
     var body: some View {
         VStack {
             HStack(spacing:screenWidth * (30/templateWidth)) {
@@ -24,7 +27,7 @@ struct AACView: View {
                     HStack {
                         
                     }
-                    .frame(width: screenWidth * (1100/templateWidth), height: screenHeight * (150/templateHeight))
+                    .frame(width: screenWidth * (1100/templateWidth), height: screenHeight * (120/templateHeight))
                     .background(
                         RoundedRectangle(cornerRadius: 15)
                             .fill(Color(hex: "FFFFFF", transparency: 1.0))
@@ -62,11 +65,11 @@ struct AACView: View {
                 //trash button
                 CustomButton(
                     icon: "trash",
-                    width: Int(screenWidth * (150/templateWidth)),
-                    height: Int(screenHeight * (150/templateHeight)),
+                    width: Int(screenWidth * (120/templateWidth)),
+                    height: Int(screenHeight * (120/templateHeight)),
                     font: 40,
-                    iconWidth: Int(screenWidth * (50/templateWidth)),
-                    iconHeight: Int(screenHeight * (50/templateHeight)),
+                    iconWidth: Int(screenWidth * (40/templateWidth)),
+                    iconHeight: Int(screenHeight * (40/templateHeight)),
                     bgColor: "FFFFFF",
                     bgTransparency: 1.0,
                     fontColor: "000000",
@@ -87,19 +90,6 @@ struct AACView: View {
             HStack {
                 Spacer()
                 HStack(spacing: screenWidth * (10/templateWidth)) {
-                    CustomButton(
-                        icon: "house.fill",
-                        width: Int(screenWidth * (45/templateWidth)),
-                        height: Int(screenHeight * (45/templateHeight)),
-                        font: 20,
-                        iconWidth: Int(screenWidth * (30/templateWidth)),
-                        iconHeight: Int(screenHeight * (30/templateHeight)),
-                        bgColor: "FFFFFF",
-                        bgTransparency: 1.0,
-                        fontColor: "000000",
-                        fontTransparency: 1.0,
-                        cornerRadius: 50
-                    )
                     CustomButton(
                         icon: "settings",
                         width: Int(screenWidth * (45/templateWidth)),
@@ -127,6 +117,22 @@ struct AACView: View {
                         fontTransparency: 1.0,
                         cornerRadius: 50
                     )
+                    CustomButton(
+                        icon: "lightbulb",
+                        width: Int(screenWidth * (45/templateWidth)),
+                        height: Int(screenHeight * (45/templateHeight)),
+                        font: 20,
+                        iconWidth: Int(screenWidth * (30/templateWidth)),
+                        iconHeight: Int(screenHeight * (30/templateHeight)),
+                        bgColor: "FFFFFF",
+                        bgTransparency: 1.0,
+                        fontColor: "000000",
+                        fontTransparency: 1.0,
+                        cornerRadius: 50,
+                        action: {
+                            isLesson.toggle()
+                        }
+                    )
                 }
                 .padding(.trailing, screenWidth * (50/templateWidth))
                 .padding(.top, screenWidth * (5/templateWidth))
@@ -134,10 +140,29 @@ struct AACView: View {
             
             Spacer()
             
+            VStack(spacing: 20) {
+               
+                VStack {
+                    if isLesson {
+                        HStack {
+                            Spacer()
+                            TextContent(text: "Done", size: 20, color: "000000", weight: "bold")
+                                .padding(.trailing, screenWidth * 0.04)
+                            
+                        }
+                    }
+                    CardsRuangMakanView(isLesson: $isLesson)
+                }
+                .padding(.top, 50)
+                Spacer()
+            }
+            .background(
             RoundedRectangle(cornerRadius: 30)
-                .frame(width: screenWidth * (1370/templateWidth), height: screenHeight * (720/templateHeight))
-                .padding(.bottom, screenWidth * (-20/templateWidth))
+//                .frame(width: screenWidth * (1370/templateWidth), height: screenHeight * (720/templateHeight))
+                .padding(.top, screenWidth * (30/templateWidth))
                 .foregroundColor(Color(hex: "ffffff", transparency: 1.0))
+            )
+
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color(hex: "BDD4CE", transparency: 1.0))

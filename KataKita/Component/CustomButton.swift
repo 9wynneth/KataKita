@@ -54,16 +54,19 @@ struct CustomButton: View {
                 if let icon = icon, !icon.isEmpty {
                     if isSystemImage {
                         Image(systemName: icon)
+                            .antialiased(true)
                             .resizable()
                             .scaledToFit()
                             .frame(width: CGFloat(iconWidth ?? 24), height: CGFloat(iconHeight ?? 24))
                             .foregroundColor(Color(hex: fontColor, transparency: fontTransparency))
                     } else {
                         Image(icon)
+                            .antialiased(true)
                             .resizable()
                             .scaledToFit()
                             .frame(width: CGFloat(iconWidth ?? 24), height: CGFloat(iconHeight ?? 24))
                             .foregroundColor(Color(hex: fontColor, transparency: fontTransparency))
+
                     }
                 }
                 
