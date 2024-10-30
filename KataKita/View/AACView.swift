@@ -84,6 +84,53 @@ struct AACView: View {
             }
             .padding(.top,screenHeight * (50/templateHeight))
             
+            HStack {
+                Spacer()
+                HStack(spacing: screenWidth * (10/templateWidth)) {
+                    CustomButton(
+                        icon: "house.fill",
+                        width: Int(screenWidth * (45/templateWidth)),
+                        height: Int(screenHeight * (45/templateHeight)),
+                        font: 20,
+                        iconWidth: Int(screenWidth * (30/templateWidth)),
+                        iconHeight: Int(screenHeight * (30/templateHeight)),
+                        bgColor: "FFFFFF",
+                        bgTransparency: 1.0,
+                        fontColor: "000000",
+                        fontTransparency: 1.0,
+                        cornerRadius: 50
+                    )
+                    CustomButton(
+                        icon: "settings",
+                        width: Int(screenWidth * (45/templateWidth)),
+                        height: Int(screenHeight * (45/templateHeight)),
+                        font: 20,
+                        iconWidth: Int(screenWidth * (30/templateWidth)),
+                        iconHeight: Int(screenHeight * (30/templateHeight)),
+                        bgColor: "FFFFFF",
+                        bgTransparency: 1.0,
+                        fontColor: "000000",
+                        fontTransparency: 1.0,
+                        cornerRadius: 50,
+                        isSystemImage: false
+                    )
+                    CustomButton(
+                        icon: "pencil",
+                        width: Int(screenWidth * (45/templateWidth)),
+                        height: Int(screenHeight * (45/templateHeight)),
+                        font: 20,
+                        iconWidth: Int(screenWidth * (30/templateWidth)),
+                        iconHeight: Int(screenHeight * (30/templateHeight)),
+                        bgColor: "FFFFFF",
+                        bgTransparency: 1.0,
+                        fontColor: "000000",
+                        fontTransparency: 1.0,
+                        cornerRadius: 50
+                    )
+                }
+                .padding(.trailing, screenWidth * (50/templateWidth))
+                .padding(.top, screenWidth * (5/templateWidth))
+            }
             
             Spacer()
             
