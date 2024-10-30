@@ -300,7 +300,7 @@ struct AACRuangBermainView: View {
                      LazyVGrid(columns: [GridItem(.adaptive(minimum: screenWidth * (180/1376.0)))], spacing: screenWidth * (200/1376.0)) {
                          ForEach(0..<viewModel.cards.count, id: \.self) { columnIndex in
                              VStack(/*spacing: screenWidth * (20/1376.0)*/) {
-                                 let rowLimit = (columnIndex == viewModel.cards.count - 1) ? 9 : 4
+                                 let rowLimit = (columnIndex == viewModel.cards.count - 1) ? 9 : 6
                                  
                                  ForEach(0..<rowLimit, id: \.self) { rowIndex in
                                      if rowIndex < viewModel.cards[columnIndex].count {
