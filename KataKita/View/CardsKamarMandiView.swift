@@ -1,14 +1,14 @@
 //
-//  CardsRuangMakanView.swift
+//  CardsKamarMandiView.swift
 //  KataKita
 //
-//  Created by Lisandra Nicoline on 29/10/24.
+//  Created by Lisandra Nicoline on 30/10/24.
 //
 
 import SwiftUI
 import AVFoundation
 
-struct CardsRuangMakanView: View {
+struct CardsKamarMandiView: View {
     @State private var showAACSettings = false
     @State private var pencilPressed = false
     @State private var showPlusButton = false
@@ -18,7 +18,7 @@ struct CardsRuangMakanView: View {
     @State private var selectedColumnIndex: [Card] = []
     
     @StateObject private var boardModel = AACBoardModel()
-    @EnvironmentObject var viewModel: AACRuangMakanViewModel
+    @EnvironmentObject var viewModel: AACKamarMandiViewModel
     
     @State private var selectedButton: [Card] = []
     @State private var isHome: Bool = false
@@ -258,4 +258,3 @@ struct CardsRuangMakanView: View {
 
 
 }
-
