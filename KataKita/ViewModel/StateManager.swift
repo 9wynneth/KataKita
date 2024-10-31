@@ -24,6 +24,8 @@ class StateManager {
     
     func compareDate() -> Bool {
         return Calendar.current.isDate(Date.now, equalTo: self.date, toGranularity: .day)
-
+    }
+    func reset() {
+        self.index = 0
     }
 }

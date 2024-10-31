@@ -2,8 +2,7 @@
 //  ActivityManager.swift
 //  KataKita
 //
-//  Created by Alvito Dwi Reza on 11/10/24.
-
+//  Created by Alvito Dwi Heldy Muhammad on 11/10/24.
 
 import Foundation
 import UIKit
