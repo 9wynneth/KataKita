@@ -164,6 +164,7 @@
 		9B78DD182CBDA3860069DBC5 /* AddButtonAAC */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = AddButtonAAC; sourceTree = "<group>"; };
 		9B78DD312CBE10B20069DBC5 /* Model */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Model; sourceTree = "<group>"; };
 		9B78DD322CBE10C50069DBC5 /* ViewModel */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ViewModel; sourceTree = "<group>"; };
+		9BB7C5942CD31645005B161E /* CRUD AAC */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "CRUD AAC"; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -194,9 +195,10 @@
 		1E5863822CB6C07C0080373A /* View */ = {
 			isa = PBXGroup;
 			children = (
-				1EA096462CC2AF1F00B76917 /* AACMenuView.swift */,
+				9BB7C5942CD31645005B161E /* CRUD AAC */,
 				9B78DD182CBDA3860069DBC5 /* AddButtonAAC */,
 				1E5863832CB6C0840080373A /* ActivitySequenceView.swift */,
+				1EA096462CC2AF1F00B76917 /* AACMenuView.swift */,
 				9B78DD0C2CB74C510069DBC5 /* HomePageView.swift */,
 				9B78DD162CBC89850069DBC5 /* SettingsView.swift */,
 				DAE313002CB8375C001DD0A0 /* AddDailyActivityView.swift */,
@@ -377,6 +379,7 @@
 				9B78DD182CBDA3860069DBC5 /* AddButtonAAC */,
 				9B78DD312CBE10B20069DBC5 /* Model */,
 				9B78DD322CBE10C50069DBC5 /* ViewModel */,
+				9BB7C5942CD31645005B161E /* CRUD AAC */,
 			);
 			name = KataKita;
 			productName = KataKita;
@@ -697,10 +700,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = KataKita/KataKita.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"KataKita/Preview Content\"";
-				DEVELOPMENT_TEAM = NLFHS29F76;
+				DEVELOPMENT_TEAM = P4B34P7785;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = KataKita/Info.plist;
@@ -718,6 +722,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = Gwynneth.KataKita;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -730,10 +735,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = KataKita/KataKita.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"KataKita/Preview Content\"";
-				DEVELOPMENT_TEAM = NLFHS29F76;
+				DEVELOPMENT_TEAM = P4B34P7785;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = KataKita/Info.plist;
@@ -751,6 +757,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = Gwynneth.KataKita;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
