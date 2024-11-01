@@ -39,6 +39,10 @@ struct KataKitaApp: App {
     @StateObject var ruangBelajarViewModel = AACRuangBelajarViewModel()
     @StateObject var ruangMakanViewModel = AACRuangMakanViewModel()
     @StateObject var kamarMandiViewModel = AACKamarMandiViewModel()
+    @StateObject var Custom4x7ViewModel = AACCustom4x7ViewModel()
+    @StateObject var Custom4x5ViewModel = AACCustom4x5ViewModel()
+    @StateObject var Custom5x8ViewModel = AACCustom5x8ViewModel()
+    @StateObject var templateViewModel = AACTemplateViewModel()
     
     @State private var scheduleManager = ScheduleManager()
     @State private var activitiesManager = ActivitiesManager()
@@ -58,7 +62,7 @@ struct KataKitaApp: App {
 
     var body: some Scene {
         WindowGroup {
-            HomePageView()
+            AACView()
                 .onAppear {
                     // Dummy Data
                     self.scheduleManager.schedules = [
@@ -160,6 +164,10 @@ struct KataKitaApp: App {
                 .environmentObject(ruangBelajarViewModel)
                 .environmentObject(ruangMakanViewModel)
                 .environmentObject(kamarMandiViewModel)
+                .environmentObject(Custom5x8ViewModel)
+                .environmentObject(Custom4x5ViewModel)
+                .environmentObject(Custom4x7ViewModel)
+                .environmentObject(templateViewModel)
             
            
         }

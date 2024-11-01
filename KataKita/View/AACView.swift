@@ -20,6 +20,12 @@ struct AACView: View {
     @State private var isExpanded3 = false
     @State private var expandedButton: Int? = nil
     @State private var isLesson  = false
+    @State private var defaultButton: Int = 4
+    
+    @State private var showSheet = false
+    @State private var boardName = ""
+    @State private var selectedIcon = ""
+    @State private var gridSize = "4 x 5"
 
     
     var body: some View {
@@ -236,6 +242,184 @@ struct AACView: View {
                     .shadow(radius: 2)
                 }
                 
+                if defaultButton >= 5 {
+                    Button(action: {
+                        withAnimation {
+                            expandedButton = (expandedButton == 5) ? nil : 5
+                        }
+                    }) {
+                        HStack {
+                            Image("makan") // replace with actual image name
+                                .resizable()
+                                .frame(width: 50, height: 50)
+                            
+                            if expandedButton == 5 {
+                                Text("RUANG TAMU")
+                                    .font(.system(size: 14, weight: .bold))
+                                    .foregroundColor(.black)
+                                    .transition(.opacity.combined(with: .move(edge: .bottom)))
+                            }
+                        }
+                        .padding()
+                        .background(Color.white)
+                        .cornerRadius(5)
+                        .shadow(radius: 2)
+                    }
+                }
+                
+                if defaultButton >= 6 {
+                    Button(action: {
+                        withAnimation {
+                            expandedButton = (expandedButton == 6) ? nil : 6
+                        }
+                    }) {
+                        HStack {
+                            Image("makan") // replace with actual image name
+                                .resizable()
+                                .frame(width: 50, height: 50)
+                            
+                            if expandedButton == 6 {
+                                Text("RUANG APAPUN")
+                                    .font(.system(size: 14, weight: .bold))
+                                    .foregroundColor(.black)
+                                    .transition(.opacity.combined(with: .move(edge: .bottom)))
+                            }
+                        }
+                        .padding()
+                        .background(Color.white)
+                        .cornerRadius(5)
+                        .shadow(radius: 2)
+                    }
+                }
+                
+                if defaultButton >= 7 {
+                    Button(action: {
+                        withAnimation {
+                            expandedButton = (expandedButton == 7) ? nil : 7
+                        }
+                    }) {
+                        HStack {
+                            Image("makan") // replace with actual image name
+                                .resizable()
+                                .frame(width: 50, height: 50)
+                            
+                            if expandedButton == 7 {
+                                Text("OUTDOOR")
+                                    .font(.system(size: 14, weight: .bold))
+                                    .foregroundColor(.black)
+                                    .transition(.opacity.combined(with: .move(edge: .bottom)))
+                            }
+                        }
+                        .padding()
+                        .background(Color.white)
+                        .cornerRadius(5)
+                        .shadow(radius: 2)
+                    }
+                }
+                
+                if defaultButton >= 8 {
+                    Button(action: {
+                        withAnimation {
+                            expandedButton = (expandedButton == 8) ? nil : 8
+                        }
+                    }) {
+                        HStack {
+                            Image("makan") // replace with actual image name
+                                .resizable()
+                                .frame(width: 50, height: 50)
+                            
+                            if expandedButton == 8 {
+                                Text("JALAN-JALAN KE SINGAPURA")
+                                    .font(.system(size: 14, weight: .bold))
+                                    .foregroundColor(.black)
+                                    .transition(.opacity.combined(with: .move(edge: .bottom)))
+                            }
+                        }
+                        .padding()
+                        .background(Color.white)
+                        .cornerRadius(5)
+                        .shadow(radius: 2)
+                    }
+                }
+                
+                if defaultButton >= 9 {
+                    Button(action: {
+                        withAnimation {
+                            expandedButton = (expandedButton == 9) ? nil : 9
+                        }
+                    }) {
+                        HStack {
+                            Image("makan") // replace with actual image name
+                                .resizable()
+                                .frame(width: 50, height: 50)
+                            
+                            if expandedButton == 9 {
+                                Text("JALAN-JALAN KE BRUNEI DARUSALAM")
+                                    .font(.system(size: 14, weight: .bold))
+                                    .foregroundColor(.black)
+                                    .transition(.opacity.combined(with: .move(edge: .bottom)))
+                            }
+                        }
+                        .padding()
+                        .background(Color.white)
+                        .cornerRadius(5)
+                        .shadow(radius: 2)
+                    }
+                }
+                
+                if defaultButton >= 10 {
+                    Button(action: {
+                        withAnimation {
+                            expandedButton = (expandedButton == 10) ? nil : 10
+                        }
+                    }) {
+                        HStack {
+                            Image("makan") // replace with actual image name
+                                .resizable()
+                                .frame(width: 50, height: 50)
+                            
+                            if expandedButton == 10 {
+                                Text("JALAN-JALAN KE AMERIKA SERIKAT")
+                                    .font(.system(size: 14, weight: .bold))
+                                    .foregroundColor(.black)
+                                    .transition(.opacity.combined(with: .move(edge: .bottom)))
+                            }
+                        }
+                        .padding()
+                        .background(Color.white)
+                        .cornerRadius(5)
+                        .shadow(radius: 2)
+                    }
+                }
+                
+                Button(action: {
+                    withAnimation {
+                        expandedButton = (expandedButton == 11) ? nil : 11
+                        showSheet = true // tampilkan sheet saat tombol + ditekan
+                    }
+                }) {
+                    HStack {
+                        Text("+")
+                            .font(.system(size: 35, weight: .bold))
+                            .foregroundColor(.black)
+                            .transition(.opacity.combined(with: .move(edge: .bottom)))
+                            .frame(width: 50, height: 50)
+                        
+                    }
+                    .padding()
+                    .background(Color.white)
+                    .cornerRadius(5)
+                    .shadow(radius: 2)
+                }
+                .sheet(isPresented: $showSheet) {
+                    BoardCreateView(
+                        boardName: $boardName,
+                        selectedIcon: $selectedIcon,
+                        gridSize: $gridSize,
+                        defaultButton: $defaultButton // binding defaultButton di sini
+                    )
+                }
+                
                 Spacer(minLength: 0)
                 
             }
@@ -261,13 +445,13 @@ struct AACView: View {
                         }
                         
                         if expandedButton == 1 {
-                            CardsRuangMakanView(isLesson: $isLesson)
+                            CardsCustom4x5View()
                         }
                         else if expandedButton == 2 {
-                            CardsKamarMandiView(isLesson: $isLesson)
+                            CardsCustom4x7View()
                         }
                         else if expandedButton == 3 {
-                            CardsRuangBelajarView(isLesson: $isLesson)
+                            CardsCustom5x8View(isLesson: $isLesson)
                         }
                         else if expandedButton == 4 {
                             CardsRuangBelajarView(isLesson: $isLesson)
@@ -294,8 +478,4 @@ struct AACView: View {
             print(UIScreen.main.bounds.height)
         }
     }
-}
-
-#Preview {
-    AACView()
 }
