@@ -20,7 +20,6 @@ struct CardsCustom4x5View: View {
     @StateObject private var boardModel = AACBoardModel()
     @EnvironmentObject var viewModel: AACCustom4x5ViewModel
     
-    @State private var selectedButton: [Card] = []
     @State private var isHome: Bool = false
     @State private var isSetting: Bool = false
     @Environment(\.dismiss) var dismiss
@@ -28,7 +27,9 @@ struct CardsCustom4x5View: View {
     @State private var selectedColumnIndexValue: Int = -1
     @State private var selectedRowIndexValue: Int = -1
     
-
+    @Binding var isLesson: Bool
+    @Binding var selectedCard: [Card]
+    
     let columns = [
         GridItem(.flexible()),
         GridItem(.flexible()),
@@ -74,10 +75,10 @@ struct CardsCustom4x5View: View {
                                                cornerRadius: 15,
                                                isSystemImage: true,
                                                action: {
-                                                   if selectedButton.count < 10 {
+                                                   if selectedCard.count < 9 {
                                                        showAlert = false
                                                        speakText(card.name)
-                                                       selectedButton.append(card)
+                                                       selectedCard.append(card)
                                                    } else {
                                                        showAlert = true
                                                        hasSpoken = false
@@ -90,7 +91,7 @@ struct CardsCustom4x5View: View {
                                             .alert(isPresented: $showAlert) {
                                                 Alert(
                                                    title: Text("Kotak Kata Penuh"),
-                                                   message: Text("Kamu hanya bisa memilih 10 kata. Hapus kata yang sudah dipilih untuk memilih kata baru."),
+                                                   message: Text("Kamu hanya bisa memilih 9 kata. Hapus kata yang sudah dipilih untuk memilih kata baru."),
                                                    dismissButton: .default(Text("OK"), action: {
                                                        hasSpoken = true
                                                    })
@@ -114,10 +115,10 @@ struct CardsCustom4x5View: View {
                                                cornerRadius: 10,
                                                isSystemImage: false,
                                                action: {
-                                                   if selectedButton.count < 10 {
+                                                   if selectedButton.count < 9 {
                                                        showAlert = false
                                                        speakText(card.name)
-                                                       selectedButton.append(card)
+                                                       selectedCard.append(card)
                                                    } else {
                                                        showAlert = true
                                                        hasSpoken = false
@@ -130,7 +131,7 @@ struct CardsCustom4x5View: View {
                                             .alert(isPresented: $showAlert) {
                                                 Alert(
                                                     title: Text("Kotak Kata Penuh"),
-                                                    message: Text("Kamu hanya bisa memilih 10 kata. Hapus kata yang sudah dipilih untuk memilih kata baru."),
+                                                    message: Text("Kamu hanya bisa memilih 9 kata. Hapus kata yang sudah dipilih untuk memilih kata baru."),
                                                     dismissButton: .default(Text("OK"), action: {
                                                         hasSpoken = true
                                                     })

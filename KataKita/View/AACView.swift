@@ -7,6 +7,7 @@
 
 
 import SwiftUI
+import AVFoundation
 
 struct AACView: View {
     let screenWidth = UIScreen.main.bounds.width
@@ -15,9 +16,6 @@ struct AACView: View {
     let templateWidth = 1366.0
     let templateHeight = 1024.0
     
-    @State private var isExpanded1 = false
-    @State private var isExpanded2 = false
-    @State private var isExpanded3 = false
     @State private var expandedButton: Int? = nil
     @State private var isLesson  = false
     @State private var defaultButton: Int = 4
@@ -26,49 +24,78 @@ struct AACView: View {
     @State private var boardName = ""
     @State private var selectedIcon = ""
     @State private var gridSize = "4 x 5"
+    @State private var selectedCard: [Card] = []
 
+    let speechSynthesizer = AVSpeechSynthesizer()
     
     var body: some View {
         VStack(spacing:-2) {
             HStack(spacing:screenWidth * (30/templateWidth)) {
                 Spacer()
                 //textbox
-                ZStack {
-                    HStack {
+                Button(action: {
+                    speakAllText(from: selectedCard)
+                }) {
+                    ZStack {
+                        HStack(alignment: .top) {
+                            ForEach(selectedCard.indices, id: \.self) { index in
+                                let card = selectedCard[index]
+                                if index < 9 {
+                                    // Display CustomButton for the first 8 items
+                                    CustomButton(
+                                        icon: resolveIcon(for: card.icon), // Access the icon from the Card model
+                                        text: card.name, // Access the name from the Card model
+                                        width: Int(screenWidth * (105 / 1376)),
+                                        height: Int(screenHeight * (105 / 1032)),
+                                        font: Int(screenWidth * (55 / 1376)),
+                                        iconWidth: Int(screenWidth * (85 / 1376)),
+                                        iconHeight: Int(screenHeight * (85 / 1032)),
+                                        bgColor: "ffffff",
+                                        bgTransparency: 0,
+                                        fontColor: card.category.fontColor, // Convert hex string to Color
+                                        fontTransparency: 1.0,
+                                        cornerRadius: 10,
+                                        isSystemImage: false,
+                                        action: {
+                                            // Define the button action here if needed
+                                        }
+                                    )
+                                }
+                            }
+                        }
+                        .frame(width: screenWidth * (1100/templateWidth), height: screenHeight * (120/templateHeight), alignment: .leading)
+                        .background(
+                            RoundedRectangle(cornerRadius: 15)
+                                .fill(Color(hex: "FFFFFF", transparency: 1.0))
+                        )
+                        Spacer()
+                        HStack {
+                            Spacer()
+                            //delete button
+                            CustomButton(
+                                icon: "delete",
+                                width: Int(screenWidth * (90/templateWidth)),
+                                height: Int(screenHeight * (140/templateHeight)),
+                                font: 40,
+                                iconWidth: Int(screenWidth * (50/templateWidth)),
+                                iconHeight: Int(screenHeight * (50/templateHeight)),
+                                bgColor: "#ffffff",
+                                bgTransparency: 0.01,
+                                fontColor: "#ffffff",
+                                fontTransparency: 0,
+                                cornerRadius: 20,
+                                isSystemImage: false,
+                                action: {
+                                    if !selectedCard.isEmpty {
+                                        selectedCard.removeLast()
+                                        speechSynthesizer.stopSpeaking(at: .immediate)
+                                    }
+                                }
+                            )
+                        }
+                        .frame(width: screenWidth * (1100/templateWidth) , height: screenHeight * (150/templateHeight))
                         
                     }
-                    .frame(width: screenWidth * (1100/templateWidth), height: screenHeight * (120/templateHeight))
-                    .background(
-                        RoundedRectangle(cornerRadius: 15)
-                            .fill(Color(hex: "FFFFFF", transparency: 1.0))
-                    )
-                    Spacer()
-                    HStack {
-                        Spacer()
-                        //delete button
-                        CustomButton(
-                            icon: "delete",
-                            width: Int(screenWidth * (90/templateWidth)),
-                            height: Int(screenHeight * (140/templateHeight)),
-                            font: 40,
-                            iconWidth: Int(screenWidth * (50/templateWidth)),
-                            iconHeight: Int(screenHeight * (50/templateHeight)),
-                            bgColor: "#ffffff",
-                            bgTransparency: 0.01,
-                            fontColor: "#ffffff",
-                            fontTransparency: 0,
-                            cornerRadius: 20,
-                            isSystemImage: false,
-                            action: {
-                                //                            if !selectedButton.isEmpty {
-                                //                                selectedButton.removeLast()
-                                //                                speechSynthesizer.stopSpeaking(at: .immediate)
-                                //                            }
-                            }
-                        )
-                    }
-                    .frame(width: screenWidth * (1100/templateWidth) , height: screenHeight * (150/templateHeight))
-                    
                 }
                 .frame(width: screenWidth * (1100/templateWidth), height: screenHeight * (110/templateHeight))
                 
@@ -87,10 +114,10 @@ struct AACView: View {
                     cornerRadius: 20,
                     isSystemImage: false,
                     action:{
-                        //                            if !selectedButton.isEmpty {
-                        //                                selectedButton.removeAll()
-                        //                                speechSynthesizer.stopSpeaking(at: .immediate)
-                        //                            }
+                        if !selectedCard.isEmpty {
+                            selectedCard.removeAll()
+                            speechSynthesizer.stopSpeaking(at: .immediate)
+                        }
                     }
                 )
                 Spacer()
@@ -154,6 +181,7 @@ struct AACView: View {
                 Button(action: {
                     withAnimation {
                         expandedButton = (expandedButton == 1) ? nil : 1
+                        selectedCard = []
                     }
                 }) {
                     HStack {
@@ -177,6 +205,7 @@ struct AACView: View {
                 Button(action: {
                     withAnimation {
                         expandedButton = (expandedButton == 2) ? nil : 2
+                        selectedCard = []
                     }
                 }) {
                     HStack {
@@ -200,6 +229,7 @@ struct AACView: View {
                 Button(action: {
                     withAnimation {
                         expandedButton = (expandedButton == 3) ? nil : 3
+                        selectedCard = []
                     }
                 }) {
                     HStack {
@@ -222,6 +252,7 @@ struct AACView: View {
                 Button(action: {
                     withAnimation {
                         expandedButton = (expandedButton == 4) ? nil : 4
+                        selectedCard = []
                     }
                 }) {
                     HStack {
@@ -246,6 +277,7 @@ struct AACView: View {
                     Button(action: {
                         withAnimation {
                             expandedButton = (expandedButton == 5) ? nil : 5
+                            selectedCard = []
                         }
                     }) {
                         HStack {
@@ -271,6 +303,7 @@ struct AACView: View {
                     Button(action: {
                         withAnimation {
                             expandedButton = (expandedButton == 6) ? nil : 6
+                            selectedCard = []
                         }
                     }) {
                         HStack {
@@ -296,6 +329,7 @@ struct AACView: View {
                     Button(action: {
                         withAnimation {
                             expandedButton = (expandedButton == 7) ? nil : 7
+                            selectedCard = []
                         }
                     }) {
                         HStack {
@@ -321,6 +355,7 @@ struct AACView: View {
                     Button(action: {
                         withAnimation {
                             expandedButton = (expandedButton == 8) ? nil : 8
+                            selectedCard = []
                         }
                     }) {
                         HStack {
@@ -346,6 +381,7 @@ struct AACView: View {
                     Button(action: {
                         withAnimation {
                             expandedButton = (expandedButton == 9) ? nil : 9
+                            selectedCard = []
                         }
                     }) {
                         HStack {
@@ -371,6 +407,7 @@ struct AACView: View {
                     Button(action: {
                         withAnimation {
                             expandedButton = (expandedButton == 10) ? nil : 10
+                            selectedCard = []
                         }
                     }) {
                         HStack {
@@ -395,6 +432,7 @@ struct AACView: View {
                 Button(action: {
                     withAnimation {
                         expandedButton = (expandedButton == 11) ? nil : 11
+                        selectedCard = []
                         showSheet = true // tampilkan sheet saat tombol + ditekan
                     }
                 }) {
@@ -445,16 +483,16 @@ struct AACView: View {
                         }
                         
                         if expandedButton == 1 {
-                            CardsCustom4x5View()
+                            CardsCustom4x5View(isLesson: $isLesson, selectedCard: $selectedCard)
                         }
                         else if expandedButton == 2 {
-                            CardsCustom4x7View()
+                            CardsCustom4x7View(isLesson: $isLesson, selectedCard: $selectedCard)
                         }
                         else if expandedButton == 3 {
-                            CardsCustom5x8View(isLesson: $isLesson)
+                            CardsCustom5x8View(isLesson: $isLesson, selectedCard: $selectedCard)
                         }
                         else if expandedButton == 4 {
-                            CardsRuangBelajarView(isLesson: $isLesson)
+                            CardsRuangBelajarView(isLesson: $isLesson, selectedCard: $selectedCard)
                         }
                         
                     }
@@ -477,5 +515,19 @@ struct AACView: View {
             print(UIScreen.main.bounds.width)
             print(UIScreen.main.bounds.height)
         }
+    }
+    
+    func speakAllText(from buttons: [Card]) {
+        // Concatenate all the names from the Card models into a single text
+        var fullText = ""
+        for card in buttons {
+            fullText += "\(card.name) "
+        }
+        
+        // Use the AVSpeechSynthesizer to speak the full text
+        let utterance = AVSpeechUtterance(string: fullText)
+        utterance.voice = AVSpeechSynthesisVoice(language: "id-ID") // Indonesian language
+        utterance.rate = 0.5 // Set the speech rate
+        speechSynthesizer.speak(utterance)
     }
 }
