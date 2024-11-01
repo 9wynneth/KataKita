@@ -1,5 +1,5 @@
 //
-//  CardsRuangBermainView.swift
+//  CardsRuangBelajarView.swift
 //  KataKita
 //
 //  Created by Lisandra Nicoline on 30/10/24.
@@ -8,7 +8,7 @@
 import SwiftUI
 import AVFoundation
 
-struct CardsRuangBermainView: View {
+struct CardsCustom4x5View: View {
     @State private var showAACSettings = false
     @State private var pencilPressed = false
     @State private var showPlusButton = false
@@ -18,9 +18,8 @@ struct CardsRuangBermainView: View {
     @State private var selectedColumnIndex: [Card] = []
     
     @StateObject private var boardModel = AACBoardModel()
-    @EnvironmentObject var viewModel: AACRuangBermainViewModel
+    @EnvironmentObject var viewModel: AACCustom4x5ViewModel
     
-    @State private var selectedButton: [Card] = []
     @State private var isHome: Bool = false
     @State private var isSetting: Bool = false
     @Environment(\.dismiss) var dismiss
@@ -29,7 +28,8 @@ struct CardsRuangBermainView: View {
     @State private var selectedRowIndexValue: Int = -1
     
     @Binding var isLesson: Bool
-
+    @Binding var selectedCard: [Card]
+    
     let columns = [
         GridItem(.flexible()),
         GridItem(.flexible()),
@@ -50,9 +50,9 @@ struct CardsRuangBermainView: View {
         VStack(spacing:-13) {
             ZStack {
                 VStack {
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: screenWidth * (130/1376.0), maximum: screenWidth * (135/1376.0)), alignment: .top)]) {
+                    LazyVGrid(columns: [GridItem(.adaptive(minimum: screenWidth * (180/1376.0), maximum: screenWidth * (185/1376.0)), alignment: .top)]) {
                         ForEach(0..<viewModel.cards.count, id: \.self) { columnIndex in
-                            VStack(spacing: screenWidth * (13/1376.0)) {
+                            VStack(/*spacing: screenWidth * (20/1376.0)*/) {
                                 let rowLimit = (columnIndex == viewModel.cards.count - 1) ? 9 : 6
                                 
                                 ForEach(0..<rowLimit, id: \.self) { rowIndex in
@@ -62,107 +62,105 @@ struct CardsRuangBermainView: View {
                                         // Special design for the last column
                                         if columnIndex == viewModel.cards.count - 1 {
                                             CustomButton(
-                                                text: card.name,
-                                                width: Int(screenWidth * (123/1376.0)),
-                                                height: Int(screenHeight * (63/1032.0)),
-                                                font: Int(screenWidth * (18/1376.0)),
-                                                iconWidth: Int(screenWidth * (50/1376.0)),
-                                                iconHeight: Int(screenHeight * (50/1032.0)),
-                                                bgColor: card.category.color,
-                                                bgTransparency: 1.0,
-                                                fontColor: card.category.fontColor,
-                                                fontTransparency: 1.0,
-                                                cornerRadius: 15,
-                                                isSystemImage: true,
-                                                action: {
-                                                    if selectedButton.count < 10 {
-                                                        showAlert = false
-                                                        speakText(card.name)
-                                                        selectedButton.append(card)
-                                                    } else {
-                                                        showAlert = true
-                                                        hasSpoken = false
-                                                        if hasSpoken == false {
-                                                            speakText("Kotak Kata Penuh")
-                                                        }
-                                                    }
-                                                }
+                                               text: card.name,
+                                               width: Int(screenWidth * (130/1376.0)),
+                                               height: Int(screenHeight * (60/1032.0)),
+                                               font: Int(screenWidth * (18/1376.0)),
+                                               iconWidth: Int(screenWidth * (30/1376.0)),
+                                               iconHeight: Int(screenHeight * (30/1032.0)),
+                                               bgColor: card.category.color,
+                                               bgTransparency: 1.0,
+                                               fontColor: card.category.fontColor,
+                                               fontTransparency: 1.0,
+                                               cornerRadius: 15,
+                                               isSystemImage: true,
+                                               action: {
+                                                   if selectedCard.count < 9 {
+                                                       showAlert = false
+                                                       speakText(card.name)
+                                                       selectedCard.append(card)
+                                                   } else {
+                                                       showAlert = true
+                                                       hasSpoken = false
+                                                       if hasSpoken == false {
+                                                           speakText("Kotak Kata Penuh")
+                                                       }
+                                                   }
+                                               }
                                             )
                                             .alert(isPresented: $showAlert) {
                                                 Alert(
-                                                    title: Text("Kotak Kata Penuh"),
-                                                    message: Text("Kamu hanya bisa memilih 10 kata. Hapus kata yang sudah dipilih untuk memilih kata baru."),
-                                                    dismissButton: .default(Text("OK"), action: {
-                                                        hasSpoken = true
-                                                    })
+                                                   title: Text("Kotak Kata Penuh"),
+                                                   message: Text("Kamu hanya bisa memilih 9 kata. Hapus kata yang sudah dipilih untuk memilih kata baru."),
+                                                   dismissButton: .default(Text("OK"), action: {
+                                                       hasSpoken = true
+                                                   })
                                                 )
                                             }
-                                            .padding(.trailing, screenWidth * (8/1376.0))
-                                            .padding(.leading, screenWidth * (63/1376.0))
-                                        }
-                                        else {
+                                            .padding(.bottom, screenHeight * (6/1032.0))
+                                        } else {
                                             // Default button for other columns
                                             CustomButton(
-                                                icon: resolveIcon(for: card.icon),
-                                                text: card.name,
-                                                width: Int(screenWidth * (125/1376.0)),
-                                                height: Int(screenHeight * (125/1032.0)),
-                                                font: Int(screenWidth * (38/1376.0)),
-                                                iconWidth: Int(screenWidth * (85/1376.0)),
-                                                iconHeight: Int(screenHeight * (85/1032.0)),
-                                                bgColor: card.category.color,
-                                                bgTransparency: isLesson ? 0.3 : 0.70,
-                                                fontColor: card.category.fontColor,
-                                                fontTransparency: 1.0,
-                                                cornerRadius: 10,
-                                                isSystemImage: false,
-                                                action: {
-                                                    if selectedButton.count < 10 {
-                                                        showAlert = false
-                                                        speakText(card.name)
-                                                        selectedButton.append(card)
-                                                    } else {
-                                                        showAlert = true
-                                                        hasSpoken = false
-                                                        if hasSpoken == false {
-                                                            speakText("Kotak Kata Penuh")
-                                                        }
-                                                    }
-                                                }
+                                               icon: resolveIcon(for: card.icon),
+                                               text: card.name,
+                                               width: Int(screenWidth * (150/1376.0)),
+                                               height: Int(screenHeight * (150/1032.0)),
+                                               font: Int(screenWidth * (48/1376.0)),
+                                               iconWidth: Int(screenWidth * (115/1376.0)),
+                                               iconHeight: Int(screenHeight * (115/1032.0)),
+                                               bgColor: card.category.color,
+                                               bgTransparency: 1.0,
+                                               fontColor: card.category.fontColor,
+                                               fontTransparency: 1.0,
+                                               cornerRadius: 10,
+                                               isSystemImage: false,
+                                               action: {
+                                                   if selectedButton.count < 9 {
+                                                       showAlert = false
+                                                       speakText(card.name)
+                                                       selectedCard.append(card)
+                                                   } else {
+                                                       showAlert = true
+                                                       hasSpoken = false
+                                                       if hasSpoken == false {
+                                                           speakText("Kotak Kata Penuh")
+                                                       }
+                                                   }
+                                               }
                                             )
                                             .alert(isPresented: $showAlert) {
                                                 Alert(
                                                     title: Text("Kotak Kata Penuh"),
-                                                    message: Text("Kamu hanya bisa memilih 10 kata. Hapus kata yang sudah dipilih untuk memilih kata baru."),
+                                                    message: Text("Kamu hanya bisa memilih 9 kata. Hapus kata yang sudah dipilih untuk memilih kata baru."),
                                                     dismissButton: .default(Text("OK"), action: {
                                                         hasSpoken = true
                                                     })
                                                 )
                                             }
-                                            .padding(.leading, screenWidth * (43/1376.0))
+                                            .padding(.bottom, screenHeight * (13/1032.0))
                                         }
                                     }
-                                    else if  viewModel.cards[columnIndex].count < 6 {
+                                    else if viewModel.cards[columnIndex].count < 6 {
                                         let buttonsData = [
                                             0: ("#FFEBAF", "#000000"),
                                             1: ("#A77DFF", "#000000"),
                                             2: ("#FFB0C7", "#000000"),
                                             3: ("#CFF0C8", "#000000"),
-                                            4: ("#CFF0C8", "#000000"),
-                                            5: ("#D4F3FF", "#000000"),
+                                            4: ("#D4F3FF", "#000000"),
+                                            5: ("#F2B95C", "#000000"),
                                             6: ("#F2B95C", "#000000"),
-                                            7: ("#F2B95C", "#000000")
+                                            7: ("#FFFFFF", "#000000")
                                         ]
                                         
                                         if let (bgColor, fontColor) = buttonsData[columnIndex] {
                                             // Show the CustomButton if showPlusButton is true
                                             CustomButton(
                                                 text: "+",
-                                                width: Int(screenWidth * (110/1376.0)),
-                                                height: Int(screenHeight * (110/1032.0)),
-                                                font: Int(screenWidth * (28/1376.0)),
-                                                iconWidth: Int(screenWidth * (75/1376.0)),
-                                                iconHeight: Int(screenHeight * (75/1032.0)),
+                                                width: Int(screenWidth * (100/1376.0)),
+                                                height: Int(screenHeight * (100/1032.0)),
+                                                font: Int(screenWidth * (18/1376.0)),
+                                                iconWidth: Int(screenWidth * (50/1376.0)),
+                                                iconHeight: Int(screenHeight * (50/1032.0)),
                                                 bgColor: bgColor,
                                                 bgTransparency: 1.0,
                                                 fontColor: fontColor,
@@ -171,27 +169,24 @@ struct CardsRuangBermainView: View {
                                                 isSystemImage: false,
                                                 action: {
                                                     selectedCategoryColor = bgColor
-                                                    selectedColumnIndex = viewModel.cards[columnIndex]
-                                                    selectedColumnIndexValue = columnIndex
-                                                    selectedRowIndexValue = rowIndex
+                                                    print(selectedCategoryColor)
                                                     showAACSettings = true
                                                 }
                                             )
                                             .opacity(showPlusButton ? 1 : 0)
                                         }
                                     }
-                                    
-                                    
+
+
                                 }
                             }
                         }
                     }
-                    .padding(.top, screenHeight * (168/1032.0))
-                    .padding(.leading,screenWidth * (3/1376.0))
-                    .padding(.trailing,screenWidth * (58/1376.0))
+                    .padding(.top, screenHeight * (280/1032.0))
+                    .padding(.leading,screenWidth * (53/1376.0))
+                    .padding(.trailing,screenWidth * (53/1376.0))
                 }
-                .frame(width: 1350, height: screenHeight * 0.6
-                )
+                .frame(width: 1350, height: screenHeight * 0.6)
                 
             }
             
@@ -202,14 +197,7 @@ struct CardsRuangBermainView: View {
             Spacer()
         }
         .navigationBarBackButtonHidden(true)
-        NavigationLink (destination: SettingsView(), isActive: $isSetting
-        ){
-            
-        }
-        NavigationLink (destination: HomePageView(), isActive: $isHome
-        ){
-            
-        }
+       
     }
     
     
@@ -258,6 +246,5 @@ struct CardsRuangBermainView: View {
 
 
 }
-
 
 

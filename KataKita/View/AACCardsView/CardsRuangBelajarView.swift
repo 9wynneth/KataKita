@@ -1,14 +1,14 @@
 //
-//  CardsRuangMakanView.swift
+//  CardsRuangBelajarView.swift
 //  KataKita
 //
-//  Created by Lisandra Nicoline on 29/10/24.
+//  Created by Lisandra Nicoline on 30/10/24.
 //
 
 import SwiftUI
 import AVFoundation
 
-struct CardsRuangMakanView: View {
+struct CardsRuangBelajarView: View {
     @State private var showAACSettings = false
     @State private var pencilPressed = false
     @State private var showPlusButton = false
@@ -18,9 +18,8 @@ struct CardsRuangMakanView: View {
     @State private var selectedColumnIndex: [Card] = []
     
     @StateObject private var boardModel = AACBoardModel()
-    @EnvironmentObject var viewModel: AACRuangMakanViewModel
+    @EnvironmentObject var viewModel: AACRuangBelajarViewModel
     
-    @State private var selectedButton: [Card] = []
     @State private var isHome: Bool = false
     @State private var isSetting: Bool = false
     @Environment(\.dismiss) var dismiss
@@ -28,7 +27,10 @@ struct CardsRuangMakanView: View {
     @State private var selectedColumnIndexValue: Int = -1
     @State private var selectedRowIndexValue: Int = -1
     
+    
     @Binding var isLesson: Bool
+    @Binding var selectedCard: [Card]
+
 
     let columns = [
         GridItem(.flexible()),
@@ -75,10 +77,10 @@ struct CardsRuangMakanView: View {
                                                 cornerRadius: 15,
                                                 isSystemImage: true,
                                                 action: {
-                                                    if selectedButton.count < 10 {
+                                                    if selectedCard.count < 9 {
                                                         showAlert = false
                                                         speakText(card.name)
-                                                        selectedButton.append(card)
+                                                        selectedCard.append(card)
                                                     } else {
                                                         showAlert = true
                                                         hasSpoken = false
@@ -91,7 +93,7 @@ struct CardsRuangMakanView: View {
                                             .alert(isPresented: $showAlert) {
                                                 Alert(
                                                     title: Text("Kotak Kata Penuh"),
-                                                    message: Text("Kamu hanya bisa memilih 10 kata. Hapus kata yang sudah dipilih untuk memilih kata baru."),
+                                                    message: Text("Kamu hanya bisa memilih 9 kata. Hapus kata yang sudah dipilih untuk memilih kata baru."),
                                                     dismissButton: .default(Text("OK"), action: {
                                                         hasSpoken = true
                                                     })
@@ -117,10 +119,10 @@ struct CardsRuangMakanView: View {
                                                 cornerRadius: 10,
                                                 isSystemImage: false,
                                                 action: {
-                                                    if selectedButton.count < 10 {
+                                                    if selectedCard.count < 9 {
                                                         showAlert = false
                                                         speakText(card.name)
-                                                        selectedButton.append(card)
+                                                        selectedCard.append(card)
                                                     } else {
                                                         showAlert = true
                                                         hasSpoken = false
@@ -133,7 +135,7 @@ struct CardsRuangMakanView: View {
                                             .alert(isPresented: $showAlert) {
                                                 Alert(
                                                     title: Text("Kotak Kata Penuh"),
-                                                    message: Text("Kamu hanya bisa memilih 10 kata. Hapus kata yang sudah dipilih untuk memilih kata baru."),
+                                                    message: Text("Kamu hanya bisa memilih 9 kata. Hapus kata yang sudah dipilih untuk memilih kata baru."),
                                                     dismissButton: .default(Text("OK"), action: {
                                                         hasSpoken = true
                                                     })
@@ -258,4 +260,5 @@ struct CardsRuangMakanView: View {
 
 
 }
+
 

@@ -15,8 +15,8 @@ class Category: Identifiable, ObservableObject {
 
 class Card: Identifiable {
     let id: UUID = UUID()
-    let icon: String // SF Symbol
-    let name: String
+    @Published var icon: String // SF Symbol
+    @Published var name: String
     var category: Category
 
     init(icon: String, name: String, category: Category) {

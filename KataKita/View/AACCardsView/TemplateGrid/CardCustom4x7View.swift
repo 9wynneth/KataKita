@@ -1,5 +1,5 @@
 //
-//  CardsKamarMandiView.swift
+//  CardsRuangBelajarView.swift
 //  KataKita
 //
 //  Created by Lisandra Nicoline on 30/10/24.
@@ -8,7 +8,7 @@
 import SwiftUI
 import AVFoundation
 
-struct CardsKamarMandiView: View {
+struct CardsCustom4x7View: View {
     @State private var showAACSettings = false
     @State private var pencilPressed = false
     @State private var showPlusButton = false
@@ -18,9 +18,8 @@ struct CardsKamarMandiView: View {
     @State private var selectedColumnIndex: [Card] = []
     
     @StateObject private var boardModel = AACBoardModel()
-    @EnvironmentObject var viewModel: AACKamarMandiViewModel
+    @EnvironmentObject var viewModel: AACCustom4x7ViewModel
     
-    @State private var selectedButton: [Card] = []
     @State private var isHome: Bool = false
     @State private var isSetting: Bool = false
     @Environment(\.dismiss) var dismiss
@@ -29,6 +28,7 @@ struct CardsKamarMandiView: View {
     @State private var selectedRowIndexValue: Int = -1
     
     @Binding var isLesson: Bool
+    @Binding var selectedCard: [Card]
 
     let columns = [
         GridItem(.flexible()),
@@ -50,7 +50,7 @@ struct CardsKamarMandiView: View {
         VStack(spacing:-13) {
             ZStack {
                 VStack {
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: screenWidth * (130/1376.0), maximum: screenWidth * (135/1376.0)), alignment: .top)]) {
+                    LazyVGrid(columns: [GridItem(.adaptive(minimum: screenWidth * (155/1376.0), maximum: screenWidth * (155/1376.0)), alignment: .top)]) {
                         ForEach(0..<viewModel.cards.count, id: \.self) { columnIndex in
                             VStack(spacing: screenWidth * (13/1376.0)) {
                                 let rowLimit = (columnIndex == viewModel.cards.count - 1) ? 9 : 6
@@ -75,10 +75,10 @@ struct CardsKamarMandiView: View {
                                                 cornerRadius: 15,
                                                 isSystemImage: true,
                                                 action: {
-                                                    if selectedButton.count < 10 {
+                                                    if selectedCard.count < 9 {
                                                         showAlert = false
                                                         speakText(card.name)
-                                                        selectedButton.append(card)
+                                                        selectedCard.append(card)
                                                     } else {
                                                         showAlert = true
                                                         hasSpoken = false
@@ -91,36 +91,36 @@ struct CardsKamarMandiView: View {
                                             .alert(isPresented: $showAlert) {
                                                 Alert(
                                                     title: Text("Kotak Kata Penuh"),
-                                                    message: Text("Kamu hanya bisa memilih 10 kata. Hapus kata yang sudah dipilih untuk memilih kata baru."),
+                                                    message: Text("Kamu hanya bisa memilih 9 kata. Hapus kata yang sudah dipilih untuk memilih kata baru."),
                                                     dismissButton: .default(Text("OK"), action: {
                                                         hasSpoken = true
                                                     })
                                                 )
                                             }
                                             .padding(.trailing, screenWidth * (8/1376.0))
-                                            .padding(.leading, screenWidth * (63/1376.0))
+                                            .padding(.leading, screenWidth * (83/1376.0))
                                         }
                                         else {
                                             // Default button for other columns
                                             CustomButton(
                                                 icon: resolveIcon(for: card.icon),
                                                 text: card.name,
-                                                width: Int(screenWidth * (125/1376.0)),
-                                                height: Int(screenHeight * (125/1032.0)),
-                                                font: Int(screenWidth * (38/1376.0)),
-                                                iconWidth: Int(screenWidth * (85/1376.0)),
-                                                iconHeight: Int(screenHeight * (85/1032.0)),
+                                                width: Int(screenWidth * (157/1376.0)),
+                                                height: Int(screenHeight * (157/1032.0)),
+                                                font: Int(screenWidth * (23/1376.0)),
+                                                iconWidth: Int(screenWidth * (95/1376.0)),
+                                                iconHeight: Int(screenHeight * (95/1032.0)),
                                                 bgColor: card.category.color,
-                                                bgTransparency: isLesson ? 0.3 : 0.70,
+                                                bgTransparency: 0.70,
                                                 fontColor: card.category.fontColor,
                                                 fontTransparency: 1.0,
                                                 cornerRadius: 10,
                                                 isSystemImage: false,
                                                 action: {
-                                                    if selectedButton.count < 10 {
+                                                    if selectedCard.count < 9 {
                                                         showAlert = false
                                                         speakText(card.name)
-                                                        selectedButton.append(card)
+                                                        selectedCard.append(card)
                                                     } else {
                                                         showAlert = true
                                                         hasSpoken = false
@@ -133,13 +133,13 @@ struct CardsKamarMandiView: View {
                                             .alert(isPresented: $showAlert) {
                                                 Alert(
                                                     title: Text("Kotak Kata Penuh"),
-                                                    message: Text("Kamu hanya bisa memilih 10 kata. Hapus kata yang sudah dipilih untuk memilih kata baru."),
+                                                    message: Text("Kamu hanya bisa memilih 9 kata. Hapus kata yang sudah dipilih untuk memilih kata baru."),
                                                     dismissButton: .default(Text("OK"), action: {
                                                         hasSpoken = true
                                                     })
                                                 )
                                             }
-                                            .padding(.leading, screenWidth * (43/1376.0))
+                                            .padding(.leading, screenWidth * (103/1376.0))
                                         }
                                     }
                                     else if  viewModel.cards[columnIndex].count < 6 {
@@ -186,12 +186,11 @@ struct CardsKamarMandiView: View {
                             }
                         }
                     }
-                    .padding(.top, screenHeight * (168/1032.0))
-                    .padding(.leading,screenWidth * (3/1376.0))
+                    .padding(.top, screenHeight * (288/1032.0))
+                    .padding(.leading,screenWidth * (-13/1376.0))
                     .padding(.trailing,screenWidth * (58/1376.0))
                 }
-                .frame(width: 1350, height: screenHeight * 0.6
-                )
+                .frame(width: 1350, height: screenHeight * 0.6)
                 
             }
             
@@ -202,14 +201,7 @@ struct CardsKamarMandiView: View {
             Spacer()
         }
         .navigationBarBackButtonHidden(true)
-        NavigationLink (destination: SettingsView(), isActive: $isSetting
-        ){
-            
-        }
-        NavigationLink (destination: HomePageView(), isActive: $isHome
-        ){
-            
-        }
+       
     }
     
     
@@ -258,3 +250,5 @@ struct CardsKamarMandiView: View {
 
 
 }
+
+
