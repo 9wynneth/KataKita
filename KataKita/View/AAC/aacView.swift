@@ -13,6 +13,8 @@ struct aacView: View {
     @State private var addingCard: Int? = nil
     @State private var addingBoard = false
     @State private var editing = false
+    @State private var isSetting = false
+
     
     let screenWidth = UIScreen.main.bounds.width
     let screenHeight = UIScreen.main.bounds.height
@@ -185,8 +187,16 @@ struct aacView: View {
                         fontColor: "000000",
                         fontTransparency: 1.0,
                         cornerRadius: 50,
-                        isSystemImage: false
-                    )
+                        isSystemImage: false,
+                        action: {
+                            isSetting = true
+                        }
+                    ).onTapGesture{
+                        isSetting = true
+                    }
+                    
+                    
+                    
                     CustomButton(
                         icon: "pencil",
                         width: 45,
@@ -268,6 +278,9 @@ struct aacView: View {
         // MARK: Add board form
         .overlay(
             Group {
+                if isSetting {
+                    SettingsView()
+                }
                 if self.addingBoard {
                     ZStack {
                         Rectangle()

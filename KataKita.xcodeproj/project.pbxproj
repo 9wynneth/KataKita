@@ -66,6 +66,7 @@
 		1EA097122CD7AB2300B76917 /* BoardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA097112CD7AB2100B76917 /* BoardManager.swift */; };
 		1EA097142CD7B3A300B76917 /* aacView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA097132CD7B39C00B76917 /* aacView.swift */; };
 		1EA097162CD863EC00B76917 /* PECSAddCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA097152CD863DC00B76917 /* PECSAddCardView.swift */; };
+		1EA097182CD8743500B76917 /* VoiceSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA097172CD8743500B76917 /* VoiceSettingsView.swift */; };
 		1EBBC2342CB78EF200673D97 /* DailyActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EBBC2332CB78EF200673D97 /* DailyActivityView.swift */; };
 		9B3EBEC52CC8ADA8009F448E /* AllAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B3EBEC42CC8ADA8009F448E /* AllAssets.swift */; };
 		9B5A47B02CBE18AE00ECDF17 /* AACBoardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5A47AF2CBE18AE00ECDF17 /* AACBoardViewModel.swift */; };
@@ -177,6 +178,7 @@
 		1EA097112CD7AB2100B76917 /* BoardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardManager.swift; sourceTree = "<group>"; };
 		1EA097132CD7B39C00B76917 /* aacView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = aacView.swift; sourceTree = "<group>"; };
 		1EA097152CD863DC00B76917 /* PECSAddCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PECSAddCardView.swift; sourceTree = "<group>"; };
+		1EA097172CD8743500B76917 /* VoiceSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceSettingsView.swift; sourceTree = "<group>"; };
 		1EBBC2332CB78EF200673D97 /* DailyActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyActivityView.swift; sourceTree = "<group>"; };
 		9B3EBEC42CC8ADA8009F448E /* AllAssets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllAssets.swift; sourceTree = "<group>"; };
 		9B5A47AF2CBE18AE00ECDF17 /* AACBoardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AACBoardViewModel.swift; sourceTree = "<group>"; };
@@ -241,6 +243,7 @@
 				1E5863832CB6C0840080373A /* ActivitySequenceView.swift */,
 				9B78DD0C2CB74C510069DBC5 /* HomePageView.swift */,
 				9B78DD162CBC89850069DBC5 /* SettingsView.swift */,
+				1EA097172CD8743500B76917 /* VoiceSettingsView.swift */,
 				DAE313002CB8375C001DD0A0 /* AddDailyActivityView.swift */,
 				1EBBC2332CB78EF200673D97 /* DailyActivityView.swift */,
 				105D7EE82CBCA84B00F7AA96 /* AACRuangMakanView 2.swift */,
@@ -587,6 +590,7 @@
 				1E5863782CB63C640080373A /* CustomButton.swift in Sources */,
 				DAE313052CB85677001DD0A0 /* ScheduleManager.swift in Sources */,
 				1E5863842CB6C08C0080373A /* ActivitySequenceView.swift in Sources */,
+				1EA097182CD8743500B76917 /* VoiceSettingsView.swift in Sources */,
 				1EA095672CBE6B8500B76917 /* TextContent.swift in Sources */,
 				1EA096FF2CD480A300B76917 /* DraggableButton.swift in Sources */,
 				1E84D8C82CB61AC70078B648 /* colorConverter.swift in Sources */,
