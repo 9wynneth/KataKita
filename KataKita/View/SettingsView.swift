@@ -1,9 +1,14 @@
 import SwiftUI
 
 struct SettingsView: View {
-    
+    //MARK: Viewport size
+    let screenWidth = UIScreen.main.bounds.width
+    let screenHeight = UIScreen.main.bounds.height
+    @Binding var selectedVoice: VoiceOption
+
+   
     var body: some View {
-        NavigationStack {
+        VStack {
             Form {
                 // Profil Pengguna Section
                 Section(header: Text("PROFIL PENGGUNA")) {
@@ -77,8 +82,20 @@ struct SettingsView: View {
                         }
                     }
                 }
+                
+                Section(header: Text("Voice Settings")) {
+                                Picker("Select Voice", selection: $selectedVoice) {
+                                    Text("Girl").tag(VoiceOption.girl)
+                                    Text("Boy").tag(VoiceOption.boy)
+                                    Text("Personalized").tag(VoiceOption.personalized)
+                                }
+                                .pickerStyle(SegmentedPickerStyle())
+                            }
             }
-            .navigationTitle("Pengaturan")
+            .frame(width: screenWidth * 0.5)
+            .onAppear{
+                print("setting muncul")
+            }
         }
     }
 }
