@@ -459,11 +459,11 @@ struct DailyActivityView: View {
     func destinationForSelectedRuangan() -> some View {
         switch selectedRuangan {
         case "RuangMakan":
-            return AnyView(AACRuangMakanView())
+            return AnyView(EmptyView())
         case "KamarMandi":
-            return AnyView(AACKamarMandiView())
+            return AnyView(EmptyView())
         case "RuangBelajar":
-            return AnyView(AACRuangBelajarView())
+            return AnyView(EmptyView())
         case "Settings":
             return AnyView(SettingsView())
         default:

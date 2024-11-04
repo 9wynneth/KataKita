@@ -36,13 +36,17 @@ func resolveIcon(for iconName: String) -> String {
 @main
 struct KataKitaApp: App {
     
-    @StateObject var ruangBelajarViewModel = AACRuangBelajarViewModel()
-    @StateObject var ruangMakanViewModel = AACRuangMakanViewModel()
-    @StateObject var kamarMandiViewModel = AACKamarMandiViewModel()
+//    @StateObject var ruangBelajarViewModel = AACRuangBelajarViewModel()
+//    @StateObject var ruangMakanViewModel = AACRuangMakanViewModel()
+//    @StateObject var kamarMandiViewModel = AACKamarMandiViewModel()
     
     @State private var scheduleManager = ScheduleManager()
     @State private var activitiesManager = ActivitiesManager()
     @State private var stateManager = StateManager()
+    
+    @StateObject private var securityManager = SecurityManager()
+//    @StateObject private var lessonViewModel = LessonViewModel()
+
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             Item.self,
@@ -58,7 +62,7 @@ struct KataKitaApp: App {
 
     var body: some Scene {
         WindowGroup {
-            HomePageView()
+            ContentView()
                 .onAppear {
                     // Dummy Data
                     self.scheduleManager.schedules = [
@@ -156,10 +160,10 @@ struct KataKitaApp: App {
                         )
                     ]
                 }
-                
-                .environmentObject(ruangBelajarViewModel)
-                .environmentObject(ruangMakanViewModel)
-                .environmentObject(kamarMandiViewModel)
+//                
+//                .environmentObject(ruangBelajarViewModel)
+//                .environmentObject(ruangMakanViewModel)
+//                .environmentObject(kamarMandiViewModel)
             
            
         }
@@ -167,5 +171,8 @@ struct KataKitaApp: App {
         .environment(scheduleManager)
         .environment(activitiesManager)
         .environment(stateManager)
+//        .environmentObject(lessonViewModel)
+        .environmentObject(securityManager)
+
     }
 }

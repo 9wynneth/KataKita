@@ -54,6 +54,18 @@
 		1EA095672CBE6B8500B76917 /* TextContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA095662CBE6B7D00B76917 /* TextContent.swift */; };
 		1EA096472CC2AF2400B76917 /* AACMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA096462CC2AF1F00B76917 /* AACMenuView.swift */; };
 		1EA096CD2CD1BD5600B76917 /* AACView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA096CC2CD1BD5100B76917 /* AACView.swift */; };
+		1EA096FB2CD3400500B76917 /* PecsLessonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA096FA2CD3400200B76917 /* PecsLessonView.swift */; };
+		1EA096FF2CD480A300B76917 /* DraggableButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA096FE2CD480A300B76917 /* DraggableButton.swift */; };
+		1EA097022CD5360E00B76917 /* PECSView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA097012CD5360E00B76917 /* PECSView.swift */; };
+		1EA097042CD53F5700B76917 /* PECSChildView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA097032CD53F5700B76917 /* PECSChildView.swift */; };
+		1EA097062CD53F6700B76917 /* PECSParentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA097052CD53F6700B76917 /* PECSParentView.swift */; };
+		1EA097082CD540FF00B76917 /* SecurityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA097072CD540FF00B76917 /* SecurityView.swift */; };
+		1EA0970B2CD5D9DF00B76917 /* SecurityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA0970A2CD5D9DB00B76917 /* SecurityManager.swift */; };
+		1EA0970E2CD7AAEF00B76917 /* AACBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA0970D2CD7AAEA00B76917 /* AACBoardView.swift */; };
+		1EA097102CD7AB0C00B76917 /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA0970F2CD7AB0B00B76917 /* Board.swift */; };
+		1EA097122CD7AB2300B76917 /* BoardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA097112CD7AB2100B76917 /* BoardManager.swift */; };
+		1EA097142CD7B3A300B76917 /* aacView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA097132CD7B39C00B76917 /* aacView.swift */; };
+		1EA097162CD863EC00B76917 /* PECSAddCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA097152CD863DC00B76917 /* PECSAddCardView.swift */; };
 		1EBBC2342CB78EF200673D97 /* DailyActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EBBC2332CB78EF200673D97 /* DailyActivityView.swift */; };
 		9B3EBEC52CC8ADA8009F448E /* AllAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B3EBEC42CC8ADA8009F448E /* AllAssets.swift */; };
 		9B5A47B02CBE18AE00ECDF17 /* AACBoardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5A47AF2CBE18AE00ECDF17 /* AACBoardViewModel.swift */; };
@@ -153,6 +165,18 @@
 		1EA095662CBE6B7D00B76917 /* TextContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextContent.swift; sourceTree = "<group>"; };
 		1EA096462CC2AF1F00B76917 /* AACMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AACMenuView.swift; sourceTree = "<group>"; };
 		1EA096CC2CD1BD5100B76917 /* AACView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AACView.swift; sourceTree = "<group>"; };
+		1EA096FA2CD3400200B76917 /* PecsLessonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PecsLessonView.swift; sourceTree = "<group>"; };
+		1EA096FE2CD480A300B76917 /* DraggableButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggableButton.swift; sourceTree = "<group>"; };
+		1EA097012CD5360E00B76917 /* PECSView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PECSView.swift; sourceTree = "<group>"; };
+		1EA097032CD53F5700B76917 /* PECSChildView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PECSChildView.swift; sourceTree = "<group>"; };
+		1EA097052CD53F6700B76917 /* PECSParentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PECSParentView.swift; sourceTree = "<group>"; };
+		1EA097072CD540FF00B76917 /* SecurityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityView.swift; sourceTree = "<group>"; };
+		1EA0970A2CD5D9DB00B76917 /* SecurityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityManager.swift; sourceTree = "<group>"; };
+		1EA0970D2CD7AAEA00B76917 /* AACBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AACBoardView.swift; sourceTree = "<group>"; };
+		1EA0970F2CD7AB0B00B76917 /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
+		1EA097112CD7AB2100B76917 /* BoardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardManager.swift; sourceTree = "<group>"; };
+		1EA097132CD7B39C00B76917 /* aacView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = aacView.swift; sourceTree = "<group>"; };
+		1EA097152CD863DC00B76917 /* PECSAddCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PECSAddCardView.swift; sourceTree = "<group>"; };
 		1EBBC2332CB78EF200673D97 /* DailyActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyActivityView.swift; sourceTree = "<group>"; };
 		9B3EBEC42CC8ADA8009F448E /* AllAssets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllAssets.swift; sourceTree = "<group>"; };
 		9B5A47AF2CBE18AE00ECDF17 /* AACBoardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AACBoardViewModel.swift; sourceTree = "<group>"; };
@@ -204,6 +228,9 @@
 		1E5863822CB6C07C0080373A /* View */ = {
 			isa = PBXGroup;
 			children = (
+				1EA0970C2CD7AAE500B76917 /* AAC */,
+				1EA097002CD535EB00B76917 /* PECSLesson */,
+				1EA096FA2CD3400200B76917 /* PecsLessonView.swift */,
 				1EA096CC2CD1BD5100B76917 /* AACView.swift */,
 				1EA096462CC2AF1F00B76917 /* AACMenuView.swift */,
 				103A0B182CD08F4B00221E2B /* CardsRuangMakanView.swift */,
@@ -301,6 +328,7 @@
 				1E84D8C72CB61AC70078B648 /* colorConverter.swift */,
 				9B78DD272CBDE9C60069DBC5 /* ImageCard.swift */,
 				9B3EBEC42CC8ADA8009F448E /* AllAssets.swift */,
+				1EA096FE2CD480A300B76917 /* DraggableButton.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -337,6 +365,35 @@
 			path = Made;
 			sourceTree = "<group>";
 		};
+		1EA097002CD535EB00B76917 /* PECSLesson */ = {
+			isa = PBXGroup;
+			children = (
+				1EA097152CD863DC00B76917 /* PECSAddCardView.swift */,
+				1EA097012CD5360E00B76917 /* PECSView.swift */,
+				1EA097032CD53F5700B76917 /* PECSChildView.swift */,
+				1EA097052CD53F6700B76917 /* PECSParentView.swift */,
+				1EA097072CD540FF00B76917 /* SecurityView.swift */,
+			);
+			path = PECSLesson;
+			sourceTree = "<group>";
+		};
+		1EA097092CD5D9CE00B76917 /* PECS */ = {
+			isa = PBXGroup;
+			children = (
+				1EA0970A2CD5D9DB00B76917 /* SecurityManager.swift */,
+			);
+			path = PECS;
+			sourceTree = "<group>";
+		};
+		1EA0970C2CD7AAE500B76917 /* AAC */ = {
+			isa = PBXGroup;
+			children = (
+				1EA097132CD7B39C00B76917 /* aacView.swift */,
+				1EA0970D2CD7AAEA00B76917 /* AACBoardView.swift */,
+			);
+			path = AAC;
+			sourceTree = "<group>";
+		};
 		9B5A47A42CBE185E00ECDF17 /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
@@ -349,6 +406,7 @@
 		DAE312F82CB833CA001DD0A0 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				1EA0970F2CD7AB0B00B76917 /* Board.swift */,
 				9B5A47B12CBE18C000ECDF17 /* AACBoardModel.swift */,
 				DAE312FC2CB83499001DD0A0 /* Activity.swift */,
 				DAE312FE2CB835B9001DD0A0 /* Schedule.swift */,
@@ -359,6 +417,8 @@
 		DAE312F92CB833D6001DD0A0 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				1EA097112CD7AB2100B76917 /* BoardManager.swift */,
+				1EA097092CD5D9CE00B76917 /* PECS */,
 				9B5A47AF2CBE18AE00ECDF17 /* AACBoardViewModel.swift */,
 				DAE313022CB84EC4001DD0A0 /* ActivityManager.swift */,
 				DAE313042CB85677001DD0A0 /* ScheduleManager.swift */,
@@ -517,6 +577,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1EA097122CD7AB2300B76917 /* BoardManager.swift in Sources */,
 				103A0B2B2CD242B700221E2B /* CardsRuangBelajarView.swift in Sources */,
 				103A0AB12CC1E80100221E2B /* AACRuangBelajarView.swift in Sources */,
 				1E84D8992CB4D99A0078B648 /* ContentView.swift in Sources */,
@@ -527,6 +588,7 @@
 				DAE313052CB85677001DD0A0 /* ScheduleManager.swift in Sources */,
 				1E5863842CB6C08C0080373A /* ActivitySequenceView.swift in Sources */,
 				1EA095672CBE6B8500B76917 /* TextContent.swift in Sources */,
+				1EA096FF2CD480A300B76917 /* DraggableButton.swift in Sources */,
 				1E84D8C82CB61AC70078B648 /* colorConverter.swift in Sources */,
 				103A0B192CD08F4B00221E2B /* CardsRuangMakanView.swift in Sources */,
 				DAE1E7942CC0474400F5F9D1 /* StateManager.swift in Sources */,
@@ -538,24 +600,34 @@
 				103A0AA92CC1493900221E2B /* AACRuangMakanViewModel.swift in Sources */,
 				1E84D89B2CB4D99A0078B648 /* Item.swift in Sources */,
 				9B3EBEC52CC8ADA8009F448E /* AllAssets.swift in Sources */,
+				1EA097142CD7B3A300B76917 /* aacView.swift in Sources */,
+				1EA096FB2CD3400500B76917 /* PecsLessonView.swift in Sources */,
 				DAE313072CB86921001DD0A0 /* ActivitiesManager.swift in Sources */,
 				1EBBC2342CB78EF200673D97 /* DailyActivityView.swift in Sources */,
 				1EA096CD2CD1BD5600B76917 /* AACView.swift in Sources */,
+				1EA097102CD7AB0C00B76917 /* Board.swift in Sources */,
 				1E84D8972CB4D99A0078B648 /* KataKitaApp.swift in Sources */,
 				9B78DD282CBDE9C60069DBC5 /* ImageCard.swift in Sources */,
+				1EA0970E2CD7AAEF00B76917 /* AACBoardView.swift in Sources */,
 				DAE312FF2CB835B9001DD0A0 /* Schedule.swift in Sources */,
 				103A0AF92CC6597F00221E2B /* AACRuangBermainViewModel.swift in Sources */,
 				DAE313012CB8375C001DD0A0 /* AddDailyActivityView.swift in Sources */,
 				1E5863812CB6B9B30080373A /* CustomButtonSide.swift in Sources */,
+				1EA097162CD863EC00B76917 /* PECSAddCardView.swift in Sources */,
 				105D7EE92CBCA84B00F7AA96 /* AACRuangMakanView 2.swift in Sources */,
+				1EA097082CD540FF00B76917 /* SecurityView.swift in Sources */,
 				103A0AAF2CC1E7DC00221E2B /* AACRuangBelajarViewModel.swift in Sources */,
 				1E58637C2CB681130080373A /* ActivityCard.swift in Sources */,
+				1EA097042CD53F5700B76917 /* PECSChildView.swift in Sources */,
+				1EA097022CD5360E00B76917 /* PECSView.swift in Sources */,
 				DAE313032CB84EC4001DD0A0 /* ActivityManager.swift in Sources */,
+				1EA097062CD53F6700B76917 /* PECSParentView.swift in Sources */,
 				103A0AAD2CC1E46200221E2B /* AACKamarMandiView.swift in Sources */,
 				DAE312FD2CB83499001DD0A0 /* Activity.swift in Sources */,
 				1E5863742CB637C00080373A /* TextHeadline.swift in Sources */,
 				9B5A47B22CBE18C000ECDF17 /* AACBoardModel.swift in Sources */,
 				9B78DD172CBC89850069DBC5 /* SettingsView.swift in Sources */,
+				1EA0970B2CD5D9DF00B76917 /* SecurityManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
