@@ -67,8 +67,6 @@
 		DAE313032CB84EC4001DD0A0 /* ActivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE313022CB84EC4001DD0A0 /* ActivityManager.swift */; };
 		DAE313052CB85677001DD0A0 /* ScheduleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE313042CB85677001DD0A0 /* ScheduleManager.swift */; };
 		DAE313072CB86921001DD0A0 /* ActivitiesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE313062CB86921001DD0A0 /* ActivitiesManager.swift */; };
-		DAFAF58E2CD9B0E600E69810 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFAF58D2CD9B0E600E69810 /* Profile.swift */; };
-		DAFAF5902CD9B26300E69810 /* PECSViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFAF58F2CD9B26300E69810 /* PECSViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -166,8 +164,6 @@
 		DAE313022CB84EC4001DD0A0 /* ActivityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityManager.swift; sourceTree = "<group>"; };
 		DAE313042CB85677001DD0A0 /* ScheduleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleManager.swift; sourceTree = "<group>"; };
 		DAE313062CB86921001DD0A0 /* ActivitiesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitiesManager.swift; sourceTree = "<group>"; };
-		DAFAF58D2CD9B0E600E69810 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
-		DAFAF58F2CD9B26300E69810 /* PECSViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PECSViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -354,7 +350,6 @@
 				DA34C3872CD333F200ADD738 /* Board.swift */,
 				DAE312FC2CB83499001DD0A0 /* Activity.swift */,
 				DAE312FE2CB835B9001DD0A0 /* Schedule.swift */,
-				DAFAF58D2CD9B0E600E69810 /* Profile.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -367,7 +362,6 @@
 				DAE313042CB85677001DD0A0 /* ScheduleManager.swift */,
 				DAE313062CB86921001DD0A0 /* ActivitiesManager.swift */,
 				DAE1E7932CC0474400F5F9D1 /* StateManager.swift */,
-				DAFAF58F2CD9B26300E69810 /* PECSViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -526,8 +520,6 @@
 				1E5863782CB63C640080373A /* CustomButton.swift in Sources */,
 				DAE313052CB85677001DD0A0 /* ScheduleManager.swift in Sources */,
 				1E5863842CB6C08C0080373A /* ActivitySequenceView.swift in Sources */,
-				DAFAF5902CD9B26300E69810 /* PECSViewModel.swift in Sources */,
-				DAFAF58E2CD9B0E600E69810 /* Profile.swift in Sources */,
 				1EA095672CBE6B8500B76917 /* TextContent.swift in Sources */,
 				1E84D8C82CB61AC70078B648 /* colorConverter.swift in Sources */,
 				103A0B192CD08F4B00221E2B /* CardsRuangMakanView.swift in Sources */,
