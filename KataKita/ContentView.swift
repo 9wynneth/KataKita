@@ -14,30 +14,24 @@ struct ContentView: View {
     @Environment(ActivitiesManager.self) private var activitiesManager
     
     @Query private var items: [Item]
-    @State private var selectedSegment = 0
-    @EnvironmentObject var securityManager: SecurityManager
 
     var body: some View {
-        VStack {
-            Picker("Select View", selection: $selectedSegment) {
-                Text("AAC").tag(0)
-                Text("BELAJAR").tag(1)
-            }
-            .pickerStyle(SegmentedPickerStyle())
-            .frame(width: 500)
-            
-            if selectedSegment == 0 {
-                BetterAACView()
-            } else {
-                PECSView()
-                    .zIndex(1)
-            }
-            
-            
+        DailyActivityView()
+    }
+
+    private func addItem() {
+        withAnimation {
+            let newItem = Item(timestamp: Date())
+            modelContext.insert(newItem)
         }
-        .background(
-            Color(hex: "BDD4CE", transparency: 1.0)
-        )
+    }
+
+    private func deleteItems(offsets: IndexSet) {
+        withAnimation {
+            for index in offsets {
+                modelContext.delete(items[index])
+            }
+        }
     }
 }
 
