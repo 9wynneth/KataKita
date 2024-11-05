@@ -50,6 +50,11 @@
 		1EA095672CBE6B8500B76917 /* TextContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA095662CBE6B7D00B76917 /* TextContent.swift */; };
 		1EA096472CC2AF2400B76917 /* AACMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA096462CC2AF1F00B76917 /* AACMenuView.swift */; };
 		1EA096CD2CD1BD5600B76917 /* AACView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA096CC2CD1BD5100B76917 /* AACView.swift */; };
+		1EA097CF2CD9B28100B76917 /* PECSView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA097CE2CD9B27D00B76917 /* PECSView.swift */; };
+		1EA097D12CD9B2B500B76917 /* PECSParentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA097D02CD9B2A300B76917 /* PECSParentView.swift */; };
+		1EA097D32CD9B2D900B76917 /* PECSChildView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA097D22CD9B2C700B76917 /* PECSChildView.swift */; };
+		1EA097D52CD9B34A00B76917 /* SecurityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA097D42CD9B34700B76917 /* SecurityManager.swift */; };
+		1EA097D72CD9B37100B76917 /* SecurityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA097D62CD9B36E00B76917 /* SecurityView.swift */; };
 		1EBBC2342CB78EF200673D97 /* DailyActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EBBC2332CB78EF200673D97 /* DailyActivityView.swift */; };
 		9B3EBEC52CC8ADA8009F448E /* AllAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B3EBEC42CC8ADA8009F448E /* AllAssets.swift */; };
 		9B78DD0D2CB74C510069DBC5 /* HomePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B78DD0C2CB74C510069DBC5 /* HomePageView.swift */; };
@@ -147,6 +152,11 @@
 		1EA095662CBE6B7D00B76917 /* TextContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextContent.swift; sourceTree = "<group>"; };
 		1EA096462CC2AF1F00B76917 /* AACMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AACMenuView.swift; sourceTree = "<group>"; };
 		1EA096CC2CD1BD5100B76917 /* AACView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AACView.swift; sourceTree = "<group>"; };
+		1EA097CE2CD9B27D00B76917 /* PECSView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PECSView.swift; sourceTree = "<group>"; };
+		1EA097D02CD9B2A300B76917 /* PECSParentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PECSParentView.swift; sourceTree = "<group>"; };
+		1EA097D22CD9B2C700B76917 /* PECSChildView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PECSChildView.swift; sourceTree = "<group>"; };
+		1EA097D42CD9B34700B76917 /* SecurityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityManager.swift; sourceTree = "<group>"; };
+		1EA097D62CD9B36E00B76917 /* SecurityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityView.swift; sourceTree = "<group>"; };
 		1EBBC2332CB78EF200673D97 /* DailyActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyActivityView.swift; sourceTree = "<group>"; };
 		9B3EBEC42CC8ADA8009F448E /* AllAssets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllAssets.swift; sourceTree = "<group>"; };
 		9B78DD0C2CB74C510069DBC5 /* HomePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageView.swift; sourceTree = "<group>"; };
@@ -200,24 +210,12 @@
 		1E5863822CB6C07C0080373A /* View */ = {
 			isa = PBXGroup;
 			children = (
-				DADB2B582CD699960049838B /* BetterAACView.swift */,
-				DADB2B4C2CD3EAEA0049838B /* AACBoardView.swift */,
-				1EA096CC2CD1BD5100B76917 /* AACView.swift */,
-				1EA096462CC2AF1F00B76917 /* AACMenuView.swift */,
-				103A0B182CD08F4B00221E2B /* CardsRuangMakanView.swift */,
-				103A0B262CD240F300221E2B /* CardsKamarMandiView.swift */,
-				103A0B282CD2422B00221E2B /* CardsRuangBermainView.swift */,
-				103A0B2A2CD242B700221E2B /* CardsRuangBelajarView.swift */,
-				9B78DD182CBDA3860069DBC5 /* AddButtonAAC */,
-				1E5863832CB6C0840080373A /* ActivitySequenceView.swift */,
-				9B78DD0C2CB74C510069DBC5 /* HomePageView.swift */,
+				1EA097D62CD9B36E00B76917 /* SecurityView.swift */,
+				1EA097CD2CD9B22100B76917 /* PECS */,
+				1EA097CC2CD9B0BF00B76917 /* ACTIVITY */,
+				1EA097CB2CD9B0B900B76917 /* AAC */,
+				1EA097CA2CD9B05300B76917 /* TRASH */,
 				9B78DD162CBC89850069DBC5 /* SettingsView.swift */,
-				DAE313002CB8375C001DD0A0 /* AddDailyActivityView.swift */,
-				1EBBC2332CB78EF200673D97 /* DailyActivityView.swift */,
-				105D7EE82CBCA84B00F7AA96 /* AACRuangMakanView 2.swift */,
-				103A0AB02CC1E80100221E2B /* AACRuangBelajarView.swift */,
-				103A0AAC2CC1E46200221E2B /* AACKamarMandiView.swift */,
-				103A0AF62CC6591300221E2B /* AACRuangBermainView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -335,6 +333,54 @@
 			path = Made;
 			sourceTree = "<group>";
 		};
+		1EA097CA2CD9B05300B76917 /* TRASH */ = {
+			isa = PBXGroup;
+			children = (
+				105D7EE82CBCA84B00F7AA96 /* AACRuangMakanView 2.swift */,
+				103A0AB02CC1E80100221E2B /* AACRuangBelajarView.swift */,
+				103A0AAC2CC1E46200221E2B /* AACKamarMandiView.swift */,
+				103A0AF62CC6591300221E2B /* AACRuangBermainView.swift */,
+				9B78DD0C2CB74C510069DBC5 /* HomePageView.swift */,
+				1EA096462CC2AF1F00B76917 /* AACMenuView.swift */,
+				9B78DD182CBDA3860069DBC5 /* AddButtonAAC */,
+				103A0B182CD08F4B00221E2B /* CardsRuangMakanView.swift */,
+				103A0B262CD240F300221E2B /* CardsKamarMandiView.swift */,
+				103A0B282CD2422B00221E2B /* CardsRuangBermainView.swift */,
+				103A0B2A2CD242B700221E2B /* CardsRuangBelajarView.swift */,
+				1EA096CC2CD1BD5100B76917 /* AACView.swift */,
+			);
+			path = TRASH;
+			sourceTree = "<group>";
+		};
+		1EA097CB2CD9B0B900B76917 /* AAC */ = {
+			isa = PBXGroup;
+			children = (
+				DADB2B582CD699960049838B /* BetterAACView.swift */,
+				DADB2B4C2CD3EAEA0049838B /* AACBoardView.swift */,
+			);
+			path = AAC;
+			sourceTree = "<group>";
+		};
+		1EA097CC2CD9B0BF00B76917 /* ACTIVITY */ = {
+			isa = PBXGroup;
+			children = (
+				1E5863832CB6C0840080373A /* ActivitySequenceView.swift */,
+				DAE313002CB8375C001DD0A0 /* AddDailyActivityView.swift */,
+				1EBBC2332CB78EF200673D97 /* DailyActivityView.swift */,
+			);
+			path = ACTIVITY;
+			sourceTree = "<group>";
+		};
+		1EA097CD2CD9B22100B76917 /* PECS */ = {
+			isa = PBXGroup;
+			children = (
+				1EA097D22CD9B2C700B76917 /* PECSChildView.swift */,
+				1EA097D02CD9B2A300B76917 /* PECSParentView.swift */,
+				1EA097CE2CD9B27D00B76917 /* PECSView.swift */,
+			);
+			path = PECS;
+			sourceTree = "<group>";
+		};
 		9B5A47A42CBE185E00ECDF17 /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
@@ -357,6 +403,7 @@
 		DAE312F92CB833D6001DD0A0 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				1EA097D42CD9B34700B76917 /* SecurityManager.swift */,
 				DA34C3892CD338F800ADD738 /* BoardManager.swift */,
 				DAE313022CB84EC4001DD0A0 /* ActivityManager.swift */,
 				DAE313042CB85677001DD0A0 /* ScheduleManager.swift */,
@@ -518,12 +565,16 @@
 				103A0B292CD2422B00221E2B /* CardsRuangBermainView.swift in Sources */,
 				DADB2B4D2CD3EAF20049838B /* AACBoardView.swift in Sources */,
 				1E5863782CB63C640080373A /* CustomButton.swift in Sources */,
+				1EA097D32CD9B2D900B76917 /* PECSChildView.swift in Sources */,
+				1EA097D12CD9B2B500B76917 /* PECSParentView.swift in Sources */,
 				DAE313052CB85677001DD0A0 /* ScheduleManager.swift in Sources */,
 				1E5863842CB6C08C0080373A /* ActivitySequenceView.swift in Sources */,
+				1EA097D52CD9B34A00B76917 /* SecurityManager.swift in Sources */,
 				1EA095672CBE6B8500B76917 /* TextContent.swift in Sources */,
 				1E84D8C82CB61AC70078B648 /* colorConverter.swift in Sources */,
 				103A0B192CD08F4B00221E2B /* CardsRuangMakanView.swift in Sources */,
 				DAE1E7942CC0474400F5F9D1 /* StateManager.swift in Sources */,
+				1EA097CF2CD9B28100B76917 /* PECSView.swift in Sources */,
 				9B78DD0D2CB74C510069DBC5 /* HomePageView.swift in Sources */,
 				1EA096472CC2AF2400B76917 /* AACMenuView.swift in Sources */,
 				DAE1E7822CBAF59A00F5F9D1 /* SettingActivityCard.swift in Sources */,
@@ -541,6 +592,7 @@
 				105D7EE92CBCA84B00F7AA96 /* AACRuangMakanView 2.swift in Sources */,
 				DA34C3882CD333F500ADD738 /* Board.swift in Sources */,
 				DADB2B592CD6999B0049838B /* BetterAACView.swift in Sources */,
+				1EA097D72CD9B37100B76917 /* SecurityView.swift in Sources */,
 				DA34C38A2CD338FD00ADD738 /* BoardManager.swift in Sources */,
 				1E58637C2CB681130080373A /* ActivityCard.swift in Sources */,
 				DAE313032CB84EC4001DD0A0 /* ActivityManager.swift in Sources */,
