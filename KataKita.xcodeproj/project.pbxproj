@@ -58,6 +58,7 @@
 		1EBBC2342CB78EF200673D97 /* DailyActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EBBC2332CB78EF200673D97 /* DailyActivityView.swift */; };
 		1ECB57392CD9C2FB009291E8 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ECB57382CD9C2FB009291E8 /* Profile.swift */; };
 		1ECB573B2CD9C325009291E8 /* PECSViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ECB573A2CD9C325009291E8 /* PECSViewModel.swift */; };
+		1ECB573D2CD9C481009291E8 /* AddCardModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ECB573C2CD9C477009291E8 /* AddCardModalView.swift */; };
 		9B3EBEC52CC8ADA8009F448E /* AllAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B3EBEC42CC8ADA8009F448E /* AllAssets.swift */; };
 		9B78DD0D2CB74C510069DBC5 /* HomePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B78DD0C2CB74C510069DBC5 /* HomePageView.swift */; };
 		9B78DD172CBC89850069DBC5 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B78DD162CBC89850069DBC5 /* SettingsView.swift */; };
@@ -162,6 +163,7 @@
 		1EBBC2332CB78EF200673D97 /* DailyActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyActivityView.swift; sourceTree = "<group>"; };
 		1ECB57382CD9C2FB009291E8 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		1ECB573A2CD9C325009291E8 /* PECSViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PECSViewModel.swift; sourceTree = "<group>"; };
+		1ECB573C2CD9C477009291E8 /* AddCardModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCardModalView.swift; sourceTree = "<group>"; };
 		9B3EBEC42CC8ADA8009F448E /* AllAssets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllAssets.swift; sourceTree = "<group>"; };
 		9B78DD0C2CB74C510069DBC5 /* HomePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageView.swift; sourceTree = "<group>"; };
 		9B78DD162CBC89850069DBC5 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -378,6 +380,7 @@
 		1EA097CD2CD9B22100B76917 /* PECS */ = {
 			isa = PBXGroup;
 			children = (
+				1ECB573C2CD9C477009291E8 /* AddCardModalView.swift */,
 				1EA097D22CD9B2C700B76917 /* PECSChildView.swift */,
 				1EA097D02CD9B2A300B76917 /* PECSParentView.swift */,
 				1EA097CE2CD9B27D00B76917 /* PECSView.swift */,
@@ -605,6 +608,7 @@
 				1E58637C2CB681130080373A /* ActivityCard.swift in Sources */,
 				DAE313032CB84EC4001DD0A0 /* ActivityManager.swift in Sources */,
 				103A0AAD2CC1E46200221E2B /* AACKamarMandiView.swift in Sources */,
+				1ECB573D2CD9C481009291E8 /* AddCardModalView.swift in Sources */,
 				DAE312FD2CB83499001DD0A0 /* Activity.swift in Sources */,
 				1E5863742CB637C00080373A /* TextHeadline.swift in Sources */,
 				9B78DD172CBC89850069DBC5 /* SettingsView.swift in Sources */,
