@@ -43,9 +43,6 @@ struct KataKitaApp: App {
     @State private var scheduleManager = ScheduleManager()
     @State private var activitiesManager = ActivitiesManager()
     @State private var stateManager = StateManager()
-    
-    @StateObject private var securityManager = SecurityManager()
-
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             Item.self,
@@ -61,7 +58,7 @@ struct KataKitaApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            HomePageView()
                 .onAppear {
                     // Dummy Data
                     self.scheduleManager.schedules = [
@@ -170,7 +167,5 @@ struct KataKitaApp: App {
         .environment(scheduleManager)
         .environment(activitiesManager)
         .environment(stateManager)
-        .environmentObject(securityManager) 
-
     }
 }
