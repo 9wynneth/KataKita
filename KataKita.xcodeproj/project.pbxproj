@@ -56,6 +56,8 @@
 		1EA097D52CD9B34A00B76917 /* SecurityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA097D42CD9B34700B76917 /* SecurityManager.swift */; };
 		1EA097D72CD9B37100B76917 /* SecurityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA097D62CD9B36E00B76917 /* SecurityView.swift */; };
 		1EBBC2342CB78EF200673D97 /* DailyActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EBBC2332CB78EF200673D97 /* DailyActivityView.swift */; };
+		1ECB57392CD9C2FB009291E8 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ECB57382CD9C2FB009291E8 /* Profile.swift */; };
+		1ECB573B2CD9C325009291E8 /* PECSViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ECB573A2CD9C325009291E8 /* PECSViewModel.swift */; };
 		9B3EBEC52CC8ADA8009F448E /* AllAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B3EBEC42CC8ADA8009F448E /* AllAssets.swift */; };
 		9B78DD0D2CB74C510069DBC5 /* HomePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B78DD0C2CB74C510069DBC5 /* HomePageView.swift */; };
 		9B78DD172CBC89850069DBC5 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B78DD162CBC89850069DBC5 /* SettingsView.swift */; };
@@ -158,6 +160,8 @@
 		1EA097D42CD9B34700B76917 /* SecurityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityManager.swift; sourceTree = "<group>"; };
 		1EA097D62CD9B36E00B76917 /* SecurityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityView.swift; sourceTree = "<group>"; };
 		1EBBC2332CB78EF200673D97 /* DailyActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyActivityView.swift; sourceTree = "<group>"; };
+		1ECB57382CD9C2FB009291E8 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
+		1ECB573A2CD9C325009291E8 /* PECSViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PECSViewModel.swift; sourceTree = "<group>"; };
 		9B3EBEC42CC8ADA8009F448E /* AllAssets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllAssets.swift; sourceTree = "<group>"; };
 		9B78DD0C2CB74C510069DBC5 /* HomePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageView.swift; sourceTree = "<group>"; };
 		9B78DD162CBC89850069DBC5 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -393,6 +397,7 @@
 		DAE312F82CB833CA001DD0A0 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				1ECB57382CD9C2FB009291E8 /* Profile.swift */,
 				DA34C3872CD333F200ADD738 /* Board.swift */,
 				DAE312FC2CB83499001DD0A0 /* Activity.swift */,
 				DAE312FE2CB835B9001DD0A0 /* Schedule.swift */,
@@ -403,6 +408,7 @@
 		DAE312F92CB833D6001DD0A0 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				1ECB573A2CD9C325009291E8 /* PECSViewModel.swift */,
 				1EA097D42CD9B34700B76917 /* SecurityManager.swift */,
 				DA34C3892CD338F800ADD738 /* BoardManager.swift */,
 				DAE313022CB84EC4001DD0A0 /* ActivityManager.swift */,
@@ -559,6 +565,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				103A0B2B2CD242B700221E2B /* CardsRuangBelajarView.swift in Sources */,
+				1ECB573B2CD9C325009291E8 /* PECSViewModel.swift in Sources */,
 				103A0AB12CC1E80100221E2B /* AACRuangBelajarView.swift in Sources */,
 				1E84D8992CB4D99A0078B648 /* ContentView.swift in Sources */,
 				103A0AF72CC6591300221E2B /* AACRuangBermainView.swift in Sources */,
@@ -578,6 +585,7 @@
 				9B78DD0D2CB74C510069DBC5 /* HomePageView.swift in Sources */,
 				1EA096472CC2AF2400B76917 /* AACMenuView.swift in Sources */,
 				DAE1E7822CBAF59A00F5F9D1 /* SettingActivityCard.swift in Sources */,
+				1ECB57392CD9C2FB009291E8 /* Profile.swift in Sources */,
 				103A0B272CD240F300221E2B /* CardsKamarMandiView.swift in Sources */,
 				1E84D89B2CB4D99A0078B648 /* Item.swift in Sources */,
 				9B3EBEC52CC8ADA8009F448E /* AllAssets.swift in Sources */,

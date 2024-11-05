@@ -23,7 +23,7 @@ struct PECSChildView: View {
             ForEach(0..<5, id: \.self) { _ in
                 //rectangle
                 VStack (spacing: 5) {
-                    Text("child")
+                    Text("c")
                 }
                 .background(
                     Rectangle()
