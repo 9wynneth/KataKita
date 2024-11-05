@@ -36,9 +36,9 @@ func resolveIcon(for iconName: String) -> String {
 @main
 struct KataKitaApp: App {
     
-    @StateObject var ruangBelajarViewModel = AACRuangBelajarViewModel()
-    @StateObject var ruangMakanViewModel = AACRuangMakanViewModel()
-    @StateObject var kamarMandiViewModel = AACKamarMandiViewModel()
+//    @StateObject var ruangBelajarViewModel = AACRuangBelajarViewModel()
+//    @StateObject var ruangMakanViewModel = AACRuangMakanViewModel()
+//    @StateObject var kamarMandiViewModel = AACKamarMandiViewModel()
     
     @State private var scheduleManager = ScheduleManager()
     @State private var activitiesManager = ActivitiesManager()
@@ -157,9 +157,9 @@ struct KataKitaApp: App {
                     ]
                 }
                 
-                .environmentObject(ruangBelajarViewModel)
-                .environmentObject(ruangMakanViewModel)
-                .environmentObject(kamarMandiViewModel)
+//                .environmentObject(ruangBelajarViewModel)
+//                .environmentObject(ruangMakanViewModel)
+//                .environmentObject(kamarMandiViewModel)
             
            
         }

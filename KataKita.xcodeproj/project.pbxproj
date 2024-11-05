@@ -57,6 +57,8 @@
 		9B78DD282CBDE9C60069DBC5 /* ImageCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B78DD272CBDE9C60069DBC5 /* ImageCard.swift */; };
 		DA34C3882CD333F500ADD738 /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA34C3872CD333F200ADD738 /* Board.swift */; };
 		DA34C38A2CD338FD00ADD738 /* BoardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA34C3892CD338F800ADD738 /* BoardManager.swift */; };
+		DADB2B4D2CD3EAF20049838B /* AACBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADB2B4C2CD3EAEA0049838B /* AACBoardView.swift */; };
+		DADB2B592CD6999B0049838B /* BetterAACView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADB2B582CD699960049838B /* BetterAACView.swift */; };
 		DAE1E7822CBAF59A00F5F9D1 /* SettingActivityCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE1E7812CBAF57F00F5F9D1 /* SettingActivityCard.swift */; };
 		DAE1E7942CC0474400F5F9D1 /* StateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE1E7932CC0474400F5F9D1 /* StateManager.swift */; };
 		DAE312FD2CB83499001DD0A0 /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE312FC2CB83499001DD0A0 /* Activity.swift */; };
@@ -152,6 +154,8 @@
 		9B78DD272CBDE9C60069DBC5 /* ImageCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCard.swift; sourceTree = "<group>"; };
 		DA34C3872CD333F200ADD738 /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
 		DA34C3892CD338F800ADD738 /* BoardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardManager.swift; sourceTree = "<group>"; };
+		DADB2B4C2CD3EAEA0049838B /* AACBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AACBoardView.swift; sourceTree = "<group>"; };
+		DADB2B582CD699960049838B /* BetterAACView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetterAACView.swift; sourceTree = "<group>"; };
 		DAE1E7812CBAF57F00F5F9D1 /* SettingActivityCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingActivityCard.swift; sourceTree = "<group>"; };
 		DAE1E7932CC0474400F5F9D1 /* StateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateManager.swift; sourceTree = "<group>"; };
 		DAE312FC2CB83499001DD0A0 /* Activity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Activity.swift; sourceTree = "<group>"; };
@@ -196,6 +200,8 @@
 		1E5863822CB6C07C0080373A /* View */ = {
 			isa = PBXGroup;
 			children = (
+				DADB2B582CD699960049838B /* BetterAACView.swift */,
+				DADB2B4C2CD3EAEA0049838B /* AACBoardView.swift */,
 				1EA096CC2CD1BD5100B76917 /* AACView.swift */,
 				1EA096462CC2AF1F00B76917 /* AACMenuView.swift */,
 				103A0B182CD08F4B00221E2B /* CardsRuangMakanView.swift */,
@@ -509,8 +515,8 @@
 				103A0AB12CC1E80100221E2B /* AACRuangBelajarView.swift in Sources */,
 				1E84D8992CB4D99A0078B648 /* ContentView.swift in Sources */,
 				103A0AF72CC6591300221E2B /* AACRuangBermainView.swift in Sources */,
-				103A0AAB2CC1E40600221E2B /* AACKamarMandiViewModel.swift in Sources */,
 				103A0B292CD2422B00221E2B /* CardsRuangBermainView.swift in Sources */,
+				DADB2B4D2CD3EAF20049838B /* AACBoardView.swift in Sources */,
 				1E5863782CB63C640080373A /* CustomButton.swift in Sources */,
 				DAE313052CB85677001DD0A0 /* ScheduleManager.swift in Sources */,
 				1E5863842CB6C08C0080373A /* ActivitySequenceView.swift in Sources */,
@@ -521,9 +527,7 @@
 				9B78DD0D2CB74C510069DBC5 /* HomePageView.swift in Sources */,
 				1EA096472CC2AF2400B76917 /* AACMenuView.swift in Sources */,
 				DAE1E7822CBAF59A00F5F9D1 /* SettingActivityCard.swift in Sources */,
-				9B5A47B02CBE18AE00ECDF17 /* AACBoardViewModel.swift in Sources */,
 				103A0B272CD240F300221E2B /* CardsKamarMandiView.swift in Sources */,
-				103A0AA92CC1493900221E2B /* AACRuangMakanViewModel.swift in Sources */,
 				1E84D89B2CB4D99A0078B648 /* Item.swift in Sources */,
 				9B3EBEC52CC8ADA8009F448E /* AllAssets.swift in Sources */,
 				DAE313072CB86921001DD0A0 /* ActivitiesManager.swift in Sources */,
@@ -536,6 +540,7 @@
 				1E5863812CB6B9B30080373A /* CustomButtonSide.swift in Sources */,
 				105D7EE92CBCA84B00F7AA96 /* AACRuangMakanView 2.swift in Sources */,
 				DA34C3882CD333F500ADD738 /* Board.swift in Sources */,
+				DADB2B592CD6999B0049838B /* BetterAACView.swift in Sources */,
 				DA34C38A2CD338FD00ADD738 /* BoardManager.swift in Sources */,
 				1E58637C2CB681130080373A /* ActivityCard.swift in Sources */,
 				DAE313032CB84EC4001DD0A0 /* ActivityManager.swift in Sources */,

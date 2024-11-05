@@ -7,12 +7,11 @@
 import SwiftUI
 import SwiftData
 
-enum Category: String {
+enum Category: String, Codable {
     case CORE
     case QUESTION
     case SOCIAL
     case VERB
-    case PRONOUN
     case NOUN
     case ADJECTIVE
     
@@ -26,24 +25,37 @@ enum Category: String {
                 return .red
             case .VERB:
                 return .green
-            case .PRONOUN:
-                return .blue
             case .NOUN:
                 return .orange
             case .ADJECTIVE:
                 return .gray
         }
     }
+    func getColorString() -> String {
+        switch self {
+            case .CORE:
+                return "FFEBAF"
+            case .QUESTION:
+                return "A77DFF"
+            case .SOCIAL:
+                return "FFB0C7"
+            case .VERB:
+                return "CFF0C8"
+            case .NOUN:
+                return "F2B95C"
+            case .ADJECTIVE:
+                return "D4F3FF"
+        }
+    }
 }
 
-struct Grid {
+struct Grid : Codable {
     var row: Int
     var column: Int
-    
 }
 
 //MARK: Kartu yang ada pada board
-struct Card: Identifiable {
+struct Card: Identifiable, Codable {
     var id = UUID()
     var name: String
     var icon: String // SF Symbol
@@ -56,16 +68,15 @@ struct Card: Identifiable {
     }
 }
 
-@Model
 class Board: Identifiable {
     var id: UUID
-    var cards: [Card]
+    var cards: [[Card]]
     var name: String
     var icon: String?
     var gridSize: Grid
      
     
-    init(cards : [Card], name: String, icon: String? = nil, gridSize: Grid) {
+    init(cards : [[Card]], name: String, icon: String? = nil, gridSize: Grid) {
         self.id = UUID()
         self.cards = cards
         self.name = name

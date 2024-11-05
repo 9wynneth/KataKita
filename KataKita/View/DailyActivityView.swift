@@ -441,12 +441,12 @@ struct DailyActivityView: View {
             }
           
         }
-        NavigationLink(
-            destination: destinationForSelectedRuangan(),
-            isActive: $shouldNavigate
-        ) {
-            EmptyView()
-        }
+//        NavigationLink(
+//            destination: destinationForSelectedRuangan(),
+//            isActive: $shouldNavigate
+//        ) {
+//            EmptyView()
+//        }
         
     }
     
@@ -456,20 +456,20 @@ struct DailyActivityView: View {
         }
         return ""
     }
-    func destinationForSelectedRuangan() -> some View {
-        switch selectedRuangan {
-        case "RuangMakan":
-            return AnyView(AACRuangMakanView())
-        case "KamarMandi":
-            return AnyView(AACKamarMandiView())
-        case "RuangBelajar":
-            return AnyView(AACRuangBelajarView())
-        case "Settings":
-            return AnyView(SettingsView())
-        default:
-            return AnyView(EmptyView())
-        }
-    }
+//    func destinationForSelectedRuangan() -> some View {
+//        switch selectedRuangan {
+//        case "RuangMakan":
+//            return AnyView(AACRuangMakanView())
+//        case "KamarMandi":
+//            return AnyView(AACKamarMandiView())
+//        case "RuangBelajar":
+//            return AnyView(AACRuangBelajarView())
+//        case "Settings":
+//            return AnyView(SettingsView())
+//        default:
+//            return AnyView(EmptyView())
+//        }
+//    }
     
     private func speakText(_ text: String) {
             // Stop any ongoing speech

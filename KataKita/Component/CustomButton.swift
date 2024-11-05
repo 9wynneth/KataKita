@@ -10,8 +10,8 @@ struct CustomButton: View {
     let icon: String?
     let text: String?
     let font: Int
-    let width: Int
-    let height: Int
+    let width: CGFloat
+    let height: CGFloat
     let iconWidth: Int?
     let iconHeight: Int?
     let bgColor: String
@@ -23,7 +23,7 @@ struct CustomButton: View {
     let isSystemImage: Bool
     let action: (() -> Void)?
     
-    init(icon: String? = nil, text: String? = nil, width: Int, height: Int, font: Int, iconWidth: Int? = nil, iconHeight: Int? = nil, bgColor: String, bgTransparency: Double, fontColor: String, fontTransparency: Double, cornerRadius: CGFloat, strokeColor: String? = nil, isSystemImage: Bool = true, action: (() -> Void)? = nil) {
+    init(icon: String? = nil, text: String? = nil, width: CGFloat, height: CGFloat, font: Int, iconWidth: Int? = nil, iconHeight: Int? = nil, bgColor: String, bgTransparency: Double, fontColor: String, fontTransparency: Double, cornerRadius: CGFloat, strokeColor: String? = nil, isSystemImage: Bool = true, action: (() -> Void)? = nil) {
         self.icon = icon
         self.text = text
         self.width = width
@@ -45,9 +45,11 @@ struct CustomButton: View {
     let screenHeight = UIScreen.main.bounds.height
     
     var body: some View {
-        Button(action: {
-            action?()
-        }) {
+        Button {
+            if let action {
+                action()
+            }
+        } label: {
             VStack(spacing: 0) {
                 Spacer()
                 
@@ -87,28 +89,30 @@ struct CustomButton: View {
                 
                 Spacer()
             }
+            .frame(width: CGFloat(width), height: CGFloat(height))
+            .background(Color(hex: bgColor, transparency: bgTransparency))
+            .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
+            .overlay(
+                Group {
+                    if let strokeColor = strokeColor {
+                        RoundedRectangle(cornerRadius: cornerRadius)
+                            .stroke(Color(hex: strokeColor, transparency: 1.0), lineWidth: 1)
+                    } else {
+                        EmptyView()
+                    }
+                }
+            )
+            .shadow(color: Color(hex: "000000", transparency: 0.1), radius:10)
         }
         .buttonStyle(PlainButtonStyle())
-        .frame(width: CGFloat(width), height: CGFloat(height))
-        .background(Color(hex: bgColor, transparency: bgTransparency))
-        .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
-        .overlay(
-            Group {
-                if let strokeColor = strokeColor {
-                    RoundedRectangle(cornerRadius: cornerRadius)
-                        .stroke(Color(hex: strokeColor, transparency: 1.0), lineWidth: 1)
-                } else {
-                    EmptyView()
-                }
-            }
-        )
-        .shadow(color: Color(hex: "000000", transparency: 0.1), radius:10)
     }
 }
 
 // Text only
 #Preview {
-    CustomButton(text: "Text Only", width: 150, height: 50, font: 14, bgColor: "#000000", bgTransparency: 1.0, fontColor: "#ffffff", fontTransparency: 1.0, cornerRadius: 20)
+    CustomButton(text: "Text Only", width: 150, height: 50, font: 14, bgColor: "#000000", bgTransparency: 1.0, fontColor: "#ffffff", fontTransparency: 1.0, cornerRadius: 20) {
+        print("TEST")
+    }
 }
 
 // Icon only

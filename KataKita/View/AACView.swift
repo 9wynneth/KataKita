@@ -9,6 +9,8 @@
 import SwiftUI
 
 struct AACView: View {
+    
+    //MARK: Viewport Size
     let screenWidth = UIScreen.main.bounds.width
     let screenHeight = UIScreen.main.bounds.height
     
@@ -42,8 +44,8 @@ struct AACView: View {
                         //delete button
                         CustomButton(
                             icon: "delete",
-                            width: Int(screenWidth * (90/templateWidth)),
-                            height: Int(screenHeight * (140/templateHeight)),
+                            width: screenWidth * (90/templateWidth),
+                            height: screenHeight * (140/templateHeight),
                             font: 40,
                             iconWidth: Int(screenWidth * (50/templateWidth)),
                             iconHeight: Int(screenHeight * (50/templateHeight)),
@@ -69,8 +71,8 @@ struct AACView: View {
                 //trash button
                 CustomButton(
                     icon: "trash",
-                    width: Int(screenWidth * (120/templateWidth)),
-                    height: Int(screenHeight * (120/templateHeight)),
+                    width: screenWidth * (120/templateWidth),
+                    height: screenHeight * (120/templateHeight),
                     font: 40,
                     iconWidth: Int(screenWidth * (40/templateWidth)),
                     iconHeight: Int(screenHeight * (40/templateHeight)),
@@ -96,8 +98,8 @@ struct AACView: View {
                 HStack(spacing: screenWidth * (10/templateWidth)) {
                     CustomButton(
                         icon: "settings",
-                        width: Int(screenWidth * (45/templateWidth)),
-                        height: Int(screenHeight * (45/templateHeight)),
+                        width: screenWidth * (45/templateWidth),
+                        height: screenHeight * (45/templateHeight),
                         font: 20,
                         iconWidth: Int(screenWidth * (30/templateWidth)),
                         iconHeight: Int(screenHeight * (30/templateHeight)),
@@ -110,8 +112,8 @@ struct AACView: View {
                     )
                     CustomButton(
                         icon: "pencil",
-                        width: Int(screenWidth * (45/templateWidth)),
-                        height: Int(screenHeight * (45/templateHeight)),
+                        width: screenWidth * (45/templateWidth),
+                        height: screenHeight * (45/templateHeight),
                         font: 20,
                         iconWidth: Int(screenWidth * (30/templateWidth)),
                         iconHeight: Int(screenHeight * (30/templateHeight)),
@@ -123,8 +125,8 @@ struct AACView: View {
                     )
                     CustomButton(
                         icon: "lightbulb",
-                        width: Int(screenWidth * (45/templateWidth)),
-                        height: Int(screenHeight * (45/templateHeight)),
+                        width: screenWidth * (45/templateWidth),
+                        height: screenHeight * (45/templateHeight),
                         font: 20,
                         iconWidth: Int(screenWidth * (30/templateWidth)),
                         iconHeight: Int(screenHeight * (30/templateHeight)),
@@ -191,10 +193,11 @@ struct AACView: View {
                     .shadow(radius: 2)
                 }
                 
-                Button(action: {
-                    withAnimation {
-                        expandedButton = (expandedButton == 3) ? nil : 3
-                    }
+                Button(
+                    action: {
+                        withAnimation {
+                            expandedButton = (expandedButton == 3) ? nil : 3
+                        }
                 }) {
                     HStack {
                         Image("buku") // replace with actual image name
@@ -235,9 +238,7 @@ struct AACView: View {
                     .cornerRadius(5)
                     .shadow(radius: 2)
                 }
-                
                 Spacer(minLength: 0)
-                
             }
             .padding(.leading, screenWidth * (54/templateWidth))
             
@@ -246,7 +247,6 @@ struct AACView: View {
                     .frame(width: screenWidth * (1370/templateWidth), height: screenHeight * (790/templateHeight))
                     .padding(.bottom, screenWidth * (-20/templateWidth))
                     .foregroundColor(Color(hex: "ffffff", transparency: 1.0))
-                
                 
                 VStack(spacing: 20) {
                     
@@ -260,18 +260,18 @@ struct AACView: View {
                             }
                         }
                         
-                        if expandedButton == 1 {
-                            CardsRuangMakanView(isLesson: $isLesson)
-                        }
-                        else if expandedButton == 2 {
-                            CardsKamarMandiView(isLesson: $isLesson)
-                        }
-                        else if expandedButton == 3 {
-                            CardsRuangBelajarView(isLesson: $isLesson)
-                        }
-                        else if expandedButton == 4 {
-                            CardsRuangBelajarView(isLesson: $isLesson)
-                        }
+//                        if expandedButton == 1 {
+//                            CardsRuangMakanView(isLesson: $isLesson)
+//                        }
+//                        else if expandedButton == 2 {
+//                            CardsKamarMandiView(isLesson: $isLesson)
+//                        }
+//                        else if expandedButton == 3 {
+//                            CardsRuangBelajarView(isLesson: $isLesson)
+//                        }
+//                        else if expandedButton == 4 {
+//                            CardsRuangBelajarView(isLesson: $isLesson)
+//                        }
                         
                     }
                     .padding(.top, screenWidth * (30/templateWidth))
@@ -283,6 +283,8 @@ struct AACView: View {
                         .padding(.top, screenWidth * (30/templateWidth))
                         .foregroundColor(Color(hex: "ffffff", transparency: 1.0))
                 )
+                
+//                AACBoardView()
             }
 
         }
