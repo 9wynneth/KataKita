@@ -406,6 +406,12 @@ struct BetterAACView: View {
                 }
             }
         )
+        .onAppear {
+            
+            if let firstBoard = BoardManager.shared.boards.first {
+                id = firstBoard.id
+            }
+        }
         .onChange(of: id) {
             BoardManager.shared.selectId(id)
         }

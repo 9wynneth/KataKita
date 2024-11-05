@@ -174,12 +174,5 @@ class BoardManager {
             self.boards[index].cards[column].remove(at: row)
         }
     }
-    func updateCard() {
-        
-    }
-    
-    func updateBoard() {
-        
-    }
 }
 
