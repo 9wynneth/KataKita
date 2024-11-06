@@ -99,18 +99,25 @@ struct AddCardModalView: View {
             // MARK: BOARD
             VStack {
                 // MARK: Search Bar
-                            HStack {
-                                TextField("Search...", text: $searchText)
-                                    .padding(10)
-                                    .background(Color.white)
-                                    .cornerRadius(8)
-                                    .shadow(radius: 2)
-                                
-                                Spacer()
-                            }
-                            .padding(.horizontal, 20)
-                            .padding(.top, 5)
-                            .padding(.bottom, 10)
+                HStack {
+                    HStack(spacing: 10) {
+                        TextField("Search card", text: $searchText)
+                            .padding(10)
+                            .background(Color.white)
+                            .cornerRadius(8)
+                            .shadow(radius: 2)
+                        
+                        Spacer()
+                        TextContent(text: "Done", size: 20, color: "000000", weight: "bold")
+                                                        .padding(.trailing, screenWidth * 0.04)
+                    }
+                    .frame(width: screenWidth * 0.8)
+                    .padding(.leading, 10)
+                    .padding(.top, 5)
+                    .padding(.bottom, 10)
+                    Spacer()
+                    
+                }
 
             HStack(alignment: .top, spacing: 25) {
                 if let board = self.selectedBoard {

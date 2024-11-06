@@ -90,11 +90,11 @@ struct PECSView: View {
                                     .animation(.spring())
                                 }
                                 .onTapGesture {
-                                    isAskPassword = true
-                                    //                                        if securityManager.isCorrect == true {
-                                    //                                            self.toggleOn.toggle()
-                                    //
-                                    //                                        }
+                                    if !toggleOn {
+                                        isAskPassword = true
+                                    } else {
+                                        toggleOn.toggle()
+                                    }
                                 }
                             }
                             .animation(.default)
@@ -224,10 +224,10 @@ struct PECSView: View {
                 .background(Color.clear)
                 .ignoresSafeArea(.all, edges: .bottom)
                 .padding(.bottom, -50)
-
+            
             
         }
-
+        
         .ignoresSafeArea(.all)
         .edgesIgnoringSafeArea(.all)
         
