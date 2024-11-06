@@ -34,7 +34,7 @@ struct PECSChildView: View {
                 
             }
         }
-        .frame(width: screenWidth * (1180 / templateWidth), height: screenHeight * (700 / templateHeight))
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding()
 
     }

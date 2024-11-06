@@ -43,9 +43,8 @@ struct KataKitaApp: App {
     @State private var scheduleManager = ScheduleManager()
     @State private var activitiesManager = ActivitiesManager()
     @State private var stateManager = StateManager()
-    
     @State private var securityManager = SecurityManager()
-    
+    @State private var pECSViewModel = PECSViewModel()
     @State private var profileManager = ProfileViewModel()
 
     var sharedModelContainer: ModelContainer = {
@@ -173,6 +172,7 @@ struct KataKitaApp: App {
         .environment(activitiesManager)
         .environment(stateManager)
         .environment(securityManager)
+        .environment(pECSViewModel)
         .environmentObject(profileManager)
 
     }

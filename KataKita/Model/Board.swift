@@ -57,7 +57,7 @@ struct Grid : Codable {
 }
 
 //MARK: Kartu yang ada pada board
-struct Card: Identifiable, Codable {
+struct Card: Identifiable, Codable, Equatable {
     var id = UUID()
     var name: String
     var icon: String // SF Symbol

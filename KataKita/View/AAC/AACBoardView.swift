@@ -8,6 +8,7 @@ import SwiftUI
 
 struct AACBoardView : View {
     @Binding var editing: Bool
+    @Binding var cards: [[Card]]?
     
     @State private var imageFromLocal: URL?
     let board: Board
@@ -31,11 +32,13 @@ struct AACBoardView : View {
         _ board: Board,
         spacing: CGFloat = 10,
         editing: Binding<Bool> = Binding.constant(false),
+        cards: Binding<[[Card]]?> = Binding.constant(nil),
         add: ((Int) -> Void)? = nil,
         del: ((Int, Int) -> Void)? = nil
     ) {
         self.board = board
         self.spacing = spacing
+        self._cards = cards
         self._editing = editing
         self.add = add
         self.del = del
@@ -87,8 +90,7 @@ struct AACBoardView : View {
                                         fontTransparency: 1.0,
                                         cornerRadius: 13
                                     )
-                                }
-                                else {
+                                } else {
                                     CustomButton(
                                         icon: resolveIcon(for: row.icon),
                                         text: row.name,
@@ -101,7 +103,11 @@ struct AACBoardView : View {
                                         bgTransparency: 0.65,
                                         fontColor: "000000",
                                         fontTransparency: 1.0, cornerRadius: 13, isSystemImage: false
-                                    )
+                                    ) {
+                                        if self.cards != nil {
+                                            self.addCard(row)
+                                        }
+                                    }
                                 }
                                 if self.editing {
                                     CustomButton(
@@ -168,6 +174,21 @@ struct AACBoardView : View {
             }
         )
     }
+    
+    private func addCard(_ card: Card) {
+        if var cards = self.cards {
+            if card.category == .CORE {
+                cards[0].append(card)
+            } else if let index = cards.firstIndex(where: { $0.contains(where: { $0.category == card.category }) }) {
+                cards[index].append(card)
+            } else if let index = cards.firstIndex(where: { $0.isEmpty }) {
+                cards[index].append(card)
+            }
+            print("JANCOKOKO")
+            self.cards = cards
+        }
+    }
+
 }
 
 #Preview {

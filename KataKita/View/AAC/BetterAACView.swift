@@ -238,6 +238,7 @@ struct BetterAACView: View {
                 }
             }
             .padding(.top, 15)
+            
             // MARK: BOARD
             HStack(alignment: .top, spacing: 25) {
                 if let board = self.selectedBoard {
