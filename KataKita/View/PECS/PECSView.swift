@@ -29,8 +29,7 @@ struct PECSView: View {
     @State var toggleOn =  false
     
     @State var isAskPassword =  false
-    @EnvironmentObject var securityManager: SecurityManager
-    
+    @Environment(SecurityManager.self) private var securityManager
     @State private var isAddCard = false
     
     var body: some View {
@@ -257,6 +256,17 @@ struct BackgroundClearView: UIViewRepresentable {
 //        return true
 //    }
 //}
+
+
+//struct PECSView_Previews: PreviewProvider {
+//    @State var securityManager = SecurityManager()
+//    static var previews: some View {
+//        ContentView()
+//        .environment(securityManager)
+//    }
+//}
+
 #Preview {
     PECSView()
+        .environment(SecurityManager())
 }

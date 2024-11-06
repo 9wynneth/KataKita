@@ -7,19 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		103A0AAD2CC1E46200221E2B /* AACKamarMandiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103A0AAC2CC1E46200221E2B /* AACKamarMandiView.swift */; };
-		103A0AB12CC1E80100221E2B /* AACRuangBelajarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103A0AB02CC1E80100221E2B /* AACRuangBelajarView.swift */; };
-		103A0AF72CC6591300221E2B /* AACRuangBermainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103A0AF62CC6591300221E2B /* AACRuangBermainView.swift */; };
-		103A0B192CD08F4B00221E2B /* CardsRuangMakanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103A0B182CD08F4B00221E2B /* CardsRuangMakanView.swift */; };
-		103A0B272CD240F300221E2B /* CardsKamarMandiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103A0B262CD240F300221E2B /* CardsKamarMandiView.swift */; };
-		103A0B292CD2422B00221E2B /* CardsRuangBermainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103A0B282CD2422B00221E2B /* CardsRuangBermainView.swift */; };
-		103A0B2B2CD242B700221E2B /* CardsRuangBelajarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103A0B2A2CD242B700221E2B /* CardsRuangBelajarView.swift */; };
-		105D7EE92CBCA84B00F7AA96 /* AACRuangMakanView 2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105D7EE82CBCA84B00F7AA96 /* AACRuangMakanView 2.swift */; };
 		1E5863742CB637C00080373A /* TextHeadline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5863732CB637B90080373A /* TextHeadline.swift */; };
 		1E5863782CB63C640080373A /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5863772CB63C600080373A /* CustomButton.swift */; };
 		1E58637C2CB681130080373A /* ActivityCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E58637B2CB6810E0080373A /* ActivityCard.swift */; };
 		1E5863812CB6B9B30080373A /* CustomButtonSide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5863802CB6B9A70080373A /* CustomButtonSide.swift */; };
-		1E5863842CB6C08C0080373A /* ActivitySequenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5863832CB6C0840080373A /* ActivitySequenceView.swift */; };
 		1E84D8972CB4D99A0078B648 /* KataKitaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E84D8962CB4D99A0078B648 /* KataKitaApp.swift */; };
 		1E84D8992CB4D99A0078B648 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E84D8982CB4D99A0078B648 /* ContentView.swift */; };
 		1E84D89B2CB4D99A0078B648 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E84D89A2CB4D99A0078B648 /* Item.swift */; };
@@ -48,33 +39,47 @@
 		1EA095642CBE684D00B76917 /* Made-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1EA095482CBE625800B76917 /* Made-Thin.otf */; };
 		1EA095652CBE684D00B76917 /* agency.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1EA095512CBE627200B76917 /* agency.otf */; };
 		1EA095672CBE6B8500B76917 /* TextContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA095662CBE6B7D00B76917 /* TextContent.swift */; };
-		1EA096472CC2AF2400B76917 /* AACMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA096462CC2AF1F00B76917 /* AACMenuView.swift */; };
-		1EA096CD2CD1BD5600B76917 /* AACView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA096CC2CD1BD5100B76917 /* AACView.swift */; };
 		1EA097CF2CD9B28100B76917 /* PECSView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA097CE2CD9B27D00B76917 /* PECSView.swift */; };
 		1EA097D12CD9B2B500B76917 /* PECSParentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA097D02CD9B2A300B76917 /* PECSParentView.swift */; };
 		1EA097D32CD9B2D900B76917 /* PECSChildView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA097D22CD9B2C700B76917 /* PECSChildView.swift */; };
-		1EA097D52CD9B34A00B76917 /* SecurityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA097D42CD9B34700B76917 /* SecurityManager.swift */; };
 		1EA097D72CD9B37100B76917 /* SecurityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA097D62CD9B36E00B76917 /* SecurityView.swift */; };
-		1EBBC2342CB78EF200673D97 /* DailyActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EBBC2332CB78EF200673D97 /* DailyActivityView.swift */; };
 		1ECB57392CD9C2FB009291E8 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ECB57382CD9C2FB009291E8 /* Profile.swift */; };
 		1ECB573B2CD9C325009291E8 /* PECSViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ECB573A2CD9C325009291E8 /* PECSViewModel.swift */; };
 		1ECB573D2CD9C481009291E8 /* AddCardModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ECB573C2CD9C477009291E8 /* AddCardModalView.swift */; };
 		9B3EBEC52CC8ADA8009F448E /* AllAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B3EBEC42CC8ADA8009F448E /* AllAssets.swift */; };
-		9B78DD0D2CB74C510069DBC5 /* HomePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B78DD0C2CB74C510069DBC5 /* HomePageView.swift */; };
 		9B78DD172CBC89850069DBC5 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B78DD162CBC89850069DBC5 /* SettingsView.swift */; };
 		9B78DD282CBDE9C60069DBC5 /* ImageCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B78DD272CBDE9C60069DBC5 /* ImageCard.swift */; };
 		DA34C3882CD333F500ADD738 /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA34C3872CD333F200ADD738 /* Board.swift */; };
 		DA34C38A2CD338FD00ADD738 /* BoardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA34C3892CD338F800ADD738 /* BoardManager.swift */; };
-		DADB2B4D2CD3EAF20049838B /* AACBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADB2B4C2CD3EAEA0049838B /* AACBoardView.swift */; };
-		DADB2B592CD6999B0049838B /* BetterAACView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADB2B582CD699960049838B /* BetterAACView.swift */; };
 		DAE1E7822CBAF59A00F5F9D1 /* SettingActivityCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE1E7812CBAF57F00F5F9D1 /* SettingActivityCard.swift */; };
 		DAE1E7942CC0474400F5F9D1 /* StateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE1E7932CC0474400F5F9D1 /* StateManager.swift */; };
 		DAE312FD2CB83499001DD0A0 /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE312FC2CB83499001DD0A0 /* Activity.swift */; };
 		DAE312FF2CB835B9001DD0A0 /* Schedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE312FE2CB835B9001DD0A0 /* Schedule.swift */; };
-		DAE313012CB8375C001DD0A0 /* AddDailyActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE313002CB8375C001DD0A0 /* AddDailyActivityView.swift */; };
 		DAE313032CB84EC4001DD0A0 /* ActivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE313022CB84EC4001DD0A0 /* ActivityManager.swift */; };
 		DAE313052CB85677001DD0A0 /* ScheduleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE313042CB85677001DD0A0 /* ScheduleManager.swift */; };
 		DAE313072CB86921001DD0A0 /* ActivitiesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE313062CB86921001DD0A0 /* ActivitiesManager.swift */; };
+		DAFAF5E82CDA5AD300E69810 /* SecurityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFAF5E72CDA5AD300E69810 /* SecurityManager.swift */; };
+		DAFAF5EE2CDA5BA200E69810 /* AACBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFAF5EB2CDA5BA200E69810 /* AACBoardView.swift */; };
+		DAFAF5EF2CDA5BA200E69810 /* BetterAACView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFAF5EC2CDA5BA200E69810 /* BetterAACView.swift */; };
+		DAFAF6062CDA5BC100E69810 /* AddImageAACView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFAF5F72CDA5BC100E69810 /* AddImageAACView.swift */; };
+		DAFAF6072CDA5BC100E69810 /* CardsRuangBelajarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFAF6012CDA5BC100E69810 /* CardsRuangBelajarView.swift */; };
+		DAFAF6082CDA5BC100E69810 /* AddButtonAACRuangBelajarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFAF5F52CDA5BC100E69810 /* AddButtonAACRuangBelajarView.swift */; };
+		DAFAF6092CDA5BC100E69810 /* HomePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFAF6042CDA5BC100E69810 /* HomePageView.swift */; };
+		DAFAF60A2CDA5BC100E69810 /* AddButtonAACRuangMakanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFAF5F62CDA5BC100E69810 /* AddButtonAACRuangMakanView.swift */; };
+		DAFAF60B2CDA5BC100E69810 /* ActivitySequenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFAF5F02CDA5BC100E69810 /* ActivitySequenceView.swift */; };
+		DAFAF60C2CDA5BC100E69810 /* AACView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFAF5FF2CDA5BC100E69810 /* AACView.swift */; };
+		DAFAF60D2CDA5BC100E69810 /* AACRuangMakanView 2.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFAF5FE2CDA5BC100E69810 /* AACRuangMakanView 2.swift */; };
+		DAFAF60E2CDA5BC100E69810 /* AACKamarMandiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFAF5FA2CDA5BC100E69810 /* AACKamarMandiView.swift */; };
+		DAFAF60F2CDA5BC100E69810 /* AACRuangBermainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFAF5FD2CDA5BC100E69810 /* AACRuangBermainView.swift */; };
+		DAFAF6102CDA5BC100E69810 /* AddDailyActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFAF5F12CDA5BC100E69810 /* AddDailyActivityView.swift */; };
+		DAFAF6112CDA5BC100E69810 /* AACMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFAF5FB2CDA5BC100E69810 /* AACMenuView.swift */; };
+		DAFAF6122CDA5BC100E69810 /* CardsKamarMandiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFAF6002CDA5BC100E69810 /* CardsKamarMandiView.swift */; };
+		DAFAF6132CDA5BC100E69810 /* AACRuangBelajarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFAF5FC2CDA5BC100E69810 /* AACRuangBelajarView.swift */; };
+		DAFAF6142CDA5BC100E69810 /* CardsRuangBermainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFAF6022CDA5BC100E69810 /* CardsRuangBermainView.swift */; };
+		DAFAF6152CDA5BC100E69810 /* AddButtonAACKamarMandiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFAF5F42CDA5BC100E69810 /* AddButtonAACKamarMandiView.swift */; };
+		DAFAF6162CDA5BC100E69810 /* DailyActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFAF5F22CDA5BC100E69810 /* DailyActivityView.swift */; };
+		DAFAF6172CDA5BC100E69810 /* CallAACSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFAF5F82CDA5BC100E69810 /* CallAACSettingsView.swift */; };
+		DAFAF6182CDA5BC100E69810 /* CardsRuangMakanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFAF6032CDA5BC100E69810 /* CardsRuangMakanView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -116,19 +121,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		103A0AAC2CC1E46200221E2B /* AACKamarMandiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AACKamarMandiView.swift; sourceTree = "<group>"; };
-		103A0AB02CC1E80100221E2B /* AACRuangBelajarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AACRuangBelajarView.swift; sourceTree = "<group>"; };
-		103A0AF62CC6591300221E2B /* AACRuangBermainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AACRuangBermainView.swift; sourceTree = "<group>"; };
-		103A0B182CD08F4B00221E2B /* CardsRuangMakanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsRuangMakanView.swift; sourceTree = "<group>"; };
-		103A0B262CD240F300221E2B /* CardsKamarMandiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsKamarMandiView.swift; sourceTree = "<group>"; };
-		103A0B282CD2422B00221E2B /* CardsRuangBermainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsRuangBermainView.swift; sourceTree = "<group>"; };
-		103A0B2A2CD242B700221E2B /* CardsRuangBelajarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsRuangBelajarView.swift; sourceTree = "<group>"; };
-		105D7EE82CBCA84B00F7AA96 /* AACRuangMakanView 2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AACRuangMakanView 2.swift"; sourceTree = "<group>"; };
 		1E5863732CB637B90080373A /* TextHeadline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextHeadline.swift; sourceTree = "<group>"; };
 		1E5863772CB63C600080373A /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		1E58637B2CB6810E0080373A /* ActivityCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityCard.swift; sourceTree = "<group>"; };
 		1E5863802CB6B9A70080373A /* CustomButtonSide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtonSide.swift; sourceTree = "<group>"; };
-		1E5863832CB6C0840080373A /* ActivitySequenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitySequenceView.swift; sourceTree = "<group>"; };
 		1E84D8932CB4D99A0078B648 /* KataKita.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KataKita.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1E84D8962CB4D99A0078B648 /* KataKitaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KataKitaApp.swift; sourceTree = "<group>"; };
 		1E84D8982CB4D99A0078B648 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -153,37 +149,50 @@
 		1EA095482CBE625800B76917 /* Made-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Made-Thin.otf"; sourceTree = "<group>"; };
 		1EA095512CBE627200B76917 /* agency.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = agency.otf; sourceTree = "<group>"; };
 		1EA095662CBE6B7D00B76917 /* TextContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextContent.swift; sourceTree = "<group>"; };
-		1EA096462CC2AF1F00B76917 /* AACMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AACMenuView.swift; sourceTree = "<group>"; };
-		1EA096CC2CD1BD5100B76917 /* AACView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AACView.swift; sourceTree = "<group>"; };
 		1EA097CE2CD9B27D00B76917 /* PECSView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PECSView.swift; sourceTree = "<group>"; };
 		1EA097D02CD9B2A300B76917 /* PECSParentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PECSParentView.swift; sourceTree = "<group>"; };
 		1EA097D22CD9B2C700B76917 /* PECSChildView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PECSChildView.swift; sourceTree = "<group>"; };
-		1EA097D42CD9B34700B76917 /* SecurityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityManager.swift; sourceTree = "<group>"; };
 		1EA097D62CD9B36E00B76917 /* SecurityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityView.swift; sourceTree = "<group>"; };
-		1EBBC2332CB78EF200673D97 /* DailyActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyActivityView.swift; sourceTree = "<group>"; };
 		1ECB57382CD9C2FB009291E8 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		1ECB573A2CD9C325009291E8 /* PECSViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PECSViewModel.swift; sourceTree = "<group>"; };
 		1ECB573C2CD9C477009291E8 /* AddCardModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCardModalView.swift; sourceTree = "<group>"; };
 		9B3EBEC42CC8ADA8009F448E /* AllAssets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllAssets.swift; sourceTree = "<group>"; };
-		9B78DD0C2CB74C510069DBC5 /* HomePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageView.swift; sourceTree = "<group>"; };
 		9B78DD162CBC89850069DBC5 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		9B78DD272CBDE9C60069DBC5 /* ImageCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCard.swift; sourceTree = "<group>"; };
 		DA34C3872CD333F200ADD738 /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
 		DA34C3892CD338F800ADD738 /* BoardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardManager.swift; sourceTree = "<group>"; };
-		DADB2B4C2CD3EAEA0049838B /* AACBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AACBoardView.swift; sourceTree = "<group>"; };
-		DADB2B582CD699960049838B /* BetterAACView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetterAACView.swift; sourceTree = "<group>"; };
 		DAE1E7812CBAF57F00F5F9D1 /* SettingActivityCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingActivityCard.swift; sourceTree = "<group>"; };
 		DAE1E7932CC0474400F5F9D1 /* StateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateManager.swift; sourceTree = "<group>"; };
 		DAE312FC2CB83499001DD0A0 /* Activity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Activity.swift; sourceTree = "<group>"; };
 		DAE312FE2CB835B9001DD0A0 /* Schedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Schedule.swift; sourceTree = "<group>"; };
-		DAE313002CB8375C001DD0A0 /* AddDailyActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDailyActivityView.swift; sourceTree = "<group>"; };
 		DAE313022CB84EC4001DD0A0 /* ActivityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityManager.swift; sourceTree = "<group>"; };
 		DAE313042CB85677001DD0A0 /* ScheduleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleManager.swift; sourceTree = "<group>"; };
 		DAE313062CB86921001DD0A0 /* ActivitiesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitiesManager.swift; sourceTree = "<group>"; };
+		DAFAF5E72CDA5AD300E69810 /* SecurityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityManager.swift; sourceTree = "<group>"; };
+		DAFAF5EB2CDA5BA200E69810 /* AACBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AACBoardView.swift; sourceTree = "<group>"; };
+		DAFAF5EC2CDA5BA200E69810 /* BetterAACView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetterAACView.swift; sourceTree = "<group>"; };
+		DAFAF5F02CDA5BC100E69810 /* ActivitySequenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitySequenceView.swift; sourceTree = "<group>"; };
+		DAFAF5F12CDA5BC100E69810 /* AddDailyActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDailyActivityView.swift; sourceTree = "<group>"; };
+		DAFAF5F22CDA5BC100E69810 /* DailyActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyActivityView.swift; sourceTree = "<group>"; };
+		DAFAF5F42CDA5BC100E69810 /* AddButtonAACKamarMandiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddButtonAACKamarMandiView.swift; sourceTree = "<group>"; };
+		DAFAF5F52CDA5BC100E69810 /* AddButtonAACRuangBelajarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddButtonAACRuangBelajarView.swift; sourceTree = "<group>"; };
+		DAFAF5F62CDA5BC100E69810 /* AddButtonAACRuangMakanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddButtonAACRuangMakanView.swift; sourceTree = "<group>"; };
+		DAFAF5F72CDA5BC100E69810 /* AddImageAACView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddImageAACView.swift; sourceTree = "<group>"; };
+		DAFAF5F82CDA5BC100E69810 /* CallAACSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallAACSettingsView.swift; sourceTree = "<group>"; };
+		DAFAF5FA2CDA5BC100E69810 /* AACKamarMandiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AACKamarMandiView.swift; sourceTree = "<group>"; };
+		DAFAF5FB2CDA5BC100E69810 /* AACMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AACMenuView.swift; sourceTree = "<group>"; };
+		DAFAF5FC2CDA5BC100E69810 /* AACRuangBelajarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AACRuangBelajarView.swift; sourceTree = "<group>"; };
+		DAFAF5FD2CDA5BC100E69810 /* AACRuangBermainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AACRuangBermainView.swift; sourceTree = "<group>"; };
+		DAFAF5FE2CDA5BC100E69810 /* AACRuangMakanView 2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AACRuangMakanView 2.swift"; sourceTree = "<group>"; };
+		DAFAF5FF2CDA5BC100E69810 /* AACView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AACView.swift; sourceTree = "<group>"; };
+		DAFAF6002CDA5BC100E69810 /* CardsKamarMandiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsKamarMandiView.swift; sourceTree = "<group>"; };
+		DAFAF6012CDA5BC100E69810 /* CardsRuangBelajarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsRuangBelajarView.swift; sourceTree = "<group>"; };
+		DAFAF6022CDA5BC100E69810 /* CardsRuangBermainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsRuangBermainView.swift; sourceTree = "<group>"; };
+		DAFAF6032CDA5BC100E69810 /* CardsRuangMakanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsRuangMakanView.swift; sourceTree = "<group>"; };
+		DAFAF6042CDA5BC100E69810 /* HomePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		9B78DD182CBDA3860069DBC5 /* AddButtonAAC */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = AddButtonAAC; sourceTree = "<group>"; };
 		9B78DD312CBE10B20069DBC5 /* Model */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Model; sourceTree = "<group>"; };
 		9B78DD322CBE10C50069DBC5 /* ViewModel */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ViewModel; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -216,11 +225,11 @@
 		1E5863822CB6C07C0080373A /* View */ = {
 			isa = PBXGroup;
 			children = (
+				DAFAF5F32CDA5BC100E69810 /* ACTIVITY */,
+				DAFAF6052CDA5BC100E69810 /* TRASH */,
+				DAFAF5ED2CDA5BA200E69810 /* AAC */,
 				1EA097D62CD9B36E00B76917 /* SecurityView.swift */,
 				1EA097CD2CD9B22100B76917 /* PECS */,
-				1EA097CC2CD9B0BF00B76917 /* ACTIVITY */,
-				1EA097CB2CD9B0B900B76917 /* AAC */,
-				1EA097CA2CD9B05300B76917 /* TRASH */,
 				9B78DD162CBC89850069DBC5 /* SettingsView.swift */,
 			);
 			path = View;
@@ -339,44 +348,6 @@
 			path = Made;
 			sourceTree = "<group>";
 		};
-		1EA097CA2CD9B05300B76917 /* TRASH */ = {
-			isa = PBXGroup;
-			children = (
-				105D7EE82CBCA84B00F7AA96 /* AACRuangMakanView 2.swift */,
-				103A0AB02CC1E80100221E2B /* AACRuangBelajarView.swift */,
-				103A0AAC2CC1E46200221E2B /* AACKamarMandiView.swift */,
-				103A0AF62CC6591300221E2B /* AACRuangBermainView.swift */,
-				9B78DD0C2CB74C510069DBC5 /* HomePageView.swift */,
-				1EA096462CC2AF1F00B76917 /* AACMenuView.swift */,
-				9B78DD182CBDA3860069DBC5 /* AddButtonAAC */,
-				103A0B182CD08F4B00221E2B /* CardsRuangMakanView.swift */,
-				103A0B262CD240F300221E2B /* CardsKamarMandiView.swift */,
-				103A0B282CD2422B00221E2B /* CardsRuangBermainView.swift */,
-				103A0B2A2CD242B700221E2B /* CardsRuangBelajarView.swift */,
-				1EA096CC2CD1BD5100B76917 /* AACView.swift */,
-			);
-			path = TRASH;
-			sourceTree = "<group>";
-		};
-		1EA097CB2CD9B0B900B76917 /* AAC */ = {
-			isa = PBXGroup;
-			children = (
-				DADB2B582CD699960049838B /* BetterAACView.swift */,
-				DADB2B4C2CD3EAEA0049838B /* AACBoardView.swift */,
-			);
-			path = AAC;
-			sourceTree = "<group>";
-		};
-		1EA097CC2CD9B0BF00B76917 /* ACTIVITY */ = {
-			isa = PBXGroup;
-			children = (
-				1E5863832CB6C0840080373A /* ActivitySequenceView.swift */,
-				DAE313002CB8375C001DD0A0 /* AddDailyActivityView.swift */,
-				1EBBC2332CB78EF200673D97 /* DailyActivityView.swift */,
-			);
-			path = ACTIVITY;
-			sourceTree = "<group>";
-		};
 		1EA097CD2CD9B22100B76917 /* PECS */ = {
 			isa = PBXGroup;
 			children = (
@@ -412,7 +383,7 @@
 			isa = PBXGroup;
 			children = (
 				1ECB573A2CD9C325009291E8 /* PECSViewModel.swift */,
-				1EA097D42CD9B34700B76917 /* SecurityManager.swift */,
+				DAFAF5E72CDA5AD300E69810 /* SecurityManager.swift */,
 				DA34C3892CD338F800ADD738 /* BoardManager.swift */,
 				DAE313022CB84EC4001DD0A0 /* ActivityManager.swift */,
 				DAE313042CB85677001DD0A0 /* ScheduleManager.swift */,
@@ -420,6 +391,56 @@
 				DAE1E7932CC0474400F5F9D1 /* StateManager.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		DAFAF5ED2CDA5BA200E69810 /* AAC */ = {
+			isa = PBXGroup;
+			children = (
+				DAFAF5EB2CDA5BA200E69810 /* AACBoardView.swift */,
+				DAFAF5EC2CDA5BA200E69810 /* BetterAACView.swift */,
+			);
+			path = AAC;
+			sourceTree = "<group>";
+		};
+		DAFAF5F32CDA5BC100E69810 /* ACTIVITY */ = {
+			isa = PBXGroup;
+			children = (
+				DAFAF5F02CDA5BC100E69810 /* ActivitySequenceView.swift */,
+				DAFAF5F12CDA5BC100E69810 /* AddDailyActivityView.swift */,
+				DAFAF5F22CDA5BC100E69810 /* DailyActivityView.swift */,
+			);
+			path = ACTIVITY;
+			sourceTree = "<group>";
+		};
+		DAFAF5F92CDA5BC100E69810 /* AddButtonAAC */ = {
+			isa = PBXGroup;
+			children = (
+				DAFAF5F42CDA5BC100E69810 /* AddButtonAACKamarMandiView.swift */,
+				DAFAF5F52CDA5BC100E69810 /* AddButtonAACRuangBelajarView.swift */,
+				DAFAF5F62CDA5BC100E69810 /* AddButtonAACRuangMakanView.swift */,
+				DAFAF5F72CDA5BC100E69810 /* AddImageAACView.swift */,
+				DAFAF5F82CDA5BC100E69810 /* CallAACSettingsView.swift */,
+			);
+			path = AddButtonAAC;
+			sourceTree = "<group>";
+		};
+		DAFAF6052CDA5BC100E69810 /* TRASH */ = {
+			isa = PBXGroup;
+			children = (
+				DAFAF5F92CDA5BC100E69810 /* AddButtonAAC */,
+				DAFAF5FA2CDA5BC100E69810 /* AACKamarMandiView.swift */,
+				DAFAF5FB2CDA5BC100E69810 /* AACMenuView.swift */,
+				DAFAF5FC2CDA5BC100E69810 /* AACRuangBelajarView.swift */,
+				DAFAF5FD2CDA5BC100E69810 /* AACRuangBermainView.swift */,
+				DAFAF5FE2CDA5BC100E69810 /* AACRuangMakanView 2.swift */,
+				DAFAF5FF2CDA5BC100E69810 /* AACView.swift */,
+				DAFAF6002CDA5BC100E69810 /* CardsKamarMandiView.swift */,
+				DAFAF6012CDA5BC100E69810 /* CardsRuangBelajarView.swift */,
+				DAFAF6022CDA5BC100E69810 /* CardsRuangBermainView.swift */,
+				DAFAF6032CDA5BC100E69810 /* CardsRuangMakanView.swift */,
+				DAFAF6042CDA5BC100E69810 /* HomePageView.swift */,
+			);
+			path = TRASH;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -439,7 +460,6 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				9B78DD182CBDA3860069DBC5 /* AddButtonAAC */,
 				9B78DD312CBE10B20069DBC5 /* Model */,
 				9B78DD322CBE10C50069DBC5 /* ViewModel */,
 			);
@@ -567,47 +587,52 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				103A0B2B2CD242B700221E2B /* CardsRuangBelajarView.swift in Sources */,
 				1ECB573B2CD9C325009291E8 /* PECSViewModel.swift in Sources */,
-				103A0AB12CC1E80100221E2B /* AACRuangBelajarView.swift in Sources */,
 				1E84D8992CB4D99A0078B648 /* ContentView.swift in Sources */,
-				103A0AF72CC6591300221E2B /* AACRuangBermainView.swift in Sources */,
-				103A0B292CD2422B00221E2B /* CardsRuangBermainView.swift in Sources */,
-				DADB2B4D2CD3EAF20049838B /* AACBoardView.swift in Sources */,
 				1E5863782CB63C640080373A /* CustomButton.swift in Sources */,
 				1EA097D32CD9B2D900B76917 /* PECSChildView.swift in Sources */,
 				1EA097D12CD9B2B500B76917 /* PECSParentView.swift in Sources */,
+				DAFAF5EE2CDA5BA200E69810 /* AACBoardView.swift in Sources */,
+				DAFAF5EF2CDA5BA200E69810 /* BetterAACView.swift in Sources */,
 				DAE313052CB85677001DD0A0 /* ScheduleManager.swift in Sources */,
-				1E5863842CB6C08C0080373A /* ActivitySequenceView.swift in Sources */,
-				1EA097D52CD9B34A00B76917 /* SecurityManager.swift in Sources */,
+				DAFAF5E82CDA5AD300E69810 /* SecurityManager.swift in Sources */,
 				1EA095672CBE6B8500B76917 /* TextContent.swift in Sources */,
 				1E84D8C82CB61AC70078B648 /* colorConverter.swift in Sources */,
-				103A0B192CD08F4B00221E2B /* CardsRuangMakanView.swift in Sources */,
 				DAE1E7942CC0474400F5F9D1 /* StateManager.swift in Sources */,
 				1EA097CF2CD9B28100B76917 /* PECSView.swift in Sources */,
-				9B78DD0D2CB74C510069DBC5 /* HomePageView.swift in Sources */,
-				1EA096472CC2AF2400B76917 /* AACMenuView.swift in Sources */,
 				DAE1E7822CBAF59A00F5F9D1 /* SettingActivityCard.swift in Sources */,
+				DAFAF6062CDA5BC100E69810 /* AddImageAACView.swift in Sources */,
+				DAFAF6072CDA5BC100E69810 /* CardsRuangBelajarView.swift in Sources */,
+				DAFAF6082CDA5BC100E69810 /* AddButtonAACRuangBelajarView.swift in Sources */,
+				DAFAF6092CDA5BC100E69810 /* HomePageView.swift in Sources */,
+				DAFAF60A2CDA5BC100E69810 /* AddButtonAACRuangMakanView.swift in Sources */,
+				DAFAF60B2CDA5BC100E69810 /* ActivitySequenceView.swift in Sources */,
+				DAFAF60C2CDA5BC100E69810 /* AACView.swift in Sources */,
+				DAFAF60D2CDA5BC100E69810 /* AACRuangMakanView 2.swift in Sources */,
+				DAFAF60E2CDA5BC100E69810 /* AACKamarMandiView.swift in Sources */,
+				DAFAF60F2CDA5BC100E69810 /* AACRuangBermainView.swift in Sources */,
+				DAFAF6102CDA5BC100E69810 /* AddDailyActivityView.swift in Sources */,
+				DAFAF6112CDA5BC100E69810 /* AACMenuView.swift in Sources */,
+				DAFAF6122CDA5BC100E69810 /* CardsKamarMandiView.swift in Sources */,
+				DAFAF6132CDA5BC100E69810 /* AACRuangBelajarView.swift in Sources */,
+				DAFAF6142CDA5BC100E69810 /* CardsRuangBermainView.swift in Sources */,
+				DAFAF6152CDA5BC100E69810 /* AddButtonAACKamarMandiView.swift in Sources */,
+				DAFAF6162CDA5BC100E69810 /* DailyActivityView.swift in Sources */,
+				DAFAF6172CDA5BC100E69810 /* CallAACSettingsView.swift in Sources */,
+				DAFAF6182CDA5BC100E69810 /* CardsRuangMakanView.swift in Sources */,
 				1ECB57392CD9C2FB009291E8 /* Profile.swift in Sources */,
-				103A0B272CD240F300221E2B /* CardsKamarMandiView.swift in Sources */,
 				1E84D89B2CB4D99A0078B648 /* Item.swift in Sources */,
 				9B3EBEC52CC8ADA8009F448E /* AllAssets.swift in Sources */,
 				DAE313072CB86921001DD0A0 /* ActivitiesManager.swift in Sources */,
-				1EBBC2342CB78EF200673D97 /* DailyActivityView.swift in Sources */,
-				1EA096CD2CD1BD5600B76917 /* AACView.swift in Sources */,
 				1E84D8972CB4D99A0078B648 /* KataKitaApp.swift in Sources */,
 				9B78DD282CBDE9C60069DBC5 /* ImageCard.swift in Sources */,
 				DAE312FF2CB835B9001DD0A0 /* Schedule.swift in Sources */,
-				DAE313012CB8375C001DD0A0 /* AddDailyActivityView.swift in Sources */,
 				1E5863812CB6B9B30080373A /* CustomButtonSide.swift in Sources */,
-				105D7EE92CBCA84B00F7AA96 /* AACRuangMakanView 2.swift in Sources */,
 				DA34C3882CD333F500ADD738 /* Board.swift in Sources */,
-				DADB2B592CD6999B0049838B /* BetterAACView.swift in Sources */,
 				1EA097D72CD9B37100B76917 /* SecurityView.swift in Sources */,
 				DA34C38A2CD338FD00ADD738 /* BoardManager.swift in Sources */,
 				1E58637C2CB681130080373A /* ActivityCard.swift in Sources */,
 				DAE313032CB84EC4001DD0A0 /* ActivityManager.swift in Sources */,
-				103A0AAD2CC1E46200221E2B /* AACKamarMandiView.swift in Sources */,
 				1ECB573D2CD9C481009291E8 /* AddCardModalView.swift in Sources */,
 				DAE312FD2CB83499001DD0A0 /* Activity.swift in Sources */,
 				1E5863742CB637C00080373A /* TextHeadline.swift in Sources */,
@@ -781,6 +806,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = KataKita/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Makkata;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				INFOPLIST_KEY_NSCameraUsageDescription = "This app requires access to the camera to allow users to take photos for new activity";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -814,6 +840,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = KataKita/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Makkata;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				INFOPLIST_KEY_NSCameraUsageDescription = "This app requires access to the camera to allow users to take photos for new activity";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

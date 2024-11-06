@@ -10,10 +10,10 @@ import Foundation
 //TODO: To manage list of card that used in PECS
 //TODO: Dijadiin singleton dulu biar bisa dipake buat view
 class PECSViewModel {
-    static var shared: PECSViewModel = PECSViewModel(cards: [[]])
+    static var shared: PECSViewModel = PECSViewModel()
     var cards: [[Card]]
 
-    private init(cards: [[Card]]) {
+    private init(cards: [[Card]] = [[]]) {
         self.cards = cards
     }
     // Column are used for adding in certain column
