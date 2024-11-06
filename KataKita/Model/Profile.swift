@@ -9,6 +9,10 @@ import Foundation
 
 class Profile: Codable {
     var name: String
-    var gender: Bool    // 0 for boy, 1 for gal
-    //TODO: CARI VOICE (Menunggu gwen)
+    var gender: Bool
+    
+    init(name: String, gender: Bool) {
+        self.name = name
+        self.gender = gender
+    }
 }

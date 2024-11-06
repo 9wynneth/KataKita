@@ -45,6 +45,8 @@ struct KataKitaApp: App {
     @State private var stateManager = StateManager()
     
     @StateObject private var securityManager = SecurityManager()
+    
+    @State private var profileManager = ProfileViewModel()
 
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
@@ -170,7 +172,8 @@ struct KataKitaApp: App {
         .environment(scheduleManager)
         .environment(activitiesManager)
         .environment(stateManager)
-        .environmentObject(securityManager) 
+        .environmentObject(securityManager)
+        .environmentObject(profileManager)
 
     }
 }

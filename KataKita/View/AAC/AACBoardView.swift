@@ -9,6 +9,7 @@ import SwiftUI
 struct AACBoardView : View {
     @Binding var editing: Bool
     
+    @State private var imageFromLocal: URL?
     let board: Board
     let spacing: CGFloat
     let add: ((Int) -> Void)?
@@ -71,19 +72,37 @@ struct AACBoardView : View {
                     VStack (spacing: self.spacing){
                         ForEach(Array(column.enumerated()), id: \.offset) { rowIndex, row in
                             ZStack(alignment: .topTrailing) {
-                                CustomButton(
-                                    icon: "ASTRONOT",
-                                    text: row.name,
-                                    width: cellWidth,
-                                    height: cellHeight,
-                                    font: 24,
-                                    iconWidth: 80,
-                                    iconHeight: 60,
-                                    bgColor: row.category.getColorString(),
-                                    bgTransparency: 0.65,
-                                    fontColor: "000000",
-                                    fontTransparency: 1.0, cornerRadius: 13, isSystemImage: false
-                                )
+                                if row.isIconTypeImage == true {
+                                    CustomIcon(
+                                        icon: row.icon,
+                                        text: row.name,
+                                        width: cellWidth,
+                                        height: cellHeight,
+                                        font: 24,
+                                        iconWidth: 80,
+                                        iconHeight: 60,
+                                        bgColor: Color(hex: row.category.getColorString(), transparency: 1),
+                                        bgTransparency: 0.65,
+                                        fontColor: Color.black,
+                                        fontTransparency: 1.0,
+                                        cornerRadius: 13
+                                    )
+                                }
+                                else {
+                                    CustomButton(
+                                        icon: resolveIcon(for: row.icon),
+                                        text: row.name,
+                                        width: cellWidth,
+                                        height: cellHeight,
+                                        font: 24,
+                                        iconWidth: 80,
+                                        iconHeight: 60,
+                                        bgColor: row.category.getColorString(),
+                                        bgTransparency: 0.65,
+                                        fontColor: "000000",
+                                        fontTransparency: 1.0, cornerRadius: 13, isSystemImage: false
+                                    )
+                                }
                                 if self.editing {
                                     CustomButton(
                                         icon: "xmark",
@@ -156,30 +175,30 @@ struct AACBoardView : View {
         Board(
             cards: [
                 [
-                    Card(name: "Aku", icon: "ASTRONOT", category: .CORE),
-                    Card(name: "Kamu", icon: "ASTRONOT", category: .CORE),
-                    Card(name: "Kita", icon: "ASTRONOT", category: .CORE),
-                    Card(name: "Mereka", icon: "ASTRONOT", category: .CORE),
-                    Card(name: "Ayah", icon: "ASTRONOT", category: .CORE)
+                    Card(name: "Aku", icon: "ASTRONOT", category: .CORE, isIconTypeImage: false),
+                    Card(name: "Kamu", icon: "ASTRONOT", category: .CORE, isIconTypeImage: false),
+                    Card(name: "Kita", icon: "ASTRONOT", category: .CORE, isIconTypeImage: false),
+                    Card(name: "Mereka", icon: "ASTRONOT", category: .CORE, isIconTypeImage: false),
+                    Card(name: "Ayah", icon: "ASTRONOT", category: .CORE, isIconTypeImage: false)
                 ],
                 [
-                    Card(name: "Di atas", icon: "ASTRONOT", category: .SOCIAL),
-                    Card(name: "Terima kasih", icon: "ASTRONOT", category: .SOCIAL),
-                    Card(name: "Tidak", icon: "ASTRONOT", category: .SOCIAL),
-                    Card(name: "Suka", icon: "ASTRONOT", category: .SOCIAL),
+                    Card(name: "Di atas", icon: "ASTRONOT", category: .SOCIAL, isIconTypeImage: false),
+                    Card(name: "Terima kasih", icon: "ASTRONOT", category: .SOCIAL, isIconTypeImage: false),
+                    Card(name: "Tidak", icon: "ASTRONOT", category: .SOCIAL, isIconTypeImage: false),
+                    Card(name: "Suka", icon: "ASTRONOT", category: .SOCIAL, isIconTypeImage: false),
                 ],
                 [
-                    Card(name: "Siapa", icon: "ASTRONOT", category: .QUESTION),
-                    Card(name: "Kapan", icon: "ASTRONOT", category: .QUESTION),
-                    Card(name: "Kenapa", icon: "ASTRONOT", category: .QUESTION),
+                    Card(name: "Siapa", icon: "ASTRONOT", category: .QUESTION, isIconTypeImage: false),
+                    Card(name: "Kapan", icon: "ASTRONOT", category: .QUESTION, isIconTypeImage: false),
+                    Card(name: "Kenapa", icon: "ASTRONOT", category: .QUESTION, isIconTypeImage: false),
                 ],
                 [
-                    Card(name: "Apa", icon: "ASTRONOT", category: .QUESTION)
+                    Card(name: "Apa", icon: "ASTRONOT", category: .QUESTION, isIconTypeImage: false)
                 ],
                 [
-                    Card(name: "Apa", icon: "ASTRONOT", category: .QUESTION),
-                    Card(name: "Kapan", icon: "ASTRONOT", category: .QUESTION),
-                    Card(name: "Kenapa", icon: "ASTRONOT", category: .QUESTION),
+                    Card(name: "Apa", icon: "ASTRONOT", category: .QUESTION, isIconTypeImage: false),
+                    Card(name: "Kapan", icon: "ASTRONOT", category: .QUESTION, isIconTypeImage: false),
+                    Card(name: "Kenapa", icon: "ASTRONOT", category: .QUESTION, isIconTypeImage: false),
                 ],
                 [],
                 [],

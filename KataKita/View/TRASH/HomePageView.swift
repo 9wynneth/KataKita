@@ -3,8 +3,10 @@ import SwiftUI
 struct HomePageView: View {
     @State private var selectedOption: String = "Jadwal"
     @State private var shouldNavigate: Bool = false
+    @State private var showsettings = false
     
     var body: some View {
+       
         NavigationStack {
             VStack {
                 Spacer()
@@ -44,39 +46,39 @@ struct HomePageView: View {
                     }
                 }
                 Spacer()
-                NavigationLink(destination: SettingsView()) {
-                    CustomButton(
-                        icon: "settings", width: 100, height: 100, font: 50,
-                        iconWidth: 50, iconHeight: 50, bgColor: "#ffffff",
-                        bgTransparency: 1.0, fontColor: "#696767",
-                        fontTransparency: 1.0, cornerRadius: 20, isSystemImage: false,
-                        action: {
-                            selectedOption = "Setting"
-                            shouldNavigate = true
-                        }
-                    )
-                }
+//                NavigationLink(destination: SettingsView(showsettings = $showsettings)) {
+//                    CustomButton(
+//                        icon: "settings", width: 100, height: 100, font: 50,
+//                        iconWidth: 50, iconHeight: 50, bgColor: "#ffffff",
+//                        bgTransparency: 1.0, fontColor: "#696767",
+//                        fontTransparency: 1.0, cornerRadius: 20, isSystemImage: false,
+//                        action: {
+//                            selectedOption = "Setting"
+//                            shouldNavigate = true
+//                        }
+//                    )
+//                }
                 Spacer()
             }
             .background(Image("homebackground"))
-            NavigationLink(
-                destination: {
-                    switch selectedOption {
-                    case "Setting":
-                        AnyView(SettingsView())
-                    case "Jadwal":
-                        AnyView(DailyActivityView())
-                    case "AAC":
-                        AnyView(AACView())
-                    default:
-                        AnyView(EmptyView())
-                    }
-                }(),
-                isActive: $shouldNavigate,
-                label: {
-                    EmptyView()
-                }
-            )
+//            NavigationLink(
+////                destination: {
+////                    switch selectedOption {
+////                    case "Setting":
+////                        AnyView(SettingsView())
+////                    case "Jadwal":
+////                        AnyView(DailyActivityView())
+////                    case "AAC":
+////                        AnyView(AACView())
+////                    default:
+////                        AnyView(EmptyView())
+////                    }
+//                }(),
+//                isActive: $shouldNavigate,
+//                label: {
+//                    EmptyView()
+//                }
+//            )
             
         }
         .navigationBarBackButtonHidden(true)

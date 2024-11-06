@@ -7,7 +7,7 @@
 import SwiftUI
 import SwiftData
 
-enum Category: String, Codable {
+enum Category: String, Codable, CaseIterable {
     case CORE
     case QUESTION
     case SOCIAL
@@ -31,6 +31,7 @@ enum Category: String, Codable {
                 return .gray
         }
     }
+    
     func getColorString() -> String {
         switch self {
             case .CORE:
@@ -49,6 +50,7 @@ enum Category: String, Codable {
     }
 }
 
+
 struct Grid : Codable {
     var row: Int
     var column: Int
@@ -60,11 +62,13 @@ struct Card: Identifiable, Codable {
     var name: String
     var icon: String // SF Symbol
     var category: Category
+    var isIconTypeImage: Bool
 
-    init(name: String, icon: String, category: Category) {
+    init(name: String, icon: String, category: Category, isIconTypeImage: Bool) {
         self.icon = icon
         self.name = name
         self.category = category
+        self.isIconTypeImage = isIconTypeImage
     }
 }
 

@@ -13,6 +13,19 @@ struct BetterAACView: View {
     @State private var addingBoard = false
     @State private var editing = false
     
+    @State private var showSheet = false
+    @State private var boardName = ""
+    @State private var selectedIcon = ""
+    @State private var gridSize = "4 x 5"
+    @State private var selectedCard: [Card] = []
+    @State private var defaultButton: Int = 4
+    @State private var showAACSettings = false
+    @State private var showprofile = false
+    
+    @State static var navigateFromImage = false
+    @State private var selectedCategoryColor: String = "#FFFFFF"
+    @State private var selectedColumnIndexValue: Int = -1
+    
     let screenWidth = UIScreen.main.bounds.width
     let screenHeight = UIScreen.main.bounds.height
     
@@ -149,6 +162,7 @@ struct BetterAACView: View {
                     if self.editing {
                         Button {
                             self.addingBoard = true
+                            showSheet = true
                         } label: {
                             ZStack {
                                 Image(systemName: "plus")
@@ -184,7 +198,11 @@ struct BetterAACView: View {
                         fontColor: "000000",
                         fontTransparency: 1.0,
                         cornerRadius: 50,
-                        isSystemImage: false
+                        isSystemImage: false,
+                        action:
+                            {
+                                showprofile = true
+                            }
                     )
                     CustomButton(
                         icon: "pencil",
@@ -227,6 +245,8 @@ struct BetterAACView: View {
                         board,
                         editing: self.$editing,
                         add: { colIndex in
+                            selectedColumnIndexValue = colIndex
+                            showAACSettings = true
                             self.addingCard = colIndex
                         },
                         del: { colIndex, rowIndex in
@@ -258,6 +278,7 @@ struct BetterAACView: View {
                     .ignoresSafeArea()
             )
         }
+        
         .padding(EdgeInsets(top: 30, leading: 45, bottom: 0, trailing: 45))
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(
@@ -268,76 +289,7 @@ struct BetterAACView: View {
         .overlay(
             Group {
                 if self.addingBoard {
-                    ZStack {
-                        Rectangle()
-                            .fill(.ultraThinMaterial)
-                            .frame(maxWidth: .infinity, maxHeight: .infinity)
-                            .ignoresSafeArea()
-                        
-                        VStack(spacing: 24) {
-                            HStack {
-                                TextHeadline(text: "Add room", size: 20, color: "000", weight: "bold")
-                                Spacer()
-                                CustomButton(
-                                    icon: "xmark",
-                                    width: 45,
-                                    height: 45,
-                                    font: 20,
-                                    iconWidth: 20,
-                                    iconHeight: 20,
-                                    bgColor: "efefef",
-                                    bgTransparency: 1.0,
-                                    fontColor: "000000",
-                                    fontTransparency: 1.0,
-                                    cornerRadius: 10,
-                                    isSystemImage: true
-                                ) {
-                                    self.addingBoard = false
-                                }
-                            }
-                            // TODO: Replace with actual board form
-                            CustomButton(
-                                icon: "",
-                                text: "Add dummy board",
-                                width: 200,
-                                height: 45,
-                                font: 20,
-                                iconWidth: 20,
-                                iconHeight: 20,
-                                bgColor: "efefef",
-                                bgTransparency: 1.0,
-                                fontColor: "000000",
-                                fontTransparency: 1.0,
-                                cornerRadius: 10,
-                                isSystemImage: true
-                            ) {
-                                BoardManager.shared.addBoard(
-                                    Board(
-                                        cards: [
-                                            [],
-                                            [],
-                                            [],
-                                            [],
-                                            [],
-                                            [],
-                                            [],
-                                            []
-                                        ],
-                                        name: "New Board",
-                                        icon: "ASTRONOT",
-                                        gridSize: Grid(row: 5, column: 8)
-                                    )
-                                )
-                                self.addingBoard = false
-                            }
-                        }
-                        .padding(20)
-                        .frame(width: screenWidth * 0.5)
-                        .background(
-                            RoundedRectangle(cornerRadius: 20)
-                                .fill(.white)
-                        )
-                    }
+                    
                 } else {
                     EmptyView()
                 }
@@ -347,60 +299,7 @@ struct BetterAACView: View {
         .overlay(
             Group {
                 if let colIndex = self.addingCard {
-                    ZStack {
-                        Rectangle()
-                            .fill(.ultraThinMaterial)
-                            .frame(maxWidth: .infinity, maxHeight: .infinity)
-                            .ignoresSafeArea()
-                        
-                        VStack(spacing: 24) {
-                            HStack {
-                                TextHeadline(text: "Adding card to column #\(colIndex)", size: 20, color: "000", weight: "bold")
-                                Spacer()
-                                CustomButton(
-                                    icon: "xmark",
-                                    width: 45,
-                                    height: 45,
-                                    font: 20,
-                                    iconWidth: 20,
-                                    iconHeight: 20,
-                                    bgColor: "efefef",
-                                    bgTransparency: 1.0,
-                                    fontColor: "000000",
-                                    fontTransparency: 1.0,
-                                    cornerRadius: 10,
-                                    isSystemImage: true
-                                ) {
-                                    self.addingCard = nil
-                                }
-                            }
-                            // TODO: Replace with actual card form
-                            CustomButton(
-                                icon: "",
-                                text: "Add dummy card",
-                                width: 200,
-                                height: 45,
-                                font: 20,
-                                iconWidth: 20,
-                                iconHeight: 20,
-                                bgColor: "efefef",
-                                bgTransparency: 1.0,
-                                fontColor: "000000",
-                                fontTransparency: 1.0,
-                                cornerRadius: 10,
-                                isSystemImage: true
-                            ) {
-                                BoardManager.shared.addCard(Card(name: "Aku", icon: "ball", category: .CORE), column: colIndex)
-                                self.addingCard = nil
-                            }
-                        }
-                        .padding(20)
-                        .frame(width: screenWidth * 0.5)
-                        .background(
-                            RoundedRectangle(cornerRadius: 20)
-                                .fill(.white)
-                        )
-                    }
+                    
                 } else {
                     EmptyView()
                 }
@@ -414,6 +313,25 @@ struct BetterAACView: View {
         }
         .onChange(of: id) {
             BoardManager.shared.selectId(id)
+        }
+        .sheet(isPresented: $showSheet) {
+            BoardCreateView(
+                boardName: $boardName,
+                selectedIcon: $selectedIcon,
+                gridSize: $gridSize,
+                defaultButton: $defaultButton // binding defaultButton di sini
+            )
+        }
+        .sheet(isPresented: $showAACSettings) {
+            CardCreateView(
+                navigateFromImage: BetterAACView.$navigateFromImage,
+                selectedColumnIndexValue: $selectedColumnIndexValue,
+                showAACSettings: $showAACSettings
+            )
+        }
+        .sheet(isPresented: $showprofile) {
+            SettingsView(
+            )
         }
     }
     
