@@ -72,6 +72,16 @@ struct Card: Identifiable, Codable, Equatable {
     }
 }
 
+struct CardList: Identifiable {
+    var id = UUID()
+    var name: String
+    var icon: String
+    var bgColor: Color  // Background color
+    var bgTransparency: Double  // Background transparency
+    var fontColor: Color
+    
+}
+
 class Board: Identifiable {
     var id: UUID
     var cards: [[Card]]

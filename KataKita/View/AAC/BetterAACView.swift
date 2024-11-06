@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import AVFoundation
+
 
 struct BetterAACView: View {
     //MARK: Viewport Size
@@ -28,14 +30,33 @@ struct BetterAACView: View {
     
     let screenWidth = UIScreen.main.bounds.width
     let screenHeight = UIScreen.main.bounds.height
+    let speechSynthesizer = AVSpeechSynthesizer()
+    
+    @State private var showAlert = false
+    @State private var hasSpoken = false
     
     let colors: [Color] = [.black, .brown, .orange, .red, .purple, .pink, .blue, .green, .yellow]
+    let colorNames: [Color: String] = [
+        .black: "Hitam",
+        .brown: "Cokelat",
+        .orange: "Oranye",
+        .red: "Merah",
+        .purple: "Ungu",
+        .pink: "Pink",
+        .blue: "Biru",
+        .green: "Hijau",
+        .yellow: "Kuning"
+    ]
     
     @State private var id = UUID()
+    
+    @EnvironmentObject var sharedState: SharedState
+    
     
     var selectedBoard: Board? {
         if let board = BoardManager.shared.boards.first(where: { $0.id == id }) {
             return board
+            
         }
         
         return nil
@@ -44,30 +65,58 @@ struct BetterAACView: View {
     var body: some View {
         VStack(spacing: 0) {
             // MARK: Textfield && Delete
-            HStack (spacing: 20) {
-                HStack {
-                    HStack {
-                        //TODO: create icon list
-                    }
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    CustomButton(
-                        icon: "delete",
-                        width: 100,
-                        height: 100,
-                        font: 40,
-                        iconWidth: 50,
-                        iconHeight: 50,
-                        bgColor: "#ffffff",
-                        bgTransparency: 0.01,
-                        fontColor: "#ffffff",
-                        fontTransparency: 0,
-                        cornerRadius: 20,
-                        isSystemImage: false
-                    ) {
-                        //                            if !selectedButton.isEmpty {
-                        //                                selectedButton.removeLast()
-                        //                                speechSynthesizer.stopSpeaking(at: .immediate)
-                        //                            }
+            HStack {
+                Button(action: {
+                    speakAllText(from: sharedState.selectedCards)
+                }) {
+                    ZStack {
+                        HStack {
+                            HStack (spacing: 20){
+                                ForEach(Array(sharedState.selectedCards.enumerated()), id: \.element.id) { index, card in
+                                    if index < 10 {  // Only show cards where index is less than 10
+                                        VStack {
+                                            // Directly using Image to load from the asset catalog
+                                            Image(card.icon)  // icon name is passed from the card
+                                                .resizable()
+                                                .frame(width: 50, height: 50)
+                                            
+                                            Text(card.name)
+                                                .font(.system(size: 18))
+                                                .lineLimit(1)
+                                                .minimumScaleFactor(0.5)
+                                                .foregroundColor(card.fontColor)
+                                        }
+                                        .frame(width: 80, height: 80)
+                                        .background(card.bgColor.opacity(card.bgTransparency)) // Apply the background color with transparency
+                                        .cornerRadius(8)
+                                    }
+                                }
+                            }
+                            
+                            .padding(.leading, 33)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+                            
+                            Spacer()
+                            
+                            CustomButton(
+                                icon: "delete",
+                                width: 100,
+                                height: 100,
+                                font: 40,
+                                iconWidth: 50,
+                                iconHeight: 50,
+                                bgColor: "#ffffff",
+                                bgTransparency: 0.01,
+                                fontColor: "#ffffff",
+                                fontTransparency: 0,
+                                cornerRadius: 20,
+                                isSystemImage: false
+                            ) {
+                                sharedState.selectedCards.removeLast()
+                                speechSynthesizer.stopSpeaking(at: .immediate)
+                                
+                            }
+                        }
                     }
                 }
                 .frame(height: 100)
@@ -89,10 +138,9 @@ struct BetterAACView: View {
                     cornerRadius: 20,
                     isSystemImage: false
                 ) {
-                    //                            if !selectedButton.isEmpty {
-                    //                                selectedButton.removeAll()
-                    //                                speechSynthesizer.stopSpeaking(at: .immediate)
-                    //                            }
+                    sharedState.selectedCards.removeAll()
+                    speechSynthesizer.stopSpeaking(at: .immediate)
+                    
                 }
             }
             // MARK: Navigation && Actions
@@ -238,7 +286,6 @@ struct BetterAACView: View {
                 }
             }
             .padding(.top, 15)
-            
             // MARK: BOARD
             HStack(alignment: .top, spacing: 25) {
                 if let board = self.selectedBoard {
@@ -258,11 +305,41 @@ struct BetterAACView: View {
                 }
 
                 VStack(spacing: screenHeight * 0.02) {
-                    ForEach(Array(colors.enumerated()), id: \.offset) {index, color in
-                        Button {} label: {
+                    ForEach(Array(colors.enumerated()), id: \.offset) { index, color in
+                        Button {
+                            if sharedState.selectedCards.count < 10 {
+                                showAlert = false
+                                let colorName = colorNames[color] ?? "Unknown"
+                                
+                                let cardListItem = CardList(
+                                    name: colorName,
+                                    icon: "person.fill",
+                                    bgColor: color,
+                                    bgTransparency: 1.0,
+                                    fontColor: color
+                                )
+                                sharedState.selectedCards.append(cardListItem)
+                                speakText(colorName)
+                            } else {
+                                showAlert = true
+                                hasSpoken = false
+                                if hasSpoken == false {
+                                    speakText("Kotak Kata Penuh")
+                                }
+                            }
+                        } label: {
                             RoundedRectangle(cornerRadius: 10)
                                 .fill(color)
                                 .frame(width: 120, height: screenHeight * 0.05)
+                        }
+                        .alert(isPresented: $showAlert) {
+                            Alert(
+                                title: Text("Kotak Kata Penuh"),
+                                message: Text("Kamu hanya bisa memilih 10 kata. Hapus kata yang sudah dipilih untuk memilih kata baru."),
+                                dismissButton: .default(Text("OK"), action: {
+                                    hasSpoken = true
+                                })
+                            )
                         }
                     }
                 }
@@ -286,6 +363,8 @@ struct BetterAACView: View {
             Color(hex: "BDD4CE", transparency: 1.0)
                 .ignoresSafeArea()
         )
+            
+            
         // MARK: Add board form
         .overlay(
             Group {
@@ -314,6 +393,7 @@ struct BetterAACView: View {
         }
         .onChange(of: id) {
             BoardManager.shared.selectId(id)
+            sharedState.selectedCards.removeAll()
         }
         .sheet(isPresented: $showSheet) {
             BoardCreateView(
@@ -335,7 +415,27 @@ struct BetterAACView: View {
             )
         }
     }
+        
+    func speakText(_ text: String) {
+        let utterance = AVSpeechUtterance(string: text)
+        utterance.voice = AVSpeechSynthesisVoice(language: "id-ID")
+        utterance.rate = 0.5
+        speechSynthesizer.speak(utterance)
+    }
     
+    func speakAllText(from buttons: [CardList]) {
+        // Concatenate all the names from the Card models into a single text
+        var fullText = ""
+        for card in buttons {
+            fullText += "\(card.name) "
+        }
+
+        // Use the AVSpeechSynthesizer to speak the full text
+        let utterance = AVSpeechUtterance(string: fullText)
+        utterance.voice = AVSpeechSynthesisVoice(language: "id-ID") // Indonesian language
+        utterance.rate = 0.5 // Set the speech rate
+        speechSynthesizer.speak(utterance)
+    }
 }
 
 #Preview {

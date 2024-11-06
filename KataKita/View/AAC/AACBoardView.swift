@@ -5,10 +5,21 @@
 //  Created by Alvito Dwi Reza on 31/10/24.
 //
 import SwiftUI
+import AVFoundation
+
+class SharedState: ObservableObject {
+    @Published var selectedCards: [CardList] = []
+}
 
 struct AACBoardView : View {
     @Binding var editing: Bool
-    @Binding var cards: [[Card]]?
+    
+    @State private var showAlert = false
+    @State private var hasSpoken = false
+    
+    let speechSynthesizer = AVSpeechSynthesizer()
+    
+    @EnvironmentObject var sharedState: SharedState
     
     @State private var imageFromLocal: URL?
     let board: Board
@@ -32,13 +43,11 @@ struct AACBoardView : View {
         _ board: Board,
         spacing: CGFloat = 10,
         editing: Binding<Bool> = Binding.constant(false),
-        cards: Binding<[[Card]]?> = Binding.constant(nil),
         add: ((Int) -> Void)? = nil,
         del: ((Int, Int) -> Void)? = nil
     ) {
         self.board = board
         self.spacing = spacing
-        self._cards = cards
         self._editing = editing
         self.add = add
         self.del = del
@@ -75,7 +84,7 @@ struct AACBoardView : View {
                     VStack (spacing: self.spacing){
                         ForEach(Array(column.enumerated()), id: \.offset) { rowIndex, row in
                             ZStack(alignment: .topTrailing) {
-                                if row.isIconTypeImage == true {
+                                if row.isIconTypeImage {
                                     CustomIcon(
                                         icon: row.icon,
                                         text: row.name,
@@ -89,7 +98,32 @@ struct AACBoardView : View {
                                         fontColor: Color.black,
                                         fontTransparency: 1.0,
                                         cornerRadius: 13
-                                    )
+                                    ) {
+                                        
+                                        if sharedState.selectedCards.count < 10 {
+                                            showAlert = false
+                                            speakText(row.name)
+                                            let cardListItem = CardList(name: row.name, icon: row.icon, bgColor: Color.white, bgTransparency: 0.0, fontColor: Color.black)
+                                            sharedState.selectedCards.append(cardListItem)
+                                        } else {
+                                            showAlert = true
+                                            hasSpoken = false
+                                            if hasSpoken == false {
+                                                speakText("Kotak Kata Penuh")
+                                            }
+                                        }
+                                        
+                                        
+                                    }
+                                    .alert(isPresented: $showAlert) {
+                                        Alert(
+                                            title: Text("Kotak Kata Penuh"),
+                                            message: Text("Kamu hanya bisa memilih 10 kata. Hapus kata yang sudah dipilih untuk memilih kata baru."),
+                                            dismissButton: .default(Text("OK"), action: {
+                                                hasSpoken = true
+                                            })
+                                        )
+                                    }
                                 } else {
                                     CustomButton(
                                         icon: resolveIcon(for: row.icon),
@@ -102,11 +136,33 @@ struct AACBoardView : View {
                                         bgColor: row.category.getColorString(),
                                         bgTransparency: 0.65,
                                         fontColor: "000000",
-                                        fontTransparency: 1.0, cornerRadius: 13, isSystemImage: false
+                                        fontTransparency: 1.0,
+                                        cornerRadius: 13,
+                                        isSystemImage: false
                                     ) {
-                                        if self.cards != nil {
-                                            self.addCard(row)
+                                        if sharedState.selectedCards.count < 10 {
+                                            showAlert = false
+                                            speakText(row.name)
+                                            let cardListItem = CardList(name: row.name, icon: row.icon, bgColor: Color.white, bgTransparency: 0.0, fontColor: Color.black)
+                                            sharedState.selectedCards.append(cardListItem)
+                                        } else {
+                                            showAlert = true
+                                            hasSpoken = false
+                                            if hasSpoken == false {
+                                                speakText("Kotak Kata Penuh")
+                                            }
                                         }
+                                        
+                                        
+                                    }
+                                    .alert(isPresented: $showAlert) {
+                                        Alert(
+                                            title: Text("Kotak Kata Penuh"),
+                                            message: Text("Kamu hanya bisa memilih 10 kata. Hapus kata yang sudah dipilih untuk memilih kata baru."),
+                                            dismissButton: .default(Text("OK"), action: {
+                                                hasSpoken = true
+                                            })
+                                        )
                                     }
                                 }
                                 if self.editing {
@@ -175,20 +231,27 @@ struct AACBoardView : View {
         )
     }
     
-    private func addCard(_ card: Card) {
-        if var cards = self.cards {
-            if card.category == .CORE {
-                cards[0].append(card)
-            } else if let index = cards.firstIndex(where: { $0.contains(where: { $0.category == card.category }) }) {
-                cards[index].append(card)
-            } else if let index = cards.firstIndex(where: { $0.isEmpty }) {
-                cards[index].append(card)
-            }
-            print("JANCOKOKO")
-            self.cards = cards
-        }
+    func speakText(_ text: String) {
+        let utterance = AVSpeechUtterance(string: text)
+        utterance.voice = AVSpeechSynthesisVoice(language: "id-ID")
+        utterance.rate = 0.5
+        speechSynthesizer.speak(utterance)
     }
-
+    
+    func speakAllText(from buttons: [CardList]) {
+        // Concatenate all the names from the Card models into a single text
+        var fullText = ""
+        for card in buttons {
+            fullText += "\(card.name) "
+        }
+        
+        // Use the AVSpeechSynthesizer to speak the full text
+        let utterance = AVSpeechUtterance(string: fullText)
+        utterance.voice = AVSpeechSynthesisVoice(language: "id-ID") // Indonesian language
+        utterance.rate = 0.5 // Set the speech rate
+        speechSynthesizer.speak(utterance)
+    }
+    
 }
 
 #Preview {
