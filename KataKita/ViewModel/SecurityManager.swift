@@ -7,6 +7,7 @@
 
 import SwiftUI
 
-class SecurityManager: ObservableObject {
-    @Published var isCorrect: Bool = false
+@Observable
+class SecurityManager {
+    var isCorrect: Bool = false
 }

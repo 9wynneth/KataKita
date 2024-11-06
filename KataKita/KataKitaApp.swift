@@ -44,7 +44,7 @@ struct KataKitaApp: App {
     @State private var activitiesManager = ActivitiesManager()
     @State private var stateManager = StateManager()
     
-    @StateObject private var securityManager = SecurityManager()
+    @State private var securityManager = SecurityManager()
     
     @State private var profileManager = ProfileViewModel()
 
@@ -172,7 +172,7 @@ struct KataKitaApp: App {
         .environment(scheduleManager)
         .environment(activitiesManager)
         .environment(stateManager)
-        .environmentObject(securityManager)
+        .environment(securityManager)
         .environmentObject(profileManager)
 
     }

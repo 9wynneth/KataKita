@@ -13,7 +13,7 @@ struct SecurityView: View {
     @State private var buttonColors: [String] = Array(repeating: "#F7F5F0", count: 10) // Button colors for 0-9
     
 //    @State var isCorrect: Bool = false
-    @EnvironmentObject var securityManager: SecurityManager
+    @Environment(SecurityManager.self) var securityManager
 
     
     // Separate digits of the random number

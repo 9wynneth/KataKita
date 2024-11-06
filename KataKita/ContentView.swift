@@ -12,10 +12,11 @@ struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(ScheduleManager.self) private var scheduleManager
     @Environment(ActivitiesManager.self) private var activitiesManager
+    @Environment(SecurityManager.self) private var securityManager
     
     @Query private var items: [Item]
     @State private var selectedSegment = 0
-    @EnvironmentObject var securityManager: SecurityManager
+    
 
     var body: some View {
         VStack {
