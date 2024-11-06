@@ -108,30 +108,35 @@ struct SearchIconView: View {
     }
     
     var body: some View {
-        List(filteredIcons, id: \.self) { icon in
-            Button(action: {
-                // Update selectedIcon and dismiss the view
-                selectedIcon = icon
-                dismiss()
-            }) {
-                CustomButton(
-                    icon: resolveIcon(for: icon),
-                    text: icon,
-                    width: 100,
-                    height: 100,
-                    font: 20,
-                    iconWidth: 50,
-                    iconHeight: 50,
-                    bgColor: "#FFFFFF",
-                    bgTransparency: 1.0,
-                    fontColor: "#000000",
-                    fontTransparency: 1.0,
-                    cornerRadius: 20,
-                    isSystemImage: icon.contains("person.fill")) {
+        ScrollView {
+            LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 16), count: 3), spacing: 16) {
+                ForEach(filteredIcons, id: \.self) { icon in
+                    Button(action: {
+                        // Update selectedIcon and dismiss the view
                         selectedIcon = icon
                         dismiss()
+                    }) {
+                        CustomButton(
+                            icon: resolveIcon(for: icon),
+                            text: icon,
+                            width: 200,
+                            height: 200,
+                            font: 40,
+                            iconWidth: 100,
+                            iconHeight: 100,
+                            bgColor: "#FFFFFF",
+                            bgTransparency: 1.0,
+                            fontColor: "#000000",
+                            fontTransparency: 1.0,
+                            cornerRadius: 20,
+                            isSystemImage: icon.contains("person.fill")) {
+                                selectedIcon = icon
+                                dismiss()
+                            }
                     }
+                }
             }
+            .padding()
         }
         .searchable(text: $searchText)
         .navigationBarTitle("Cari Icon", displayMode: .inline)
