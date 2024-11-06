@@ -14,6 +14,7 @@ struct DailyActivityView: View {
     @Environment(StateManager.self) private var stateManager
     
     private let speechSynthesizer = AVSpeechSynthesizer()
+    @State private var showsettings = false
 
     @State private var selectedRuangan: String = ""
     @State private var isSetting: Bool = false
@@ -140,25 +141,25 @@ struct DailyActivityView: View {
                     }
                 )
                 
-                NavigationLink(destination: SettingsView()){
-                    CustomButton(
-                        icon: "gearshape.fill",
-                        width: 70,
-                        height: 70,
-                        font: 50,
-                        iconWidth: 30,
-                        iconHeight: 30,
-                        bgColor: "F7F5F0",
-                        bgTransparency: 1.0,
-                        fontColor: "696767",
-                        fontTransparency: 1.0,
-                        cornerRadius: 20,
-                        action: {
-                            selectedRuangan = "Settings"
-                            shouldNavigate = true
-                        }
-                    )
-                }
+//                NavigationLink(destination: SettingsView(showsettings = $showsettings)){
+//                    CustomButton(
+//                        icon: "gearshape.fill",
+//                        width: 70,
+//                        height: 70,
+//                        font: 50,
+//                        iconWidth: 30,
+//                        iconHeight: 30,
+//                        bgColor: "F7F5F0",
+//                        bgTransparency: 1.0,
+//                        fontColor: "696767",
+//                        fontTransparency: 1.0,
+//                        cornerRadius: 20,
+//                        action: {
+//                            selectedRuangan = "Settings"
+//                            shouldNavigate = true
+//                        }
+//                    )
+//                }
                 
             }
             .padding(.horizontal, 50)

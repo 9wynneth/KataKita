@@ -2,83 +2,47 @@ import SwiftUI
 
 struct SettingsView: View {
     
+    @StateObject private var viewModel = ProfileViewModel()
+    @Environment(\.presentationMode) var presentationMode
+    
     var body: some View {
         NavigationStack {
             Form {
                 // Profil Pengguna Section
                 Section(header: Text("PROFIL PENGGUNA")) {
+                    // Name TextField
                     HStack {
-                        Text("testsubject@icloud.com")
-                        Spacer()
-                        
-                        HStack
-                        {
-                            Text("Detail")
-                                .foregroundColor(.gray)
-                            Image(systemName: "chevron.right")
-                                       .foregroundColor(.gray)
-                        }
+                        Text("Name")
+                        TextField("Enter your name", text: $viewModel.userProfile.name)
+                            .multilineTextAlignment(.trailing)
                     }
-                    HStack {
-                        Text("Warna Kulit")
-                        Spacer()
-                        Image(systemName: "checkmark")
-                            .foregroundColor(.blue)
-//                        NavigationLink(destination: DetailView()) {
-//
-//                        }
-                    }
-                    HStack {
-                        Text("Bahasa")
-                        Spacer()
-//                        NavigationLink(destination: DetailView()) {
-//                            Text("Detail")
-//                                .foregroundColor(.gray)
-//                        }
-                        HStack
-                        {
-                            Text("Detail")
-                                .foregroundColor(.gray)
-                            Image(systemName: "chevron.right")
-                                       .foregroundColor(.gray)
-                        }
-                    }
-                }
-                
-                // Pengaturan Kataloka Section
-                Section(header: Text("PENGATURAN KATALOKA")) {
-                    HStack {
-                        Text("Pengaturan Aktivitas Harian")
-                        Spacer()
-                        NavigationLink(destination: AddDailyActivityView()) {
-                            HStack{
-                                Spacer()
-                                
-                                Text("Detail")
-                                    .foregroundColor(.gray)
-                            }
-                        }
-                        
+                    .onAppear {
+                        print("Updated Profile:")
+                        print("Name: \($viewModel.userProfile.name)")
                     }
                     
+                    // Gender Selection
                     HStack {
-                        Text("Pengaturan Urutan Aktifitas")
+                        Text("Gender")
                         Spacer()
-//                        NavigationLink(destination: DetailView()) {
-//                            Text("Detail")
-//                                .foregroundColor(.gray)
-//                        }
-                        HStack
-                        {
-                            Text("Detail")
-                                .foregroundColor(.gray)
-                            Image(systemName: "chevron.right")
-                                       .foregroundColor(.gray)
+                        Picker("", selection: $viewModel.userProfile.gender) {
+                            Text("Laki-laki").tag(false)
+                            Text("Perempuan").tag(true)
                         }
+                        .pickerStyle(MenuPickerStyle())
                     }
                 }
             }
             .navigationTitle("Pengaturan")
+            .navigationBarItems(
+                trailing: Button("Done") {
+                    viewModel.updateProfile(
+                        name: viewModel.userProfile.name,
+                        gender: viewModel.userProfile.gender
+                    )
+                    presentationMode.wrappedValue.dismiss()
+                }
+            )
         }
     }
 }
@@ -87,8 +51,4 @@ struct DetailView: View {
     var body: some View {
         Text("Detail Page")
     }
-}
-
-#Preview {
-    SettingsView()
 }
