@@ -33,7 +33,7 @@ class BoardManager {
                         ],
                         [
                             Card(name: "suka", icon: "suka", category: .SOCIAL, isIconTypeImage: false),
-                            Card(name: "tidak suka", icon: "terima kasih", category: .SOCIAL, isIconTypeImage: false),
+                            Card(name: "tidak suka", icon: "tidak suka", category: .SOCIAL, isIconTypeImage: false),
                             Card(name: "mau", icon: "mau", category: .SOCIAL, isIconTypeImage: false),
                             Card(name: "tidak mau", icon: "tidak mau", category: .SOCIAL, isIconTypeImage: false),
                             Card(name: "tolong", icon: "tolong", category: .SOCIAL, isIconTypeImage: false)
@@ -96,7 +96,7 @@ class BoardManager {
                         [
                             Card(name: "mau", icon: "mau", category: .SOCIAL, isIconTypeImage: false),
                             Card(name: "suka", icon: "suka", category: .SOCIAL, isIconTypeImage: false),
-                            Card(name: "iya", icon: "ya", category: .SOCIAL, isIconTypeImage: false),
+                            Card(name: "iya", icon: "iya", category: .SOCIAL, isIconTypeImage: false),
                             Card(name: "tidak", icon: "tidak", category: .SOCIAL, isIconTypeImage: false),
                             Card(name: "tolong", icon: "tolong", category: .SOCIAL, isIconTypeImage: false)
                         ],
@@ -160,7 +160,7 @@ class BoardManager {
                         [
                             Card(name: "mau", icon: "mau", category: .SOCIAL, isIconTypeImage: false),
                             Card(name: "suka", icon: "suka", category: .SOCIAL, isIconTypeImage: false),
-                            Card(name: "iya", icon: "ya", category: .SOCIAL, isIconTypeImage: false),
+                            Card(name: "iya", icon: "iya", category: .SOCIAL, isIconTypeImage: false),
                             Card(name: "tidak", icon: "tidak", category: .SOCIAL, isIconTypeImage: false),
                             Card(name: "tolong", icon: "tolong", category: .SOCIAL, isIconTypeImage: false)
                         ],
@@ -221,7 +221,7 @@ class BoardManager {
                         [
                             Card(name: "mau", icon: "mau", category: .SOCIAL, isIconTypeImage: false),
                             Card(name: "tidak mau", icon: "suka", category: .SOCIAL, isIconTypeImage: false),
-                            Card(name: "iya", icon: "ya", category: .SOCIAL, isIconTypeImage: false),
+                            Card(name: "iya", icon: "iya", category: .SOCIAL, isIconTypeImage: false),
                             Card(name: "tidak", icon: "tidak", category: .SOCIAL, isIconTypeImage: false),
                             Card(name: "tolong", icon: "tolong", category: .SOCIAL, isIconTypeImage: false)
                         ],
@@ -287,7 +287,7 @@ class BoardManager {
                         [
                             Card(name: "suka", icon: "suka", category: .SOCIAL, isIconTypeImage: false),
                             Card(name: "tidak suka", icon: "tidak suka", category: .SOCIAL, isIconTypeImage: false),
-                            Card(name: "iya", icon: "ya", category: .SOCIAL, isIconTypeImage: false),
+                            Card(name: "iya", icon: "iya", category: .SOCIAL, isIconTypeImage: false),
                             Card(name: "tidak", icon: "tidak", category: .SOCIAL, isIconTypeImage: false),
                             Card(name: "tolong", icon: "tolong", category: .SOCIAL, isIconTypeImage: false)
                         ],
@@ -350,7 +350,7 @@ class BoardManager {
                         [
                             Card(name: "suka", icon: "suka", category: .SOCIAL, isIconTypeImage: false),
                             Card(name: "tidak suka", icon: "tidak suka", category: .SOCIAL, isIconTypeImage: false),
-                            Card(name: "iya", icon: "ya", category: .SOCIAL, isIconTypeImage: false),
+                            Card(name: "iya", icon: "iya", category: .SOCIAL, isIconTypeImage: false),
                             Card(name: "tidak", icon: "tidak", category: .SOCIAL, isIconTypeImage: false),
                             Card(name: "tolong", icon: "tolong", category: .SOCIAL, isIconTypeImage: false)
                         ],

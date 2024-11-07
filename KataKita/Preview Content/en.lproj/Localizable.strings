@@ -331,6 +331,30 @@
 "BOY_TIDAK SUKA" = "don’t like";
 "BOY_TIDAK" = "no";
 
+"ambil" = "take";
+"bermain" = "play";
+"buang" = "throw";
+"dia" = "he";
+"dimana" = "where";
+"duduk" = "sit";
+"iya" = "yes";
+"kamu" = "you";
+"kapan" = "when";
+"kita" = "we";
+"makan" = "eat";
+"mau" = "want";
+"membaca" = "read";
+"mengangkat" = "lift";
+"mengunyah" = "chew";
+"minum" = "drink";
+"sakit" = "sick";
+"saya" = "I";
+"siapa" = "who";
+"suka" = "like";
+"tidak mau" = "don’t want";
+"tidak suka" = "don’t like";
+"tidak" = "no";
+
 "RUANG MAKAN" = "DINING ROOM";
 "RUANG BELAJAR" = "STUDY ROOM";
 "KAMAR MANDI" = "BATHROOM";

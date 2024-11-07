@@ -14,6 +14,7 @@ struct PECSView: View {
     //MARK: Viewport size
     let screenWidth = UIScreen.main.bounds.width
     let screenHeight = UIScreen.main.bounds.height
+    @StateObject private var viewModel = ProfileViewModel()
 
     //MARK: Button color
     let colors: [Color] = [
@@ -158,24 +159,97 @@ struct PECSView: View {
             HStack(spacing: 20) {
                 HStack {
                     ForEach(droppedCards) { card in
-                        CustomButton(
-                            icon: resolveIcon(for: card.icon),
-                            text: card.name,
-                            width: 100,
-                            height: 100,
-                            font: 18,
-                            iconWidth: 50,
-                            iconHeight: 50,
-                            bgColor: card.category.getColorString(),
-                            bgTransparency: toggleOn ? 0.0 : 1.0,
-                            fontColor: "000000",
-                            fontTransparency: toggleOn ? 0.0 : 1.0,
-                            cornerRadius: 13,
-                            isSystemImage: false
-                        )
-                        .onAppear{
-                            speakCardName(card)
+                        if viewModel.userProfile.gender {
+                            if AllAssets.genderAssets.contains(card.name) {
+                                CustomButton(
+                                    icon: resolveIcon(for: "GIRL_" + card.icon),
+                                    text: card.name,
+                                    width: 100,
+                                    height: 100,
+                                    font: 18,
+                                    iconWidth: 50,
+                                    iconHeight: 50,
+                                    bgColor: card.category.getColorString(),
+                                    bgTransparency: toggleOn ? 0.0 : 1.0,
+                                    fontColor: "000000",
+                                    fontTransparency: toggleOn ? 0.0 : 1.0,
+                                    cornerRadius: 13,
+                                    isSystemImage: false
+                                )
+                                .onAppear{
+                                    speakCardName(card)
+                                }
+                            }
+                            else
+                            {
+                                CustomButton(
+                                    icon: resolveIcon(for: card.icon),
+                                    text: card.name,
+                                    width: 100,
+                                    height: 100,
+                                    font: 18,
+                                    iconWidth: 50,
+                                    iconHeight: 50,
+                                    bgColor: card.category.getColorString(),
+                                    bgTransparency: toggleOn ? 0.0 : 1.0,
+                                    fontColor: "000000",
+                                    fontTransparency: toggleOn ? 0.0 : 1.0,
+                                    cornerRadius: 13,
+                                    isSystemImage: false
+                                )
+                                .onAppear{
+                                    speakCardName(card)
+                                }
+                            }
                         }
+                        else
+                        {
+                            if AllAssets.genderAssets.contains(card.name)
+                            {
+                                CustomButton(
+                                    icon: resolveIcon(for: "BOY_" + card.icon),
+                                    text: card.name,
+                                    width: 100,
+                                    height: 100,
+                                    font: 18,
+                                    iconWidth: 50,
+                                    iconHeight: 50,
+                                    bgColor: card.category.getColorString(),
+                                    bgTransparency: toggleOn ? 0.0 : 1.0,
+                                    fontColor: "000000",
+                                    fontTransparency: toggleOn ? 0.0 : 1.0,
+                                    cornerRadius: 13,
+                                    isSystemImage: false
+                                )
+                                .onAppear{
+                                    speakCardName(card)
+                                }
+                                
+                            }
+                            else
+                            {
+                                CustomButton(
+                                    icon: resolveIcon(for: card.icon),
+                                    text: card.name,
+                                    width: 100,
+                                    height: 100,
+                                    font: 18,
+                                    iconWidth: 50,
+                                    iconHeight: 50,
+                                    bgColor: card.category.getColorString(),
+                                    bgTransparency: toggleOn ? 0.0 : 1.0,
+                                    fontColor: "000000",
+                                    fontTransparency: toggleOn ? 0.0 : 1.0,
+                                    cornerRadius: 13,
+                                    isSystemImage: false
+                                )
+                                .onAppear{
+                                    speakCardName(card)
+                                }
+                                
+                            }
+                        }
+                        
                     }
 
                     Color.clear

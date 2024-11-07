@@ -12,4 +12,13 @@ struct AllAssets {
     static let girlAssets: [String] = [
         "GIRL_AMBIL", "GIRL_BUANG", "GIRL_DIA", "GIRL_BERMAIN", "GIRL_DIMANA", "GIRL_DUDUK", "GIRL_IYA", "GIRL_KAMU", "GIRL_KAPAN", "GIRL_KITA", "GIRL_MAKAN", "GIRL_MAU", "GIRL_MEMBACA", "GIRL_MENGANGKAT", "GIRL_MENGUNYAH", "GIRL_MINUM", "GIRL_SAKIT", "GIRL_SAYA", "GIRL_SIAPA", "GIRL_SUKA", "GIRL_TIDAK MAU", "GIRL_TIDAK SUKA", "GIRL_TIDAK"
         ]
+    
+    static let genderAssets: [String] = [
+        "ambil", "buang", "dia", "bermain", "dimana", "duduk", "iya", "kamu", "kapan", "kita", "makan", "mau", "membaca", "mengangkat", "mengunyah", "minum", "sakit", "saya", "siapa", "suka", "tidak mau", "tidak suka", "tidak"
+        ]
 }
+
+
+
+    
+

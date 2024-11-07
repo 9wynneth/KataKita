@@ -12,6 +12,7 @@ struct PECSChildView: View {
     
     @State private var width: CGFloat = 0.0
     @State private var height: CGFloat = 0.0
+    @StateObject private var viewModel = ProfileViewModel()
     
     //MARK: Button color
     let colors: [Color] = [.black, .brown, .orange, .red, .purple, .pink, .blue, .green, .yellow]
@@ -29,20 +30,80 @@ struct PECSChildView: View {
                 //rectangle
                 VStack(spacing: 10) {
                     ForEach(Array(column.enumerated()), id: \.offset) { j, card in
-                        CustomButton(
-                            icon: resolveIcon(for: card.icon),
-                            text: card.name,
-                            width: (self.height - 60) / 5,
-                            height: (self.height - 60) / 5,
-                            font: 30,
-                            iconWidth: Int((self.width - 20) / 3),
-                            iconHeight: Int ((self.width - 20) / 3),
-                            bgColor: card.category.getColorString(),
-                            bgTransparency: 0.65,
-                            fontColor: "000000",
-                            fontTransparency: 1.0, cornerRadius: 13, isSystemImage: false
-                        )
-                        .draggable(card)
+                        if viewModel.userProfile.gender {
+                            if AllAssets.genderAssets.contains(card.name) {
+                                CustomButton(
+                                    icon: resolveIcon(for: "GIRL_" + card.icon),
+                                    text: card.name,
+                                    width: (self.height - 60) / 5,
+                                    height: (self.height - 60) / 5,
+                                    font: 30,
+                                    iconWidth: Int((self.width - 20) / 3),
+                                    iconHeight: Int ((self.width - 20) / 3),
+                                    bgColor: card.category.getColorString(),
+                                    bgTransparency: 0.65,
+                                    fontColor: "000000",
+                                    fontTransparency: 1.0, cornerRadius: 13, isSystemImage: false
+                                )
+                                .draggable(card)
+                            }
+                            else
+                            {
+                                CustomButton(
+                                    icon: resolveIcon(for: card.icon),
+                                    text: card.name,
+                                    width: (self.height - 60) / 5,
+                                    height: (self.height - 60) / 5,
+                                    font: 30,
+                                    iconWidth: Int((self.width - 20) / 3),
+                                    iconHeight: Int ((self.width - 20) / 3),
+                                    bgColor: card.category.getColorString(),
+                                    bgTransparency: 0.65,
+                                    fontColor: "000000",
+                                    fontTransparency: 1.0, cornerRadius: 13, isSystemImage: false
+                                )
+                                .draggable(card)
+                            }
+                        }
+                        else
+                        {
+                            if AllAssets.genderAssets.contains(card.name)
+                            {
+                                CustomButton(
+                                    icon: resolveIcon(for: "BOY_" + card.icon),
+                                    text: card.name,
+                                    width: (self.height - 60) / 5,
+                                    height: (self.height - 60) / 5,
+                                    font: 30,
+                                    iconWidth: Int((self.width - 20) / 3),
+                                    iconHeight: Int ((self.width - 20) / 3),
+                                    bgColor: card.category.getColorString(),
+                                    bgTransparency: 0.65,
+                                    fontColor: "000000",
+                                    fontTransparency: 1.0, cornerRadius: 13, isSystemImage: false
+                                )
+                                .draggable(card)
+                                
+                            }
+                            else
+                            {
+                                CustomButton(
+                                    icon: resolveIcon(for: card.icon),
+                                    text: card.name,
+                                    width: (self.height - 60) / 5,
+                                    height: (self.height - 60) / 5,
+                                    font: 30,
+                                    iconWidth: Int((self.width - 20) / 3),
+                                    iconHeight: Int ((self.width - 20) / 3),
+                                    bgColor: card.category.getColorString(),
+                                    bgTransparency: 0.65,
+                                    fontColor: "000000",
+                                    fontTransparency: 1.0, cornerRadius: 13, isSystemImage: false
+                                )
+                                .draggable(card)
+                            }
+                        }
+                        
                     }
                 }
                 .padding(10)
