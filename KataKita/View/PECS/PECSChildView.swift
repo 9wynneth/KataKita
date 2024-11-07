@@ -50,7 +50,7 @@ struct PECSChildView: View {
                 .background(
                     GeometryReader { geometry in
                         Rectangle()
-                            .fill(Color(hex: "D9D9D9", transparency: 0.4))
+                            .fill(getBackgroundColor(for: column))
                             .onAppear {
                                 self.width = geometry.frame(in: .global).width
                                 self.height = geometry.frame(in: .global).height
@@ -64,6 +64,15 @@ struct PECSChildView: View {
         }
         .padding(20)
     }
+    func getBackgroundColor(for column: [Card]) -> Color {
+            // Example logic: Check if there's at least one card, and take its category color
+            if let firstCard = column.first {
+                return Color(hex: firstCard.category.getColorString(), transparency: 0.4)
+            } else {
+                // Default background color if no cards exist in the column
+                return Color(hex: "D9D9D9", transparency: 0.4)
+            }
+        }
 }
 
 #Preview {

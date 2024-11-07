@@ -36,7 +36,7 @@ struct PECSView: View {
     @State var toggleOn = false
 
     @State var isAskPassword = false
-
+    @State private var showAlert = false
     @State private var isAddCard = false
 
     var body: some View {
@@ -118,9 +118,20 @@ struct PECSView: View {
                             fontTransparency: 1.0,
                             cornerRadius: 20,
                             action: {
-                                self.cards = [[], [], [], [], []] 
+                                self.showAlert = true 
+
                             }
                         )
+                        .alert(isPresented: $showAlert) {
+                                    Alert(
+                                        title: Text("Refresh Cards"),
+                                        message: Text("Are you sure you want to reset all cards?"),
+                                        primaryButton: .destructive(Text("Reset")) {
+                                            self.cards = [[], [], [], [], []]
+                                        },
+                                        secondaryButton: .cancel()
+                                    )
+                                }
                         CustomButton(
                             icon: "plus.rectangle.fill.on.rectangle.fill",
                             width: 85,
