@@ -22,7 +22,9 @@ struct PECSView: View {
     let templateWidth = 1366.0
     let templateHeight = 1024.0
     
-    
+    @Binding var droppedCards: [Card]  // Binding to hold dropped cards
+    @Binding var deletedCards: [Card]  // Binding to hold dropped cards
+
 
     @State private var cards: [[Card]] = [[], [], [], [], []]
     @State private var position = CGSize.zero
@@ -145,17 +147,49 @@ struct PECSView: View {
             //part 3
             HStack(spacing: 20) {
                 HStack {
-                   
+                    ForEach(droppedCards) { card in
+                                    CustomButton(
+                                        icon:resolveIcon(for: card.icon),
+                                        text: card.name,
+                                        width: screenWidth * 0.09,
+                                        height: screenWidth * 0.09,
+                                        font: 18,
+                                        iconWidth: 50,
+                                        iconHeight: 50,
+                                        bgColor: card.category.getColorString(),
+                                        bgTransparency: toggleOn ? 0.0 : 1.0,
+                                        fontColor: "000000",
+                                        fontTransparency: toggleOn ? 0.0 : 1.0,
+                                        cornerRadius: 13,
+                                        isSystemImage: false
+                                    )
+                                }
                                       
                     
                     
                     Color.clear
-                        .frame(height: 120)
+                        .frame(height: 130)
                 }
+                .padding()
+               
+
                 .frame(maxWidth: .infinity)
                 .background(
                     RoundedRectangle(cornerRadius: 30)
                         .fill(Color(hex: "ffffff", transparency: toggleOn ? 0.0 : 1.0))
+                        .onDrop(of: [.cardType], isTargeted: nil) { items, _ in
+                            guard let item = items.first else { return false }
+                            
+                            item.loadTransferable(type: Card.self) { result in
+                                if let loadedCard = try? result.get() {
+                                    droppedCards.append(loadedCard)
+                                    removeCard(loadedCard)
+                                } else {
+                                    print("Failed to load dropped card.")
+                                }
+                            }
+                            return true
+                        }
                 )
 
                 CustomButton(
@@ -169,7 +203,12 @@ struct PECSView: View {
                     bgTransparency: toggleOn ? 0.0 : 1.0,
                     fontColor: "#696767",
                     fontTransparency: toggleOn ? 0.0 : 1.0,
-                    cornerRadius: 20
+                    cornerRadius: 20,
+                    action: {
+                            restoreDeletedCards()
+                        droppedCards.removeAll()
+
+                    }
                 )
             }
             .padding()
@@ -243,6 +282,58 @@ struct PECSView: View {
 //            self.pECSViewModel.cards = self.cards
 //        }
     }
+    
+    func removeCard(_ card: Card) {
+        for (i, column) in cards.enumerated() {
+              if let index = column.firstIndex(where: { $0.id == card.id }) {
+                cards[i].remove(at: index)
+                  deletedCards.append(card)  // Add the removed card to deletedCards
+                    break
+               }
+          }
+       }
+    
+    //TODO: RESET BASED ON COLUMNS BEFORE (ini masi template)
+    func restoreDeletedCards() {
+        // Restore deleted cards back to their respective category columns
+        for card in deletedCards {
+           
+            switch card.category {
+            case .CORE:
+                if cards[0].count < 5 {
+                    cards[0].append(card)
+                }
+            case .QUESTION:
+                if cards[1].count < 5 {
+                    cards[1].append(card)
+                }
+            case .SOCIAL:
+                if cards[2].count < 5 {
+                    cards[2].append(card)
+                }
+            case .VERB:
+                if cards[3].count < 5 {
+                    cards[3].append(card)
+                }
+            case .NOUN:
+                if cards[4].count < 5 {
+                    cards[4].append(card)
+                }
+            case .ADJECTIVE:
+                if cards[5].count < 5 {
+                    cards[5].append(card)
+                }
+            case .CONJUNCTION:
+                if cards[6].count < 5 {
+                    cards[6].append(card)
+                }
+            }
+        }
+        deletedCards.removeAll() // Clear the deleted cards after restoring
+    }
+
+        
+
 }
 
     

@@ -6,6 +6,8 @@
 //
 import SwiftUI
 import SwiftData
+import UniformTypeIdentifiers
+
 
 enum Category: String, Codable, CaseIterable {
     case CORE
@@ -63,12 +65,16 @@ struct Grid : Codable {
 }
 
 //MARK: Kartu yang ada pada board
-struct Card: Identifiable, Codable, Equatable {
+struct Card: Identifiable, Codable, Equatable, Transferable {
     var id = UUID()
     var name: String
     var icon: String // SF Symbol
     var category: Category
     var isIconTypeImage: Bool
+    var bgTransparency: Double = 1.0 // Default to fully visible
+    var isBeingDragged: Bool = false  // New property to track drag state
+
+       
 
     init(name: String, icon: String, category: Category, isIconTypeImage: Bool) {
         self.icon = icon
@@ -76,7 +82,17 @@ struct Card: Identifiable, Codable, Equatable {
         self.category = category
         self.isIconTypeImage = isIconTypeImage
     }
+    static var transferRepresentation: some TransferRepresentation {
+            CodableRepresentation(contentType: .cardType)
+        }
+    
+    
 }
+extension UTType {
+    static let cardType = UTType(exportedAs: "com.example.KataKita.card")
+}
+
+
 
 struct CardList: Identifiable {
     var id = UUID()

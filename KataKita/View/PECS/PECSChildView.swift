@@ -29,7 +29,6 @@ struct PECSChildView: View {
                 VStack (spacing: 5) {
                     ForEach(Array(column.enumerated()), id: \.offset) { j, card in
                         if j <= 4 {
-                            
                             CustomButton(
                                 icon: resolveIcon(for: card.icon),
                                 text: card.name,
@@ -44,6 +43,9 @@ struct PECSChildView: View {
                                 fontTransparency: 1.0, cornerRadius: 13, isSystemImage: false
                             )
                             .padding(1)
+                            .draggable(card)
+                            
+                            
                         }
                     }
                     

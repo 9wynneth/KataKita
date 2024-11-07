@@ -17,6 +17,9 @@ struct ContentView: View {
     @Query private var items: [Item]
     @State private var selectedSegment = 0
     
+    @State private var cards: [[Card]] = [[], [], [], [], []]
+    @State private var droppedCards: [Card] = []
+    @State private var deletedCards: [Card] = []
 
     var body: some View {
         VStack(spacing: 30) {
@@ -30,7 +33,7 @@ struct ContentView: View {
             if self.selectedSegment == 0 {
                 BetterAACView()
             } else {
-                PECSView()
+                PECSView(droppedCards: $droppedCards, deletedCards: $deletedCards)
             }
         }
         .frame(alignment: .topLeading)
