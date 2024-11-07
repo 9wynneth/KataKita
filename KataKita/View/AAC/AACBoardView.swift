@@ -506,24 +506,30 @@ struct AACBoardView : View {
     }
 
     func speakText(_ text: String) {
-        let utterance = AVSpeechUtterance(string: text)
+        // Menggunakan NSLocalizedString untuk mendapatkan string yang dilokalkan
+        let localizedText = NSLocalizedString(text, comment: "")
+        
+        let utterance = AVSpeechUtterance(string: localizedText)
         utterance.voice = AVSpeechSynthesisVoice(language: "id-ID")
         utterance.rate = 0.5
         speechSynthesizer.speak(utterance)
     }
-    
+
     func speakAllText(from buttons: [CardList]) {
-        // Concatenate all the names from the Card models into a single text
+        // Menggabungkan semua nama dari model Card menjadi satu teks
         var fullText = ""
         for card in buttons {
-            fullText += "\(card.name) "
+            // Menggunakan NSLocalizedString untuk setiap nama kartu
+            let localizedName = NSLocalizedString(card.name, comment: "")
+            fullText += "\(localizedName) "
         }
         
-        // Use the AVSpeechSynthesizer to speak the full text
+        // Menggunakan AVSpeechSynthesizer untuk membaca teks lengkap
         let utterance = AVSpeechUtterance(string: fullText)
-        utterance.voice = AVSpeechSynthesisVoice(language: "id-ID") // Indonesian language
-        utterance.rate = 0.5 // Set the speech rate
+        utterance.voice = AVSpeechSynthesisVoice(language: "id-ID") // Bahasa Indonesia
+        utterance.rate = 0.5 // Menetapkan kecepatan bicara
         speechSynthesizer.speak(utterance)
     }
+
     
 }
