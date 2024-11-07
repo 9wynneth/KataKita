@@ -46,6 +46,7 @@ struct KataKitaApp: App {
     @State private var securityManager = SecurityManager()
     @State private var pECSViewModel = PECSViewModel()
     @State private var profileManager = ProfileViewModel()
+    @StateObject private var sharedState = SharedState()
 
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
@@ -174,6 +175,7 @@ struct KataKitaApp: App {
         .environment(securityManager)
         .environment(pECSViewModel)
         .environmentObject(profileManager)
+        .environmentObject(sharedState)
 
     }
 }

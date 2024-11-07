@@ -10,7 +10,6 @@ import SwiftUI
 struct PECSView: View {
     @Environment(PECSViewModel.self) var pECSViewModel
     @Environment(SecurityManager.self) var securityManager
-
     //MARK: Viewport size
     let screenWidth = UIScreen.main.bounds.width
     let screenHeight = UIScreen.main.bounds.height
@@ -166,9 +165,16 @@ struct PECSView: View {
                     cornerRadius: 20
                 )
             }
+            .padding()
         }
         .padding(EdgeInsets(top: 0, leading: 45, bottom: 30, trailing: 45))
-        .frame(maxWidth: .infinity)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color(hex: "BDD4CE", transparency: 1))
+        .navigationBarBackButtonHidden(true)
+        .onTapGesture{
+            isAskPassword = false
+        }
+        .padding(.top,-30)
         .overlay(
             Group {
                 if isAskPassword {
@@ -208,6 +214,36 @@ struct PECSView: View {
             self.pECSViewModel.cards = self.cards
         }
         .navigationBarBackButtonHidden(true)
+        .sheet(isPresented: $isAddCard) {
+            Color.yellow.opacity(0)
+                .background(BackgroundClearView())
+                .onTapGesture {
+                    isAddCard = false
+                }
+            AddCardModalView(self.$cards)
+                .frame(width: screenWidth , height: screenHeight * 0.85)
+                .cornerRadius(16)
+                .shadow(radius: 10)
+                .padding(.horizontal, screenWidth * 0.125)
+                .background(Color.clear)
+                .ignoresSafeArea(.all, edges: .bottom)
+                .padding(.bottom, -50)
+        }
+        .ignoresSafeArea(.all)
+        .edgesIgnoringSafeArea(.all)
+        .onChange(of: self.cards, initial: true) {
+            print(self.cards)
+            self.pECSViewModel.cards = self.cards
+        }
+    }
+}
+struct BackgroundClearView: UIViewRepresentable {
+    func makeUIView(context: Context) -> UIView {
+        let view = UIView()
+        DispatchQueue.main.async {
+            view.superview?.superview?.backgroundColor = .clear
+        }
+        return view
     }
     
     struct BackgroundClearView: UIViewRepresentable {
