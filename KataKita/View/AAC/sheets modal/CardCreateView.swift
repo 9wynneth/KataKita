@@ -154,7 +154,7 @@ struct CardCreateView: View {
                                 .tag(category)
                         }
                     }
-                    .pickerStyle(SegmentedPickerStyle())
+                    .pickerStyle(MenuPickerStyle())
                 }
             }
             .navigationDestination(isPresented: $showingAddImageView) {
