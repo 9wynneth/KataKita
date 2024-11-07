@@ -112,8 +112,8 @@ struct AddCardModalView: View {
                             .shadow(radius: 2)
                         
                         Spacer()
-                        TextContent(text: "Done", size: 20, color: "000000", weight: "bold")
-                                                        .padding(.trailing, screenWidth * 0.04)
+//                        TextContent(text: "Done", size: 20, color: "000000", weight: "bold")
+//                                                        .padding(.trailing, screenWidth * 0.04)
                     }
                     .frame(maxWidth: .infinity)
                     .padding(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 10))
@@ -132,7 +132,7 @@ struct AddCardModalView: View {
                         Button {} label: {
                             RoundedRectangle(cornerRadius: 10)
                                 .fill(color)
-                                .frame(width: 120, height: screenHeight * 0.05)
+                                .frame(width: 120, height: screenHeight * 0.05)                             
                         }
                     }
                 }
