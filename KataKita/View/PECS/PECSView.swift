@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AVFoundation
 
 struct PECSView: View {
     @Environment(PECSViewModel.self) var pECSViewModel
@@ -24,6 +25,7 @@ struct PECSView: View {
     
     @Binding var droppedCards: [Card]  // Binding to hold dropped cards
     @Binding var deletedCards: [Card]  // Binding to hold dropped cards
+    private let speechSynthesizer = AVSpeechSynthesizer()
 
 
     @State private var cards: [[Card]] = [[], [], [], [], []]
@@ -38,7 +40,7 @@ struct PECSView: View {
     @State private var isAddCard = false
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 15) {
+        VStack(alignment: .leading, spacing: 5) {
             //part 2
             HStack(alignment: .top, spacing: 20) {
                 //whiteboard
@@ -163,7 +165,11 @@ struct PECSView: View {
                                         cornerRadius: 13,
                                         isSystemImage: false
                                     )
-                                }
+                                    .onAppear{
+                                        speakCardName(card)
+                                    }
+                                    
+                    }
                                       
                     
                     
@@ -175,21 +181,43 @@ struct PECSView: View {
 
                 .frame(maxWidth: .infinity)
                 .background(
-                    RoundedRectangle(cornerRadius: 30)
-                        .fill(Color(hex: "ffffff", transparency: toggleOn ? 0.0 : 1.0))
-                        .onDrop(of: [.cardType], isTargeted: nil) { items, _ in
-                            guard let item = items.first else { return false }
-                            
-                            item.loadTransferable(type: Card.self) { result in
-                                if let loadedCard = try? result.get() {
-                                    droppedCards.append(loadedCard)
-                                    removeCard(loadedCard)
-                                } else {
-                                    print("Failed to load dropped card.")
-                                }
-                            }
-                            return true
+                    ZStack {
+                        CustomButton(
+                            icon: "",
+                            text: "",
+                            width: screenWidth * 0.45,
+                            height: 130,
+                            font: 0,
+                            iconWidth: 0,
+                            iconHeight: 0,
+                            bgColor: "ffffff",
+                            bgTransparency: 0.1,
+                            fontColor: "ffffff",
+                            fontTransparency: 0,
+                            cornerRadius: 0,
+                            isSystemImage: false,
+                            action: {
+                                speakText(for: droppedCards)
                         }
+                            
+                        )
+                        RoundedRectangle(cornerRadius: 30)
+                            .fill(Color(hex: "ffffff", transparency: toggleOn ? 0.0 : 1.0))
+                            .onDrop(of: [.cardType], isTargeted: nil) { items, _ in
+                                guard let item = items.first else { return false }
+                                
+                                item.loadTransferable(type: Card.self) { result in
+                                    if let loadedCard = try? result.get() {
+                                        droppedCards.append(loadedCard)
+                                        removeCard(loadedCard)
+                                        
+                                    } else {
+                                        print("Failed to load dropped card.")
+                                    }
+                                }
+                                return true
+                            }
+                    }
                 )
 
                 CustomButton(
@@ -292,6 +320,20 @@ struct PECSView: View {
                }
           }
        }
+    
+    func speakCardName(_ card: Card) {
+            let utterance = AVSpeechUtterance(string: card.name)
+            utterance.voice = AVSpeechSynthesisVoice(language: "id-ID")
+            let synthesizer = AVSpeechSynthesizer()
+            synthesizer.speak(utterance)
+        }
+    
+    func speakText(for cards: [Card]) {
+            let utterance = AVSpeechUtterance(string: cards.map { $0.name }.joined(separator: ", "))
+            utterance.voice = AVSpeechSynthesisVoice(language: "id-ID") // You can change the language if needed
+            let synthesizer = AVSpeechSynthesizer()
+            synthesizer.speak(utterance)
+        }
     
     //TODO: RESET BASED ON COLUMNS BEFORE (ini masi template)
     func restoreDeletedCards() {

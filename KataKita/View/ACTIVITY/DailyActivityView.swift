@@ -123,43 +123,27 @@ struct DailyActivityView: View {
                     }
                 )
                 
-                
-                CustomButton(
-                    icon: "house.fill",
-                    width: 70,
-                    height: 70,
-                    font: 50,
-                    iconWidth: 30,
-                    iconHeight: 30,
-                    bgColor: "F7F5F0",
-                    bgTransparency: 1.0,
-                    fontColor: "696767",
-                    fontTransparency: 1.0,
-                    cornerRadius: 20,
-                    action: {
-                        dismiss()
+                    CustomButton(
+                        icon: "gearshape.fill",
+                        width: 70,
+                        height: 70,
+                        font: 50,
+                        iconWidth: 30,
+                        iconHeight: 30,
+                        bgColor: "F7F5F0",
+                        bgTransparency: 1.0,
+                        fontColor: "696767",
+                        fontTransparency: 1.0,
+                        cornerRadius: 20,
+                        action: {
+                            selectedRuangan = "Settings"
+                            shouldNavigate = true
+                        }
+                    )
+                    .onTapGesture {
+                        selectedRuangan = "Settings"
                     }
-                )
                 
-//                NavigationLink(destination: SettingsView(showsettings = $showsettings)){
-//                    CustomButton(
-//                        icon: "gearshape.fill",
-//                        width: 70,
-//                        height: 70,
-//                        font: 50,
-//                        iconWidth: 30,
-//                        iconHeight: 30,
-//                        bgColor: "F7F5F0",
-//                        bgTransparency: 1.0,
-//                        fontColor: "696767",
-//                        fontTransparency: 1.0,
-//                        cornerRadius: 20,
-//                        action: {
-//                            selectedRuangan = "Settings"
-//                            shouldNavigate = true
-//                        }
-//                    )
-//                }
                 
             }
             .padding(.horizontal, 50)
@@ -229,7 +213,7 @@ struct DailyActivityView: View {
                                     transparency: 1.0,
                                     weight: "Light"
                                 )
-                                .frame(maxWidth: .infinity)
+//                                .frame(maxWidth: .infinity)
                                 Spacer()
                             } else {
                                 ScrollView{
@@ -428,7 +412,7 @@ struct DailyActivityView: View {
             .padding(.horizontal, 50)
             .frame(width: viewPortWidth, height: viewPortHeight * 0.85, alignment: .topLeading)
         }
-        .frame(width: viewPortWidth, height: viewPortHeight)
+        .frame(width: viewPortWidth, height: viewPortHeight * 0.9)
         .navigationBarBackButtonHidden(true)
         .onAppear() {
             // statemanager
@@ -457,20 +441,14 @@ struct DailyActivityView: View {
         }
         return ""
     }
-//    func destinationForSelectedRuangan() -> some View {
-//        switch selectedRuangan {
-//        case "RuangMakan":
-//            return AnyView(AACRuangMakanView())
-//        case "KamarMandi":
-//            return AnyView(AACKamarMandiView())
-//        case "RuangBelajar":
-//            return AnyView(AACRuangBelajarView())
-//        case "Settings":
-//            return AnyView(SettingsView())
-//        default:
-//            return AnyView(EmptyView())
-//        }
-//    }
+    func destinationForSelectedRuangan() -> some View {
+        switch selectedRuangan {
+        case "Settings":
+            return AnyView(SettingsView())
+        default:
+            return AnyView(EmptyView())
+        }
+    }
     
     private func speakText(_ text: String) {
             // Stop any ongoing speech
