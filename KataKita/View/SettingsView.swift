@@ -12,36 +12,32 @@ struct SettingsView: View {
         NavigationStack {
             Form {
                 // Profil Pengguna Section
-                Section(header: Text("PROFIL PENGGUNA")) {
+                Section(header: Text(LocalizedStringKey("PROFIL PENGGUNA"))) {
                     // Name TextField
                     HStack {
-                        Text("Name")
+                        Text(LocalizedStringKey("Nama"))
                         TextField(
-                            "Enter your name", text: $viewModel.userProfile.name
+                            LocalizedStringKey("Ketik namamu"), text: $viewModel.userProfile.name
                         )
                         .multilineTextAlignment(.trailing)
-                    }
-                    .onAppear {
-                        print("Updated Profile:")
-                        print("Name: \($viewModel.userProfile.name)")
                     }
 
                     // Gender Selection
                     HStack {
-                        Text("Gender")
+                        Text(LocalizedStringKey("Jenis Kelamin"))
                         Spacer()
                         Picker("", selection: $viewModel.userProfile.gender) {
-                            Text("Laki-laki").tag(false)
-                            Text("Perempuan").tag(true)
+                            Text(LocalizedStringKey("Laki-laki")).tag(false)
+                            Text(LocalizedStringKey("Perempuan")).tag(true)
                         }
                         .pickerStyle(MenuPickerStyle())
                     }
                 }
                 // aplikasi
-                Section(header: Text("APLIKASI")) {
+                Section(header: Text(LocalizedStringKey("APLIKASI"))) {
                     // CUSTOM SUARA
                     HStack {
-                        Text("Suara")
+                        Text(LocalizedStringKey("Suara"))
                         Spacer()
                         Picker("", selection: $viewModel.userProfile.sound) {
                             Text("Default").tag(false)
@@ -59,7 +55,7 @@ struct SettingsView: View {
             }
             .navigationTitle("Pengaturan")
             .navigationBarItems(
-                trailing: Button("Done") {
+                trailing: Button(LocalizedStringKey("Selesai")) {
                     viewModel.updateProfile(
                         name: viewModel.userProfile.name,
                         gender: viewModel.userProfile.gender,

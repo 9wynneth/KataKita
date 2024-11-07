@@ -112,7 +112,8 @@ struct AddCardModalView: View {
                             .shadow(radius: 2)
                         
                         Spacer()
-//                        TextContent(text: "Done", size: 20, color: "000000", weight: "bold")
+
+//                        TextContent(text: "Selesai", size: 20, color: "000000", weight: "bold")
 //                                                        .padding(.trailing, screenWidth * 0.04)
                     }
                     .frame(maxWidth: .infinity)

@@ -45,7 +45,7 @@ struct AddImageCardView: View {
             }
             .navigationBarTitle("Add Image", displayMode: .inline)
             .navigationBarItems(
-                trailing: Button("Done") {
+                trailing: Button(LocalizedStringKey("Selesai")) {
                     if imageFromLocal != nil {
                         dismiss()
                     }

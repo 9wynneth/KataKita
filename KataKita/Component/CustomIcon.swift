@@ -28,7 +28,7 @@ struct CustomIcon: View {
                     .frame(width: iconWidth, height: iconHeight)
                     .cornerRadius(cornerRadius)
                 
-                Text(text)
+                Text(LocalizedStringKey(text))
                     .font(.system(size: font))
                     .foregroundColor(fontColor.opacity(fontTransparency))
             }
