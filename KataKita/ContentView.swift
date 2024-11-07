@@ -19,7 +19,7 @@ struct ContentView: View {
     
 
     var body: some View {
-        VStack {
+        VStack(spacing: 30) {
             Picker("Select View", selection: $selectedSegment) {
                 Text("AAC").tag(0)
                 Text("BELAJAR").tag(1)
@@ -27,22 +27,24 @@ struct ContentView: View {
             .pickerStyle(SegmentedPickerStyle())
             .frame(width: 500)
             
-            if selectedSegment == 0 {
+            if self.selectedSegment == 0 {
                 BetterAACView()
             } else {
                 PECSView()
-                    .zIndex(1)
             }
-            
-            
         }
+        .frame(alignment: .topLeading)
         .background(
             Color(hex: "BDD4CE", transparency: 1.0)
+                .ignoresSafeArea()
         )
     }
 }
 
-//#Preview {
-//    ContentView()
-//        .modelContainer(for: Item.self, inMemory: true)
-//}
+#Preview {
+    ContentView()
+        .modelContainer(for: Item.self, inMemory: true)
+        .environment(ScheduleManager())
+        .environment(ActivitiesManager())
+        .environment(SecurityManager())
+}

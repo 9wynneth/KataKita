@@ -7,9 +7,10 @@ class ProfileViewModel: ObservableObject {
         loadProfile()
     }
     
-    func updateProfile(name: String, gender: Bool) {
+    func updateProfile(name: String, gender: Bool, sound: Bool) {
         userProfile.name = name
         userProfile.gender = gender
+        userProfile.sound = sound
         saveProfile()
     }
     
@@ -22,9 +23,14 @@ class ProfileViewModel: ObservableObject {
         userProfile.name = UserDefaults.standard.string(forKey: "userName") ?? ""
         userProfile.gender = UserDefaults.standard.bool(forKey: "userGender")
     }
+    
+    func fetchPersonalVoices() async -> Bool {
+        return false
+    }
 }
 
 struct UserProfile {
     var name: String = ""
     var gender: Bool = false // false for Laki-laki, true for Perempuan
+    var sound: Bool = false
 }

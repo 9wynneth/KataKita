@@ -11,7 +11,7 @@ struct AddCardModalView: View {
     //MARK: Viewport Size
     @Binding var cards: [[Card]]
     
-    @State private var pecsCards: [[Card]]?
+    @State private var pecsCards: [[Card]]? = nil
     @State private var addingCard: Int? = nil
     @State private var addingBoard = false
     
@@ -25,7 +25,6 @@ struct AddCardModalView: View {
     
     init(_ cards: Binding<[[Card]]>) {
         self._cards = cards
-        self.pecsCards = cards.wrappedValue
     }
 
     var selectedBoard: Board? {
@@ -139,22 +138,24 @@ struct AddCardModalView: View {
                 }
             }
         }
-            .padding(.top, 5)
+            .padding(EdgeInsets(top: 5, leading: 0, bottom: 50, trailing: 0))
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
             .background(
                 Rectangle()
                     .fill(Color.white)
                     .clipShape(
-                        .rect(topLeadingRadius: 45, bottomLeadingRadius: 10, bottomTrailingRadius: 10, topTrailingRadius: 45)
+                        .rect(topLeadingRadius: 45, bottomLeadingRadius: 0, bottomTrailingRadius: 0, topTrailingRadius: 45)
                     )
                     .frame(width: screenWidth)
                     .ignoresSafeArea()
             )
         }
-        .padding(EdgeInsets(top: 30, leading: 45, bottom: 10, trailing: 45))
-        .frame(maxWidth: .infinity, maxHeight: screenHeight * 0.75)
+        .offset(y: 50)
+        .padding(EdgeInsets(top: 30, leading: 45, bottom: 40, trailing: 45))
+        .frame(maxWidth: .infinity)
         .background(Color.clear)
         .onAppear {
+            self.pecsCards = self.cards
             if let firstBoard = BoardManager.shared.boards.first {
                 id = firstBoard.id
             }

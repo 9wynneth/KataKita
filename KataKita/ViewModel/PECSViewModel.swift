@@ -15,7 +15,7 @@ class PECSViewModel {
     
     var cards: [[Card]]
     
-    init(cards: [[Card]] = [[]]) {
+    init(cards: [[Card]] = [[], [], [], [], []]) {
         self.cards = cards
     }
     

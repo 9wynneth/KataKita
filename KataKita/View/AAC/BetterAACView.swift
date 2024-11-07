@@ -143,6 +143,7 @@ struct BetterAACView: View {
                     
                 }
             }
+            
             // MARK: Navigation && Actions
             HStack (spacing: 0) {
                 HStack(spacing: 0) {
@@ -286,6 +287,7 @@ struct BetterAACView: View {
                 }
             }
             .padding(.top, 15)
+            
             // MARK: BOARD
             HStack(alignment: .top, spacing: 25) {
                 if let board = self.selectedBoard {
@@ -330,7 +332,7 @@ struct BetterAACView: View {
                         } label: {
                             RoundedRectangle(cornerRadius: 10)
                                 .fill(color)
-                                .frame(width: 120, height: screenHeight * 0.05)
+                                .frame(width: 120, height: screenHeight * 0.045)
                         }
                         .alert(isPresented: $showAlert) {
                             Alert(
@@ -356,8 +358,7 @@ struct BetterAACView: View {
                     .ignoresSafeArea()
             )
         }
-        
-        .padding(EdgeInsets(top: 30, leading: 45, bottom: 0, trailing: 45))
+        .padding(EdgeInsets(top: 0, leading: 45, bottom: 0, trailing: 45))
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(
             Color(hex: "BDD4CE", transparency: 1.0)
@@ -386,7 +387,6 @@ struct BetterAACView: View {
             }
         )
         .onAppear {
-            
             if let firstBoard = BoardManager.shared.boards.first {
                 id = firstBoard.id
             }
