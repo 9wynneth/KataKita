@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AVFoundation
 
 struct PECSView: View {
     @Environment(PECSViewModel.self) var pECSViewModel
@@ -116,7 +117,7 @@ struct PECSView: View {
                             fontTransparency: 1.0,
                             cornerRadius: 20,
                             action: {
-                                //                                        MARK: dismiss()
+                                self.cards = [[], [], [], [], []] 
                             }
                         )
                         CustomButton(
@@ -160,6 +161,9 @@ struct PECSView: View {
                             cornerRadius: 13,
                             isSystemImage: false
                         )
+                        .onAppear{
+                            speakCardName(card)
+                        }
                     }
 
                     Color.clear
@@ -188,6 +192,10 @@ struct PECSView: View {
                             }
                             return true
                         }
+                        .onTapGesture{
+                            speakText(for: droppedCards)
+                        }
+
                 )
 
                 CustomButton(
@@ -289,6 +297,20 @@ struct PECSView: View {
     func restoreDeletedCards() {
         self.childCards = self.cards
     }
+    
+    func speakCardName(_ card: Card) {
+            let utterance = AVSpeechUtterance(string: card.name)
+            utterance.voice = AVSpeechSynthesisVoice(language: "id-ID")
+            let synthesizer = AVSpeechSynthesizer()
+            synthesizer.speak(utterance)
+        }
+    
+    func speakText(for cards: [Card]) {
+            let utterance = AVSpeechUtterance(string: cards.map { $0.name }.joined(separator: ", "))
+            utterance.voice = AVSpeechSynthesisVoice(language: "id-ID") // You can change the language if needed
+            let synthesizer = AVSpeechSynthesizer()
+            synthesizer.speak(utterance)
+        }
 
 }
 
