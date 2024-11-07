@@ -132,10 +132,6 @@ struct AACBoardView : View {
                                         fontTransparency: 1.0, cornerRadius: 13, isSystemImage: false
                                     ) {
                                         self.cardHandler(row)
-                                    } {
-  
-                                        
-                                        
                                     }
                                     .alert(isPresented: $showAlert) {
                                         Alert(
