@@ -9,6 +9,9 @@ import SwiftUI
 
 struct PECSParentView: View {
     @Binding var cards: [[Card]]
+    //MARK: Viewport size
+    let screenWidth = UIScreen.main.bounds.width
+    let screenHeight = UIScreen.main.bounds.height
     
     //MARK: Button color
     let colors: [Color] = [.black, .brown, .orange, .red, .purple, .pink, .blue, .green, .yellow]
