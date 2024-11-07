@@ -10,7 +10,8 @@ import AVFoundation
 
 
 struct BetterAACView: View {
-    @Environment(SecurityManager.self) var securityManager
+    @Environment(SecurityManager.self) private var securityManager
+    @Environment(BoardManager.self) private var boardManager
 
     //MARK: Viewport Size
     @State private var addingCard: Int? = nil
@@ -58,7 +59,7 @@ struct BetterAACView: View {
     
     
     var selectedBoard: Board? {
-        if let board = BoardManager.shared.boards.first(where: { $0.id == id }) {
+        if let board = boardManager.boards.first(where: { $0.id == id }) {
             return board
             
         }
@@ -156,7 +157,7 @@ struct BetterAACView: View {
                 // MARK: Navigation && Actions
                 HStack (spacing: 0) {
                     HStack(spacing: 0) {
-                        ForEach(BoardManager.shared.boards) { board in
+                        ForEach(boardManager.boards) { board in
                             ZStack(alignment: .trailing) {
                                 HStack {
                                     TextContent(
@@ -187,7 +188,7 @@ struct BetterAACView: View {
                                         cornerRadius: 25,
                                         isSystemImage: true
                                     ) {
-                                        BoardManager.shared.removeBoard()
+                                        boardManager.removeBoard()
                                     }
                                 } else {
                                     if let icon = board.icon {
@@ -301,7 +302,7 @@ struct BetterAACView: View {
                             },
                             del: { colIndex, rowIndex in
                                 print("remove \(colIndex) \(rowIndex)")
-                                BoardManager.shared.removeCard(column: colIndex, row: rowIndex)
+                                boardManager.removeCard(column: colIndex, row: rowIndex)
                             }
                         )
                     }
@@ -396,12 +397,12 @@ struct BetterAACView: View {
                 }
             )
             .onAppear {
-                if let firstBoard = BoardManager.shared.boards.first {
+                if let firstBoard = boardManager.boards.first {
                     id = firstBoard.id
                 }
             }
             .onChange(of: id) {
-                BoardManager.shared.selectId(id)
+                boardManager.selectId(id)
                 sharedState.selectedCards.removeAll()
             }
             .onChange(of: securityManager.isCorrect) {

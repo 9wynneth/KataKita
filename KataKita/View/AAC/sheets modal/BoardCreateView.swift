@@ -8,6 +8,7 @@ struct BoardCreateView: View {
     @Environment(\.presentationMode) var presentationMode
     @State private var addingBoard = false
     @State private var totalgrid: Int = 20
+    @Environment(BoardManager.self) private var boardManager
 
     var body: some View {
         NavigationView {
@@ -73,7 +74,7 @@ struct BoardCreateView: View {
                         let gridRows = totalgrid == 20 ? 5 : totalgrid == 28 ? 7 : 8
                         let gridColumns = totalgrid == 20 || totalgrid == 28 ? 4 : 5
                         
-                        BoardManager.shared.addBoard(
+                        boardManager.addBoard(
                             Board(
                                 cards: Array(repeating: [], count: gridRows),
                                 name: boardName,

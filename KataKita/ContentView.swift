@@ -13,6 +13,7 @@ struct ContentView: View {
     @Environment(ScheduleManager.self) private var scheduleManager
     @Environment(ActivitiesManager.self) private var activitiesManager
     @Environment(SecurityManager.self) private var securityManager
+    @Environment(BoardManager.self) private var boardManager
     
     @Query private var items: [Item]
     @State private var selectedSegment = 0
@@ -54,4 +55,5 @@ struct ContentView: View {
         .environment(ScheduleManager())
         .environment(ActivitiesManager())
         .environment(SecurityManager())
+        .environment(BoardManager())
 }

@@ -15,6 +15,8 @@ struct AddCardModalView: View {
     @State private var addingCard: Int? = nil
     @State private var addingBoard = false
     
+    @Environment(BoardManager.self) private var boardManager
+    
     let screenWidth = UIScreen.main.bounds.width
     let screenHeight = UIScreen.main.bounds.height
     
@@ -28,7 +30,7 @@ struct AddCardModalView: View {
     }
 
     var selectedBoard: Board? {
-        if let board = BoardManager.shared.boards.first(where: { $0.id == id }) {
+        if let board = boardManager.boards.first(where: { $0.id == id }) {
             return board
         }
         
@@ -52,7 +54,7 @@ struct AddCardModalView: View {
             // MARK: Navigation && Actions
             HStack (spacing: 0) {
                 HStack(spacing: 0) {
-                    ForEach(BoardManager.shared.boards) { board in
+                    ForEach(boardManager.boards) { board in
                         ZStack(alignment: .trailing) {
                             HStack {
                                 TextContent(
@@ -156,12 +158,12 @@ struct AddCardModalView: View {
         .background(Color.clear)
         .onAppear {
             self.pecsCards = self.cards
-            if let firstBoard = BoardManager.shared.boards.first {
+            if let firstBoard = boardManager.boards.first {
                 id = firstBoard.id
             }
         }
         .onChange(of: id) {
-            BoardManager.shared.selectId(id)
+            boardManager.selectId(id)
         }
         .onChange(of: self.pecsCards) {
             print(self.pecsCards)

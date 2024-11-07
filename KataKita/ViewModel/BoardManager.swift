@@ -6,8 +6,8 @@
 //
 import SwiftUI
 
+@Observable
 class BoardManager {
-    static var shared = BoardManager()
     var boards: [Board]
     var selectedID: UUID?
     

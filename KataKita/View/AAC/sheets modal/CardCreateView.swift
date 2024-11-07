@@ -8,6 +8,7 @@ struct CardCreateView: View {
     @State private var navigateToCekVMView = false
     @State private var addingCard: Int? = nil
     @State private var imageFromLocal: URL?  // New State to store image URL
+    @Environment(BoardManager.self) private var boardManager
     
     @Binding var navigateFromImage: Bool
     @Binding var selectedColumnIndexValue: Int
@@ -160,7 +161,7 @@ struct CardCreateView: View {
         let color = selectedCategory
         
         print("Handling done action: Icon: \(icon), Text: \(text), Background Color: \(color)")
-        BoardManager.shared.addCard(Card(name: text, icon: icon, category: selectedCategory, isIconTypeImage: isIconTypeImage), column: selectedColumnIndexValue)
+        boardManager.addCard(Card(name: text, icon: icon, category: selectedCategory, isIconTypeImage: isIconTypeImage), column: selectedColumnIndexValue)
         self.addingCard = nil
     }
     
