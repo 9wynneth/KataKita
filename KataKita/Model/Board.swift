@@ -28,7 +28,7 @@ enum Category: String, Codable, CaseIterable {
             case .NOUN:
                 return .orange
             case .ADJECTIVE:
-                return .gray
+                return .blue
         }
     }
     

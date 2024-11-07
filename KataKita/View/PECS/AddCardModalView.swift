@@ -105,7 +105,7 @@ struct AddCardModalView: View {
                 // MARK: Search Bar
                 HStack {
                     HStack(spacing: 10) {
-                        TextField("Search card", text: $searchText)
+                        TextField("Search words", text: $searchText)
                             .padding(10)
                             .background(Color.white)
                             .cornerRadius(8)

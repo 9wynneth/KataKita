@@ -76,7 +76,7 @@ struct BetterAACView: View {
                                     if index < 10 {  // Only show cards where index is less than 10
                                         VStack {
                                             // Directly using Image to load from the asset catalog
-                                            Image(card.icon)  // icon name is passed from the card
+                                            Image(resolveIcon(for: card.icon))  // icon name is passed from the card
                                                 .resizable()
                                                 .frame(width: 50, height: 50)
                                             
@@ -112,8 +112,10 @@ struct BetterAACView: View {
                                 cornerRadius: 20,
                                 isSystemImage: false
                             ) {
-                                sharedState.selectedCards.removeLast()
-                                speechSynthesizer.stopSpeaking(at: .immediate)
+                                if !sharedState.selectedCards.isEmpty {
+                                    sharedState.selectedCards.removeLast()
+                                    speechSynthesizer.stopSpeaking(at: .immediate)
+                                }
                                 
                             }
                         }
@@ -138,8 +140,10 @@ struct BetterAACView: View {
                     cornerRadius: 20,
                     isSystemImage: false
                 ) {
-                    sharedState.selectedCards.removeAll()
-                    speechSynthesizer.stopSpeaking(at: .immediate)
+                    if !sharedState.selectedCards.isEmpty {
+                        sharedState.selectedCards.removeAll()
+                        speechSynthesizer.stopSpeaking(at: .immediate)
+                    }
                     
                 }
             }
