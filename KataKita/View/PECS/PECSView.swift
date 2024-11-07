@@ -118,7 +118,7 @@ struct PECSView: View {
                             fontTransparency: 1.0,
                             cornerRadius: 20,
                             action: {
-                                self.showAlert = true 
+                                self.showAlert = true
 
                             }
                         )

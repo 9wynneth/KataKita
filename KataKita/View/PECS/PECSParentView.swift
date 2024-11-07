@@ -19,6 +19,8 @@ struct PECSParentView: View {
     
     //MARK: Button color
     let colors: [Color] = [.black, .brown, .orange, .red, .purple, .pink, .blue, .green, .yellow]
+    @State private var showDeleteAlert = false
+    @State private var cardToDelete: (Int, Int)? = nil // To track which card to delete
     
     
     init(_ cards: Binding<[[Card]]>) {
@@ -63,7 +65,9 @@ struct PECSParentView: View {
                                 cornerRadius: 25,
                                 isSystemImage: true
                             ) {
-                                cards[i].remove(at: j)
+//                                cards[i].remove(at: j)
+                                self.cardToDelete = (i, j)
+                                self.showDeleteAlert = true
                             }
                             .offset(x: -5, y: 5)
                         }
@@ -84,6 +88,18 @@ struct PECSParentView: View {
             }
         }
         .padding(20)
+        .alert(isPresented: $showDeleteAlert) {
+                    Alert(
+                        title: Text("Delete Card"),
+                        message: Text("Are you sure you want to delete this card?"),
+                        primaryButton: .destructive(Text("Delete")) {
+                            if let cardToDelete = self.cardToDelete {
+                                self.cards[cardToDelete.0].remove(at: cardToDelete.1) 
+                            }
+                        },
+                        secondaryButton: .cancel()
+                    )
+                }
     }
 }
 
