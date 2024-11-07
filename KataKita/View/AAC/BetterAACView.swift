@@ -10,6 +10,8 @@ import AVFoundation
 
 
 struct BetterAACView: View {
+    @Environment(SecurityManager.self) var securityManager
+
     //MARK: Viewport Size
     @State private var addingCard: Int? = nil
     @State private var addingBoard = false
@@ -23,6 +25,8 @@ struct BetterAACView: View {
     @State private var defaultButton: Int = 4
     @State private var showAACSettings = false
     @State private var showprofile = false
+    @State var isAskPassword = false
+
     
     @State static var navigateFromImage = false
     @State private var selectedCategoryColor: String = "#FFFFFF"
@@ -63,362 +67,374 @@ struct BetterAACView: View {
     }
     
     var body: some View {
-        VStack(spacing: 0) {
-            // MARK: Textfield && Delete
-            HStack {
-                Button(action: {
-                    speakAllText(from: sharedState.selectedCards)
-                }) {
-                    ZStack {
-                        HStack {
-                            HStack (spacing: 20){
-                                ForEach(Array(sharedState.selectedCards.enumerated()), id: \.element.id) { index, card in
-                                    if index < 10 {  // Only show cards where index is less than 10
-                                        VStack {
-                                            // Directly using Image to load from the asset catalog
-                                            Image(resolveIcon(for: card.icon))  // icon name is passed from the card
-                                                .resizable()
-                                                .frame(width: 50, height: 50)
-                                            
-                                            Text(card.name)
-                                                .font(.system(size: 18))
-                                                .lineLimit(1)
-                                                .minimumScaleFactor(0.5)
-                                                .foregroundColor(card.fontColor)
+        ZStack {
+            VStack(spacing: 0) {
+                // MARK: Textfield && Delete
+                HStack {
+                    Button(action: {
+                        speakAllText(from: sharedState.selectedCards)
+                    }) {
+                        ZStack {
+                            HStack {
+                                HStack (spacing: 20){
+                                    ForEach(Array(sharedState.selectedCards.enumerated()), id: \.element.id) { index, card in
+                                        if index < 10 {  // Only show cards where index is less than 10
+                                            VStack {
+                                                // Directly using Image to load from the asset catalog
+                                                Image(resolveIcon(for: card.icon))  // icon name is passed from the card
+                                                    .resizable()
+                                                    .frame(width: 50, height: 50)
+                                                
+                                                Text(card.name)
+                                                    .font(.system(size: 18))
+                                                    .lineLimit(1)
+                                                    .minimumScaleFactor(0.5)
+                                                    .foregroundColor(card.fontColor)
+                                            }
+                                            .frame(width: 80, height: 80)
+                                            .background(card.bgColor.opacity(card.bgTransparency)) // Apply the background color with transparency
+                                            .cornerRadius(8)
                                         }
-                                        .frame(width: 80, height: 80)
-                                        .background(card.bgColor.opacity(card.bgTransparency)) // Apply the background color with transparency
-                                        .cornerRadius(8)
+                                    }
+                                }
+                                
+                                .padding(.leading, 33)
+                                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+                                
+                                Spacer()
+                                
+                                CustomButton(
+                                    icon: "delete",
+                                    width: 100,
+                                    height: 100,
+                                    font: 40,
+                                    iconWidth: 50,
+                                    iconHeight: 50,
+                                    bgColor: "#ffffff",
+                                    bgTransparency: 0.01,
+                                    fontColor: "#ffffff",
+                                    fontTransparency: 0,
+                                    cornerRadius: 20,
+                                    isSystemImage: false
+                                ) {
+                                    if !sharedState.selectedCards.isEmpty {
+                                        sharedState.selectedCards.removeLast()
+                                        speechSynthesizer.stopSpeaking(at: .immediate)
+                                    }
+                                    
+                                }
+                            }
+                        }
+                    }
+                    .frame(height: 100)
+                    .background(
+                        RoundedRectangle(cornerRadius: 15)
+                            .fill(Color(hex: "FFFFFF", transparency: 1.0))
+                    )
+                    CustomButton(
+                        icon: "trash",
+                        width: 100,
+                        height: 100,
+                        font: 40,
+                        iconWidth: 50,
+                        iconHeight: 50,
+                        bgColor: "FFFFFF",
+                        bgTransparency: 1.0,
+                        fontColor: "000000",
+                        fontTransparency: 1.0,
+                        cornerRadius: 20,
+                        isSystemImage: false
+                    ) {
+                        if !sharedState.selectedCards.isEmpty {
+                            sharedState.selectedCards.removeAll()
+                            speechSynthesizer.stopSpeaking(at: .immediate)
+                        }
+                        
+                    }
+                }
+                
+                // MARK: Navigation && Actions
+                HStack (spacing: 0) {
+                    HStack(spacing: 0) {
+                        ForEach(BoardManager.shared.boards) { board in
+                            ZStack(alignment: .trailing) {
+                                HStack {
+                                    TextContent(
+                                        text: board.name.uppercased(),
+                                        size: 15,
+                                        color: "00000",
+                                        transparency: 1.0,
+                                        weight: "medium"
+                                    )
+                                    
+                                    Spacer(minLength: 60)
+                                }
+                                .opacity(id == board.id ? 1 : 0)
+                                .frame(maxHeight: .infinity)
+                                if self.editing && id == board.id {
+                                    CustomButton(
+                                        icon: "xmark",
+                                        text: "",
+                                        width: 50,
+                                        height: 50,
+                                        font: 24,
+                                        iconWidth: 20,
+                                        iconHeight: 20,
+                                        bgColor: "F47455",
+                                        bgTransparency: 1,
+                                        fontColor: "FFFFFF",
+                                        fontTransparency: 1.0,
+                                        cornerRadius: 25,
+                                        isSystemImage: true
+                                    ) {
+                                        BoardManager.shared.removeBoard()
+                                    }
+                                } else {
+                                    if let icon = board.icon {
+                                        Image(icon)
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(width: 50)
+                                    } else {
+                                        Image(systemName: "star.fill")
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(width: 50)
                                     }
                                 }
                             }
-                            
-                            .padding(.leading, 33)
-                            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-                            
-                            Spacer()
-                            
-                            CustomButton(
-                                icon: "delete",
-                                width: 100,
-                                height: 100,
-                                font: 40,
-                                iconWidth: 50,
-                                iconHeight: 50,
-                                bgColor: "#ffffff",
-                                bgTransparency: 0.01,
-                                fontColor: "#ffffff",
-                                fontTransparency: 0,
-                                cornerRadius: 20,
-                                isSystemImage: false
-                            ) {
-                                if !sharedState.selectedCards.isEmpty {
-                                    sharedState.selectedCards.removeLast()
-                                    speechSynthesizer.stopSpeaking(at: .immediate)
-                                }
-                                
-                            }
-                        }
-                    }
-                }
-                .frame(height: 100)
-                .background(
-                    RoundedRectangle(cornerRadius: 15)
-                        .fill(Color(hex: "FFFFFF", transparency: 1.0))
-                )
-                CustomButton(
-                    icon: "trash",
-                    width: 100,
-                    height: 100,
-                    font: 40,
-                    iconWidth: 50,
-                    iconHeight: 50,
-                    bgColor: "FFFFFF",
-                    bgTransparency: 1.0,
-                    fontColor: "000000",
-                    fontTransparency: 1.0,
-                    cornerRadius: 20,
-                    isSystemImage: false
-                ) {
-                    if !sharedState.selectedCards.isEmpty {
-                        sharedState.selectedCards.removeAll()
-                        speechSynthesizer.stopSpeaking(at: .immediate)
-                    }
-                    
-                }
-            }
-            
-            // MARK: Navigation && Actions
-            HStack (spacing: 0) {
-                HStack(spacing: 0) {
-                    ForEach(BoardManager.shared.boards) { board in
-                        ZStack(alignment: .trailing) {
-                            HStack {
-                                TextContent(
-                                    text: board.name.uppercased(),
-                                    size: 15,
-                                    color: "00000",
-                                    transparency: 1.0,
-                                    weight: "medium"
-                                )
-                                
-                                Spacer(minLength: 60)
-                            }
-                            .opacity(id == board.id ? 1 : 0)
-                            .frame(maxHeight: .infinity)
-                            if self.editing && id == board.id {
-                                CustomButton(
-                                    icon: "xmark",
-                                    text: "",
-                                    width: 50,
-                                    height: 50,
-                                    font: 24,
-                                    iconWidth: 20,
-                                    iconHeight: 20,
-                                    bgColor: "F47455",
-                                    bgTransparency: 1,
-                                    fontColor: "FFFFFF",
-                                    fontTransparency: 1.0,
-                                    cornerRadius: 25,
-                                    isSystemImage: true
-                                ) {
-                                    BoardManager.shared.removeBoard()
-                                }
-                            } else {
-                                if let icon = board.icon {
-                                    Image(icon)
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: 50)
-                                } else {
-                                    Image(systemName: "star.fill")
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: 50)
-                                }
-                            }
-                        }
-                        .padding(.horizontal, 15)
-                        .frame(width: id == board.id ? 165 : 80, alignment: .trailing)
-                        .background(
-                            Rectangle()
-                                .fill(Color(hex: id == board.id ? "FFFFFF" : "EFEFEF", transparency: 1))
-                                .clipShape(
-                                    .rect(topLeadingRadius: 10, bottomLeadingRadius: 0, bottomTrailingRadius: 0, topTrailingRadius: 10)
-                                )
-                        )
-                        .animation(.spring(duration: 0.25), value: id == board.id)
-                        .onTapGesture {
-                            id = board.id
-                        }
-                    }
-                    if self.editing {
-                        Button {
-                            self.addingBoard = true
-                            showSheet = true
-                        } label: {
-                            ZStack {
-                                Image(systemName: "plus")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .foregroundStyle(Color(hex: "000000", transparency: 1))
-                                    .frame(width: 30)
-                            }
                             .padding(.horizontal, 15)
-                            .frame(width: 80, height: 75)
+                            .frame(width: id == board.id ? 165 : 80, alignment: .trailing)
                             .background(
                                 Rectangle()
-                                    .fill(Color(hex: "D4F3FF", transparency: 1))
+                                    .fill(Color(hex: id == board.id ? "FFFFFF" : "EFEFEF", transparency: 1))
                                     .clipShape(
                                         .rect(topLeadingRadius: 10, bottomLeadingRadius: 0, bottomTrailingRadius: 0, topTrailingRadius: 10)
                                     )
                             )
-                        }
-                    }
-                }
-                .frame(height: 75)
-                Spacer()
-                HStack(spacing: 10) {
-                    CustomButton(
-                        icon: "settings",
-                        width: 45,
-                        height: 45,
-                        font: 20,
-                        iconWidth: 20,
-                        iconHeight: 20,
-                        bgColor: "FFFFFF",
-                        bgTransparency: 1.0,
-                        fontColor: "000000",
-                        fontTransparency: 1.0,
-                        cornerRadius: 50,
-                        isSystemImage: false,
-                        action:
-                            {
-                                showprofile = true
+                            .animation(.spring(duration: 0.25), value: id == board.id)
+                            .onTapGesture {
+                                id = board.id
                             }
-                    )
-                    CustomButton(
-                        icon: "pencil",
-                        width: 45,
-                        height: 45,
-                        font: 20,
-                        iconWidth: 20,
-                        iconHeight: 20,
-                        bgColor: self.editing ? "F47455" : "FFFFFF",
-                        bgTransparency: 1.0,
-                        fontColor: "000000",
-                        fontTransparency: 1.0,
-                        cornerRadius: 50
-                    ) {
-                        self.editing.toggle()
-                    }
-                    CustomButton(
-                        icon: "lightbulb",
-                        width: 45,
-                        height: 45,
-                        font: 20,
-                        iconWidth: 20,
-                        iconHeight: 20,
-                        bgColor: "FFFFFF",
-                        bgTransparency: 1.0,
-                        fontColor: "000000",
-                        fontTransparency: 1.0,
-                        cornerRadius: 50,
-                        action: {
-//                            isLesson.toggle()
                         }
-                    )
-                }
-            }
-            .padding(.top, 15)
-            
-            // MARK: BOARD
-            HStack(alignment: .top, spacing: 25) {
-                if let board = self.selectedBoard {
-                    AACBoardView(
-                        board,
-                        editing: self.$editing,
-                        add: { colIndex in
-                            selectedColumnIndexValue = colIndex
-                            showAACSettings = true
-                            self.addingCard = colIndex
-                        },
-                        del: { colIndex, rowIndex in
-                            print("remove \(colIndex) \(rowIndex)")
-                            BoardManager.shared.removeCard(column: colIndex, row: rowIndex)
-                        }
-                    )
-                }
-
-                VStack(spacing: screenHeight * 0.02) {
-                    ForEach(Array(colors.enumerated()), id: \.offset) { index, color in
-                        Button {
-                            if sharedState.selectedCards.count < 10 {
-                                showAlert = false
-                                let colorName = colorNames[color] ?? "Unknown"
-                                
-                                let cardListItem = CardList(
-                                    name: colorName,
-                                    icon: "person.fill",
-                                    bgColor: color,
-                                    bgTransparency: 1.0,
-                                    fontColor: color
-                                )
-                                sharedState.selectedCards.append(cardListItem)
-                                speakText(colorName)
-                            } else {
-                                showAlert = true
-                                hasSpoken = false
-                                if hasSpoken == false {
-                                    speakText("Kotak Kata Penuh")
+                        if self.editing {
+                            Button {
+                                self.addingBoard = true
+                                showSheet = true
+                            } label: {
+                                ZStack {
+                                    Image(systemName: "plus")
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .foregroundStyle(Color(hex: "000000", transparency: 1))
+                                        .frame(width: 30)
                                 }
+                                .padding(.horizontal, 15)
+                                .frame(width: 80, height: 75)
+                                .background(
+                                    Rectangle()
+                                        .fill(Color(hex: "D4F3FF", transparency: 1))
+                                        .clipShape(
+                                            .rect(topLeadingRadius: 10, bottomLeadingRadius: 0, bottomTrailingRadius: 0, topTrailingRadius: 10)
+                                        )
+                                )
                             }
-                        } label: {
-                            RoundedRectangle(cornerRadius: 10)
-                                .fill(color)
-                                .frame(width: 120, height: screenHeight * 0.045)
                         }
-                        .alert(isPresented: $showAlert) {
-                            Alert(
-                                title: Text("Kotak Kata Penuh"),
-                                message: Text("Kamu hanya bisa memilih 10 kata. Hapus kata yang sudah dipilih untuk memilih kata baru."),
-                                dismissButton: .default(Text("OK"), action: {
-                                    hasSpoken = true
-                                })
-                            )
+                    }
+                    .frame(height: 75)
+                    Spacer()
+                    HStack(spacing: 10) {
+                        CustomButton(
+                            icon: "settings",
+                            width: 45,
+                            height: 45,
+                            font: 20,
+                            iconWidth: 20,
+                            iconHeight: 20,
+                            bgColor: "FFFFFF",
+                            bgTransparency: 1.0,
+                            fontColor: "000000",
+                            fontTransparency: 1.0,
+                            cornerRadius: 50,
+                            isSystemImage: false,
+                            action:
+                                {
+                                    showprofile = true
+                                }
+                        )
+                        CustomButton(
+                            icon: "pencil",
+                            width: 45,
+                            height: 45,
+                            font: 20,
+                            iconWidth: 20,
+                            iconHeight: 20,
+                            bgColor: self.editing ? "F47455" : "FFFFFF",
+                            bgTransparency: 1.0,
+                            fontColor: "000000",
+                            fontTransparency: 1.0,
+                            cornerRadius: 50
+                        ) {
+                            self.editing.toggle()
+
+                            if !self.editing {
+                                isAskPassword = false
+                            } else {
+                                isAskPassword = true
+                            }
+
                         }
                     }
                 }
+                .padding(.top, 15)
+                
+                // MARK: BOARD
+                HStack(alignment: .top, spacing: 25) {
+                    if let board = self.selectedBoard {
+                        AACBoardView(
+                            board,
+                            editing: self.$editing,
+                            add: { colIndex in
+                                selectedColumnIndexValue = colIndex
+                                showAACSettings = true
+                                self.addingCard = colIndex
+                            },
+                            del: { colIndex, rowIndex in
+                                print("remove \(colIndex) \(rowIndex)")
+                                BoardManager.shared.removeCard(column: colIndex, row: rowIndex)
+                            }
+                        )
+                    }
+                    
+                    VStack(spacing: screenHeight * 0.02) {
+                        ForEach(Array(colors.enumerated()), id: \.offset) { index, color in
+                            Button {
+                                if sharedState.selectedCards.count < 10 {
+                                    showAlert = false
+                                    let colorName = colorNames[color] ?? "Unknown"
+                                    
+                                    let cardListItem = CardList(
+                                        name: colorName,
+                                        icon: "person.fill",
+                                        bgColor: color,
+                                        bgTransparency: 1.0,
+                                        fontColor: color
+                                    )
+                                    sharedState.selectedCards.append(cardListItem)
+                                    speakText(colorName)
+                                } else {
+                                    showAlert = true
+                                    hasSpoken = false
+                                    if hasSpoken == false {
+                                        speakText("Kotak Kata Penuh")
+                                    }
+                                }
+                            } label: {
+                                RoundedRectangle(cornerRadius: 10)
+                                    .fill(color)
+                                    .frame(width: 120, height: screenHeight * 0.045)
+                            }
+                            .alert(isPresented: $showAlert) {
+                                Alert(
+                                    title: Text("Kotak Kata Penuh"),
+                                    message: Text("Kamu hanya bisa memilih 10 kata. Hapus kata yang sudah dipilih untuk memilih kata baru."),
+                                    dismissButton: .default(Text("OK"), action: {
+                                        hasSpoken = true
+                                    })
+                                )
+                            }
+                        }
+                    }
+                }
+                .padding(.top, 45)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
+                .background(
+                    Rectangle()
+                        .fill(Color.white)
+                        .clipShape(
+                            .rect(topLeadingRadius: 45, bottomLeadingRadius: 0, bottomTrailingRadius: 0, topTrailingRadius: 45)
+                        )
+                        .frame(width: screenWidth)
+                        .ignoresSafeArea()
+                )
             }
-            .padding(.top, 45)
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
+            .padding(EdgeInsets(top: 0, leading: 45, bottom: 0, trailing: 45))
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(
-                Rectangle()
-                    .fill(Color.white)
-                    .clipShape(
-                        .rect(topLeadingRadius: 45, bottomLeadingRadius: 0, bottomTrailingRadius: 0, topTrailingRadius: 45)
-                    )
-                    .frame(width: screenWidth)
+                Color(hex: "BDD4CE", transparency: 1.0)
                     .ignoresSafeArea()
             )
-        }
-        .padding(EdgeInsets(top: 0, leading: 45, bottom: 0, trailing: 45))
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(
-            Color(hex: "BDD4CE", transparency: 1.0)
-                .ignoresSafeArea()
-        )
-            
-            
-        // MARK: Add board form
-        .overlay(
-            Group {
-                if self.addingBoard {
-                    
-                } else {
-                    EmptyView()
+            // MARK: Add board form
+            .overlay(
+                Group {
+                    if self.addingBoard {
+                        
+                    } else {
+                        EmptyView()
+                    }
+                }
+            )
+            // MARK: Add card form
+            .overlay(
+                Group {
+                    if let colIndex = self.addingCard {
+                        
+                    } else {
+                        EmptyView()
+                    }
+                    if isAskPassword {
+                        VStack {
+                            SecurityView()
+                        }
+                        .frame(width: screenWidth, height: screenHeight)
+                        .background(Color.white.opacity(0.01))
+                        .onTapGesture{
+                            isAskPassword = false
+                            self.editing.toggle()
+                        }
+                    }
+                }
+            )
+            .onAppear {
+                if let firstBoard = BoardManager.shared.boards.first {
+                    id = firstBoard.id
                 }
             }
-        )
-        // MARK: Add card form
-        .overlay(
-            Group {
-                if let colIndex = self.addingCard {
-                    
-                } else {
-                    EmptyView()
+            .onChange(of: id) {
+                BoardManager.shared.selectId(id)
+                sharedState.selectedCards.removeAll()
+            }
+            .onChange(of: securityManager.isCorrect) {
+                if securityManager.isCorrect {
+                    // Password is correct; toggle and reset values
+                    isAskPassword = false
+                    securityManager.isCorrect = false
                 }
+                
             }
-        )
-        .onAppear {
-            if let firstBoard = BoardManager.shared.boards.first {
-                id = firstBoard.id
+            .sheet(isPresented: $showSheet) {
+                BoardCreateView(
+                    boardName: $boardName,
+                    selectedIcon: $selectedIcon,
+                    gridSize: $gridSize,
+                    defaultButton: $defaultButton
+                )
             }
-        }
-        .onChange(of: id) {
-            BoardManager.shared.selectId(id)
-            sharedState.selectedCards.removeAll()
-        }
-        .sheet(isPresented: $showSheet) {
-            BoardCreateView(
-                boardName: $boardName,
-                selectedIcon: $selectedIcon,
-                gridSize: $gridSize,
-                defaultButton: $defaultButton // binding defaultButton di sini
-            )
-        }
-        .sheet(isPresented: $showAACSettings) {
-            CardCreateView(
-                navigateFromImage: BetterAACView.$navigateFromImage,
-                selectedColumnIndexValue: $selectedColumnIndexValue,
-                showAACSettings: $showAACSettings
-            )
-        }
-        .sheet(isPresented: $showprofile) {
-            SettingsView(
-            )
+            .sheet(isPresented: $showAACSettings) {
+                CardCreateView(
+                    navigateFromImage: BetterAACView.$navigateFromImage,
+                    selectedColumnIndexValue: $selectedColumnIndexValue,
+                    showAACSettings: $showAACSettings
+                )
+            }
+            .sheet(isPresented: $showprofile) {
+                SettingsView(
+                )
+            }
+           
         }
     }
+        
         
     func speakText(_ text: String) {
         let utterance = AVSpeechUtterance(string: text)
