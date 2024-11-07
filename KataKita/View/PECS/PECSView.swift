@@ -21,6 +21,8 @@ struct PECSView: View {
 
     let templateWidth = 1366.0
     let templateHeight = 1024.0
+    
+    
 
     @State private var cards: [[Card]] = [[], [], [], [], []]
     @State private var position = CGSize.zero
@@ -34,7 +36,7 @@ struct PECSView: View {
     @State private var isAddCard = false
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 45) {
+        VStack(alignment: .leading, spacing: 15) {
             //part 2
             HStack(alignment: .top, spacing: 20) {
                 //whiteboard
@@ -58,8 +60,9 @@ struct PECSView: View {
                             .easeInOut(duration: 0.6), value: toggleOn)
                 }
                 .frame(
-                    maxWidth: .infinity
+                    width: screenWidth * 0.84, height: screenHeight * 0.7
                 )
+                .padding(.leading, screenWidth * 0.02)
                 .background(
                     RoundedRectangle(cornerRadius: 30)
                         .fill(Color(hex: "F7F5F0", transparency: 1.0))
@@ -142,13 +145,17 @@ struct PECSView: View {
             //part 3
             HStack(spacing: 20) {
                 HStack {
+                   
+                                      
+                    
+                    
                     Color.clear
                         .frame(height: 120)
                 }
                 .frame(maxWidth: .infinity)
                 .background(
                     RoundedRectangle(cornerRadius: 30)
-                        .fill(Color(hex: "ffffff", transparency: 1.0))
+                        .fill(Color(hex: "ffffff", transparency: toggleOn ? 0.0 : 1.0))
                 )
 
                 CustomButton(
@@ -159,9 +166,9 @@ struct PECSView: View {
                     iconWidth: 50,
                     iconHeight: 50,
                     bgColor: "ffffff",
-                    bgTransparency: 1.0,
+                    bgTransparency: toggleOn ? 0.0 : 1.0,
                     fontColor: "#696767",
-                    fontTransparency: 1.0,
+                    fontTransparency: toggleOn ? 0.0 : 1.0,
                     cornerRadius: 20
                 )
             }
@@ -187,17 +194,17 @@ struct PECSView: View {
                 }
             }
         )
-        .sheet(isPresented: $isAddCard) {
-            ZStack {
-                Color.clear
-                    .background(BackgroundClearView())
-                    .onTapGesture {
-                        isAddCard = false
-                    }
-                AddCardModalView(self.$cards)
-            }
-            .frame(width: screenWidth)
-        }
+//        .sheet(isPresented: $isAddCard) {
+//            ZStack {
+//                Color.clear
+//                    .background(BackgroundClearView())
+//                    .onTapGesture {
+//                        isAddCard = false
+//                    }
+//                AddCardModalView(self.$cards)
+//            }
+//            .frame(width: screenWidth)
+//        }
         .onTapGesture {
             isAskPassword = false
         }
@@ -231,10 +238,10 @@ struct PECSView: View {
         }
         .ignoresSafeArea(.all)
         .edgesIgnoringSafeArea(.all)
-        .onChange(of: self.cards, initial: true) {
-            print(self.cards)
-            self.pECSViewModel.cards = self.cards
-        }
+//        .onChange(of: self.cards, initial: true) {
+//            print(self.cards)
+//            self.pECSViewModel.cards = self.cards
+//        }
     }
 }
 
@@ -264,9 +271,9 @@ struct PECSView: View {
 //        }
 //        return true
 //    }
+////}
+//#Preview {
+//    PECSView()
+//        .environment(SecurityManager())
+//        .environment(PECSViewModel())
 //}
-#Preview {
-    PECSView()
-        .environment(SecurityManager())
-        .environment(PECSViewModel())
-}
