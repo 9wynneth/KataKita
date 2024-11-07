@@ -28,20 +28,23 @@ struct PECSChildView: View {
                 //rectangle
                 VStack (spacing: 5) {
                     ForEach(Array(column.enumerated()), id: \.offset) { j, card in
-                        CustomButton(
-                            icon: resolveIcon(for: card.icon),
-                            text: card.name,
-                            width: screenWidth * 0.09,
-                            height: screenWidth * 0.09,
-                            font: 38,
-                            iconWidth: 80,
-                            iconHeight: 80,
-                            bgColor: card.category.getColorString(),
-                            bgTransparency: 0.65,
-                            fontColor: "000000",
-                            fontTransparency: 1.0, cornerRadius: 13, isSystemImage: false
-                        )
-                        .padding(1)
+                        if j <= 4 {
+                            
+                            CustomButton(
+                                icon: resolveIcon(for: card.icon),
+                                text: card.name,
+                                width: screenWidth * 0.09,
+                                height: screenWidth * 0.09,
+                                font: 38,
+                                iconWidth: 80,
+                                iconHeight: 80,
+                                bgColor: card.category.getColorString(),
+                                bgTransparency: 0.65,
+                                fontColor: "000000",
+                                fontTransparency: 1.0, cornerRadius: 13, isSystemImage: false
+                            )
+                            .padding(1)
+                        }
                     }
                     
                 Spacer()
