@@ -23,7 +23,19 @@ struct PECSChildView: View {
                 //rectangle
                 VStack (spacing: 5) {
                     ForEach(Array(column.enumerated()), id: \.offset) { j, card in
-                        Text(card.name)
+                        CustomButton(
+                            icon: resolveIcon(for: card.icon),
+                            text: card.name,
+                            width: .infinity,
+                            height: .infinity,
+                            font: 24,
+                            iconWidth: 80,
+                            iconHeight: 60,
+                            bgColor: card.category.getColorString(),
+                            bgTransparency: 0.65,
+                            fontColor: "000000",
+                            fontTransparency: 1.0, cornerRadius: 13, isSystemImage: false
+                        )
                     }
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -34,7 +46,6 @@ struct PECSChildView: View {
             }
         }
         .padding(20)
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
 
