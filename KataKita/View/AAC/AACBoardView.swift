@@ -8,6 +8,7 @@ import SwiftUI
 
 struct AACBoardView : View {
     @Binding var editing: Bool
+    @Binding var cards: [[Card]]?
     
     @State private var imageFromLocal: URL?
     let board: Board
@@ -31,11 +32,13 @@ struct AACBoardView : View {
         _ board: Board,
         spacing: CGFloat = 10,
         editing: Binding<Bool> = Binding.constant(false),
+        cards: Binding<[[Card]]?> = Binding.constant(nil),
         add: ((Int) -> Void)? = nil,
         del: ((Int, Int) -> Void)? = nil
     ) {
         self.board = board
         self.spacing = spacing
+        self._cards = cards
         self._editing = editing
         self.add = add
         self.del = del
@@ -87,8 +90,23 @@ struct AACBoardView : View {
                                         fontTransparency: 1.0,
                                         cornerRadius: 13
                                     )
-                                }
-                                else {
+                                } else if self.cards != nil {
+                                    CustomButton(
+                                        icon: resolveIcon(for: row.icon),
+                                        text: row.name,
+                                        width: cellWidth,
+                                        height: cellHeight,
+                                        font: 24,
+                                        iconWidth: 80,
+                                        iconHeight: 60,
+                                        bgColor: row.category.getColorString(),
+                                        bgTransparency: self.getCardPos(row) == nil ? 0.3 : 1,
+                                        fontColor: "000000",
+                                        fontTransparency: 1.0, cornerRadius: 13, isSystemImage: false
+                                    ) {
+                                        self.cardHandler(row)
+                                    }
+                                } else {
                                     CustomButton(
                                         icon: resolveIcon(for: row.icon),
                                         text: row.name,
@@ -168,6 +186,38 @@ struct AACBoardView : View {
             }
         )
     }
+    
+    private func cardHandler(_ card: Card) {
+        if var cards = self.cards, cards.count >= 2 {
+            if let pos = self.getCardPos(card) {
+                cards[pos.0].remove(at: pos.1)
+            } else {
+                if card.category == .CORE {
+                    cards[0].append(card)
+                } else if let index = cards.firstIndex(where: { $0.contains(where: { $0.category == card.category }) }) {
+                    cards[index].append(card)
+                } else if let index = cards[1...].firstIndex(where: { $0.isEmpty }) {
+                    cards[index].append(card)
+                }
+            }
+            self.cards = cards
+        }
+    }
+    
+    private func getCardPos(_ card: Card) -> (Int, Int)? {
+        guard let cards = self.cards else { return nil }
+        
+        for (colIndex, col) in cards.enumerated() {
+            for (rowIndex, row) in col.enumerated() {
+                if row.id == card.id {
+                    return (colIndex, rowIndex)
+                }
+            }
+        }
+        
+        return nil
+    }
+
 }
 
 #Preview {

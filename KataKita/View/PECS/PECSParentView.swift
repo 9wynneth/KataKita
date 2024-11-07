@@ -8,40 +8,47 @@
 import SwiftUI
 
 struct PECSParentView: View {
-    //MARK: Viewport size
-    let screenWidth = UIScreen.main.bounds.width
-    let screenHeight = UIScreen.main.bounds.height
+    @Binding var cards: [[Card]]
     
     //MARK: Button color
     let colors: [Color] = [.black, .brown, .orange, .red, .purple, .pink, .blue, .green, .yellow]
     
-    let templateWidth = 1366.0
-    let templateHeight = 1024.0
+    init(_ cards: Binding<[[Card]]>) {
+        self._cards = cards
+    }
     
     var body: some View {
-        VStack {
-            HStack(spacing: 220) {
-                ForEach(0..<5, id: \.self) { _ in
-                    //rectangle
-                    VStack (spacing: 5) {
-                        
+        HStack(spacing: 20) {
+            ForEach(Array(self.cards.enumerated()), id: \.offset) { i, column in
+                //rectangle
+                VStack (spacing: 5) {
+                    ForEach(Array(column.enumerated()), id: \.offset) { j, card in
+                        CustomButton(
+                            icon: resolveIcon(for: card.icon),
+                            text: card.name,
+                            width: .infinity,
+                            height: .infinity,
+                            font: 24,
+                            iconWidth: 80,
+                            iconHeight: 60,
+                            bgColor: card.category.getColorString(),
+                            bgTransparency: 0.65,
+                            fontColor: "000000",
+                            fontTransparency: 1.0, cornerRadius: 13, isSystemImage: false
+                        )
                     }
-                    .background(
-                        Rectangle()
-                            .fill(Color(hex: "D9D9D9", transparency: 0.4))
-                            .frame(width: 180, height: 580)
-                        
-                    )
-                    
                 }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(
+                    Rectangle()
+                        .fill(Color(hex: "D9D9D9", transparency: 0.4))
+                )
             }
-            .frame(width: screenWidth * (1180 / templateWidth), height: screenHeight * (700 / templateHeight))
-
         }
-
+        .padding(20)
     }
 }
 
 #Preview {
-    PECSParentView()
+    PECSParentView(Binding.constant([[],[],[],[],[]]))
 }

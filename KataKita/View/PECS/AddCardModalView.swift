@@ -9,9 +9,11 @@ import SwiftUI
 
 struct AddCardModalView: View {
     //MARK: Viewport Size
+    @Binding var cards: [[Card]]
+    
+    @State private var pecsCards: [[Card]]? = nil
     @State private var addingCard: Int? = nil
     @State private var addingBoard = false
-    @State private var editing = false
     
     let screenWidth = UIScreen.main.bounds.width
     let screenHeight = UIScreen.main.bounds.height
@@ -20,6 +22,10 @@ struct AddCardModalView: View {
     
     @State private var id = UUID()
     @State private var searchText = ""
+    
+    init(_ cards: Binding<[[Card]]>) {
+        self._cards = cards
+    }
 
     var selectedBoard: Board? {
         if let board = BoardManager.shared.boards.first(where: { $0.id == id }) {
@@ -43,7 +49,6 @@ struct AddCardModalView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            
             // MARK: Navigation && Actions
             HStack (spacing: 0) {
                 HStack(spacing: 0) {
@@ -95,7 +100,6 @@ struct AddCardModalView: View {
             }
             .padding(.top, 15)
             
-            
             // MARK: BOARD
             VStack {
                 // MARK: Search Bar
@@ -111,27 +115,16 @@ struct AddCardModalView: View {
                         TextContent(text: "Done", size: 20, color: "000000", weight: "bold")
                                                         .padding(.trailing, screenWidth * 0.04)
                     }
-                    .frame(width: screenWidth * 0.8)
-                    .padding(.leading, 10)
-                    .padding(.top, 5)
-                    .padding(.bottom, 10)
+                    .frame(maxWidth: .infinity)
+                    .padding(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 10))
+                    
                     Spacer()
                     
                 }
 
             HStack(alignment: .top, spacing: 25) {
                 if let board = self.selectedBoard {
-                    AACBoardView(
-                        board,
-                        editing: self.$editing,
-                        add: { colIndex in
-                            self.addingCard = colIndex
-                        },
-                        del: { colIndex, rowIndex in
-                            print("remove \(colIndex) \(rowIndex)")
-                            BoardManager.shared.removeCard(column: colIndex, row: rowIndex)
-                        }
-                    )
+                    AACBoardView(board, cards: self.$pecsCards)
                 }
                 
                 VStack(spacing: screenHeight * 0.02) {
@@ -145,22 +138,24 @@ struct AddCardModalView: View {
                 }
             }
         }
-            .padding(.top, 5)
+            .padding(EdgeInsets(top: 5, leading: 0, bottom: 50, trailing: 0))
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
             .background(
                 Rectangle()
                     .fill(Color.white)
                     .clipShape(
-                        .rect(topLeadingRadius: 45, bottomLeadingRadius: 10, bottomTrailingRadius: 10, topTrailingRadius: 45)
+                        .rect(topLeadingRadius: 45, bottomLeadingRadius: 0, bottomTrailingRadius: 0, topTrailingRadius: 45)
                     )
                     .frame(width: screenWidth)
                     .ignoresSafeArea()
             )
         }
-        .padding(EdgeInsets(top: 30, leading: 45, bottom: 10, trailing: 45))
-        .frame(maxWidth: .infinity, maxHeight: screenHeight * 0.75)
+        .offset(y: 50)
+        .padding(EdgeInsets(top: 30, leading: 45, bottom: 40, trailing: 45))
+        .frame(maxWidth: .infinity)
         .background(Color.clear)
         .onAppear {
+            self.pecsCards = self.cards
             if let firstBoard = BoardManager.shared.boards.first {
                 id = firstBoard.id
             }
@@ -168,11 +163,16 @@ struct AddCardModalView: View {
         .onChange(of: id) {
             BoardManager.shared.selectId(id)
         }
+        .onChange(of: self.pecsCards) {
+            if let cards = self.pecsCards {
+                self.cards = cards
+            }
+        }
     }
     
 }
 
 
 #Preview {
-    AddCardModalView()
+    AddCardModalView(Binding.constant([[Card]]()))
 }
