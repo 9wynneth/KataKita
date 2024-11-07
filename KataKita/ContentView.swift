@@ -26,14 +26,18 @@ struct ContentView: View {
             Picker("Select View", selection: $selectedSegment) {
                 Text("AAC").tag(0)
                 Text("BELAJAR").tag(1)
+//                Text("JADWAL").tag(2)
+
             }
             .pickerStyle(SegmentedPickerStyle())
             .frame(width: 500)
             
             if self.selectedSegment == 0 {
                 BetterAACView()
-            } else {
+            } else if self.selectedSegment == 1 {
                 PECSView(droppedCards: $droppedCards, deletedCards: $deletedCards)
+            } else {
+                DailyActivityView()
             }
         }
         .frame(alignment: .topLeading)
