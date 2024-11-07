@@ -14,6 +14,8 @@ enum Category: String, Codable, CaseIterable {
     case VERB
     case NOUN
     case ADJECTIVE
+    case CONJUNCTION
+
     
     func getColor() -> Color {
         switch self {
@@ -28,7 +30,9 @@ enum Category: String, Codable, CaseIterable {
             case .NOUN:
                 return .orange
             case .ADJECTIVE:
-                return .gray
+                return .blue
+            case .CONJUNCTION:
+                return .white
         }
     }
     
@@ -46,6 +50,8 @@ enum Category: String, Codable, CaseIterable {
                 return "F2B95C"
             case .ADJECTIVE:
                 return "D4F3FF"
+            case .CONJUNCTION:
+                return "FFFFFF"
         }
     }
 }
