@@ -191,7 +191,7 @@ struct BetterAACView: View {
                                     }
                                 } else {
                                     if let icon = board.icon {
-                                        Image(icon)
+                                        Image(resolveIcon(for: icon))
                                             .resizable()
                                             .aspectRatio(contentMode: .fit)
                                             .frame(width: 50)

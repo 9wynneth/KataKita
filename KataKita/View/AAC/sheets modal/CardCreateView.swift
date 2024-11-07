@@ -33,6 +33,7 @@ struct CardCreateView: View {
     @State private var navigateToCekVMView = false
     @State private var addingCard: Int? = nil
     @State private var imageFromLocal: URL?
+    @State private var isGender = false
     
     @Binding var navigateFromImage: Bool
     @Binding var selectedColumnIndexValue: Int
@@ -89,6 +90,16 @@ struct CardCreateView: View {
                                             action: {
                                                 navigatesFromImage = true
                                                 textToSpeak = assetName
+                                                if textToSpeak.hasPrefix("GIRL_") {
+                                                    textToSpeak = textToSpeak.replacingOccurrences(of: "GIRL_", with: "")
+                                                    isGender = true
+                                                } else if textToSpeak.hasPrefix("BOY_") {
+                                                    textToSpeak = textToSpeak.replacingOccurrences(of: "BOY_", with: "")
+                                                    isGender = true
+                                                }
+                                                else {
+                                                    isGender = false
+                                                }
                                                 filteredAssets = [assetName]
                                                 isIconTypeImage = false
                                             }
@@ -169,6 +180,14 @@ struct CardCreateView: View {
             selectedIcon = imageFromLocal?.path ?? ""
         } else {
             selectedIcon = textToSpeak.lowercased()
+            if isGender {
+                if viewModel.userProfile.gender {
+                    selectedIcon = "GIRL_" + selectedIcon
+                }
+                else {
+                    selectedIcon = "BOY_" + selectedIcon
+                }
+            }
         }
         let icon = selectedIcon
         let text = textToSpeak
@@ -202,6 +221,13 @@ struct SearchIconsView: View {
                     ForEach(filteredIcons, id: \.self) { icon in
                         Button(action: {
                             selectedIcon = icon
+
+                            if selectedIcon.hasPrefix("GIRL_") {
+                                selectedIcon = selectedIcon.replacingOccurrences(of: "GIRL_", with: "")
+                            } else if selectedIcon.hasPrefix("BOY_") {
+                                selectedIcon = selectedIcon.replacingOccurrences(of: "BOY_", with: "")
+                            }
+
                             dismiss()
                         }) {
                             CustomButton(
