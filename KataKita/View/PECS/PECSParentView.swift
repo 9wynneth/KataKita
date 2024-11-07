@@ -9,6 +9,10 @@ import SwiftUI
 
 struct PECSParentView: View {
     @Binding var cards: [[Card]]
+    
+    @State private var width: CGFloat = 0.0
+    @State private var height: CGFloat = 0.0
+    
     //MARK: Viewport size
     let screenWidth = UIScreen.main.bounds.width
     let screenHeight = UIScreen.main.bounds.height
@@ -16,41 +20,42 @@ struct PECSParentView: View {
     //MARK: Button color
     let colors: [Color] = [.black, .brown, .orange, .red, .purple, .pink, .blue, .green, .yellow]
     
+    
     init(_ cards: Binding<[[Card]]>) {
         self._cards = cards
     }
     
-
-    
     var body: some View {
-        HStack(spacing: 20) {
+        HStack(alignment: .top, spacing: 20) {
             ForEach(Array(self.cards.enumerated()), id: \.offset) { i, column in
                 //rectangle
-                VStack (spacing: 5) {
+                VStack(spacing: 10) {
                     ForEach(Array(column.enumerated()), id: \.offset) { j, card in
-                        if j <= 4 {
+                        ZStack(alignment: .topTrailing) {
                             CustomButton(
                                 icon: resolveIcon(for: card.icon),
                                 text: card.name,
-                                width: screenWidth * 0.09,
-                                height: screenWidth * 0.09,
-                                font: 38,
-                                iconWidth: 80,
-                                iconHeight: 80,
+                                width: (self.height - 60) / 5,
+                                height: (self.height - 60) / 5,
+                                font: 30,
+                                iconWidth: Int((self.width - 20) / 3),
+                                iconHeight: Int ((self.width - 20) / 3),
                                 bgColor: card.category.getColorString(),
                                 bgTransparency: 0.65,
                                 fontColor: "000000",
-                                fontTransparency: 1.0, cornerRadius: 13, isSystemImage: false
+                                fontTransparency: 1.0,
+                                cornerRadius: 13,
+                                isSystemImage: false
                             )
                             
                             CustomButton(
                                 icon: "xmark",
                                 text: "",
-                                width: 50,
-                                height: 50,
-                                font: 24,
-                                iconWidth: 20,
-                                iconHeight: 20,
+                                width: 30,
+                                height: 30,
+                                font: 15,
+                                iconWidth: 15,
+                                iconHeight: 15,
                                 bgColor: "F47455",
                                 bgTransparency: 1,
                                 fontColor: "ffffff",
@@ -61,18 +66,20 @@ struct PECSParentView: View {
                                 cards[i].remove(at: j)
                             }
                             .offset(x: -5, y: 5)
-                            .padding(1)
                         }
-                        
                     }
-                    
-                Spacer()
                 }
-                .padding(.top, 12)
-                .frame(width: screenWidth * 0.15, height: screenHeight*0.65)
+                .padding(10)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                 .background(
-                    Rectangle()
-                        .fill(Color(hex: "D9D9D9", transparency: 0.4))
+                    GeometryReader { geometry in
+                        Rectangle()
+                            .fill(Color(hex: "D9D9D9", transparency: 0.4))
+                            .onAppear {
+                                self.width = geometry.frame(in: .global).width
+                                self.height = geometry.frame(in: .global).height
+                            }
+                    }
                 )
             }
         }

@@ -255,11 +255,17 @@ struct AACBoardView : View {
                 cards[pos.0].remove(at: pos.1)
             } else {
                 if card.category == .CORE {
-                    cards[0].append(card)
+                    if cards[0].count < 5 {
+                        cards[0].append(card)
+                    }
                 } else if let index = cards.firstIndex(where: { $0.contains(where: { $0.category == card.category }) }) {
-                    cards[index].append(card)
+                    if cards[index].count < 5 {
+                        cards[index].append(card)
+                    }
                 } else if let index = cards[1...].firstIndex(where: { $0.isEmpty }) {
-                    cards[index].append(card)
+                    if cards[index].count < 5 {
+                        cards[index].append(card)
+                    }
                 }
             }
             self.cards = cards
