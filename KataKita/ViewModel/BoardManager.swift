@@ -293,7 +293,7 @@ class BoardManager {
                         ],
                         [
                             Card(name: "cuci", icon: "cuci", category: .VERB, isIconTypeImage: false),
-                            Card(name: "potong", icon: "potong", category: .VERB, isIconTypeImage: false),
+                            Card(name: "potong", icon: "memotong", category: .VERB, isIconTypeImage: false),
                             Card(name: "masak", icon: "masak", category: .VERB, isIconTypeImage: false),
                             Card(name: "buka", icon: "buka", category: .VERB, isIconTypeImage: false),
                             Card(name: "tutup", icon: "tutup", category: .VERB, isIconTypeImage: false)
