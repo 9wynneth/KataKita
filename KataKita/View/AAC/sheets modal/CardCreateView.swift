@@ -180,14 +180,14 @@ struct CardCreateView: View {
             selectedIcon = imageFromLocal?.path ?? ""
         } else {
             selectedIcon = textToSpeak.lowercased()
-            if isGender {
-                if viewModel.userProfile.gender {
-                    selectedIcon = "GIRL_" + selectedIcon
-                }
-                else {
-                    selectedIcon = "BOY_" + selectedIcon
-                }
-            }
+//            if isGender {
+//                if viewModel.userProfile.gender {
+//                    selectedIcon = "GIRL_" + selectedIcon
+//                }
+//                else {
+//                    selectedIcon = "BOY_" + selectedIcon
+//                }
+//            }
         }
         let icon = selectedIcon
         let text = textToSpeak
