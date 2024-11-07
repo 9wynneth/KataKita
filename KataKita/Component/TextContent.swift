@@ -23,7 +23,7 @@ init(text: String, size:Int, color: String, transparency: Double = 1.0, weight: 
 }
 
 var body: some View {
-        var styledText: Text = Text(text)
+        var styledText: Text = Text(LocalizedStringKey(text))
         .font(Font.custom("MADECarvingSoftPERSONALUSE-\(mapFontWeight(weight))", size: CGFloat(size)))
             .foregroundColor(Color(hex: color, transparency: transparency))
 

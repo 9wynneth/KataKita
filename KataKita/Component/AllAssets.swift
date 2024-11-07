@@ -2,44 +2,15 @@ import SwiftUI
 
 struct AllAssets {
     static let assets: [String] = [
-        "air", "alas bedak", "alkitab", "ambil", "ambil buku", "ambil pewarna", "ambulance", "apa",
-        "api", "astronot", "awas", "ayah", "ayam goreng",
-        "ayam", "babi", "baca", "bagaimana", "baju",
-        "bak mandi", "ball", "balok", "balon udara", "balon", "bantal", "batu",
-        "belalang", "berat", "bermain", "besar", "bidan",
-        "bintang", "bis", "bola", "bolpoin",
-        "botol", "bowling", "buah buahan", "buang","BUKA BUKU DAN ALAT PEWARNA", "buka", "buku",
-        "bulan", "bumi", "bunga", "burung", "capung", "celana panjang",
-        "celana pendek", "cermin", "cobaprinter", "coklat", "crayon", "cucitangan", "dan", "delete", "deodoran", "di atas", "di bawah", "di dalam", "di luar", "di samping", "di", "dia", "DUDUK DI MEJA BELAJAR",
-        "dimana", "dingin", "dokter bedah", "dokter",
-        "drum", "gajah", "gambar", "garam", "garpu",
-        "gelas air", "gunting 1", "gunting", "guru", "handuk", "hanger",
-        "helikopter", "hiu", "home", "hujan",
-        "ibu", "ikan", "iya", "jagung",
-        "jaket", "jam", "jerapah", "kacamata", "kalender", "kalkulator",
-        "kamera", "kamu", "kaos kaki", "kapal", "kapan", "kardus",
-        "kartu atm", "kasur", "ke", "kecil", "kepiting", "keran", "keranjang", "keras", "kereta", "kertas 1", "kertas", "kita", "kodok", "koki", "kolam renang",
-        "komputer", "kontraktor", "korek", "kotak p3k",
-        "kotak pensil", "ktp", "kuas", "kucing", "kuda",
-        "kue kering", "kue", "kunci", "kunyah", "kupu kupu", "kura kura", "kursi roda",
-        "kursi", "lampu 1", "lampu lalu lintas", "lampu",
-        "layang layang", "lebah", "lem", "lemari",
-        "lilin", "lipstik", "lotion", "makan", "mandi", "manis",
-        "map", "masukkan", "matahari", "mau", "meja belajar", "meja",
-       "menempel", "mesin cuci", "mie", "minum", "mobil polisi", "mobil", "monyet", "mood tracker", "motor", "mug", "musik", "nasi", "nelayan", "obat", "odol pasta gigi", "odol sikat gigi",
-        "ombak", "panas", "papan tulis", "paus",
-        "pelari", "pelukis", "pemadam kebakaran", "pemain basket", "penggaris",
-        "penghapus", "pensil warna", "pensil", "pesawat", "petani", "peternak",
-        "piring", "plester", "pohon", "polisi",
-        "potong", "print", "puding", "putar", "RAPIKAN ALAT DAN BUKU",
-        "rautan", "resleting", "rok", "roti", "rumah", "sabun",
-        "sandal", "saya", "selesai 1", "selesai", "semangka", "semut",
-        "sendok", "sepatu", "sepeda", "setrika", "settings", "shampo", "shower", "siapa", "sikat gigi",
-        "sikat", "silet", "singa", "sisir", "sofa", "sosis",
-        "spons cuci", "stabilo", "suka", "sup", "surat", "sushi",
-        "suster", "susu", "sweater", "tas", "teh", "televisi", "telur", "tempat sampah", "termometer", "tidak mau", "tidak suka", "tidak", "timbangan", "tisu", "toilet",
-        "tolong", "topi koboi", "trash", "troli",
-        "truk", "tukang pos", "tulis", "tutup", "uang",
-        "ular", "warnai"
+        "air", "alas bedak", "alkitab", "ambil", "ambulan", "anggur", "apa", "apel", "api", "asin", "astronot", "awas", "ayah", "ayam", "ayam goreng", "babi", "baca", "bagaimana", "baju", "bak mandi", "balok", "balon", "balon udara", "baut", "bayi", "berenang", "bantal", "batu", "belalang", "berat", "bermain", "besar", "bidan", "bintang", "bis", "bola", "bolpoin", "botol", "bowling", "buah", "buang", "buka", "buku", "bulan", "bumi", "bunga", "burger", "burung", "capung", "celana panjang", "celana pendek", "cermin kecil", "cermin", "coklat", "crayon", "cuci tangan", "cuci piring", "dan", "delete", "deodoran", "deterjen", "di", "di atas", "di bawah", "di dalam", "di luar", "di samping", "dia", "dimana", "dingin", "dokter", "dokter bedah", "donut", "es krim", "drum", "foto", "gajah", "gambar", "garam", "garpu", "permainan", "gelas", "gunting", "gelembung", "gitar", "gunung", "guru", "pengering rambut", "handuk", "hanger", "helikopter", "helm", "handphone", "hiu", "home", "hujan", "hutan", "ibu", "ikan", "iya", "jagung", "jaket", "jam", "jerapah", "kacamata", "kalender", "kalkulator", "kamera", "kamu", "kaos kaki", "kapal", "kapan", "kardus", "kartu atm", "kasur", "ke", "kecil", "kepiting", "keran", "keranjang", "keras", "kereta api", "kertas", "kita", "kodok", "koki", "koala", "kolam renang", "komputer", "kontraktor", "kompor", "koper", "korek api", "kotak p3k", "kotak pensil", "kotak mainan", "ktp", "kuas", "kucing", "kuda", "kue", "kue kering", "kunci", "kunyah", "kulkas", "kupu-kupu", "kura-kura", "kursi", "kursi roda", "lampu", "lampu lalu lintas", "lampu tidur", "layang-layang", "lebah", "lem", "lemari", "lift", "lilin", "lipstik", "lotion", "mainan", "makan", "mandi", "manis", "map", "masuk", "matahari", "mau", "meja", "meja belajar", "memotong", "menempel", "mesin cuci", "menggunting", "menulis", "menyikat gigi", "mewarnai", "mie", "minum", "mixer", "mobil", "mobil polisi", "monyet", "mood tracker", "motor", "mug", "musik", "nasi", "nelayan", "netflix", "obat", "ombak", "panas", "panci", "panggangan", "papan tulis", "pasta gigi", "paus", "pelari", "pelukis", "pemadam kebakaran", "pemain basket", "penggaris", "penghapus", "pensil", "pensil warna", "permen", "pesawat", "petani", "peternak", "piring", "pizza", "pena", "pengering rambut", "plester", "pohon", "polisi", "potong", "print", "puding", "putar", "rautan", "resleting", "rak buku", "rok", "roti", "roti lapis", "roti panggang", "robot", "rumah", "sabun", "sandal", "sarung tangan", "saya", "selesai", "semangka", "semut", "sendok", "sepatu", "sepeda", "setrika", "settings", "shampo", "shower", "siapa", "sikat", "sikat gigi", "silet", "singa", "sisir", "soda", "sofa", "sosis", "spon cuci", "stabilo", "sudah", "suka", "sup", "surat", "sushi", "suster", "susu", "sweater", "tas", "teh", "televisi", "telur", "telfon", "tempat sampah", "termometer", "tidak", "tidak mau", "tidak suka", "timbangan", "tisu", "toilet", "tolong", "topi koboi", "tong sampah", "troli", "topi", "truk", "tukang pos", "tulis", "tutup", "uang", "ular", "virus", "wajan", "warnai", "youtube"
+
     ]
+    
+    static let boyAssets: [String] = [
+        "BOY_AMBIL", "BOY_BERMAIN", "BOY_BUANG", "BOY_DIA", "BOY_DIMANA", "BOY_DUDUK", "BOY_IYA", "BOY_KAMU", "BOY_KAPAN", "BOY_KITA", "BOY_MAKAN", "BOY_MAU", "BOY_MEMBACA", "BOY_MENGANGKAT", "BOY_MENGUNYAH", "BOY_MINUM", "BOY_SAKIT", "BOY_SAYA", "BOY_SIAPA", "BOY_SUKA", "BOY_TIDAK MAU", "BOY_TIDAK SUKA", "BOY_TIDAK"
+        ]
+    
+    static let girlAssets: [String] = [
+        "GIRL_BERMAIN", "GIRL_DIMANA", "GIRL_DUDUK", "GIRL_IYA", "GIRL_KAMU", "GIRL_KAPAN", "GIRL_KITA", "GIRL_MAKAN", "GIRL_MAU", "GIRL_MEMBACA", "GIRL_MENGANGKAT", "GIRL_MENGUNYAH", "GIRL_MINUM", "GIRL_SAKIT", "GIRL_SAYA", "GIRL_SIAPA", "GIRL_SUKA", "GIRL_TIDAK SUKA", "GIRL_TIDAK"
+        ]
 }
