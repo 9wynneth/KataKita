@@ -28,7 +28,7 @@ struct PECSParentView: View {
                 //rectangle
                 VStack (spacing: 5) {
                     ForEach(Array(column.enumerated()), id: \.offset) { j, card in
-                        if j <= 5 {
+                        if j <= 4 {
                             CustomButton(
                                 icon: resolveIcon(for: card.icon),
                                 text: card.name,
