@@ -46,7 +46,7 @@ class BoardManager {
                         ],
                         [
                             Card(name: "ambil", icon: "ambil", category: .VERB, isIconTypeImage: false),
-                            Card(name: "kunyah", icon: "mengunyah", category: .VERB, isIconTypeImage: false),
+                            Card(name: "mengunyah", icon: "mengunyah", category: .VERB, isIconTypeImage: false),
                             Card(name: "potong", icon: "memotong", category: .VERB, isIconTypeImage: false),
                             Card(name: "buang", icon: "buang", category: .VERB, isIconTypeImage: false),
                             Card(name: "masukkan", icon: "MASUK", category: .VERB, isIconTypeImage: false)

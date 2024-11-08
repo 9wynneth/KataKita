@@ -6,7 +6,7 @@
 //
 import SwiftUI
 
-struct CustomButtonSearch: View {
+struct CustomButtonBoard: View {
     let icon: String?
     let text: String?
     let font: Int
