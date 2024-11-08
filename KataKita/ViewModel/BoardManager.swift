@@ -50,7 +50,7 @@ class BoardManager {
                             Card(name: "kunyah", icon: "kunyah", category: .VERB, isIconTypeImage: false),
                             Card(name: "potong", icon: "menggunting", category: .VERB, isIconTypeImage: false),
                             Card(name: "buang", icon: "buang", category: .VERB, isIconTypeImage: false),
-                            Card(name: "masukkan", icon: "masukkan", category: .VERB, isIconTypeImage: false)
+                            Card(name: "masukkan", icon: "masuk", category: .VERB, isIconTypeImage: false)
                         ],
                         [
                             Card(name: "dingin", icon: "dingin", category: .ADJECTIVE, isIconTypeImage: false),
@@ -292,14 +292,14 @@ class BoardManager {
                             Card(name: "tolong", icon: "tolong", category: .SOCIAL, isIconTypeImage: false)
                         ],
                         [
-                            Card(name: "cuci", icon: "cuci", category: .VERB, isIconTypeImage: false),
+                            Card(name: "cuci piring", icon: "cuci piring", category: .VERB, isIconTypeImage: false),
                             Card(name: "potong", icon: "memotong", category: .VERB, isIconTypeImage: false),
                             Card(name: "masak", icon: "masak", category: .VERB, isIconTypeImage: false),
                             Card(name: "buka", icon: "buka", category: .VERB, isIconTypeImage: false),
                             Card(name: "tutup", icon: "tutup", category: .VERB, isIconTypeImage: false)
                         ],
                         [
-                            Card(name: "masukkan", icon: "masukkan", category: .VERB, isIconTypeImage: false),
+                            Card(name: "masukkan", icon: "masuk", category: .VERB, isIconTypeImage: false),
                             Card(name: "ambil", icon: "ambil", category: .VERB, isIconTypeImage: false),
                             Card(name: "goreng", icon: "goreng", category: .VERB, isIconTypeImage: false),
                             Card(name: "aduk", icon: "aduk", category: .VERB, isIconTypeImage: false),

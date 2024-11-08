@@ -79,41 +79,47 @@ struct BetterAACView: View {
                             HStack {
                                 HStack (spacing: 20){
                                     ForEach(Array(sharedState.selectedCards.enumerated()), id: \.element.id) { index, card in
-                                        if index < 10 {  // Only show cards where index is less than 10
+                                        if index < 10 {
                                             VStack {
-                                                // Directly using Image to load from the asset catalog
-                                                
-                                                
-                                                if viewModel.userProfile.gender {
-                                                    if AllAssets.genderAssets.contains(card.name) {
-                                                        Image(resolveIcon(for: "GIRL_" + card.icon))  // icon name is passed from the card
-                                                            .resizable()
-                                                            .frame(width: 50, height: 50)
+//                                                if card.isIconTypeImage == true
+//                                                {
+//                                                    Image(uiImage: (UIImage(named: card.icon) ?? UIImage()))
+//                                                        .resizable()
+//                                                        .frame(width: 50, height: 50)
+//                                                }
+//                                                else
+//                                                {
+                                                    if viewModel.userProfile.gender {
+                                                        if AllAssets.genderAssets.contains(card.name) {
+                                                            Image(resolveIcon(for: "GIRL_" + card.icon))  // icon name is passed from the card
+                                                                .resizable()
+                                                                .frame(width: 50, height: 50)
+                                                        }
+                                                        else
+                                                        {
+                                                            Image(resolveIcon(for: card.icon))  // icon name is passed from the card
+                                                                .resizable()
+                                                                .frame(width: 50, height: 50)
+                                                        }
                                                     }
                                                     else
                                                     {
-                                                        Image(resolveIcon(for: card.icon))  // icon name is passed from the card
-                                                            .resizable()
-                                                            .frame(width: 50, height: 50)
+                                                        if AllAssets.genderAssets.contains(card.name)
+                                                        {
+                                                            Image(resolveIcon(for: "BOY_" + card.icon))  // icon name is passed from the card
+                                                                .resizable()
+                                                                .frame(width: 50, height: 50)
+                                                            
+                                                        }
+                                                        else
+                                                        {
+                                                            Image(resolveIcon(for: card.icon))  // icon name is passed from the card
+                                                                .resizable()
+                                                                .frame(width: 50, height: 50)
+                                                            
+                                                        }
                                                     }
-                                                }
-                                                else
-                                                {
-                                                    if AllAssets.genderAssets.contains(card.name)
-                                                    {
-                                                        Image(resolveIcon(for: "BOY_" + card.icon))  // icon name is passed from the card
-                                                            .resizable()
-                                                            .frame(width: 50, height: 50)
-                                                        
-                                                    }
-                                                    else
-                                                    {
-                                                        Image(resolveIcon(for: card.icon))  // icon name is passed from the card
-                                                            .resizable()
-                                                            .frame(width: 50, height: 50)
-                                                        
-                                                    }
-                                                }
+                                             //   }
                                                 Text(LocalizedStringKey(card.name))
                                                     .font(.system(size: 18))
                                                     .lineLimit(1)
