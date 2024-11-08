@@ -4,13 +4,13 @@ func filterAssets(by input: String, for gender: Bool?) -> [String] {
     if let gender = gender {
         if gender {
             // Filter for girl-specific assets with "GIRL_" prefix
-            let girlAssets = AllAssets.girlAssets.filter {
+            let girlAssets = AllAssets.shared.girlAssets.filter {
                 $0.lowercased().starts(with: "girl_\(input.lowercased())")
             }
             if !girlAssets.isEmpty { return girlAssets }
         } else {
             // Filter for boy-specific assets with "BOY_" prefix
-            let boyAssets = AllAssets.boyAssets.filter {
+            let boyAssets = AllAssets.shared.boyAssets.filter {
                 $0.lowercased().starts(with: "boy_\(input.lowercased())")
             }
             if !boyAssets.isEmpty { return boyAssets }
@@ -18,14 +18,19 @@ func filterAssets(by input: String, for gender: Bool?) -> [String] {
     }
     
     // If no gender-specific match is found, fall back to general assets
-    return (AllAssets.assets + AllAssets.girlAssets.map { $0.replacingOccurrences(of: "GIRL_", with: "") }
-            + AllAssets.boyAssets.map { $0.replacingOccurrences(of: "BOY_", with: "") }).filter {
+    return (AllAssets.shared.assets + AllAssets.shared.girlAssets.map { $0.replacingOccurrences(of: "GIRL_", with: "") }
+            + AllAssets.shared.boyAssets.map { $0.replacingOccurrences(of: "BOY_", with: "") }).filter {
         $0.lowercased().starts(with: input.lowercased())
     }
 }
 
 // Updated CardCreateView
 struct CardCreateView: View {
+    @Environment(StickerImageManager.self) var stickerManager
+    @Environment(OriginalImageManager.self) var originalImageManager
+    @Environment(ProfileViewModel.self) private var viewModel
+    @Environment(BoardManager.self) private var boardManager
+
     @State private var textToSpeak: String = ""
     @State private var selectedIcon: String = ""
     @State private var showingAddImageView = false
@@ -33,10 +38,7 @@ struct CardCreateView: View {
     @State private var navigateToCekVMView = false
     @State private var addingCard: Int? = nil
     @State private var isGender = false
-    @Environment(StickerImageManager.self) var stickerManager
-    @Environment(OriginalImageManager.self) var originalImageManager
-
-    
+       
     @Binding var navigateFromImage: Bool
     @Binding var selectedColumnIndexValue: Int
     @Binding var showAACSettings: Bool
@@ -44,8 +46,8 @@ struct CardCreateView: View {
     @State private var isIconTypeImage = false
     @State private var selectedCategory: Category = .CORE
     @State private var filteredAssets: [String] = []
-    @StateObject private var viewModel = ProfileViewModel()
-    @Environment(BoardManager.self) private var boardManager
+    
+
 
     var body: some View {
         NavigationStack {
@@ -230,10 +232,11 @@ struct CardCreateView: View {
 
 // Updated SearchIconView
 struct SearchIconsView: View {
+    @Environment(ProfileViewModel.self) private var viewModel
+
     @Binding var selectedIcon: String
     @Environment(\.dismiss) private var dismiss
     @State private var searchText = ""
-    @EnvironmentObject var viewModel: ProfileViewModel
     
     var filteredIcons: [String] {
         filterAssets(by: searchText, for: viewModel.userProfile.gender)

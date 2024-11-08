@@ -11,10 +11,11 @@ import AVFoundation
 struct PECSView: View {
     @Environment(PECSViewModel.self) var pECSViewModel
     @Environment(SecurityManager.self) var securityManager
+    @Environment(ProfileViewModel.self) private var viewModel
+
     //MARK: Viewport size
     let screenWidth = UIScreen.main.bounds.width
     let screenHeight = UIScreen.main.bounds.height
-    @StateObject private var viewModel = ProfileViewModel()
 
     //MARK: Button color
     let colors: [Color] = [
@@ -48,21 +49,13 @@ struct PECSView: View {
                 ZStack {
                     PECSChildView(self.$childCards)
                         .opacity(toggleOn ? 0 : 1)
-                        .rotation3DEffect(
-                            .degrees(toggleOn ? 180 : 0),
-                            axis: (x: 0.0, y: 1.0, z: 0.0)
-                        )
                         .animation(
-                            .easeInOut(duration: 0.6), value: toggleOn)
+                            .easeInOut(duration: 0.25), value: toggleOn)
 
                     PECSParentView(self.$cards)
                         .opacity(toggleOn ? 1 : 0)
-                        .rotation3DEffect(
-                            .degrees(toggleOn ? 0 : -180),
-                            axis: (x: 0.0, y: 1.0, z: 0.0)
-                        )
                         .animation(
-                            .easeInOut(duration: 0.6), value: toggleOn)
+                            .easeInOut(duration: 0.25), value: toggleOn)
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(
@@ -159,130 +152,41 @@ struct PECSView: View {
             HStack(spacing: 20) {
                 HStack {
                     ForEach(droppedCards) { card in
-                        if viewModel.userProfile.gender {
-                            if AllAssets.genderAssets.contains(card.name) {
-                                CustomButton(
-                                    icon: resolveIcon(for: "GIRL_" + card.icon),
-                                    text: card.name,
-                                    width: 100,
-                                    height: 100,
-                                    font: 18,
-                                    iconWidth: 50,
-                                    iconHeight: 50,
-                                    bgColor: card.category.getColorString(),
-                                    bgTransparency: toggleOn ? 0.0 : 1.0,
-                                    fontColor: "000000",
-                                    fontTransparency: toggleOn ? 0.0 : 1.0,
-                                    cornerRadius: 13,
-                                    isSystemImage: false
-                                )
-                                .onAppear{
-                                    speakCardName(card)
-                                }
-                            }
-                            else
-                            {
-                                CustomButton(
-                                    icon: resolveIcon(for: card.icon),
-                                    text: card.name,
-                                    width: 100,
-                                    height: 100,
-                                    font: 18,
-                                    iconWidth: 50,
-                                    iconHeight: 50,
-                                    bgColor: card.category.getColorString(),
-                                    bgTransparency: toggleOn ? 0.0 : 1.0,
-                                    fontColor: "000000",
-                                    fontTransparency: toggleOn ? 0.0 : 1.0,
-                                    cornerRadius: 13,
-                                    isSystemImage: false
-                                )
-                                .onAppear{
-                                    speakCardName(card)
-                                }
-                            }
+                        PECSCard(
+                            card,
+                            card.isIconTypeImage ? nil : resolveIcon(for: "\(self.genderHandler(card.icon))\(card.icon)")
+                        )
+                        .onAppear{
+                            speakCardName(card)
                         }
-                        else
-                        {
-                            if AllAssets.genderAssets.contains(card.name)
-                            {
-                                CustomButton(
-                                    icon: resolveIcon(for: "BOY_" + card.icon),
-                                    text: card.name,
-                                    width: 100,
-                                    height: 100,
-                                    font: 18,
-                                    iconWidth: 50,
-                                    iconHeight: 50,
-                                    bgColor: card.category.getColorString(),
-                                    bgTransparency: toggleOn ? 0.0 : 1.0,
-                                    fontColor: "000000",
-                                    fontTransparency: toggleOn ? 0.0 : 1.0,
-                                    cornerRadius: 13,
-                                    isSystemImage: false
-                                )
-                                .onAppear{
-                                    speakCardName(card)
-                                }
-                                
-                            }
-                            else
-                            {
-                                CustomButton(
-                                    icon: resolveIcon(for: card.icon),
-                                    text: card.name,
-                                    width: 100,
-                                    height: 100,
-                                    font: 18,
-                                    iconWidth: 50,
-                                    iconHeight: 50,
-                                    bgColor: card.category.getColorString(),
-                                    bgTransparency: toggleOn ? 0.0 : 1.0,
-                                    fontColor: "000000",
-                                    fontTransparency: toggleOn ? 0.0 : 1.0,
-                                    cornerRadius: 13,
-                                    isSystemImage: false
-                                )
-                                .onAppear{
-                                    speakCardName(card)
-                                }
-                                
-                            }
-                        }
-                        
                     }
 
                     Color.clear
                         .frame(height: 100)
                 }
                 .padding()
-
                 .frame(maxWidth: .infinity)
                 .background(
                     RoundedRectangle(cornerRadius: 30)
-                        .fill(
-                            Color(
-                                hex: "ffffff",
-                                transparency: toggleOn ? 0.0 : 1.0)
-                        )
-                        .onDrop(of: [.cardType], isTargeted: nil) { items, _ in
-                            guard let item = items.first else { return false }
-
-                            item.loadTransferable(type: Card.self) { result in
-                                if let loadedCard = try? result.get() {
-                                    droppedCards.append(loadedCard)
-                                    removeCard(loadedCard)
-                                } else {
-                                    print("Failed to load dropped card.")
-                                }
-                            }
-                            return true
-                        }
-                        .onTapGesture{
-                            speakText(for: droppedCards)
-                        }
-
+                        .fill(Color(hex: "ffffff", transparency: toggleOn ? 0.0 : 1.0))
                 )
+                .onDrop(of: [.cardType], isTargeted: nil) { items, _ in
+                    guard let item = items.first else { return false }
+
+                    let _ = item.loadTransferable(type: Card.self) { result in
+                        if let loadedCard = try? result.get() {
+                            droppedCards.append(loadedCard)
+                            removeCard(loadedCard)
+                        } else {
+                            print("Failed to load dropped card.")
+                        }
+                    }
+                    return true
+                }
+                .onTapGesture{
+                    speakText(for: droppedCards)
+                }
+
 
                 CustomButton(
                     icon: "trash",
@@ -299,7 +203,6 @@ struct PECSView: View {
                     action: {
                         restoreDeletedCards()
                         droppedCards.removeAll()
-
                     }
                 )
             }
@@ -313,7 +216,6 @@ struct PECSView: View {
         }
         .overlay(
             Group {
-           
                 if isAskPassword {
                     VStack {
                         SecurityView()
@@ -327,17 +229,6 @@ struct PECSView: View {
                 }
             }
         )
-        //        .sheet(isPresented: $isAddCard) {
-        //            ZStack {
-        //                Color.clear
-        //                    .background(BackgroundClearView())
-        //                    .onTapGesture {
-        //                        isAddCard = false
-        //                    }
-        //                AddCardModalView(self.$cards)
-        //            }
-        //            .frame(width: screenWidth)
-        //        }
         .onTapGesture {
             isAskPassword = false
         }
@@ -349,40 +240,68 @@ struct PECSView: View {
                 securityManager.isCorrect = false
             }
         }
-        .onChange(of: self.cards, initial: true) {
+        .onChange(of: self.cards) {
+            self.pECSViewModel.cards = self.cards
+            self.childCards = self.cards
+
+            guard let data = try? JSONEncoder().encode(self.cards) else {
+                return
+            }
+            
+            let defaults = UserDefaults.standard
+            defaults.set(data, forKey: "pecs")
+        }
+        .onAppear {
+            let defaults = UserDefaults.standard
+            
+            if let raw = defaults.object(forKey: "pecs") as? Data {
+                guard let cards = try? JSONDecoder().decode([[Card]].self, from: raw) else {
+                    return
+                }
+                self.cards = cards
+            }
+            
             self.pECSViewModel.cards = self.cards
             self.childCards = self.cards
         }
         .navigationBarBackButtonHidden(true)
         .sheet(isPresented: $isAddCard) {
-            Color.clear
-                .background(BackgroundClearView()
-                    .onTapGesture{
-                        isAddCard = false
-
+            ZStack {
+                Color.clear
+                    .background(BackgroundClearView())
+                    .edgesIgnoringSafeArea(.all)
+                    
+                AddCardModalView(self.$cards)
+                    .offset(y: 20)
+                    .frame(width: screenWidth)
+                    .cornerRadius(15)
+                    .shadow(radius: 10)
+                    .background(Color.clear)
+                    .onTapGesture {
+                        // Prevent sheet dismissal when tapping on the modal itself
                     }
-                )
-                .edgesIgnoringSafeArea(.all)
-                .onTapGesture {
-                    isAddCard = false
-                }
-            AddCardModalView(self.$cards)
-                .offset(y: 10)
-                .frame(width: screenWidth)
-                .cornerRadius(15)
-                .shadow(radius: 10)
-                .background(Color.clear)
-                .onTapGesture {
-                    // Prevent sheet dismissal when tapping on the modal itself
-                }
-        }
 
-        //        .onChange(of: self.cards, initial: true) {
-        //            print(self.cards)
-        //            self.pECSViewModel.cards = self.cards
-        //        }
+            }
+            .onTapGesture {
+                isAddCard = false
+            }
+        }
+        .onChange(of: self.cards, initial: true) {
+            print(self.cards)
+            self.pECSViewModel.cards = self.cards
+        }
     }
 
+    private func genderHandler(_ name: String) -> String {
+        if AllAssets.shared.genderAssets.contains(name) {
+            if self.viewModel.userProfile.gender {
+                return "GIRL_"
+            }
+            return "BOY_"
+        }
+        return ""
+    }
+    
     func removeCard(_ card: Card) {
         for (i, column) in self.childCards.enumerated() {
             if let index = column.firstIndex(where: { $0.id == card.id }) {
@@ -442,6 +361,52 @@ struct BackgroundClearView: UIViewRepresentable {
     func updateUIView(_ uiView: UIView, context: Context) {}
 }
 
+struct PECSCard: View {
+    let card: Card
+    let icon: String?
+
+    init(_ card: Card, _ icon: String?) {
+        self.card = card
+        self.icon = icon
+    }
+    
+    var body: some View {
+        if self.card.isIconTypeImage {
+            CustomIcon(
+                icon: self.card.icon,
+                text: self.card.name,
+                width: 100,
+                height: 100,
+                font: 14,
+                iconWidth: 50,
+                iconHeight: 50,
+                bgColor: Color(hex: card.category.getColorString(), transparency: 1),
+                bgTransparency: 0.65,
+                fontColor: Color.black,
+                fontTransparency: 1.0,
+                cornerRadius: 13
+            ) {}
+        } else if let icon = self.icon {
+            CustomButton(
+                icon: icon,
+                text: self.card.name,
+                width: 100,
+                height: 100,
+                font: 14,
+                iconWidth: 50,
+                iconHeight: 50,
+                bgColor: self.card.category.getColorString(),
+                bgTransparency: 0.65,
+                fontColor: "000000",
+                fontTransparency: 1.0,
+                cornerRadius: 13,
+                isSystemImage: false
+            )
+        } else {
+            EmptyView()
+        }
+    }
+}
 //extension PECSView: DropDelegate {
 //    func performDrop(info: DropInfo) -> Bool {
 //        guard let item = info.itemProviders(for: ["public.text"]).first else { return false }

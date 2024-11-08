@@ -75,7 +75,7 @@ struct CustomButton: View {
                 if let text = text, !text.isEmpty {
                     TextContent(
                         text: text,
-                        size: Int(CGFloat(font)),
+                        size: Int(font),
                         color: fontColor,
                         transparency: fontTransparency,
                         weight: "medium"
@@ -83,8 +83,6 @@ struct CustomButton: View {
                     .padding(.horizontal)
                     .lineLimit(1)
                     .frame(maxWidth: .infinity, alignment: .center)
-                    .minimumScaleFactor(0.3)
-                    .allowsTightening(true)
                 }
                 
                 Spacer()

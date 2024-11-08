@@ -24,7 +24,6 @@ struct AddCardModalView: View {
     
     @State private var id = UUID()
     //    @State private var searchText = ""
-    @Environment(BoardManager.self) private var boardManager
     @Environment(\.presentationMode) private var presentationMode // For dismissing the sheet
     
     

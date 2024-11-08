@@ -96,27 +96,27 @@ import SwiftUI
 
 struct SearchIconView: View {
     @Binding var selectedIcon: String
+    @Environment(ProfileViewModel.self) private var viewModel
     @Environment(\.dismiss) private var dismiss
     @State private var searchText = ""
-    @StateObject private var viewModel = ProfileViewModel()
-    let allIcons = AllAssets.assets + AllAssets.girlAssets + AllAssets.boyAssets
+    let allIcons = AllAssets.shared.assets + AllAssets.shared.girlAssets + AllAssets.shared.boyAssets
 
     var filteredIcons: [String] {
         if !searchText.isEmpty {
             if viewModel.userProfile.gender == true {
                 // Check if there is a girl asset with "GIRL_" + searchText
-                if let girlAsset = AllAssets.girlAssets.first(where: { $0.localizedCaseInsensitiveContains("GIRL_" + searchText) }) {
-                    return [girlAsset] + Array(AllAssets.assets.filter { $0.localizedCaseInsensitiveContains(searchText) }.prefix(10))
+                if let girlAsset = AllAssets.shared.girlAssets.first(where: { $0.localizedCaseInsensitiveContains("GIRL_" + searchText) }) {
+                    return [girlAsset] + Array(AllAssets.shared.assets.filter { $0.localizedCaseInsensitiveContains(searchText) }.prefix(10))
                 } else {
                     // Fallback to general assets if no girl-specific asset matches, limiting to the first match
-                    return Array(AllAssets.assets.filter { $0.localizedCaseInsensitiveContains(searchText) }.prefix(10))
+                    return Array(AllAssets.shared.assets.filter { $0.localizedCaseInsensitiveContains(searchText) }.prefix(10))
                 }
             } else {
-                if let boyAsset = AllAssets.boyAssets.first(where: { $0.localizedCaseInsensitiveContains("BOY_" + searchText) }) {
-                    return [boyAsset] + Array(AllAssets.assets.filter { $0.localizedCaseInsensitiveContains(searchText) }.prefix(10))
+                if let boyAsset = AllAssets.shared.boyAssets.first(where: { $0.localizedCaseInsensitiveContains("BOY_" + searchText) }) {
+                    return [boyAsset] + Array(AllAssets.shared.assets.filter { $0.localizedCaseInsensitiveContains(searchText) }.prefix(10))
                 } else {
                     // Fallback to general assets if no boy-specific asset matches, limiting to the first match
-                    return Array(AllAssets.assets.filter { $0.localizedCaseInsensitiveContains(searchText) }.prefix(10))
+                    return Array(AllAssets.shared.assets.filter { $0.localizedCaseInsensitiveContains(searchText) }.prefix(10))
                 }
             }
         } else {
