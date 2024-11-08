@@ -49,6 +49,7 @@
 "buang" = "throw";
 "buka" = "open";
 "buku" = "book";
+"buku cerita" = "story book";
 "bulan" = "moon";
 "bumi" = "earth";
 "bunga" = "flower";
@@ -167,7 +168,9 @@
 "mandi" = "bath";
 "manis" = "sweet";
 "map" = "folder";
-"masuk" = "enter";
+"masuk" = "in";
+"masukkan" = "in";
+"mangkok" = "bowl";
 "matahari" = "sun";
 "meja" = "table";
 "meja belajar" = "study table";
@@ -266,6 +269,7 @@
 "telur" = "egg";
 "telfon" = "telephone";
 "termometer" = "thermometer";
+"tempat tidur" = "bed";
 "timbangan" = "scale";
 "tisu" = "tissue";
 "tisu roll" = "toilet paper";
@@ -397,3 +401,12 @@
 "Kotak Kata Penuh" = "Word Box Full";
 "Kamu hanya bisa memilih 10 kata. Hapus kata yang sudah dipilih untuk memilih kata baru." = "You can only choose 10 words. Delete selected words to choose new one";
 
+"Hitam" = "Black";
+"Cokelat" = "Chocolate";
+"Oranye" = "Orange";
+"Merah" = "Red";
+"Ungu" = "Purple";
+"Pink" = "Pink";
+"Biru" = "Blue";
+"Hijau" = "Green";
+"Kuning" = "Yellow";

@@ -233,7 +233,7 @@ struct SearchIconsView: View {
     @Binding var selectedIcon: String
     @Environment(\.dismiss) private var dismiss
     @State private var searchText = ""
-    @StateObject private var viewModel = ProfileViewModel()
+    @EnvironmentObject var viewModel: ProfileViewModel
     
     var filteredIcons: [String] {
         filterAssets(by: searchText, for: viewModel.userProfile.gender)

@@ -101,7 +101,7 @@ struct CardList: Identifiable {
     var bgColor: Color  // Background color
     var bgTransparency: Double  // Background transparency
     var fontColor: Color
-    
+    var isIconTypeImage: Bool
 }
 
 class Board: Identifiable {
