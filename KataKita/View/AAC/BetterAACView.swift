@@ -213,8 +213,8 @@ struct BetterAACView: View {
                                     CustomButton(
                                         icon: "xmark",
                                         text: "",
-                                        width: 50,
-                                        height: 50,
+                                        width: 35,
+                                        height: 35,
                                         font: 24,
                                         iconWidth: 20,
                                         iconHeight: 20,
@@ -424,12 +424,13 @@ struct BetterAACView: View {
                         VStack {
                             SecurityView()
                         }
-                        .frame(width: screenWidth, height: screenHeight)
-                        .background(Color.white.opacity(0.01))
+                        .frame(width: screenWidth, height: screenHeight + 50)
+                        .background(Color.gray.opacity(0.3))
                         .onTapGesture{
                             isAskPassword = false
                             self.editing.toggle()
                         }
+                        .edgesIgnoringSafeArea(.all)
                     }
                 }
             )

@@ -22,7 +22,9 @@ struct PECSChildView: View {
     
     init(_ cards: Binding<[[Card]]>) {
         self._cards = cards
+        
     }
+    
     
     var body: some View {
         HStack(alignment: .top, spacing: 20) {

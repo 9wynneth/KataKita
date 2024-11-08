@@ -313,13 +313,17 @@ struct PECSView: View {
         }
         .overlay(
             Group {
+           
                 if isAskPassword {
-                    SecurityView()
-                } else if isAddCard {
-                    //TODO: Create Logic Here
-                    EmptyView()
-                } else {
-                    EmptyView()
+                    VStack {
+                        SecurityView()
+                    }
+                    .frame(width: screenWidth, height: screenHeight + 50)
+                    .background(Color.gray.opacity(0.3))
+                    .onTapGesture{
+                        isAskPassword = false
+                    }
+                    .edgesIgnoringSafeArea(.all)
                 }
             }
         )
@@ -352,7 +356,13 @@ struct PECSView: View {
         .navigationBarBackButtonHidden(true)
         .sheet(isPresented: $isAddCard) {
             Color.clear
-                .background(BackgroundClearView())
+                .background(BackgroundClearView()
+                    .onTapGesture{
+                        isAddCard = false
+
+                    }
+                )
+                .edgesIgnoringSafeArea(.all)
                 .onTapGesture {
                     isAddCard = false
                 }
@@ -362,7 +372,11 @@ struct PECSView: View {
                 .cornerRadius(15)
                 .shadow(radius: 10)
                 .background(Color.clear)
+                .onTapGesture {
+                    // Prevent sheet dismissal when tapping on the modal itself
+                }
         }
+
         //        .onChange(of: self.cards, initial: true) {
         //            print(self.cards)
         //            self.pECSViewModel.cards = self.cards
