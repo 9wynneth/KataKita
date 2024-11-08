@@ -1,28 +1,34 @@
 import SwiftUI// Helper function to filter assets based on input and gender
 
 func filterAssets(by input: String, for gender: Bool?) -> [String] {
+    // Determine the asset set based on device language
+    let assets = Locale.current.languageCode == "id" ? AllAssets.assets : AllAssets.englishAssets
+    let girlAssets = Locale.current.languageCode == "id" ? AllAssets.girlAssets : AllAssets.girlAssets
+    let boyAssets = Locale.current.languageCode == "id" ? AllAssets.boyAssets : AllAssets.boyAssets
+
     if let gender = gender {
         if gender {
             // Filter for girl-specific assets with "GIRL_" prefix
-            let girlAssets = AllAssets.girlAssets.filter {
-                $0.lowercased().starts(with: "girl_\(input.lowercased())")
+            let filteredGirlAssets = girlAssets.filter {
+                $0.lowercased().starts(with: "GIRL_\(input.lowercased())")
             }
-            if !girlAssets.isEmpty { return girlAssets }
+            if !filteredGirlAssets.isEmpty { return filteredGirlAssets }
         } else {
             // Filter for boy-specific assets with "BOY_" prefix
-            let boyAssets = AllAssets.boyAssets.filter {
-                $0.lowercased().starts(with: "boy_\(input.lowercased())")
+            let filteredBoyAssets = boyAssets.filter {
+                $0.lowercased().starts(with: "BOY_\(input.lowercased())")
             }
-            if !boyAssets.isEmpty { return boyAssets }
+            if !filteredBoyAssets.isEmpty { return filteredBoyAssets }
         }
     }
     
     // If no gender-specific match is found, fall back to general assets
-    return (AllAssets.assets + AllAssets.girlAssets.map { $0.replacingOccurrences(of: "GIRL_", with: "") }
-            + AllAssets.boyAssets.map { $0.replacingOccurrences(of: "BOY_", with: "") }).filter {
+    return (assets + girlAssets.map { $0.replacingOccurrences(of: "GIRL_", with: "") }
+            + boyAssets.map { $0.replacingOccurrences(of: "BOY_", with: "") }).filter {
         $0.lowercased().starts(with: input.lowercased())
     }
 }
+
 
 // Updated CardCreateView
 struct CardCreateView: View {
@@ -91,7 +97,7 @@ struct CardCreateView: View {
                             VStack(alignment: .leading) {
                                 HStack {
                                     ForEach(filteredAssets.prefix(3), id: \.self) { assetName in
-                                        CustomButton(
+                                        CustomButtonSearch(
                                             icon: resolveIcon(for: assetName),
                                             text: assetName,
                                             width: 100,
@@ -126,7 +132,7 @@ struct CardCreateView: View {
                                 }
                             }
                         } else if !textToSpeak.isEmpty {
-                            CustomButton(
+                            CustomButtonSearch(
                                 text: textToSpeak,
                                 width: 100,
                                 height: 100,
@@ -143,7 +149,7 @@ struct CardCreateView: View {
                         }
                     }
                     
-                    CustomButton(
+                    CustomButtonSearch(
                         icon: "plus",
                         width: 100,
                         height: 100,
@@ -208,14 +214,17 @@ struct CardCreateView: View {
         }
 
         // Handle the card creation
-        let icon = selectedIcon
-        let text = textToSpeak
+        let icon = NSLocalizedString(selectedIcon, comment: "")
         let color = selectedCategory
 
-        print("Handling done action: Icon: \(icon), Text: \(text), Background Color: \(color)")
+        // Localize only when displaying in SwiftUI
+        let localizedText = NSLocalizedString(textToSpeak, comment: "")
+
+        print("Handling done action: Icon: \(icon), Text: \(localizedText), Background Color: \(color)")
 
         // Add card to board
-        boardManager.addCard(Card(name: text, icon: icon, category: selectedCategory, isIconTypeImage: isIconTypeImage), column: selectedColumnIndexValue)
+        boardManager.addCard(Card(name: localizedText, icon: icon, category: selectedCategory, isIconTypeImage: isIconTypeImage), column: selectedColumnIndexValue)
+
 
         // Reset the image state after the card has been added
         originalImageManager.imageFromLocal = nil
@@ -229,14 +238,32 @@ struct CardCreateView: View {
 }
 
 // Updated SearchIconView
+
 struct SearchIconsView: View {
     @Binding var selectedIcon: String
     @Environment(\.dismiss) private var dismiss
     @State private var searchText = ""
     @EnvironmentObject var viewModel: ProfileViewModel
     
-    var filteredIcons: [String] {
-        filterAssets(by: searchText, for: viewModel.userProfile.gender)
+    // Step 1: Fetch all assets localized to the user's language
+    var localizedAssets: [(original: String, localized: String)] {
+        let allAssets = AllAssets.assets + AllAssets.boyAssets + AllAssets.girlAssets
+        return allAssets.map { asset in
+            (original: asset, localized: NSLocalizedString(asset, comment: ""))
+        }
+    }
+    
+    // Step 2: Filter assets by localized names matching the English input
+    var filteredIcons: [(original: String, localized: String)] {
+        if searchText.isEmpty {
+            return localizedAssets
+        } else {
+            // Filter based on localized names in Indonesian that match English input
+            return localizedAssets.filter { _, localized in
+                let englishTerm = NSLocalizedString(localized, tableName: "Localizable", comment: "")
+                return englishTerm.localizedCaseInsensitiveContains(searchText)
+            }
+        }
     }
     
     var body: some View {
@@ -247,21 +274,14 @@ struct SearchIconsView: View {
 
             ScrollView {
                 LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 16), count: 3), spacing: 16) {
-                    ForEach(filteredIcons, id: \.self) { icon in
+                    ForEach(filteredIcons, id: \.original) { icon in
                         Button(action: {
-                            selectedIcon = icon
-
-                            if selectedIcon.hasPrefix("GIRL_") {
-                                selectedIcon = selectedIcon.replacingOccurrences(of: "GIRL_", with: "")
-                            } else if selectedIcon.hasPrefix("BOY_") {
-                                selectedIcon = selectedIcon.replacingOccurrences(of: "BOY_", with: "")
-                            }
-
+                            selectedIcon = icon.original
                             dismiss()
                         }) {
-                            CustomButton(
-                                icon: resolveIcon(for: icon),
-                                text: icon,
+                            CustomButtonSearch(
+                                icon: resolveIcon(for: icon.localized),
+                                text: icon.original,
                                 width: 150,
                                 height: 150,
                                 font: 40,
@@ -272,8 +292,8 @@ struct SearchIconsView: View {
                                 fontColor: "#000000",
                                 fontTransparency: 1.0,
                                 cornerRadius: 20,
-                                isSystemImage: icon.contains("person.fill")) {
-                                    selectedIcon = icon
+                                isSystemImage: icon.original.contains("person.fill")) {
+                                    selectedIcon = icon.localized
                                     dismiss()
                                 }
                         }
