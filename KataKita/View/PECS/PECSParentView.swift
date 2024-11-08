@@ -12,6 +12,7 @@ struct PECSParentView: View {
     
     @State private var width: CGFloat = 0.0
     @State private var height: CGFloat = 0.0
+    @StateObject private var viewModel = ProfileViewModel()
     
     //MARK: Viewport size
     let screenWidth = UIScreen.main.bounds.width
@@ -34,42 +35,170 @@ struct PECSParentView: View {
                 VStack(spacing: 10) {
                     ForEach(Array(column.enumerated()), id: \.offset) { j, card in
                         ZStack(alignment: .topTrailing) {
-                            CustomButton(
-                                icon: resolveIcon(for: card.icon),
-                                text: card.name,
-                                width: (self.height - 60) / 5,
-                                height: (self.height - 60) / 5,
-                                font: 30,
-                                iconWidth: Int((self.width - 20) / 3),
-                                iconHeight: Int ((self.width - 20) / 3),
-                                bgColor: card.category.getColorString(),
-                                bgTransparency: 0.65,
-                                fontColor: "000000",
-                                fontTransparency: 1.0,
-                                cornerRadius: 13,
-                                isSystemImage: false
-                            )
-                            
-                            CustomButton(
-                                icon: "xmark",
-                                text: "",
-                                width: 30,
-                                height: 30,
-                                font: 15,
-                                iconWidth: 15,
-                                iconHeight: 15,
-                                bgColor: "F47455",
-                                bgTransparency: 1,
-                                fontColor: "ffffff",
-                                fontTransparency: 1.0,
-                                cornerRadius: 25,
-                                isSystemImage: true
-                            ) {
-//                                cards[i].remove(at: j)
-                                self.cardToDelete = (i, j)
-                                self.showDeleteAlert = true
+                            if viewModel.userProfile.gender {
+                                if AllAssets.genderAssets.contains(card.name) {
+                                    CustomButton(
+                                        icon: resolveIcon(for: "GIRL_" + card.icon),
+                                        text: card.name,
+                                        width: (self.height - 60) / 5,
+                                        height: (self.height - 60) / 5,
+                                        font: 30,
+                                        iconWidth: Int((self.width - 20) / 3),
+                                        iconHeight: Int ((self.width - 20) / 3),
+                                        bgColor: card.category.getColorString(),
+                                        bgTransparency: 0.65,
+                                        fontColor: "000000",
+                                        fontTransparency: 1.0,
+                                        cornerRadius: 13,
+                                        isSystemImage: false
+                                    )
+                                    
+                                    CustomButton(
+                                        icon: "xmark",
+                                        text: "",
+                                        width: 30,
+                                        height: 30,
+                                        font: 15,
+                                        iconWidth: 15,
+                                        iconHeight: 15,
+                                        bgColor: "F47455",
+                                        bgTransparency: 1,
+                                        fontColor: "ffffff",
+                                        fontTransparency: 1.0,
+                                        cornerRadius: 25,
+                                        isSystemImage: true
+                                    ) {
+        //                                cards[i].remove(at: j)
+                                        self.cardToDelete = (i, j)
+                                        self.showDeleteAlert = true
+                                    }
+                                    .offset(x: -5, y: 5)
+                                }
+                                else
+                                {
+                                    CustomButton(
+                                        icon: resolveIcon(for: card.icon),
+                                        text: card.name,
+                                        width: (self.height - 60) / 5,
+                                        height: (self.height - 60) / 5,
+                                        font: 30,
+                                        iconWidth: Int((self.width - 20) / 3),
+                                        iconHeight: Int ((self.width - 20) / 3),
+                                        bgColor: card.category.getColorString(),
+                                        bgTransparency: 0.65,
+                                        fontColor: "000000",
+                                        fontTransparency: 1.0,
+                                        cornerRadius: 13,
+                                        isSystemImage: false
+                                    )
+                                    
+                                    CustomButton(
+                                        icon: "xmark",
+                                        text: "",
+                                        width: 30,
+                                        height: 30,
+                                        font: 15,
+                                        iconWidth: 15,
+                                        iconHeight: 15,
+                                        bgColor: "F47455",
+                                        bgTransparency: 1,
+                                        fontColor: "ffffff",
+                                        fontTransparency: 1.0,
+                                        cornerRadius: 25,
+                                        isSystemImage: true
+                                    ) {
+        //                                cards[i].remove(at: j)
+                                        self.cardToDelete = (i, j)
+                                        self.showDeleteAlert = true
+                                    }
+                                    .offset(x: -5, y: 5)
+                                }
                             }
-                            .offset(x: -5, y: 5)
+                            else
+                            {
+                                if AllAssets.genderAssets.contains(card.name)
+                                {
+                                    CustomButton(
+                                        icon: resolveIcon(for: "BOY_" + card.icon),
+                                        text: card.name,
+                                        width: (self.height - 60) / 5,
+                                        height: (self.height - 60) / 5,
+                                        font: 30,
+                                        iconWidth: Int((self.width - 20) / 3),
+                                        iconHeight: Int ((self.width - 20) / 3),
+                                        bgColor: card.category.getColorString(),
+                                        bgTransparency: 0.65,
+                                        fontColor: "000000",
+                                        fontTransparency: 1.0,
+                                        cornerRadius: 13,
+                                        isSystemImage: false
+                                    )
+                                    
+                                    CustomButton(
+                                        icon: "xmark",
+                                        text: "",
+                                        width: 30,
+                                        height: 30,
+                                        font: 15,
+                                        iconWidth: 15,
+                                        iconHeight: 15,
+                                        bgColor: "F47455",
+                                        bgTransparency: 1,
+                                        fontColor: "ffffff",
+                                        fontTransparency: 1.0,
+                                        cornerRadius: 25,
+                                        isSystemImage: true
+                                    ) {
+        //                                cards[i].remove(at: j)
+                                        self.cardToDelete = (i, j)
+                                        self.showDeleteAlert = true
+                                    }
+                                    .offset(x: -5, y: 5)
+                                    
+                                }
+                                else
+                                {
+                                    CustomButton(
+                                        icon: resolveIcon(for: card.icon),
+                                        text: card.name,
+                                        width: (self.height - 60) / 5,
+                                        height: (self.height - 60) / 5,
+                                        font: 30,
+                                        iconWidth: Int((self.width - 20) / 3),
+                                        iconHeight: Int ((self.width - 20) / 3),
+                                        bgColor: card.category.getColorString(),
+                                        bgTransparency: 0.65,
+                                        fontColor: "000000",
+                                        fontTransparency: 1.0,
+                                        cornerRadius: 13,
+                                        isSystemImage: false
+                                    )
+                                    
+                                    CustomButton(
+                                        icon: "xmark",
+                                        text: "",
+                                        width: 30,
+                                        height: 30,
+                                        font: 15,
+                                        iconWidth: 15,
+                                        iconHeight: 15,
+                                        bgColor: "F47455",
+                                        bgTransparency: 1,
+                                        fontColor: "ffffff",
+                                        fontTransparency: 1.0,
+                                        cornerRadius: 25,
+                                        isSystemImage: true
+                                    ) {
+        //                                cards[i].remove(at: j)
+                                        self.cardToDelete = (i, j)
+                                        self.showDeleteAlert = true
+                                    }
+                                    .offset(x: -5, y: 5)
+                                    
+                                }
+                            }
+                            
+                            
                         }
                     }
                 }

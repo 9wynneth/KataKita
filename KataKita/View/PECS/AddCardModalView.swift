@@ -24,7 +24,8 @@ struct AddCardModalView: View {
     
     @State private var id = UUID()
     @State private var searchText = ""
-    
+    @Environment(BoardManager.self) private var boardManager
+
     init(_ cards: Binding<[[Card]]>) {
         self._cards = cards
     }
@@ -114,7 +115,8 @@ struct AddCardModalView: View {
                             .shadow(radius: 2)
                         
                         Spacer()
-//                        TextContent(text: "Done", size: 20, color: "000000", weight: "bold")
+
+//                        TextContent(text: "Selesai", size: 20, color: "000000", weight: "bold")
 //                                                        .padding(.trailing, screenWidth * 0.04)
                     }
                     .frame(maxWidth: .infinity)

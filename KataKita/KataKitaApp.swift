@@ -48,6 +48,8 @@ struct KataKitaApp: App {
     @State private var profileManager = ProfileViewModel()
     @State private var boardManager = BoardManager()
     @StateObject private var sharedState = SharedState()
+    @State private var boardManager = BoardManager()
+
 
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
@@ -178,6 +180,7 @@ struct KataKitaApp: App {
         .environment(boardManager)
         .environmentObject(profileManager)
         .environmentObject(sharedState)
+        .environment(boardManager)
 
     }
 }

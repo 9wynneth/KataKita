@@ -27,6 +27,7 @@ struct BetterAACView: View {
     @State private var showAACSettings = false
     @State private var showprofile = false
     @State var isAskPassword = false
+    @StateObject private var viewModel = ProfileViewModel()
 
     
     @State static var navigateFromImage = false
@@ -79,18 +80,53 @@ struct BetterAACView: View {
                             HStack {
                                 HStack (spacing: 20){
                                     ForEach(Array(sharedState.selectedCards.enumerated()), id: \.element.id) { index, card in
-                                        if index < 10 {  // Only show cards where index is less than 10
+                                        if index < 10 {
                                             VStack {
-                                                // Directly using Image to load from the asset catalog
-                                                Image(resolveIcon(for: card.icon))  // icon name is passed from the card
-                                                    .resizable()
-                                                    .frame(width: 50, height: 50)
-                                                
-                                                Text(card.name)
+//                                                if card.isIconTypeImage == true
+//                                                {
+//                                                    Image(uiImage: (UIImage(named: card.icon) ?? UIImage()))
+//                                                        .resizable()
+//                                                        .frame(width: 50, height: 50)
+//                                                }
+//                                                else
+//                                                {
+                                                    if viewModel.userProfile.gender {
+                                                        if AllAssets.genderAssets.contains(card.name) {
+                                                            Image(resolveIcon(for: "GIRL_" + card.icon))  // icon name is passed from the card
+                                                                .resizable()
+                                                                .frame(width: 50, height: 50)
+                                                        }
+                                                        else
+                                                        {
+                                                            Image(resolveIcon(for: card.icon))  // icon name is passed from the card
+                                                                .resizable()
+                                                                .frame(width: 50, height: 50)
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        if AllAssets.genderAssets.contains(card.name)
+                                                        {
+                                                            Image(resolveIcon(for: "BOY_" + card.icon))  // icon name is passed from the card
+                                                                .resizable()
+                                                                .frame(width: 50, height: 50)
+                                                            
+                                                        }
+                                                        else
+                                                        {
+                                                            Image(resolveIcon(for: card.icon))  // icon name is passed from the card
+                                                                .resizable()
+                                                                .frame(width: 50, height: 50)
+                                                            
+                                                        }
+                                                    }
+                                             //   }
+                                                Text(LocalizedStringKey(card.name))
                                                     .font(.system(size: 18))
                                                     .lineLimit(1)
                                                     .minimumScaleFactor(0.5)
                                                     .foregroundColor(card.fontColor)
+                                                    
                                             }
                                             .frame(width: 80, height: 80)
                                             .background(card.bgColor.opacity(card.bgTransparency)) // Apply the background color with transparency
@@ -192,7 +228,7 @@ struct BetterAACView: View {
                                     }
                                 } else {
                                     if let icon = board.icon {
-                                        Image(icon)
+                                        Image(resolveIcon(for: icon))
                                             .resizable()
                                             .aspectRatio(contentMode: .fit)
                                             .frame(width: 50)
@@ -438,25 +474,27 @@ struct BetterAACView: View {
         
         
     func speakText(_ text: String) {
-        let utterance = AVSpeechUtterance(string: text)
-        utterance.voice = AVSpeechSynthesisVoice(language: "id-ID")
-        utterance.rate = 0.5
-        speechSynthesizer.speak(utterance)
-    }
-    
-    func speakAllText(from buttons: [CardList]) {
-        // Concatenate all the names from the Card models into a single text
-        var fullText = ""
-        for card in buttons {
-            fullText += "\(card.name) "
+            let localizedText = NSLocalizedString(text, comment: "Text to be spoken")
+            let utterance = AVSpeechUtterance(string: localizedText)
+            utterance.voice = AVSpeechSynthesisVoice(language: "id-ID")
+            utterance.rate = 0.5
+            speechSynthesizer.speak(utterance)
         }
 
-        // Use the AVSpeechSynthesizer to speak the full text
-        let utterance = AVSpeechUtterance(string: fullText)
-        utterance.voice = AVSpeechSynthesisVoice(language: "id-ID") // Indonesian language
-        utterance.rate = 0.5 // Set the speech rate
-        speechSynthesizer.speak(utterance)
-    }
+        func speakAllText(from buttons: [CardList]) {
+            // Concatenate all the localized names from the Card models into a single text
+            var fullText = ""
+            for card in buttons {
+                let localizedName = NSLocalizedString(card.name, comment: "Concatenated text for speech synthesis")
+                fullText += "\(localizedName) "
+            }
+
+            // Use the AVSpeechSynthesizer to speak the full text
+            let utterance = AVSpeechUtterance(string: fullText)
+            utterance.voice = AVSpeechSynthesisVoice(language: "id-ID") 
+            utterance.rate = 0.5 // Set the speech rate
+            speechSynthesizer.speak(utterance)
+        }
 }
 
 #Preview {

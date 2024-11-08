@@ -20,7 +20,7 @@ struct BoardCreateView: View {
                 Section(header: Text("Pilih Icon / Gambar")) {
                     VStack {
                         HStack {
-                            Text("Icon yang dipilih: \(selectedIcon)")
+                            Text("Icon yang dipilih: ")
                             Spacer()
                             NavigationLink("Pilih Icon") {
                                 SearchIconView(selectedIcon: $selectedIcon)
@@ -98,48 +98,71 @@ struct SearchIconView: View {
     @Binding var selectedIcon: String
     @Environment(\.dismiss) private var dismiss
     @State private var searchText = ""
-    let allIcons = AllAssets.assets
+    @StateObject private var viewModel = ProfileViewModel()
+    let allIcons = AllAssets.assets + AllAssets.girlAssets + AllAssets.boyAssets
 
     var filteredIcons: [String] {
-        if searchText.isEmpty {
-            return allIcons
-        } else {
-            return allIcons.filter { $0.localizedCaseInsensitiveContains(searchText) }
-        }
-    }
-    
-    var body: some View {
-        ScrollView {
-            LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 16), count: 3), spacing: 16) {
-                ForEach(filteredIcons, id: \.self) { icon in
-                    Button(action: {
-                        // Update selectedIcon and dismiss the view
-                        selectedIcon = icon
-                        dismiss()
-                    }) {
-                        CustomButton(
-                            icon: resolveIcon(for: icon),
-                            text: icon,
-                            width: 200,
-                            height: 200,
-                            font: 40,
-                            iconWidth: 100,
-                            iconHeight: 100,
-                            bgColor: "#FFFFFF",
-                            bgTransparency: 1.0,
-                            fontColor: "#000000",
-                            fontTransparency: 1.0,
-                            cornerRadius: 20,
-                            isSystemImage: icon.contains("person.fill")) {
-                                selectedIcon = icon
-                                dismiss()
-                            }
-                    }
+        if !searchText.isEmpty {
+            if viewModel.userProfile.gender == true {
+                // Check if there is a girl asset with "GIRL_" + searchText
+                if let girlAsset = AllAssets.girlAssets.first(where: { $0.localizedCaseInsensitiveContains("GIRL_" + searchText) }) {
+                    return [girlAsset] + Array(AllAssets.assets.filter { $0.localizedCaseInsensitiveContains(searchText) }.prefix(10))
+                } else {
+                    // Fallback to general assets if no girl-specific asset matches, limiting to the first match
+                    return Array(AllAssets.assets.filter { $0.localizedCaseInsensitiveContains(searchText) }.prefix(10))
+                }
+            } else {
+                if let boyAsset = AllAssets.boyAssets.first(where: { $0.localizedCaseInsensitiveContains("BOY_" + searchText) }) {
+                    return [boyAsset] + Array(AllAssets.assets.filter { $0.localizedCaseInsensitiveContains(searchText) }.prefix(10))
+                } else {
+                    // Fallback to general assets if no boy-specific asset matches, limiting to the first match
+                    return Array(AllAssets.assets.filter { $0.localizedCaseInsensitiveContains(searchText) }.prefix(10))
                 }
             }
-            .padding()
+        } else {
+            // Show all icons by default if searchText is empty
+            return allIcons
         }
-        .searchable(text: $searchText)
+    }
+
+    
+    var body: some View {
+        VStack {
+            TextField("Cari Icon", text: $searchText)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .padding()
+
+            ScrollView {
+                LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 16), count: 3), spacing: 16) {
+                    ForEach(filteredIcons, id: \.self) { icon in
+                        Button(action: {
+                            // Update selectedIcon and dismiss the view
+                            selectedIcon = icon
+                            dismiss()
+                        }) {
+                            CustomButton(
+                                icon: resolveIcon(for: icon),
+                                text: icon,
+                                width: 150,
+                                height: 150,
+                                font: 40,
+                                iconWidth: 75,
+                                iconHeight: 75,
+                                bgColor: "#FFFFFF",
+                                bgTransparency: 1.0,
+                                fontColor: "#000000",
+                                fontTransparency: 1.0,
+                                cornerRadius: 20,
+                                isSystemImage: icon.contains("person.fill")) {
+                                    selectedIcon = icon
+                                    dismiss()
+                                }
+                        }
+                    }
+                }
+                .padding()
+            }
+        }
         .navigationBarTitle("Cari Icon", displayMode: .inline)
     }
 }

@@ -21,20 +21,25 @@ struct CustomIcon: View {
                 action()
             }
         } label: {
-            VStack(spacing: 4) { // Reduced spacing between Image and Text
+            VStack(spacing: -15) { // Reduced spacing between Image and Text
                 Image(uiImage: (UIImage(named: icon) ?? UIImage()))
                     .resizable()
                     .scaledToFit()
                     .frame(width: iconWidth, height: iconHeight)
                     .cornerRadius(cornerRadius)
                 
-                Text(text)
-                    .font(.system(size: font))
-                    .foregroundColor(fontColor.opacity(fontTransparency))
+                TextContent(
+                    text: text,
+                    size: Int(CGFloat(font)),
+                    color: "#000000",
+                    transparency: fontTransparency,
+                    weight: "medium"
+                )
             }
             .frame(width: width, height: height)
             .background(bgColor.opacity(bgTransparency))
             .cornerRadius(cornerRadius)
+            .padding(.bottom, 20)
         }
     }
 }

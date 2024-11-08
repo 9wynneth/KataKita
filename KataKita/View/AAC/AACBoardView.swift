@@ -21,6 +21,7 @@ struct AACBoardView : View {
     let speechSynthesizer = AVSpeechSynthesizer()
     
     @EnvironmentObject var sharedState: SharedState
+    @StateObject private var viewModel = ProfileViewModel()
     
     @State private var imageFromLocal: URL?
     let board: Board
@@ -94,8 +95,8 @@ struct AACBoardView : View {
                                         width: cellWidth,
                                         height: cellHeight,
                                         font: 24,
-                                        iconWidth: 80,
-                                        iconHeight: 60,
+                                        iconWidth: 100,
+                                        iconHeight: 100,
                                         bgColor: Color(hex: row.category.getColorString(), transparency: 1),
                                         bgTransparency: 0.65,
                                         fontColor: Color.black,
@@ -118,69 +119,287 @@ struct AACBoardView : View {
 
                                     
                                 } else if self.cards != nil {
-                                    CustomButton(
-                                        icon: resolveIcon(for: row.icon),
-                                        text: row.name,
-                                        width: cellWidth,
-                                        height: cellHeight,
-                                        font: 24,
-                                        iconWidth: 80,
-                                        iconHeight: 60,
-                                        bgColor: row.category.getColorString(),
-                                        bgTransparency: self.getCardPos(row) == nil ? 0.3 : 1,
-                                        fontColor: "000000",
-                                        fontTransparency: 1.0, cornerRadius: 13, isSystemImage: false
-                                    ) {
-                                        self.cardHandler(row)
-                                    }
-                                    .alert(isPresented: $showAlert) {
-                                        Alert(
-                                            title: Text("Kotak Kata Penuh"),
-                                            message: Text("Kamu hanya bisa memilih 10 kata. Hapus kata yang sudah dipilih untuk memilih kata baru."),
-                                            dismissButton: .default(Text("OK"), action: {
-                                                hasSpoken = true
-                                            })
-                                        )
-                                    }
-                                } else {
-                                    CustomButton(
-                                        icon: resolveIcon(for: row.icon),
-                                        text: row.name,
-                                        width: cellWidth,
-                                        height: cellHeight,
-                                        font: 24,
-                                        iconWidth: 80,
-                                        iconHeight: 60,
-                                        bgColor: row.category.getColorString(),
-                                        bgTransparency: 0.65,
-                                        fontColor: "000000",
-                                        fontTransparency: 1.0,
-                                        cornerRadius: 13,
-                                        isSystemImage: false
-                                    ) {
-                                        if sharedState.selectedCards.count < 10 {
-                                            showAlert = false
-                                            speakText(row.name)
-                                            let cardListItem = CardList(name: row.name, icon: row.icon, bgColor: Color.white, bgTransparency: 0.0, fontColor: Color.black)
-                                            sharedState.selectedCards.append(cardListItem)
-                                        } else {
-                                            showAlert = true
-                                            hasSpoken = false
-                                            if hasSpoken == false {
-                                                speakText("Kotak Kata Penuh")
+                                    if viewModel.userProfile.gender {
+                                        if AllAssets.genderAssets.contains(row.icon) {
+                                            CustomButton(
+                                                icon: resolveIcon(for: "GIRL_" + row.icon),
+                                                text: row.name,
+                                                width: cellWidth,
+                                                height: cellHeight,
+                                                font: 24,
+                                                iconWidth: 80,
+                                                iconHeight: 60,
+                                                bgColor: row.category.getColorString(),
+                                                bgTransparency: self.getCardPos(row) == nil ? 0.3 : 1,
+                                                fontColor: "000000",
+                                                fontTransparency: 1.0, cornerRadius: 13, isSystemImage: false
+                                            ) {
+                                                self.cardHandler(row)
+                                            }
+                                            .alert(isPresented: $showAlert) {
+                                                Alert(
+                                                    title: Text("Kotak Kata Penuh"),
+                                                    message: Text("Kamu hanya bisa memilih 10 kata. Hapus kata yang sudah dipilih untuk memilih kata baru."),
+                                                    dismissButton: .default(Text("OK"), action: {
+                                                        hasSpoken = true
+                                                    })
+                                                )
                                             }
                                         }
-                                        
-                                        
+                                        else
+                                        {
+                                            CustomButton(
+                                                icon: resolveIcon(for: row.icon),
+                                                text: row.name,
+                                                width: cellWidth,
+                                                height: cellHeight,
+                                                font: 24,
+                                                iconWidth: 80,
+                                                iconHeight: 60,
+                                                bgColor: row.category.getColorString(),
+                                                bgTransparency: self.getCardPos(row) == nil ? 0.3 : 1,
+                                                fontColor: "000000",
+                                                fontTransparency: 1.0, cornerRadius: 13, isSystemImage: false
+                                            ) {
+                                                self.cardHandler(row)
+                                            }
+                                            .alert(isPresented: $showAlert) {
+                                                Alert(
+                                                    title: Text("Kotak Kata Penuh"),
+                                                    message: Text("Kamu hanya bisa memilih 10 kata. Hapus kata yang sudah dipilih untuk memilih kata baru."),
+                                                    dismissButton: .default(Text("OK"), action: {
+                                                        hasSpoken = true
+                                                    })
+                                                )
+                                            }
+                                        }
                                     }
-                                    .alert(isPresented: $showAlert) {
-                                        Alert(
-                                            title: Text("Kotak Kata Penuh"),
-                                            message: Text("Kamu hanya bisa memilih 10 kata. Hapus kata yang sudah dipilih untuk memilih kata baru."),
-                                            dismissButton: .default(Text("OK"), action: {
-                                                hasSpoken = true
-                                            })
-                                        )
+                                    else
+                                    {
+                                        if AllAssets.genderAssets.contains(row.icon) {
+                                            CustomButton(
+                                                icon: resolveIcon(for: "BOY_" + row.icon),
+                                                text: row.name,
+                                                width: cellWidth,
+                                                height: cellHeight,
+                                                font: 24,
+                                                iconWidth: 80,
+                                                iconHeight: 60,
+                                                bgColor: row.category.getColorString(),
+                                                bgTransparency: self.getCardPos(row) == nil ? 0.3 : 1,
+                                                fontColor: "000000",
+                                                fontTransparency: 1.0, cornerRadius: 13, isSystemImage: false
+                                            ) {
+                                                self.cardHandler(row)
+                                            }
+                                            .alert(isPresented: $showAlert) {
+                                                Alert(
+                                                    title: Text("Kotak Kata Penuh"),
+                                                    message: Text("Kamu hanya bisa memilih 10 kata. Hapus kata yang sudah dipilih untuk memilih kata baru."),
+                                                    dismissButton: .default(Text("OK"), action: {
+                                                        hasSpoken = true
+                                                    })
+                                                )
+                                            }
+                                        }
+                                        else
+                                        {
+                                            CustomButton(
+                                                icon: resolveIcon(for: row.icon),
+                                                text: row.name,
+                                                width: cellWidth,
+                                                height: cellHeight,
+                                                font: 24,
+                                                iconWidth: 80,
+                                                iconHeight: 60,
+                                                bgColor: row.category.getColorString(),
+                                                bgTransparency: self.getCardPos(row) == nil ? 0.3 : 1,
+                                                fontColor: "000000",
+                                                fontTransparency: 1.0, cornerRadius: 13, isSystemImage: false
+                                            ) {
+                                                self.cardHandler(row)
+                                            }
+                                            .alert(isPresented: $showAlert) {
+                                                Alert(
+                                                    title: Text("Kotak Kata Penuh"),
+                                                    message: Text("Kamu hanya bisa memilih 10 kata. Hapus kata yang sudah dipilih untuk memilih kata baru."),
+                                                    dismissButton: .default(Text("OK"), action: {
+                                                        hasSpoken = true
+                                                    })
+                                                )
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    if viewModel.userProfile.gender {
+                                        if AllAssets.genderAssets.contains(row.icon) {
+                                            CustomButton(
+                                                icon: resolveIcon(for: "GIRL_" + row.icon),
+                                                text: row.name,
+                                                width: cellWidth,
+                                                height: cellHeight,
+                                                font: 24,
+                                                iconWidth: 80,
+                                                iconHeight: 60,
+                                                bgColor: row.category.getColorString(),
+                                                bgTransparency: 0.65,
+                                                fontColor: "000000",
+                                                fontTransparency: 1.0,
+                                                cornerRadius: 13,
+                                                isSystemImage: false
+                                            ) {
+                                                if sharedState.selectedCards.count < 10 {
+                                                    showAlert = false
+                                                    speakText(row.name)
+                                                    let cardListItem = CardList(name: row.name, icon: row.icon, bgColor: Color.white, bgTransparency: 0.0, fontColor: Color.black)
+                                                    sharedState.selectedCards.append(cardListItem)
+                                                } else {
+                                                    showAlert = true
+                                                    hasSpoken = false
+                                                    if hasSpoken == false {
+                                                        speakText("Kotak Kata Penuh")
+                                                    }
+                                                }
+                                                
+                                                
+                                            }
+                                            .alert(isPresented: $showAlert) {
+                                                Alert(
+                                                    title: Text("Kotak Kata Penuh"),
+                                                    message: Text("Kamu hanya bisa memilih 10 kata. Hapus kata yang sudah dipilih untuk memilih kata baru."),
+                                                    dismissButton: .default(Text("OK"), action: {
+                                                        hasSpoken = true
+                                                    })
+                                                )
+                                            }
+                                        }
+                                        else
+                                        {
+                                            CustomButton(
+                                                icon: resolveIcon(for: row.icon),
+                                                text: row.name,
+                                                width: cellWidth,
+                                                height: cellHeight,
+                                                font: 24,
+                                                iconWidth: 80,
+                                                iconHeight: 60,
+                                                bgColor: row.category.getColorString(),
+                                                bgTransparency: 0.65,
+                                                fontColor: "000000",
+                                                fontTransparency: 1.0,
+                                                cornerRadius: 13,
+                                                isSystemImage: false
+                                            ) {
+                                                if sharedState.selectedCards.count < 10 {
+                                                    showAlert = false
+                                                    speakText(row.name)
+                                                    let cardListItem = CardList(name: row.name, icon: row.icon, bgColor: Color.white, bgTransparency: 0.0, fontColor: Color.black)
+                                                    sharedState.selectedCards.append(cardListItem)
+                                                } else {
+                                                    showAlert = true
+                                                    hasSpoken = false
+                                                    if hasSpoken == false {
+                                                        speakText("Kotak Kata Penuh")
+                                                    }
+                                                }
+                                                
+                                                
+                                            }
+                                            .alert(isPresented: $showAlert) {
+                                                Alert(
+                                                    title: Text("Kotak Kata Penuh"),
+                                                    message: Text("Kamu hanya bisa memilih 10 kata. Hapus kata yang sudah dipilih untuk memilih kata baru."),
+                                                    dismissButton: .default(Text("OK"), action: {
+                                                        hasSpoken = true
+                                                    })
+                                                )
+                                            }
+                                        }
+                                    }
+                                    else {
+                                        if AllAssets.genderAssets.contains(row.icon) {
+                                            CustomButton(
+                                                icon: resolveIcon(for: "BOY_" + row.icon),
+                                                text: row.name,
+                                                width: cellWidth,
+                                                height: cellHeight,
+                                                font: 24,
+                                                iconWidth: 80,
+                                                iconHeight: 60,
+                                                bgColor: row.category.getColorString(),
+                                                bgTransparency: 0.65,
+                                                fontColor: "000000",
+                                                fontTransparency: 1.0,
+                                                cornerRadius: 13,
+                                                isSystemImage: false
+                                            ) {
+                                                if sharedState.selectedCards.count < 10 {
+                                                    showAlert = false
+                                                    speakText(row.name)
+                                                    let cardListItem = CardList(name: row.name, icon: row.icon, bgColor: Color.white, bgTransparency: 0.0, fontColor: Color.black)
+                                                    sharedState.selectedCards.append(cardListItem)
+                                                } else {
+                                                    showAlert = true
+                                                    hasSpoken = false
+                                                    if hasSpoken == false {
+                                                        speakText("Kotak Kata Penuh")
+                                                    }
+                                                }
+                                                
+                                                
+                                            }
+                                            .alert(isPresented: $showAlert) {
+                                                Alert(
+                                                    title: Text("Kotak Kata Penuh"),
+                                                    message: Text("Kamu hanya bisa memilih 10 kata. Hapus kata yang sudah dipilih untuk memilih kata baru."),
+                                                    dismissButton: .default(Text("OK"), action: {
+                                                        hasSpoken = true
+                                                    })
+                                                )
+                                            }
+                                        }
+                                        else
+                                        {
+                                            CustomButton(
+                                                icon: resolveIcon(for: row.icon),
+                                                text: row.name,
+                                                width: cellWidth,
+                                                height: cellHeight,
+                                                font: 24,
+                                                iconWidth: 80,
+                                                iconHeight: 60,
+                                                bgColor: row.category.getColorString(),
+                                                bgTransparency: 0.65,
+                                                fontColor: "000000",
+                                                fontTransparency: 1.0,
+                                                cornerRadius: 13,
+                                                isSystemImage: false
+                                            ) {
+                                                if sharedState.selectedCards.count < 10 {
+                                                    showAlert = false
+                                                    speakText(row.name)
+                                                    let cardListItem = CardList(name: row.name, icon: row.icon, bgColor: Color.white, bgTransparency: 0.0, fontColor: Color.black)
+                                                    sharedState.selectedCards.append(cardListItem)
+                                                } else {
+                                                    showAlert = true
+                                                    hasSpoken = false
+                                                    if hasSpoken == false {
+                                                        speakText("Kotak Kata Penuh")
+                                                    }
+                                                }
+                                                
+                                                
+                                            }
+                                            .alert(isPresented: $showAlert) {
+                                                Alert(
+                                                    title: Text("Kotak Kata Penuh"),
+                                                    message: Text("Kamu hanya bisa memilih 10 kata. Hapus kata yang sudah dipilih untuk memilih kata baru."),
+                                                    dismissButton: .default(Text("OK"), action: {
+                                                        hasSpoken = true
+                                                    })
+                                                )
+                                            }
+                                        }
                                     }
                                 }
                                 if self.editing {
@@ -287,67 +506,30 @@ struct AACBoardView : View {
     }
 
     func speakText(_ text: String) {
-        let utterance = AVSpeechUtterance(string: text)
+        // Menggunakan NSLocalizedString untuk mendapatkan string yang dilokalkan
+        let localizedText = NSLocalizedString(text, comment: "")
+        
+        let utterance = AVSpeechUtterance(string: localizedText)
         utterance.voice = AVSpeechSynthesisVoice(language: "id-ID")
         utterance.rate = 0.5
         speechSynthesizer.speak(utterance)
     }
-    
+
     func speakAllText(from buttons: [CardList]) {
-        // Concatenate all the names from the Card models into a single text
+        // Menggabungkan semua nama dari model Card menjadi satu teks
         var fullText = ""
         for card in buttons {
-            fullText += "\(card.name) "
+            // Menggunakan NSLocalizedString untuk setiap nama kartu
+            let localizedName = NSLocalizedString(card.name, comment: "")
+            fullText += "\(localizedName) "
         }
         
-        // Use the AVSpeechSynthesizer to speak the full text
+        // Menggunakan AVSpeechSynthesizer untuk membaca teks lengkap
         let utterance = AVSpeechUtterance(string: fullText)
-        utterance.voice = AVSpeechSynthesisVoice(language: "id-ID") // Indonesian language
-        utterance.rate = 0.5 // Set the speech rate
+        utterance.voice = AVSpeechSynthesisVoice(language: "id-ID") // Bahasa Indonesia
+        utterance.rate = 0.5 // Menetapkan kecepatan bicara
         speechSynthesizer.speak(utterance)
     }
-    
-}
 
-#Preview {
-    AACBoardView(
-        Board(
-            cards: [
-                [
-                    Card(name: "Aku", icon: "ASTRONOT", category: .CORE, isIconTypeImage: false),
-                    Card(name: "Kamu", icon: "ASTRONOT", category: .CORE, isIconTypeImage: false),
-                    Card(name: "Kita", icon: "ASTRONOT", category: .CORE, isIconTypeImage: false),
-                    Card(name: "Mereka", icon: "ASTRONOT", category: .CORE, isIconTypeImage: false),
-                    Card(name: "Ayah", icon: "ASTRONOT", category: .CORE, isIconTypeImage: false)
-                ],
-                [
-                    Card(name: "Di atas", icon: "ASTRONOT", category: .SOCIAL, isIconTypeImage: false),
-                    Card(name: "Terima kasih", icon: "ASTRONOT", category: .SOCIAL, isIconTypeImage: false),
-                    Card(name: "Tidak", icon: "ASTRONOT", category: .SOCIAL, isIconTypeImage: false),
-                    Card(name: "Suka", icon: "ASTRONOT", category: .SOCIAL, isIconTypeImage: false),
-                ],
-                [
-                    Card(name: "Siapa", icon: "ASTRONOT", category: .QUESTION, isIconTypeImage: false),
-                    Card(name: "Kapan", icon: "ASTRONOT", category: .QUESTION, isIconTypeImage: false),
-                    Card(name: "Kenapa", icon: "ASTRONOT", category: .QUESTION, isIconTypeImage: false),
-                ],
-                [
-                    Card(name: "Apa", icon: "ASTRONOT", category: .QUESTION, isIconTypeImage: false)
-                ],
-                [
-                    Card(name: "Apa", icon: "ASTRONOT", category: .QUESTION, isIconTypeImage: false),
-                    Card(name: "Kapan", icon: "ASTRONOT", category: .QUESTION, isIconTypeImage: false),
-                    Card(name: "Kenapa", icon: "ASTRONOT", category: .QUESTION, isIconTypeImage: false),
-                ],
-                [],
-                [],
-                []
-            ],
-            name: "Ruang Nentod",
-            icon: "ASTRONOT",
-            gridSize: Grid(row: 5, column: 8)
-        ),
-        spacing: 5,
-        editing: Binding.constant(true)
-    )
+    
 }
