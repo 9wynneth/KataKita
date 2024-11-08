@@ -11,7 +11,9 @@ import AVFoundation
 
 struct BetterAACView: View {
     @Environment(SecurityManager.self) private var securityManager
-       @Environment(BoardManager.self) private var boardManager
+    @Environment(BoardManager.self) private var boardManager
+    @Environment(StickerImageManager.self) var stickerManager
+
     //MARK: Viewport Size
     @State private var addingCard: Int? = nil
     @State private var addingBoard = false
@@ -456,6 +458,7 @@ struct BetterAACView: View {
                     defaultButton: $defaultButton
                 )
             }
+            
             .sheet(isPresented: $showAACSettings) {
                 CardCreateView(
                     navigateFromImage: BetterAACView.$navigateFromImage,

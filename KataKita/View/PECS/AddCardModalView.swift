@@ -21,7 +21,7 @@ struct AddCardModalView: View {
     let colors: [Color] = [.black, .brown, .orange, .red, .purple, .pink, .blue, .green, .yellow]
     
     @State private var id = UUID()
-    @State private var searchText = ""
+//    @State private var searchText = ""
     @Environment(BoardManager.self) private var boardManager
 
     init(_ cards: Binding<[[Card]]>) {
@@ -36,17 +36,17 @@ struct AddCardModalView: View {
         return nil
     }
     
-    var filteredCards: [[Card]] {
-        guard let board = selectedBoard else { return [] }
-        if searchText.isEmpty {
-            return board.cards
-        }
-        return board.cards.map { column in
-            column.filter { card in
-                card.name.lowercased().contains(searchText.lowercased())
-            }
-        }
-    }
+//    var filteredCards: [[Card]] {
+//        guard let board = selectedBoard else { return [] }
+//        if searchText.isEmpty {
+//            return board.cards
+//        }
+//        return board.cards.map { column in
+//            column.filter { card in
+//                card.name.lowercased().contains(searchText.lowercased())
+//            }
+//        }
+//    }
     
     var body: some View {
         VStack(spacing: 0) {
@@ -103,26 +103,26 @@ struct AddCardModalView: View {
             
             // MARK: BOARD
             VStack {
-                // MARK: Search Bar
-                HStack {
-                    HStack(spacing: 10) {
-                        TextField("Search words", text: $searchText)
-                            .padding(10)
-                            .background(Color.white)
-                            .cornerRadius(8)
-                            .shadow(radius: 2)
-                        
-                        Spacer()
-
-//                        TextContent(text: "Selesai", size: 20, color: "000000", weight: "bold")
-//                                                        .padding(.trailing, screenWidth * 0.04)
-                    }
-                    .frame(maxWidth: .infinity)
-                    .padding(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 10))
-                    
-                    Spacer()
-                    
-                }
+//                // MARK: Search Bar
+//                HStack {
+//                    HStack(spacing: 10) {
+//                        TextField("Search words", text: $searchText)
+//                            .padding(10)
+//                            .background(Color.white)
+//                            .cornerRadius(8)
+//                            .shadow(radius: 2)
+//                        
+//                        Spacer()
+//
+////                        TextContent(text: "Selesai", size: 20, color: "000000", weight: "bold")
+////                                                        .padding(.trailing, screenWidth * 0.04)
+//                    }
+//                    .frame(maxWidth: .infinity)
+//                    .padding(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 10))
+//                    
+//                    Spacer()
+//                    
+//                }
 
             HStack(alignment: .top, spacing: 25) {
                 if let board = self.selectedBoard {
@@ -140,6 +140,7 @@ struct AddCardModalView: View {
                 }
             }
         }
+            .padding(.top, 10)
             .padding(EdgeInsets(top: 5, leading: 0, bottom: 50, trailing: 0))
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
             .background(
@@ -150,6 +151,7 @@ struct AddCardModalView: View {
                     )
                     .frame(width: screenWidth)
                     .ignoresSafeArea()
+
             )
         }
         .offset(y: 50)
