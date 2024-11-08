@@ -21,7 +21,7 @@ struct AACBoardView : View {
     let speechSynthesizer = AVSpeechSynthesizer()
     
     @EnvironmentObject var sharedState: SharedState
-    @StateObject private var viewModel = ProfileViewModel()
+    @EnvironmentObject var viewModel: ProfileViewModel
     
     @State private var imageFromLocal: URL?
     let board: Board
@@ -96,17 +96,18 @@ struct AACBoardView : View {
                                         height: cellHeight,
                                         font: 24,
                                         iconWidth: 100,
-                                        iconHeight: 100,
+                                        iconHeight: 75,
                                         bgColor: Color(hex: row.category.getColorString(), transparency: 1),
                                         bgTransparency: 0.65,
                                         fontColor: Color.black,
                                         fontTransparency: 1.0,
                                         cornerRadius: 13
                                     ){
+                                        self.cardHandler(row)
                                         if sharedState.selectedCards.count < 10 {
                                             showAlert = false
                                             speakText(row.name)
-                                            let cardListItem = CardList(name: row.name, icon: row.icon, bgColor: Color.white, bgTransparency: 0.0, fontColor: Color.black)
+                                            let cardListItem = CardList(name: row.name, icon: row.icon, bgColor: Color.white, bgTransparency: 0.0, fontColor: Color.black, isIconTypeImage: row.isIconTypeImage)
                                             sharedState.selectedCards.append(cardListItem)
                                         } else {
                                             showAlert = true
@@ -251,7 +252,7 @@ struct AACBoardView : View {
                                                 if sharedState.selectedCards.count < 10 {
                                                     showAlert = false
                                                     speakText(row.name)
-                                                    let cardListItem = CardList(name: row.name, icon: row.icon, bgColor: Color.white, bgTransparency: 0.0, fontColor: Color.black)
+                                                    let cardListItem = CardList(name: row.name, icon: row.icon, bgColor: Color.white, bgTransparency: 0.0, fontColor: Color.black, isIconTypeImage: row.isIconTypeImage)
                                                     sharedState.selectedCards.append(cardListItem)
                                                 } else {
                                                     showAlert = true
@@ -293,7 +294,7 @@ struct AACBoardView : View {
                                                 if sharedState.selectedCards.count < 10 {
                                                     showAlert = false
                                                     speakText(row.name)
-                                                    let cardListItem = CardList(name: row.name, icon: row.icon, bgColor: Color.white, bgTransparency: 0.0, fontColor: Color.black)
+                                                    let cardListItem = CardList(name: row.name, icon: row.icon, bgColor: Color.white, bgTransparency: 0.0, fontColor: Color.black, isIconTypeImage: row.isIconTypeImage)
                                                     sharedState.selectedCards.append(cardListItem)
                                                 } else {
                                                     showAlert = true
@@ -336,7 +337,7 @@ struct AACBoardView : View {
                                                 if sharedState.selectedCards.count < 10 {
                                                     showAlert = false
                                                     speakText(row.name)
-                                                    let cardListItem = CardList(name: row.name, icon: row.icon, bgColor: Color.white, bgTransparency: 0.0, fontColor: Color.black)
+                                                    let cardListItem = CardList(name: row.name, icon: row.icon, bgColor: Color.white, bgTransparency: 0.0, fontColor: Color.black, isIconTypeImage: row.isIconTypeImage)
                                                     sharedState.selectedCards.append(cardListItem)
                                                 } else {
                                                     showAlert = true
@@ -378,7 +379,7 @@ struct AACBoardView : View {
                                                 if sharedState.selectedCards.count < 10 {
                                                     showAlert = false
                                                     speakText(row.name)
-                                                    let cardListItem = CardList(name: row.name, icon: row.icon, bgColor: Color.white, bgTransparency: 0.0, fontColor: Color.black)
+                                                    let cardListItem = CardList(name: row.name, icon: row.icon, bgColor: Color.white, bgTransparency: 0.0, fontColor: Color.black, isIconTypeImage: row.isIconTypeImage)
                                                     sharedState.selectedCards.append(cardListItem)
                                                 } else {
                                                     showAlert = true
