@@ -476,27 +476,37 @@ struct BetterAACView: View {
         
         
     func speakText(_ text: String) {
-            let localizedText = NSLocalizedString(text, comment: "Text to be spoken")
-            let utterance = AVSpeechUtterance(string: localizedText)
-            utterance.voice = AVSpeechSynthesisVoice(language: "id-ID")
-            utterance.rate = 0.5
-            speechSynthesizer.speak(utterance)
+        let localizedText = NSLocalizedString(text, comment: "Text to be spoken")
+        
+        // Detect device language
+        let languageCode = Locale.current.languageCode
+        let voiceLanguage = languageCode == "id" ? "id-ID" : "en-AU"
+        
+        let utterance = AVSpeechUtterance(string: localizedText)
+        utterance.voice = AVSpeechSynthesisVoice(language: voiceLanguage)
+        utterance.rate = 0.5
+        speechSynthesizer.speak(utterance)
+    }
+
+    func speakAllText(from buttons: [CardList]) {
+        // Concatenate all the localized names from the Card models into a single text
+        var fullText = ""
+        for card in buttons {
+            let localizedName = NSLocalizedString(card.name, comment: "Concatenated text for speech synthesis")
+            fullText += "\(localizedName) "
         }
 
-        func speakAllText(from buttons: [CardList]) {
-            // Concatenate all the localized names from the Card models into a single text
-            var fullText = ""
-            for card in buttons {
-                let localizedName = NSLocalizedString(card.name, comment: "Concatenated text for speech synthesis")
-                fullText += "\(localizedName) "
-            }
+        // Detect device language
+        let languageCode = Locale.current.languageCode
+        let voiceLanguage = languageCode == "id" ? "id-ID" : "en-AU"
+        
+        // Use the AVSpeechSynthesizer to speak the full text
+        let utterance = AVSpeechUtterance(string: fullText)
+        utterance.voice = AVSpeechSynthesisVoice(language: voiceLanguage)
+        utterance.rate = 0.5 // Set the speech rate
+        speechSynthesizer.speak(utterance)
+    }
 
-            // Use the AVSpeechSynthesizer to speak the full text
-            let utterance = AVSpeechUtterance(string: fullText)
-            utterance.voice = AVSpeechSynthesisVoice(language: "id-ID")
-            utterance.rate = 0.5 // Set the speech rate
-            speechSynthesizer.speak(utterance)
-        }
 }
 
 #Preview {

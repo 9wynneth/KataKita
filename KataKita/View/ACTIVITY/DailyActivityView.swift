@@ -451,18 +451,23 @@ struct DailyActivityView: View {
     }
     
     private func speakText(_ text: String) {
-            // Stop any ongoing speech
-            if speechSynthesizer.isSpeaking {
-                speechSynthesizer.stopSpeaking(at: .immediate)
-            }
-            
-            // Create a speech utterance
-            let utterance = AVSpeechUtterance(string: text)
-            utterance.voice = AVSpeechSynthesisVoice(language: "id-ID") // Set the language as needed
-            
-            // Speak the text
-            speechSynthesizer.speak(utterance)
+        // Stop any ongoing speech
+        if speechSynthesizer.isSpeaking {
+            speechSynthesizer.stopSpeaking(at: .immediate)
         }
+
+        // Detect the device language
+        let languageCode = Locale.current.languageCode
+        let voiceLanguage = languageCode == "id" ? "id-ID" : "en-AU"
+        
+        // Create a speech utterance
+        let utterance = AVSpeechUtterance(string: text)
+        utterance.voice = AVSpeechSynthesisVoice(language: voiceLanguage) // Set the language based on the device language
+        
+        // Speak the text
+        speechSynthesizer.speak(utterance)
+    }
+
     
     func resolveIcon(for iconName: String) -> String {
             if let _ = UIImage(named: iconName) {
