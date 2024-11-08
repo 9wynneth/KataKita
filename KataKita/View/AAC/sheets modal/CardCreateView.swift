@@ -43,7 +43,8 @@ struct CardCreateView: View {
     @State private var selectedCategory: Category = .CORE
     @State private var filteredAssets: [String] = []
     @StateObject private var viewModel = ProfileViewModel()
-    
+    @Environment(BoardManager.self) private var boardManager
+
     var body: some View {
         NavigationStack {
             Form {
@@ -194,7 +195,7 @@ struct CardCreateView: View {
         let color = selectedCategory
         
         print("Handling done action: Icon: \(icon), Text: \(text), Background Color: \(color)")
-        BoardManager.shared.addCard(Card(name: text, icon: icon, category: selectedCategory, isIconTypeImage: isIconTypeImage), column: selectedColumnIndexValue)
+        boardManager.addCard(Card(name: text, icon: icon, category: selectedCategory, isIconTypeImage: isIconTypeImage), column: selectedColumnIndexValue)
         self.addingCard = nil
     }
 }
