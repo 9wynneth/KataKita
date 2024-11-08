@@ -23,13 +23,15 @@ struct AddCardModalView: View {
     let colors: [Color] = [.black, .brown, .orange, .red, .purple, .pink, .blue, .green, .yellow]
     
     @State private var id = UUID()
-    @State private var searchText = ""
+    //    @State private var searchText = ""
     @Environment(BoardManager.self) private var boardManager
-
+    @Environment(\.presentationMode) private var presentationMode // For dismissing the sheet
+    
+    
     init(_ cards: Binding<[[Card]]>) {
         self._cards = cards
     }
-
+    
     var selectedBoard: Board? {
         if let board = boardManager.boards.first(where: { $0.id == id }) {
             return board
@@ -38,24 +40,24 @@ struct AddCardModalView: View {
         return nil
     }
     
-    var filteredCards: [[Card]] {
-        guard let board = selectedBoard else { return [] }
-        if searchText.isEmpty {
-            return board.cards
-        }
-        return board.cards.map { column in
-            column.filter { card in
-                card.name.lowercased().contains(searchText.lowercased())
-            }
-        }
-    }
+    //    var filteredCards: [[Card]] {
+    //        guard let board = selectedBoard else { return [] }
+    //        if searchText.isEmpty {
+    //            return board.cards
+    //        }
+    //        return board.cards.map { column in
+    //            column.filter { card in
+    //                card.name.lowercased().contains(searchText.lowercased())
+    //            }
+    //        }
+    //    }
     
     var body: some View {
         VStack(spacing: 0) {
             // MARK: Navigation && Actions
             HStack (spacing: 0) {
                 HStack(spacing: 0) {
-                    ForEach(boardManager.boards) { board in
+                    ForEach(boardManager.boards.sorted { $0.name.lowercased() < $1.name.lowercased() }) { board in
                         ZStack(alignment: .trailing) {
                             HStack {
                                 TextContent(
@@ -105,43 +107,44 @@ struct AddCardModalView: View {
             
             // MARK: BOARD
             VStack {
-                // MARK: Search Bar
-                HStack {
-                    HStack(spacing: 10) {
-                        TextField("Search words", text: $searchText)
-                            .padding(10)
-                            .background(Color.white)
-                            .cornerRadius(8)
-                            .shadow(radius: 2)
-                        
-                        Spacer()
-
-//                        TextContent(text: "Selesai", size: 20, color: "000000", weight: "bold")
-//                                                        .padding(.trailing, screenWidth * 0.04)
-                    }
-                    .frame(maxWidth: .infinity)
-                    .padding(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 10))
-                    
-                    Spacer()
-                    
-                }
-
-            HStack(alignment: .top, spacing: 25) {
-                if let board = self.selectedBoard {
-                    AACBoardView(board, cards: self.$pecsCards)
-                }
+                //                // MARK: Search Bar
+                //                HStack {
+                //                    HStack(spacing: 10) {
+                //                        TextField("Search words", text: $searchText)
+                //                            .padding(10)
+                //                            .background(Color.white)
+                //                            .cornerRadius(8)
+                //                            .shadow(radius: 2)
+                //
+                //                        Spacer()
+                //
+                ////                        TextContent(text: "Selesai", size: 20, color: "000000", weight: "bold")
+                ////                                                        .padding(.trailing, screenWidth * 0.04)
+                //                    }
+                //                    .frame(maxWidth: .infinity)
+                //                    .padding(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 10))
+                //
+                //                    Spacer()
+                //
+                //                }
                 
-                VStack(spacing: screenHeight * 0.02) {
-                    ForEach(Array(colors.enumerated()), id: \.offset) {index, color in
-                        Button {} label: {
-                            RoundedRectangle(cornerRadius: 10)
-                                .fill(color)
-                                .frame(width: 120, height: screenHeight * 0.05)                             
+                HStack(alignment: .top, spacing: 25) {
+                    if let board = self.selectedBoard {
+                        AACBoardView(board, cards: self.$pecsCards)
+                    }
+                    
+                    VStack(spacing: screenHeight * 0.02) {
+                        ForEach(Array(colors.enumerated()), id: \.offset) {index, color in
+                            Button {} label: {
+                                RoundedRectangle(cornerRadius: 10)
+                                    .fill(color)
+                                    .frame(width: 120, height: screenHeight * 0.05)
+                            }
                         }
                     }
                 }
             }
-        }
+            .padding(.top, 10)
             .padding(EdgeInsets(top: 5, leading: 0, bottom: 50, trailing: 0))
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
             .background(
@@ -152,6 +155,8 @@ struct AddCardModalView: View {
                     )
                     .frame(width: screenWidth)
                     .ignoresSafeArea()
+                   
+                
             )
         }
         .offset(y: 50)
@@ -173,6 +178,7 @@ struct AddCardModalView: View {
                 self.cards = cards
             }
         }
+        
     }
     
 }

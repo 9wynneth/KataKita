@@ -21,7 +21,7 @@ struct CustomIcon: View {
                 action()
             }
         } label: {
-            VStack(spacing: -15) { // Reduced spacing between Image and Text
+            VStack(spacing: -10) { // Reduced spacing between Image and Text
                 Image(uiImage: (UIImage(named: icon) ?? UIImage()))
                     .resizable()
                     .scaledToFit()

@@ -68,7 +68,7 @@ struct Grid : Codable {
 struct Card: Identifiable, Codable, Equatable, Transferable {
     var id = UUID()
     var name: String
-    var icon: String // SF Symbol
+    var icon: String
     var category: Category
     var isIconTypeImage: Bool
     var bgTransparency: Double = 1.0 // Default to fully visible
@@ -101,7 +101,7 @@ struct CardList: Identifiable {
     var bgColor: Color  // Background color
     var bgTransparency: Double  // Background transparency
     var fontColor: Color
-    
+    var isIconTypeImage: Bool
 }
 
 class Board: Identifiable {

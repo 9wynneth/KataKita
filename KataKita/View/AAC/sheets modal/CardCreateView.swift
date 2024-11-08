@@ -32,8 +32,10 @@ struct CardCreateView: View {
     @State private var navigatesFromImage = false
     @State private var navigateToCekVMView = false
     @State private var addingCard: Int? = nil
-    @State private var imageFromLocal: URL?
     @State private var isGender = false
+    @Environment(StickerImageManager.self) var stickerManager
+    @Environment(OriginalImageManager.self) var originalImageManager
+
     
     @Binding var navigateFromImage: Bool
     @Binding var selectedColumnIndexValue: Int
@@ -60,7 +62,20 @@ struct CardCreateView: View {
                 }
                 
                 HStack {
-                    if let imageURL = imageFromLocal, let uiImage = UIImage(contentsOfFile: imageURL.path) {
+                    if let stickerURL = stickerManager.stickerImage,
+                       let stickerImage = UIImage(contentsOfFile: stickerURL.path) {
+                        // Display the sticker image if available
+                        Image(uiImage: stickerImage)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 50, height: 50)
+                            .cornerRadius(20)
+                            .onAppear {
+                                isIconTypeImage = true
+                                print("STICKER")
+                            }
+                    } else if let imageURL = originalImageManager.imageFromLocal, let uiImage = UIImage(contentsOfFile: imageURL.path) {
+                        // Fallback to image from local if sticker is not set
                         Image(uiImage: uiImage)
                             .resizable()
                             .scaledToFit()
@@ -68,8 +83,10 @@ struct CardCreateView: View {
                             .cornerRadius(20)
                             .onAppear {
                                 isIconTypeImage = true
+                                print("ORIGINALc")
                             }
                     } else {
+                        // Display icons if no image is selected
                         if !filteredAssets.isEmpty {
                             VStack(alignment: .leading) {
                                 HStack {
@@ -161,9 +178,13 @@ struct CardCreateView: View {
             .navigationDestination(isPresented: $showingAddImageView) {
                 AddImageCardView(
                     selectedColumnIndexValue: $selectedColumnIndexValue,
-                    CardName: $textToSpeak,
-                    imageFromLocal: $imageFromLocal
+                    CardName: $textToSpeak
                 )
+//                .onDisappear {
+//                      // Reset image selection when navigating back
+//                      originalImageManager.imageFromLocal = nil
+//                      stickerManager.stickerImage = nil
+//                  }
             }
             .navigationBarItems(
                 trailing: Button(LocalizedStringKey("Selesai")) {
@@ -177,27 +198,34 @@ struct CardCreateView: View {
     }
     
     private func handleDoneAction() {
-        if isIconTypeImage {
-            selectedIcon = imageFromLocal?.path ?? ""
+        // Check if it's a sticker
+        if let stickerURL = stickerManager.stickerImage {
+            selectedIcon = stickerURL.path
+        } else if isIconTypeImage {
+            selectedIcon = originalImageManager.imageFromLocal?.path ?? ""
         } else {
             selectedIcon = textToSpeak.lowercased()
-//            if isGender {
-//                if viewModel.userProfile.gender {
-//                    selectedIcon = "GIRL_" + selectedIcon
-//                }
-//                else {
-//                    selectedIcon = "BOY_" + selectedIcon
-//                }
-//            }
         }
+
+        // Handle the card creation
         let icon = selectedIcon
         let text = textToSpeak
         let color = selectedCategory
-        
+
         print("Handling done action: Icon: \(icon), Text: \(text), Background Color: \(color)")
+
+        // Add card to board
         boardManager.addCard(Card(name: text, icon: icon, category: selectedCategory, isIconTypeImage: isIconTypeImage), column: selectedColumnIndexValue)
+
+        // Reset the image state after the card has been added
+        originalImageManager.imageFromLocal = nil
+        stickerManager.stickerImage = nil  // Clear the sticker image after it's added
+
+        // Dismiss the view
         self.addingCard = nil
     }
+
+
 }
 
 // Updated SearchIconView
@@ -205,7 +233,7 @@ struct SearchIconsView: View {
     @Binding var selectedIcon: String
     @Environment(\.dismiss) private var dismiss
     @State private var searchText = ""
-    @StateObject private var viewModel = ProfileViewModel()
+    @EnvironmentObject var viewModel: ProfileViewModel
     
     var filteredIcons: [String] {
         filterAssets(by: searchText, for: viewModel.userProfile.gender)

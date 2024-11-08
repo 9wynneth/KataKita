@@ -3,7 +3,7 @@ import SwiftUI
 
 struct SettingsView: View {
 
-    @StateObject private var viewModel = ProfileViewModel()
+    @EnvironmentObject var viewModel: ProfileViewModel
     @Environment(\.presentationMode) var presentationMode
     @State private var showAlert = false
     @State private var isPersonalVoiceAvailable = false
@@ -20,6 +20,13 @@ struct SettingsView: View {
                             LocalizedStringKey("Ketik namamu"), text: $viewModel.userProfile.name
                         )
                         .multilineTextAlignment(.trailing)
+                        .onChange(of: viewModel.userProfile.name) { newValue in
+                            viewModel.updateProfile(
+                                name: viewModel.userProfile.name,
+                                gender: viewModel.userProfile.gender,
+                                sound: viewModel.userProfile.sound
+                            )
+                        }
                     }
 
                     // Gender Selection
@@ -29,6 +36,13 @@ struct SettingsView: View {
                         Picker("", selection: $viewModel.userProfile.gender) {
                             Text(LocalizedStringKey("Laki-laki")).tag(false)
                             Text(LocalizedStringKey("Perempuan")).tag(true)
+                        }
+                        .onChange(of: viewModel.userProfile.gender) { newValue in
+                            viewModel.updateProfile(
+                                name: viewModel.userProfile.name,
+                                gender: viewModel.userProfile.gender,
+                                sound: viewModel.userProfile.sound
+                            )
                         }
                         .pickerStyle(MenuPickerStyle())
                     }
@@ -54,16 +68,6 @@ struct SettingsView: View {
 
             }
             .navigationTitle("Pengaturan")
-            .navigationBarItems(
-                trailing: Button(LocalizedStringKey("Selesai")) {
-                    viewModel.updateProfile(
-                        name: viewModel.userProfile.name,
-                        gender: viewModel.userProfile.gender,
-                        sound: viewModel.userProfile.sound
-                    )
-                    presentationMode.wrappedValue.dismiss()
-                }
-            )
             .onAppear(perform: checkPersonalVoice)
             .onReceive(
                 NotificationCenter.default.publisher(

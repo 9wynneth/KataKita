@@ -27,7 +27,7 @@ struct BetterAACView: View {
     @State private var showAACSettings = false
     @State private var showprofile = false
     @State var isAskPassword = false
-    @StateObject private var viewModel = ProfileViewModel()
+    @EnvironmentObject var viewModel: ProfileViewModel
 
     
     @State static var navigateFromImage = false
@@ -82,14 +82,14 @@ struct BetterAACView: View {
                                     ForEach(Array(sharedState.selectedCards.enumerated()), id: \.element.id) { index, card in
                                         if index < 10 {
                                             VStack {
-//                                                if card.isIconTypeImage == true
-//                                                {
-//                                                    Image(uiImage: (UIImage(named: card.icon) ?? UIImage()))
-//                                                        .resizable()
-//                                                        .frame(width: 50, height: 50)
-//                                                }
-//                                                else
-//                                                {
+                                                if card.isIconTypeImage
+                                                {
+                                                    Image(uiImage: (UIImage(named: card.icon) ?? UIImage()))
+                                                        .resizable()
+                                                        .frame(width: 50, height: 50)
+                                                }
+                                                else
+                                                {
                                                     if viewModel.userProfile.gender {
                                                         if AllAssets.genderAssets.contains(card.name) {
                                                             Image(resolveIcon(for: "GIRL_" + card.icon))  // icon name is passed from the card
@@ -120,7 +120,7 @@ struct BetterAACView: View {
                                                             
                                                         }
                                                     }
-                                             //   }
+                                                }
                                                 Text(LocalizedStringKey(card.name))
                                                     .font(.system(size: 18))
                                                     .lineLimit(1)
@@ -212,8 +212,8 @@ struct BetterAACView: View {
                                     CustomButton(
                                         icon: "xmark",
                                         text: "",
-                                        width: 50,
-                                        height: 50,
+                                        width: 35,
+                                        height: 35,
                                         font: 24,
                                         iconWidth: 20,
                                         iconHeight: 20,
@@ -355,7 +355,8 @@ struct BetterAACView: View {
                                         icon: "person.fill",
                                         bgColor: color,
                                         bgTransparency: 1.0,
-                                        fontColor: color
+                                        fontColor: color,
+                                        isIconTypeImage: false
                                     )
                                     sharedState.selectedCards.append(cardListItem)
                                     speakText(colorName)
@@ -423,12 +424,13 @@ struct BetterAACView: View {
                         VStack {
                             SecurityView()
                         }
-                        .frame(width: screenWidth, height: screenHeight)
-                        .background(Color.white.opacity(0.01))
+                        .frame(width: screenWidth, height: screenHeight + 50)
+                        .background(Color.gray.opacity(0.3))
                         .onTapGesture{
                             isAskPassword = false
                             self.editing.toggle()
                         }
+                        .edgesIgnoringSafeArea(.all)
                     }
                 }
             )
@@ -470,6 +472,7 @@ struct BetterAACView: View {
             }
            
         }
+        .environmentObject(viewModel)
     }
         
         
@@ -491,7 +494,7 @@ struct BetterAACView: View {
 
             // Use the AVSpeechSynthesizer to speak the full text
             let utterance = AVSpeechUtterance(string: fullText)
-            utterance.voice = AVSpeechSynthesisVoice(language: "id-ID") 
+            utterance.voice = AVSpeechSynthesisVoice(language: "id-ID")
             utterance.rate = 0.5 // Set the speech rate
             speechSynthesizer.speak(utterance)
         }
