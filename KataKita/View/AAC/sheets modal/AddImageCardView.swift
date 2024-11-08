@@ -17,7 +17,7 @@ struct AddImageCardView: View {
     @Environment(\.dismiss) var dismiss
     @Binding var selectedColumnIndexValue: Int
     @Binding var CardName: String
-    @Environment(OriginalImageManager.self) var originalImageManager // This manages the image URL
+    @Environment(OriginalImageManager.self) var originalImageManager 
     @State private var tempImageURL: URL?
 
 
@@ -213,8 +213,11 @@ struct ImagePicker: UIViewControllerRepresentable {
 
         func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
             if let uiImage = info[.originalImage] as? UIImage {
-                // Save the image to a file and set the imageURL to the URL path
-                if let data = uiImage.pngData() {
+                // Fix orientation if needed
+                let fixedImage = fixOrientation(of: uiImage)
+
+                // Save the fixed image to a temporary file and set the imageURL to the URL path
+                if let data = fixedImage.pngData() {
                     let filename = UUID().uuidString + ".png"
                     let path = FileManager.default.temporaryDirectory.appendingPathComponent(filename)
                     try? data.write(to: path)
@@ -226,6 +229,20 @@ struct ImagePicker: UIViewControllerRepresentable {
 
         func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
             picker.dismiss(animated: true)
+        }
+
+        // Helper function to fix image orientation
+        private func fixOrientation(of image: UIImage) -> UIImage {
+            if image.imageOrientation == .up {
+                return image // No need to fix
+            }
+
+            UIGraphicsBeginImageContextWithOptions(image.size, false, image.scale)
+            image.draw(in: CGRect(origin: .zero, size: image.size))
+            let fixedImage = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+
+            return fixedImage ?? image // Fallback to the original image if something goes wrong
         }
     }
 }
