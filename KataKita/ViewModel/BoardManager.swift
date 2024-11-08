@@ -6,11 +6,10 @@
 //
 import SwiftUI
 
+@Observable
 class BoardManager {
-    static var shared = BoardManager()
     var boards: [Board]
     var selectedID: UUID?
-    @StateObject private var viewModel = ProfileViewModel()
     
     init(_ boards: [Board] = []) {
         if boards.isEmpty {

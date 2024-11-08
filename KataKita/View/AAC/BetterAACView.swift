@@ -10,8 +10,8 @@ import AVFoundation
 
 
 struct BetterAACView: View {
-    @Environment(SecurityManager.self) var securityManager
-
+    @Environment(SecurityManager.self) private var securityManager
+       @Environment(BoardManager.self) private var boardManager
     //MARK: Viewport Size
     @State private var addingCard: Int? = nil
     @State private var addingBoard = false
@@ -59,7 +59,7 @@ struct BetterAACView: View {
     
     
     var selectedBoard: Board? {
-        if let board = BoardManager.shared.boards.first(where: { $0.id == id }) {
+        if let board = boardManager.boards.first(where: { $0.id == id }) {
             return board
             
         }
@@ -192,7 +192,7 @@ struct BetterAACView: View {
                 // MARK: Navigation && Actions
                 HStack (spacing: 0) {
                     HStack(spacing: 0) {
-                        ForEach(BoardManager.shared.boards) { board in
+                        ForEach(boardManager.boards) { board in
                             ZStack(alignment: .trailing) {
                                 HStack {
                                     TextContent(
@@ -223,7 +223,7 @@ struct BetterAACView: View {
                                         cornerRadius: 25,
                                         isSystemImage: true
                                     ) {
-                                        BoardManager.shared.removeBoard()
+                                        boardManager.removeBoard()
                                     }
                                 } else {
                                     if let icon = board.icon {
@@ -337,7 +337,7 @@ struct BetterAACView: View {
                             },
                             del: { colIndex, rowIndex in
                                 print("remove \(colIndex) \(rowIndex)")
-                                BoardManager.shared.removeCard(column: colIndex, row: rowIndex)
+                                boardManager.removeCard(column: colIndex, row: rowIndex)
                             }
                         )
                     }
@@ -432,12 +432,12 @@ struct BetterAACView: View {
                 }
             )
             .onAppear {
-                if let firstBoard = BoardManager.shared.boards.first {
+                if let firstBoard = boardManager.boards.first {
                     id = firstBoard.id
                 }
             }
             .onChange(of: id) {
-                BoardManager.shared.selectId(id)
+                boardManager.selectId(id)
                 sharedState.selectedCards.removeAll()
             }
             .onChange(of: securityManager.isCorrect) {
@@ -473,25 +473,27 @@ struct BetterAACView: View {
         
         
     func speakText(_ text: String) {
-        let utterance = AVSpeechUtterance(string: text)
-        utterance.voice = AVSpeechSynthesisVoice(language: "id-ID")
-        utterance.rate = 0.5
-        speechSynthesizer.speak(utterance)
-    }
-    
-    func speakAllText(from buttons: [CardList]) {
-        // Concatenate all the names from the Card models into a single text
-        var fullText = ""
-        for card in buttons {
-            fullText += "\(card.name) "
+            let localizedText = NSLocalizedString(text, comment: "Text to be spoken")
+            let utterance = AVSpeechUtterance(string: localizedText)
+            utterance.voice = AVSpeechSynthesisVoice(language: "id-ID")
+            utterance.rate = 0.5
+            speechSynthesizer.speak(utterance)
         }
 
-        // Use the AVSpeechSynthesizer to speak the full text
-        let utterance = AVSpeechUtterance(string: fullText)
-        utterance.voice = AVSpeechSynthesisVoice(language: "id-ID") // Indonesian language
-        utterance.rate = 0.5 // Set the speech rate
-        speechSynthesizer.speak(utterance)
-    }
+        func speakAllText(from buttons: [CardList]) {
+            // Concatenate all the localized names from the Card models into a single text
+            var fullText = ""
+            for card in buttons {
+                let localizedName = NSLocalizedString(card.name, comment: "Concatenated text for speech synthesis")
+                fullText += "\(localizedName) "
+            }
+
+            // Use the AVSpeechSynthesizer to speak the full text
+            let utterance = AVSpeechUtterance(string: fullText)
+            utterance.voice = AVSpeechSynthesisVoice(language: "id-ID") 
+            utterance.rate = 0.5 // Set the speech rate
+            speechSynthesizer.speak(utterance)
+        }
 }
 
 #Preview {

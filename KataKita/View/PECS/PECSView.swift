@@ -385,18 +385,34 @@ struct PECSView: View {
     }
     
     func speakCardName(_ card: Card) {
-            let utterance = AVSpeechUtterance(string: card.name)
-            utterance.voice = AVSpeechSynthesisVoice(language: "id-ID")
-            let synthesizer = AVSpeechSynthesizer()
-            synthesizer.speak(utterance)
-        }
+        // Localize the card name
+        let localizedName = NSLocalizedString(card.name, comment: "Card name for speech synthesis")
+        
+        // Create an utterance with the localized card name
+        let utterance = AVSpeechUtterance(string: localizedName)
+        utterance.voice = AVSpeechSynthesisVoice(language: "id-ID") // Indonesian language
+        utterance.rate = 0.5 // Optional: set the speech rate
+
+        // Use the AVSpeechSynthesizer to speak the localized card name
+        let synthesizer = AVSpeechSynthesizer()
+        synthesizer.speak(utterance)
+    }
+
     
     func speakText(for cards: [Card]) {
-            let utterance = AVSpeechUtterance(string: cards.map { $0.name }.joined(separator: ", "))
-            utterance.voice = AVSpeechSynthesisVoice(language: "id-ID") // You can change the language if needed
-            let synthesizer = AVSpeechSynthesizer()
-            synthesizer.speak(utterance)
-        }
+        // Concatenate all the localized names from the Card models into a single text
+        let fullText = cards.map { NSLocalizedString($0.name, comment: "Card name for speech synthesis") }.joined(separator: ", ")
+
+        // Create an utterance for the localized text
+        let utterance = AVSpeechUtterance(string: fullText)
+        utterance.voice = AVSpeechSynthesisVoice(language: "id-ID") // Indonesian language
+        utterance.rate = 0.5 // Adjust the speech rate if needed
+
+        // Use the AVSpeechSynthesizer to speak the full text
+        let synthesizer = AVSpeechSynthesizer()
+        synthesizer.speak(utterance)
+    }
+
 
 }
 
