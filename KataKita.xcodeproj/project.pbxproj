@@ -70,6 +70,8 @@
 		9B831C582CDAF0470065536F /* CustomIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B831C572CDAF0470065536F /* CustomIcon.swift */; };
 		9B831DE02CDE82270065536F /* CustomButtonSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B831DDF2CDE82270065536F /* CustomButtonSearch.swift */; };
 		9B831DE22CDE82390065536F /* TextContentSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B831DE12CDE82390065536F /* TextContentSearch.swift */; };
+		9B831DE42CDE86AC0065536F /* CustomButtonBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B831DE32CDE86AC0065536F /* CustomButtonBoard.swift */; };
+		9B831DE62CDE86BB0065536F /* TextContentBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B831DE52CDE86BB0065536F /* TextContentBoard.swift */; };
 		DA34C3882CD333F500ADD738 /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA34C3872CD333F200ADD738 /* Board.swift */; };
 		DA34C38A2CD338FD00ADD738 /* BoardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA34C3892CD338F800ADD738 /* BoardManager.swift */; };
 		DADB2B4D2CD3EAF20049838B /* AACBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADB2B4C2CD3EAEA0049838B /* AACBoardView.swift */; };
@@ -183,6 +185,8 @@
 		9B831C572CDAF0470065536F /* CustomIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomIcon.swift; sourceTree = "<group>"; };
 		9B831DDF2CDE82270065536F /* CustomButtonSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtonSearch.swift; sourceTree = "<group>"; };
 		9B831DE12CDE82390065536F /* TextContentSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextContentSearch.swift; sourceTree = "<group>"; };
+		9B831DE32CDE86AC0065536F /* CustomButtonBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtonBoard.swift; sourceTree = "<group>"; };
+		9B831DE52CDE86BB0065536F /* TextContentBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextContentBoard.swift; sourceTree = "<group>"; };
 		DA34C3872CD333F200ADD738 /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
 		DA34C3892CD338F800ADD738 /* BoardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardManager.swift; sourceTree = "<group>"; };
 		DADB2B4C2CD3EAEA0049838B /* AACBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AACBoardView.swift; sourceTree = "<group>"; };
@@ -324,6 +328,8 @@
 				9B831C572CDAF0470065536F /* CustomIcon.swift */,
 				9B831DDF2CDE82270065536F /* CustomButtonSearch.swift */,
 				9B831DE12CDE82390065536F /* TextContentSearch.swift */,
+				9B831DE32CDE86AC0065536F /* CustomButtonBoard.swift */,
+				9B831DE52CDE86BB0065536F /* TextContentBoard.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -595,6 +601,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				103A0B2B2CD242B700221E2B /* CardsRuangBelajarView.swift in Sources */,
+				9B831DE42CDE86AC0065536F /* CustomButtonBoard.swift in Sources */,
 				1ECB573B2CD9C325009291E8 /* PECSViewModel.swift in Sources */,
 				103A0AB12CC1E80100221E2B /* AACRuangBelajarView.swift in Sources */,
 				1E84D8992CB4D99A0078B648 /* ContentView.swift in Sources */,
@@ -626,6 +633,7 @@
 				DAE313072CB86921001DD0A0 /* ActivitiesManager.swift in Sources */,
 				1EBBC2342CB78EF200673D97 /* DailyActivityView.swift in Sources */,
 				1EA096CD2CD1BD5600B76917 /* AACView.swift in Sources */,
+				9B831DE62CDE86BB0065536F /* TextContentBoard.swift in Sources */,
 				9B831DE02CDE82270065536F /* CustomButtonSearch.swift in Sources */,
 				1E84D8972CB4D99A0078B648 /* KataKitaApp.swift in Sources */,
 				9B78DD282CBDE9C60069DBC5 /* ImageCard.swift in Sources */,

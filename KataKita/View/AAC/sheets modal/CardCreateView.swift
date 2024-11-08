@@ -98,7 +98,7 @@ struct CardCreateView: View {
                                 HStack {
                                     ForEach(filteredAssets.prefix(3), id: \.self) { assetName in
                                         CustomButtonSearch(
-                                            icon: resolveIcon(for: assetName),
+                                            icon: assetName,
                                             text: assetName,
                                             width: 100,
                                             height: 100,
@@ -149,7 +149,7 @@ struct CardCreateView: View {
                         }
                     }
                     
-                    CustomButtonSearch(
+                    CustomButton(
                         icon: "plus",
                         width: 100,
                         height: 100,

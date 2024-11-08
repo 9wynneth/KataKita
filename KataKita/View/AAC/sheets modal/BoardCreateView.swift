@@ -27,8 +27,8 @@ struct BoardCreateView: View {
                             }
                         }
                         if !selectedIcon.isEmpty {
-                            CustomButton(
-                                icon: resolveIcon(for: selectedIcon),
+                            CustomButtonBoard(
+                                icon: selectedIcon,
                                 text: selectedIcon,
                                 width: 100,
                                 height: 100,
@@ -74,6 +74,7 @@ struct BoardCreateView: View {
                         let gridRows = totalgrid == 20 ? 5 : totalgrid == 28 ? 7 : 8
                         let gridColumns = totalgrid == 20 || totalgrid == 28 ? 4 : 5
                         
+                        selectedIcon = NSLocalizedString(selectedIcon, comment: "")
                         boardManager.addBoard(
                             Board(
                                 cards: Array(repeating: [], count: gridRows),
@@ -99,32 +100,36 @@ struct SearchIconView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var searchText = ""
     @StateObject private var viewModel = ProfileViewModel()
-    let allIcons = AllAssets.assets + AllAssets.girlAssets + AllAssets.boyAssets
+
+    // Select assets based on the device language (Indonesian or English)
+    var allIcons: [String] {
+        let locale = Locale.current.languageCode
+        if locale == "id" {
+            return AllAssets.assets + AllAssets.girlAssets + AllAssets.boyAssets
+        } else {
+            return AllAssets.englishAssets + AllAssets.girlAssets + AllAssets.boyAssets
+        }
+    }
 
     var filteredIcons: [String] {
         if !searchText.isEmpty {
             if viewModel.userProfile.gender == true {
-                // Check if there is a girl asset with "GIRL_" + searchText
-                if let girlAsset = AllAssets.girlAssets.first(where: { $0.localizedCaseInsensitiveContains("GIRL_" + searchText) }) {
-                    return [girlAsset] + Array(AllAssets.assets.filter { $0.localizedCaseInsensitiveContains(searchText) }.prefix(10))
+                if let girlAsset = allIcons.filter({ $0.contains("GIRL_") }).first(where: { $0.localizedCaseInsensitiveContains("GIRL_" + searchText) }) {
+                    return [girlAsset] + Array(allIcons.filter { $0.localizedCaseInsensitiveContains(searchText) }.prefix(10))
                 } else {
-                    // Fallback to general assets if no girl-specific asset matches, limiting to the first match
-                    return Array(AllAssets.assets.filter { $0.localizedCaseInsensitiveContains(searchText) }.prefix(10))
+                    return Array(allIcons.filter { $0.localizedCaseInsensitiveContains(searchText) }.prefix(10))
                 }
             } else {
-                if let boyAsset = AllAssets.boyAssets.first(where: { $0.localizedCaseInsensitiveContains("BOY_" + searchText) }) {
-                    return [boyAsset] + Array(AllAssets.assets.filter { $0.localizedCaseInsensitiveContains(searchText) }.prefix(10))
+                if let boyAsset = allIcons.filter({ $0.contains("BOY_") }).first(where: { $0.localizedCaseInsensitiveContains("BOY_" + searchText) }) {
+                    return [boyAsset] + Array(allIcons.filter { $0.localizedCaseInsensitiveContains(searchText) }.prefix(10))
                 } else {
-                    // Fallback to general assets if no boy-specific asset matches, limiting to the first match
-                    return Array(AllAssets.assets.filter { $0.localizedCaseInsensitiveContains(searchText) }.prefix(10))
+                    return Array(allIcons.filter { $0.localizedCaseInsensitiveContains(searchText) }.prefix(10))
                 }
             }
         } else {
-            // Show all icons by default if searchText is empty
             return allIcons
         }
     }
-
     
     var body: some View {
         VStack {
@@ -136,12 +141,11 @@ struct SearchIconView: View {
                 LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 16), count: 3), spacing: 16) {
                     ForEach(filteredIcons, id: \.self) { icon in
                         Button(action: {
-                            // Update selectedIcon and dismiss the view
                             selectedIcon = icon
                             dismiss()
                         }) {
-                            CustomButton(
-                                icon: resolveIcon(for: icon),
+                            CustomButtonBoard(
+                                icon: icon,
                                 text: icon,
                                 width: 150,
                                 height: 150,

@@ -379,6 +379,7 @@
 "Selesai" = "Done";
 
 "kunyah" = "chew";
+"mengunyah" = "chew";
 "menggambar" = "draw";
 "mengantuk" = "sleepy";
 "mendengar" = "listen";
@@ -777,7 +778,7 @@
 "Female" = "Perempuan";
 "Type your name" = "Ketik namamu";
 "Done" = "Selesai";
-"chew" = "kunyah";
+"chew" = "mengunyah";
 "draw" = "menggambar";
 "sleepy" = "mengantuk";
 "listen" = "mendengar";
