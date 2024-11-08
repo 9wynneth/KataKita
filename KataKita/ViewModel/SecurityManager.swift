@@ -11,3 +11,15 @@ import SwiftUI
 class SecurityManager {
     var isCorrect: Bool = false
 }
+
+@Observable
+class StickerImageManager {
+    var stickerImage: URL? 
+
+}
+
+@Observable
+class OriginalImageManager {
+    var imageFromLocal: URL?
+
+}

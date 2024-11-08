@@ -48,6 +48,8 @@ struct KataKitaApp: App {
     @State private var profileManager = ProfileViewModel()
     @StateObject private var sharedState = SharedState()
     @State private var boardManager = BoardManager()
+    @State private var stickerManager = StickerImageManager()
+    @State private var originalImageManager = OriginalImageManager()
 
 
     var sharedModelContainer: ModelContainer = {
@@ -65,7 +67,7 @@ struct KataKitaApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            SplashScreen()
                 .onAppear {
                     // Dummy Data
                     self.scheduleManager.schedules = [
@@ -179,6 +181,8 @@ struct KataKitaApp: App {
         .environmentObject(profileManager)
         .environmentObject(sharedState)
         .environment(boardManager)
+        .environment(stickerManager)
+        .environment(originalImageManager)
 
     }
 }
