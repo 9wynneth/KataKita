@@ -10,7 +10,7 @@ import AVFoundation
 ///
 struct DailyActivityView: View {
     @Environment(ScheduleManager.self) private var scheduleManager
-    @EnvironmentObject var viewModel: ProfileViewModel
+    @Environment(ProfileViewModel.self) private var viewModel
     @Environment(SecurityManager.self) var securityManager
     
     @Environment(\.dismiss) var dismiss

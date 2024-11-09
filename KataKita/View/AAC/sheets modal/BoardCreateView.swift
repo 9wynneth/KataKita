@@ -8,7 +8,7 @@ struct BoardCreateView: View {
     @Environment(\.presentationMode) var presentationMode
     @State private var addingBoard = false
     @State private var totalgrid: Int = 20
-    @StateObject private var viewModel = ProfileViewModel()
+    @Environment(ProfileViewModel.self) private var viewModel
     @Environment(BoardManager.self) private var boardManager
     
     var body: some View {
@@ -107,34 +107,6 @@ struct BoardCreateView: View {
             )
         }
     }
-}
-
-// MARK: - SearchIconView for Icon Selection
-import SwiftUI
-
-struct SearchIconView: View {
-    @Binding var selectedIcon: String
-    @Environment(ProfileViewModel.self) private var viewModel
-    @Environment(\.dismiss) private var dismiss
-    @State private var searchText = ""
-    let allIcons = AllAssets.shared.assets + AllAssets.shared.girlAssets + AllAssets.shared.boyAssets
-
-    var filteredIcons: [String] {
-        if !searchText.isEmpty {
-            if viewModel.userProfile.gender == true {
-                // Check if there is a girl asset with "GIRL_" + searchText
-                if let girlAsset = AllAssets.shared.girlAssets.first(where: { $0.localizedCaseInsensitiveContains("GIRL_" + searchText) }) {
-                    return [girlAsset] + Array(AllAssets.shared.assets.filter { $0.localizedCaseInsensitiveContains(searchText) }.prefix(10))
-                } else {
-                    // Fallback to general assets if no girl-specific asset matches, limiting to the first match
-                    return Array(AllAssets.shared.assets.filter { $0.localizedCaseInsensitiveContains(searchText) }.prefix(10))
-                }
-            } else {
-                if let boyAsset = AllAssets.shared.boyAssets.first(where: { $0.localizedCaseInsensitiveContains("BOY_" + searchText) }) {
-                    return [boyAsset] + Array(AllAssets.shared.assets.filter { $0.localizedCaseInsensitiveContains(searchText) }.prefix(10))
-                } else {
-                    // Fallback to general assets if no boy-specific asset matches, limiting to the first match
-                    return Array(AllAssets.shared.assets.filter { $0.localizedCaseInsensitiveContains(searchText) }.prefix(10))
     
     private func getDisplayText(for icon: String) -> String {
         if Locale.current.languageCode == "en" {
@@ -183,26 +155,8 @@ struct SearchIconView: View {
         @Binding var selectedIcon: String
         @Environment(\.dismiss) private var dismiss
         @State private var searchText = ""
-        @StateObject private var viewModel = ProfileViewModel()
-        
-        // Select assets based on the device language (Indonesian or English)
-        var allIcons: [String] {
-            let locale = Locale.current.languageCode
-            if viewModel.userProfile.gender == true {
-                if locale == "id" {
-                    return AllAssets.assets + AllAssets.girlAssets
-                } else {
-                    return AllAssets.englishAssets + AllAssets.girlAssets
-                }
-            }
-            else {
-                if locale == "id" {
-                    return AllAssets.assets + AllAssets.boyAssets
-                } else {
-                    return AllAssets.englishAssets + AllAssets.boyAssets
-                }
-            }
-        }
+        @Environment(ProfileViewModel.self) private var viewModel
+        let allIcons = AllAssets.shared.assets + AllAssets.shared.girlAssets + AllAssets.shared.boyAssets
         
         var filteredIcons: [String] {
             if !searchText.isEmpty {

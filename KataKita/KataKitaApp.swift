@@ -48,12 +48,10 @@ struct KataKitaApp: App {
     @State private var profileManager = ProfileViewModel()
     @StateObject private var sharedState = SharedState()
     @StateObject private var sharedCards = SharedMaxCards()
-    @State private var boardManager = BoardManager()
+    @State private var boardManager: BoardManager
 
     @State private var stickerManager = StickerImageManager()
     @State private var originalImageManager = OriginalImageManager()
-
-    @StateObject private var sharedState = SharedState()
 
     let modelContainer: ModelContainer
     
@@ -63,6 +61,8 @@ struct KataKitaApp: App {
         }
         
         self.modelContainer = model
+        self._boardManager = State(initialValue: BoardManager(model.mainContext))  // Pass the context to BoardManager
+
     }
 
     var body: some Scene {
@@ -180,10 +180,8 @@ struct KataKitaApp: App {
         .environment(securityManager)
         .environment(pECSViewModel)
         .environmentObject(sharedState)
-
         .environmentObject(sharedCards)
-        .environment(boardManager)
-
+        .environment(self.boardManager)
         .environment(stickerManager)
         .environment(originalImageManager)
 

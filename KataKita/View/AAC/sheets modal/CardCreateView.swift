@@ -1,33 +1,31 @@
-import SwiftUI// Helper function to filter assets based on input and gender
+import SwiftUI
 
 func filterAssets(by input: String, for gender: Bool?) -> [String] {
-    // Determine the asset set based on device language
-    let assets = Locale.current.languageCode == "id" ? AllAssets.assets : AllAssets.englishAssets
-    let girlAssets = Locale.current.languageCode == "id" ? AllAssets.girlAssets : AllAssets.girlAssets
-    let boyAssets = Locale.current.languageCode == "id" ? AllAssets.boyAssets : AllAssets.boyAssets
-    let genderAssets = AllAssets.genderAssets
+    // Create an instance or use a shared instance of AllAssets
+    let assets = Locale.current.languageCode == "id" ? AllAssets.shared.assets : AllAssets.englishAssets
+    let girlAssets = Locale.current.languageCode == "id" ? AllAssets.shared.girlAssets : AllAssets.shared.girlAssets
+    let boyAssets = Locale.current.languageCode == "id" ? AllAssets.shared.boyAssets : AllAssets.shared.boyAssets
+    let genderAssets = AllAssets.shared.genderAssets
+
     if let gender = gender {
         if gender {
             // Filter for girl-specific assets with "GIRL_" prefix
             let girlAssets = AllAssets.shared.girlAssets.filter {
                 $0.lowercased().starts(with: "girl_\(input.lowercased())")
-
             }
-            if !filteredGirlAssets.isEmpty { return filteredGirlAssets }
+            if !girlAssets.isEmpty { return girlAssets }
         } else {
             // Filter for boy-specific assets with "BOY_" prefix
             let boyAssets = AllAssets.shared.boyAssets.filter {
                 $0.lowercased().starts(with: "boy_\(input.lowercased())")
-
             }
-            if !filteredBoyAssets.isEmpty { return filteredBoyAssets }
+            if !boyAssets.isEmpty { return boyAssets }
         }
     }
-    
+
     // If no gender-specific match is found, fall back to general assets
     return (AllAssets.shared.assets + AllAssets.shared.girlAssets.map { $0.replacingOccurrences(of: "GIRL_", with: "") }
             + AllAssets.shared.boyAssets.map { $0.replacingOccurrences(of: "BOY_", with: "") }).filter {
-
         $0.lowercased().starts(with: input.lowercased())
     }
 }
@@ -362,7 +360,8 @@ struct SearchIconsView: View {
     
     // Step 1: Fetch all assets localized to the user's language
     var localizedAssets: [(original: String, localized: String)] {
-        let allAssets = AllAssets.assets + AllAssets.boyAssets + AllAssets.girlAssets + AllAssets.genderAssets
+        let allAssetsInstance = AllAssets()
+        let allAssets = allAssetsInstance.assets + allAssetsInstance.boyAssets + allAssetsInstance.girlAssets + allAssetsInstance.genderAssets
         return allAssets.map { asset in
             (original: asset, localized: NSLocalizedString(asset, comment: ""))
         }
@@ -478,4 +477,3 @@ struct SearchIconsView: View {
         }
     }
 }
-
