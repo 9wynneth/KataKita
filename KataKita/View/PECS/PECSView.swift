@@ -164,9 +164,6 @@ struct PECSView: View {
                             card,
                             card.isIconTypeImage ? nil : resolveIcon(for: "\(self.genderHandler(card.icon))\(card.icon)")
                         )
-                        .onAppear{
-                            speakCardName(card)
-                        }
                     }
 
                     Color.clear
@@ -185,6 +182,8 @@ struct PECSView: View {
                         if let loadedCard = try? result.get() {
                             droppedCards.append(loadedCard)
                             removeCard(loadedCard)
+                            speakCardName(loadedCard)
+
                         } else {
                             print("Failed to load dropped card.")
                         }

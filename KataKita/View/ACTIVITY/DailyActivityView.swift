@@ -145,13 +145,12 @@ struct DailyActivityView: View {
                             .animation(.spring(duration: 0.25), value: toggleOn)
                         }
                         .onTapGesture {
-                            toggleOn.toggle()
                             
-//                            if !toggleOn {
-//                                isAskPassword = true
-//                            } else {
-//                                toggleOn.toggle()
-//                            }
+                            if !toggleOn {
+                                isAskPassword = true
+                            } else {
+                                toggleOn.toggle()
+                            }
                         }
                         .animation(.spring(duration: 0.25), value: toggleOn)
                         
@@ -517,6 +516,14 @@ struct DailyActivityView: View {
                     }
                 }
             )
+            .onChange(of: securityManager.isCorrect) {
+                if securityManager.isCorrect {
+                    // Password is correct; toggle and reset values
+                    toggleOn.toggle()
+                    isAskPassword = false
+                    securityManager.isCorrect = false
+                }
+            }
             
         NavigationLink(
             destination: destinationForSelectedRuangan(),
