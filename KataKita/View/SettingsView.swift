@@ -2,11 +2,15 @@ import AVFoundation
 import SwiftUI
 
 struct SettingsView: View {
-
-    @EnvironmentObject var viewModel: ProfileViewModel
+    @Environment(ProfileViewModel.self) private var viewModel
     @Environment(\.presentationMode) var presentationMode
+    
     @State private var showAlert = false
     @State private var isPersonalVoiceAvailable = false
+    
+    @State private var name = ""
+    @State private var gender = false
+    @State private var sound = false
 
     var body: some View {
         NavigationStack {
@@ -17,32 +21,18 @@ struct SettingsView: View {
                     HStack {
                         Text(LocalizedStringKey("Nama"))
                         TextField(
-                            LocalizedStringKey("Ketik namamu"), text: $viewModel.userProfile.name
+                            LocalizedStringKey("Ketik namamu"), text: $name
                         )
                         .multilineTextAlignment(.trailing)
-                        .onChange(of: viewModel.userProfile.name) { newValue in
-                            viewModel.updateProfile(
-                                name: viewModel.userProfile.name,
-                                gender: viewModel.userProfile.gender,
-                                sound: viewModel.userProfile.sound
-                            )
-                        }
                     }
 
                     // Gender Selection
                     HStack {
                         Text(LocalizedStringKey("Jenis Kelamin"))
                         Spacer()
-                        Picker("", selection: $viewModel.userProfile.gender) {
+                        Picker("", selection: $gender) {
                             Text(LocalizedStringKey("Laki-laki")).tag(false)
                             Text(LocalizedStringKey("Perempuan")).tag(true)
-                        }
-                        .onChange(of: viewModel.userProfile.gender) { newValue in
-                            viewModel.updateProfile(
-                                name: viewModel.userProfile.name,
-                                gender: viewModel.userProfile.gender,
-                                sound: viewModel.userProfile.sound
-                            )
                         }
                         .pickerStyle(MenuPickerStyle())
                     }
@@ -69,6 +59,21 @@ struct SettingsView: View {
             }
             .navigationTitle("Pengaturan")
             .onAppear(perform: checkPersonalVoice)
+            .onChange(of: viewModel.userProfile.sound) {
+                if viewModel.userProfile.sound {
+                    checkPersonalVoice()
+                }
+            }
+            .onChange(of: name) {
+                viewModel.userProfile.name = name
+            }
+            .onChange(of: gender) {
+                viewModel.userProfile.gender = gender
+                viewModel.updateProfile(name: name, gender: gender, sound: sound)
+            }
+            .onChange(of: sound) {
+                viewModel.userProfile.sound = sound
+            }
             .onReceive(
                 NotificationCenter.default.publisher(
                     for: UIApplication.didBecomeActiveNotification)

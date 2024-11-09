@@ -15,6 +15,8 @@ struct AddCardModalView: View {
     @State private var addingCard: Int? = nil
     @State private var addingBoard = false
     
+    @Environment(BoardManager.self) private var boardManager
+    
     let screenWidth = UIScreen.main.bounds.width
     let screenHeight = UIScreen.main.bounds.height
     
@@ -22,7 +24,6 @@ struct AddCardModalView: View {
     
     @State private var id = UUID()
     //    @State private var searchText = ""
-    @Environment(BoardManager.self) private var boardManager
     @Environment(\.presentationMode) private var presentationMode // For dismissing the sheet
     
     

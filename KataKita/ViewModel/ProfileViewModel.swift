@@ -1,27 +1,19 @@
 import SwiftUI
 
-class ProfileViewModel: ObservableObject {
-    @Published var userProfile = UserProfile()
-    
-    init() {
-        loadProfile()
-    }
+@Observable
+class ProfileViewModel {
+    var userProfile = UserProfile()
     
     func updateProfile(name: String, gender: Bool, sound: Bool) {
         userProfile.name = name
         userProfile.gender = gender
         userProfile.sound = sound
-        saveProfile()
-    }
-    
-    private func saveProfile() {
-        UserDefaults.standard.set(userProfile.name, forKey: "userName")
-        UserDefaults.standard.set(userProfile.gender, forKey: "userGender")
-    }
-    
-    private func loadProfile() {
-        userProfile.name = UserDefaults.standard.string(forKey: "userName") ?? ""
-        userProfile.gender = UserDefaults.standard.bool(forKey: "userGender")
+        
+        guard let data = try? JSONEncoder().encode(userProfile) else {
+            return
+        }
+        let defaults = UserDefaults.standard
+        defaults.set(data, forKey: "user")
     }
     
     func fetchPersonalVoices() async -> Bool {
@@ -29,7 +21,7 @@ class ProfileViewModel: ObservableObject {
     }
 }
 
-struct UserProfile {
+struct UserProfile: Codable {
     var name: String = ""
     var gender: Bool = false // false for Laki-laki, true for Perempuan
     var sound: Bool = false

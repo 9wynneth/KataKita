@@ -9,13 +9,12 @@ import SwiftUI
 import SwiftData
 
 struct ContentView: View {
-    @Environment(\.modelContext) private var modelContext
+    
     @Environment(ScheduleManager.self) private var scheduleManager
     @Environment(ActivitiesManager.self) private var activitiesManager
     @Environment(SecurityManager.self) private var securityManager
     @Environment(BoardManager.self) private var boardManager
 
-    
     @Query private var items: [Item]
     @State private var selectedSegment = 0
     
@@ -50,11 +49,3 @@ struct ContentView: View {
     }
 }
 
-#Preview {
-    ContentView()
-        .modelContainer(for: Item.self, inMemory: true)
-        .environment(ScheduleManager())
-        .environment(ActivitiesManager())
-        .environment(SecurityManager())
-    
-}

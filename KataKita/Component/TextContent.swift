@@ -8,29 +8,34 @@
 import SwiftUI
 
 struct TextContent: View {
-let text: String
-let size: Int
-let color: String
-let transparency: Double
-let weight: String
+    let text: String
+    let size: Int
+    let color: String
+    let transparency: Double
+    let weight: String
 
-init(text: String, size:Int, color: String, transparency: Double = 1.0, weight: String) {
-    self.text = text
-    self.size = size
-    self.color = color
-    self.transparency = transparency
-    self.weight = weight
-}
-
-var body: some View {
-        var styledText: Text = Text(LocalizedStringKey(text))
-        .font(Font.custom("MADECarvingSoftPERSONALUSE-\(mapFontWeight(weight))", size: CGFloat(size)))
-            .foregroundColor(Color(hex: color, transparency: transparency))
-
-        return styledText
-
+    init(
+        text: String, size: Int, color: String, transparency: Double = 1.0,
+        weight: String
+    ) {
+        self.text = text
+        self.size = size
+        self.color = color
+        self.transparency = transparency
+        self.weight = weight
     }
-    
+
+    var body: some View {
+        Text(LocalizedStringKey(text))
+            .font(
+                Font.custom(
+                    "MADECarvingSoftPERSONALUSE-\(mapFontWeight(weight))",
+                    size: CGFloat(size)
+                )
+            )
+            .foregroundStyle(Color(hex: color, transparency: transparency))
+    }
+
     func mapFontWeight(_ weight: String) -> String {
         switch weight.lowercased() {
         case "extralight": return "ExtraLight"
@@ -49,5 +54,7 @@ var body: some View {
 
 // heading
 #Preview {
-    TextContent(text: "Styled Text", size: 196, color: "00000", transparency: 1.0, weight: "thin")
+    TextContent(
+        text: "Styled Text", size: 196, color: "00000", transparency: 1.0,
+        weight: "thin")
 }

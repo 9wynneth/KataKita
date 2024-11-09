@@ -92,8 +92,6 @@ extension UTType {
     static let cardType = UTType(exportedAs: "com.example.KataKita.card")
 }
 
-
-
 struct CardList: Identifiable {
     var id = UUID()
     var name: String
@@ -104,13 +102,13 @@ struct CardList: Identifiable {
     var isIconTypeImage: Bool
 }
 
+@Model
 class Board: Identifiable {
     var id: UUID
     var cards: [[Card]]
     var name: String
     var icon: String?
     var gridSize: Grid
-     
     
     init(cards : [[Card]], name: String, icon: String? = nil, gridSize: Grid) {
         self.id = UUID()

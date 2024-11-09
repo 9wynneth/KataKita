@@ -30,7 +30,7 @@ struct CustomIcon: View {
                 
                 TextContent(
                     text: text,
-                    size: Int(CGFloat(font)),
+                    size: Int(font),
                     color: "#000000",
                     transparency: fontTransparency,
                     weight: "medium"
@@ -39,7 +39,6 @@ struct CustomIcon: View {
             .frame(width: width, height: height)
             .background(bgColor.opacity(bgTransparency))
             .cornerRadius(cornerRadius)
-            .padding(.bottom, 20)
         }
     }
 }
