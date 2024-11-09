@@ -160,7 +160,7 @@ struct PECSView: View {
                 HStack {
                     ForEach(droppedCards) { card in
                         if viewModel.userProfile.gender {
-                            if AllAssets.genderAssets.contains(card.name) {
+                            if AllAssets.genderAssets.contains(card.name.lowercased()) {
                                 CustomButton(
                                     icon: resolveIcon(for: "GIRL_" + card.icon),
                                     text: card.name,
@@ -204,7 +204,7 @@ struct PECSView: View {
                         }
                         else
                         {
-                            if AllAssets.genderAssets.contains(card.name)
+                            if AllAssets.genderAssets.contains(card.name.lowercased())
                             {
                                 CustomButton(
                                     icon: resolveIcon(for: "BOY_" + card.icon),
@@ -402,9 +402,13 @@ struct PECSView: View {
         // Localize the card name
         let localizedName = NSLocalizedString(card.name, comment: "Card name for speech synthesis")
         
+        // Detect device language
+        let languageCode = Locale.current.languageCode
+        let voiceLanguage = languageCode == "id" ? "id-ID" : "en-AU" // Set the voice language based on device language
+        
         // Create an utterance with the localized card name
         let utterance = AVSpeechUtterance(string: localizedName)
-        utterance.voice = AVSpeechSynthesisVoice(language: "id-ID") // Indonesian language
+        utterance.voice = AVSpeechSynthesisVoice(language: voiceLanguage) // Set voice based on device language
         utterance.rate = 0.5 // Optional: set the speech rate
 
         // Use the AVSpeechSynthesizer to speak the localized card name
@@ -412,14 +416,17 @@ struct PECSView: View {
         synthesizer.speak(utterance)
     }
 
-    
     func speakText(for cards: [Card]) {
         // Concatenate all the localized names from the Card models into a single text
         let fullText = cards.map { NSLocalizedString($0.name, comment: "Card name for speech synthesis") }.joined(separator: ", ")
 
+        // Detect device language
+        let languageCode = Locale.current.languageCode
+        let voiceLanguage = languageCode == "id" ? "id-ID" : "en-AU" // Set the voice language based on device language
+        
         // Create an utterance for the localized text
         let utterance = AVSpeechUtterance(string: fullText)
-        utterance.voice = AVSpeechSynthesisVoice(language: "id-ID") // Indonesian language
+        utterance.voice = AVSpeechSynthesisVoice(language: voiceLanguage) // Set voice based on device language
         utterance.rate = 0.5 // Adjust the speech rate if needed
 
         // Use the AVSpeechSynthesizer to speak the full text

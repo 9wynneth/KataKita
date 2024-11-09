@@ -121,7 +121,7 @@ struct AACBoardView : View {
                                     
                                 } else if self.cards != nil {
                                     if viewModel.userProfile.gender {
-                                        if AllAssets.genderAssets.contains(row.icon) {
+                                        if AllAssets.genderAssets.contains(row.icon.lowercased()) {
                                             CustomButton(
                                                 icon: resolveIcon(for: "GIRL_" + row.icon),
                                                 text: row.name,
@@ -177,7 +177,7 @@ struct AACBoardView : View {
                                     }
                                     else
                                     {
-                                        if AllAssets.genderAssets.contains(row.icon) {
+                                        if AllAssets.genderAssets.contains(row.icon.lowercased()) {
                                             CustomButton(
                                                 icon: resolveIcon(for: "BOY_" + row.icon),
                                                 text: row.name,
@@ -233,7 +233,7 @@ struct AACBoardView : View {
                                     }
                                 } else {
                                     if viewModel.userProfile.gender {
-                                        if AllAssets.genderAssets.contains(row.icon) {
+                                        if AllAssets.genderAssets.contains(row.icon.lowercased()) {
                                             CustomButton(
                                                 icon: resolveIcon(for: "GIRL_" + row.icon),
                                                 text: row.name,
@@ -318,7 +318,7 @@ struct AACBoardView : View {
                                         }
                                     }
                                     else {
-                                        if AllAssets.genderAssets.contains(row.icon) {
+                                        if AllAssets.genderAssets.contains(row.icon.lowercased()) {
                                             CustomButton(
                                                 icon: resolveIcon(for: "BOY_" + row.icon),
                                                 text: row.name,
@@ -511,8 +511,12 @@ struct AACBoardView : View {
         // Menggunakan NSLocalizedString untuk mendapatkan string yang dilokalkan
         let localizedText = NSLocalizedString(text, comment: "")
         
+        // Memeriksa bahasa perangkat
+        let languageCode = Locale.current.languageCode
+        let voiceLanguage = languageCode == "id" ? "id-ID" : "en-AU"
+        
         let utterance = AVSpeechUtterance(string: localizedText)
-        utterance.voice = AVSpeechSynthesisVoice(language: "id-ID")
+        utterance.voice = AVSpeechSynthesisVoice(language: voiceLanguage)
         utterance.rate = 0.5
         speechSynthesizer.speak(utterance)
     }
@@ -526,12 +530,17 @@ struct AACBoardView : View {
             fullText += "\(localizedName) "
         }
         
+        // Memeriksa bahasa perangkat
+        let languageCode = Locale.current.languageCode
+        let voiceLanguage = languageCode == "id" ? "id-ID" : "en-AU"
+        
         // Menggunakan AVSpeechSynthesizer untuk membaca teks lengkap
         let utterance = AVSpeechUtterance(string: fullText)
-        utterance.voice = AVSpeechSynthesisVoice(language: "id-ID") // Bahasa Indonesia
-        utterance.rate = 0.5 // Menetapkan kecepatan bicara
+        utterance.voice = AVSpeechSynthesisVoice(language: voiceLanguage)
+        utterance.rate = 0.5
         speechSynthesizer.speak(utterance)
     }
+
 
     
 }

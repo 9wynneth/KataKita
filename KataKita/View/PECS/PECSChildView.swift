@@ -56,7 +56,7 @@ struct PECSChildView: View {
                         else
                         {
                             if viewModel.userProfile.gender {
-                                if AllAssets.genderAssets.contains(card.name) {
+                                if AllAssets.genderAssets.contains(card.name.lowercased()) {
                                     CustomButton(
                                         icon: resolveIcon(for: "GIRL_" + card.icon),
                                         text: card.name,
@@ -92,7 +92,7 @@ struct PECSChildView: View {
                             }
                             else
                             {
-                                if AllAssets.genderAssets.contains(card.name)
+                                if AllAssets.genderAssets.contains(card.name.lowercased())
                                 {
                                     CustomButton(
                                         icon: resolveIcon(for: "BOY_" + card.icon),

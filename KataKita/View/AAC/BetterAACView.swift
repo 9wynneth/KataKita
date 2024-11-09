@@ -27,7 +27,8 @@ struct BetterAACView: View {
     @State private var showprofile = false
     @State var isAskPassword = false
     @EnvironmentObject var viewModel: ProfileViewModel
-
+    @Environment(StickerImageManager.self) var stickerManager
+    @Environment(OriginalImageManager.self) var originalImageManager
     
     @State static var navigateFromImage = false
     @State private var selectedCategoryColor: String = "#FFFFFF"
@@ -90,7 +91,7 @@ struct BetterAACView: View {
                                                 else
                                                 {
                                                     if viewModel.userProfile.gender {
-                                                        if AllAssets.genderAssets.contains(card.name) {
+                                                        if AllAssets.genderAssets.contains(card.name.lowercased()) {
                                                             Image(resolveIcon(for: "GIRL_" + card.icon))  // icon name is passed from the card
                                                                 .resizable()
                                                                 .frame(width: 50, height: 50)
@@ -104,7 +105,7 @@ struct BetterAACView: View {
                                                     }
                                                     else
                                                     {
-                                                        if AllAssets.genderAssets.contains(card.name)
+                                                        if AllAssets.genderAssets.contains(card.name.lowercased())
                                                         {
                                                             Image(resolveIcon(for: "BOY_" + card.icon))  // icon name is passed from the card
                                                                 .resizable()
@@ -255,6 +256,9 @@ struct BetterAACView: View {
                         }
                         if self.editing {
                             Button {
+                                boardName = ""
+                                selectedIcon = ""
+                                gridSize = "4 x 5"
                                 self.addingBoard = true
                                 showSheet = true
                             } label: {
@@ -295,6 +299,7 @@ struct BetterAACView: View {
                             isSystemImage: false,
                             action:
                                 {
+                                    
                                     showprofile = true
                                 }
                         )
@@ -331,7 +336,10 @@ struct BetterAACView: View {
                             board,
                             editing: self.$editing,
                             add: { colIndex in
+                                BetterAACView.navigateFromImage = false
                                 selectedColumnIndexValue = colIndex
+                                stickerManager.clearStickerImage()
+                                originalImageManager.clearImageFromLocal()
                                 showAACSettings = true
                                 self.addingCard = colIndex
                             },
@@ -476,27 +484,37 @@ struct BetterAACView: View {
         
         
     func speakText(_ text: String) {
-            let localizedText = NSLocalizedString(text, comment: "Text to be spoken")
-            let utterance = AVSpeechUtterance(string: localizedText)
-            utterance.voice = AVSpeechSynthesisVoice(language: "id-ID")
-            utterance.rate = 0.5
-            speechSynthesizer.speak(utterance)
+        let localizedText = NSLocalizedString(text, comment: "Text to be spoken")
+        
+        // Detect device language
+        let languageCode = Locale.current.languageCode
+        let voiceLanguage = languageCode == "id" ? "id-ID" : "en-AU"
+        
+        let utterance = AVSpeechUtterance(string: localizedText)
+        utterance.voice = AVSpeechSynthesisVoice(language: voiceLanguage)
+        utterance.rate = 0.5
+        speechSynthesizer.speak(utterance)
+    }
+
+    func speakAllText(from buttons: [CardList]) {
+        // Concatenate all the localized names from the Card models into a single text
+        var fullText = ""
+        for card in buttons {
+            let localizedName = NSLocalizedString(card.name, comment: "Concatenated text for speech synthesis")
+            fullText += "\(localizedName) "
         }
 
-        func speakAllText(from buttons: [CardList]) {
-            // Concatenate all the localized names from the Card models into a single text
-            var fullText = ""
-            for card in buttons {
-                let localizedName = NSLocalizedString(card.name, comment: "Concatenated text for speech synthesis")
-                fullText += "\(localizedName) "
-            }
+        // Detect device language
+        let languageCode = Locale.current.languageCode
+        let voiceLanguage = languageCode == "id" ? "id-ID" : "en-AU"
+        
+        // Use the AVSpeechSynthesizer to speak the full text
+        let utterance = AVSpeechUtterance(string: fullText)
+        utterance.voice = AVSpeechSynthesisVoice(language: voiceLanguage)
+        utterance.rate = 0.5 // Set the speech rate
+        speechSynthesizer.speak(utterance)
+    }
 
-            // Use the AVSpeechSynthesizer to speak the full text
-            let utterance = AVSpeechUtterance(string: fullText)
-            utterance.voice = AVSpeechSynthesisVoice(language: "id-ID")
-            utterance.rate = 0.5 // Set the speech rate
-            speechSynthesizer.speak(utterance)
-        }
 }
 
 #Preview {
