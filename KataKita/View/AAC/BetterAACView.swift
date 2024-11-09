@@ -27,7 +27,8 @@ struct BetterAACView: View {
     @State private var showprofile = false
     @State var isAskPassword = false
     @EnvironmentObject var viewModel: ProfileViewModel
-
+    @Environment(StickerImageManager.self) var stickerManager
+    @Environment(OriginalImageManager.self) var originalImageManager
     
     @State static var navigateFromImage = false
     @State private var selectedCategoryColor: String = "#FFFFFF"
@@ -337,6 +338,8 @@ struct BetterAACView: View {
                             add: { colIndex in
                                 BetterAACView.navigateFromImage = false
                                 selectedColumnIndexValue = colIndex
+                                stickerManager.clearStickerImage()
+                                originalImageManager.clearImageFromLocal()
                                 showAACSettings = true
                                 self.addingCard = colIndex
                             },

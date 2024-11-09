@@ -14,12 +14,20 @@ class SecurityManager {
 
 @Observable
 class StickerImageManager {
-    var stickerImage: URL? 
+    var stickerImage: URL?
 
+    // Fungsi untuk mengosongkan stickerImage
+    func clearStickerImage() {
+        stickerImage = nil
+    }
 }
 
 @Observable
 class OriginalImageManager {
     var imageFromLocal: URL?
 
+    // Fungsi untuk mengosongkan imageFromLocal
+    func clearImageFromLocal() {
+        imageFromLocal = nil
+    }
 }
