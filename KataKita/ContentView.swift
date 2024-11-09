@@ -26,9 +26,9 @@ struct ContentView: View {
     var body: some View {
         VStack(spacing: 30) {
             Picker("Select View", selection: $selectedSegment) {
+                Text("JADWAL").tag(2)
                 Text("AAC").tag(0)
                 Text("BELAJAR").tag(1)
-//                Text("JADWAL").tag(2)
 
             }
             .pickerStyle(SegmentedPickerStyle())

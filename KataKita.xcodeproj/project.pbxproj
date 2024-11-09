@@ -61,6 +61,7 @@
 		1ECB573D2CD9C481009291E8 /* AddCardModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ECB573C2CD9C477009291E8 /* AddCardModalView.swift */; };
 		1EEC6E5E2CDCDBA60012965C /* SpeechManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EEC6E5D2CDCDBA20012965C /* SpeechManager.swift */; };
 		1EEC6EF02CDDC73D0012965C /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EEC6EEF2CDDC7380012965C /* SplashScreenView.swift */; };
+		1EEC6EF22CDE64340012965C /* SettingActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EEC6EF12CDE642C0012965C /* SettingActivityView.swift */; };
 		9B3EBEC52CC8ADA8009F448E /* AllAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B3EBEC42CC8ADA8009F448E /* AllAssets.swift */; };
 		9B78DD0D2CB74C510069DBC5 /* HomePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B78DD0C2CB74C510069DBC5 /* HomePageView.swift */; };
 		9B78DD172CBC89850069DBC5 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B78DD162CBC89850069DBC5 /* SettingsView.swift */; };
@@ -175,6 +176,7 @@
 		1ECB573C2CD9C477009291E8 /* AddCardModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCardModalView.swift; sourceTree = "<group>"; };
 		1EEC6E5D2CDCDBA20012965C /* SpeechManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechManager.swift; sourceTree = "<group>"; };
 		1EEC6EEF2CDDC7380012965C /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
+		1EEC6EF12CDE642C0012965C /* SettingActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingActivityView.swift; sourceTree = "<group>"; };
 		9B3EBEC42CC8ADA8009F448E /* AllAssets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllAssets.swift; sourceTree = "<group>"; };
 		9B78DD0C2CB74C510069DBC5 /* HomePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageView.swift; sourceTree = "<group>"; };
 		9B78DD162CBC89850069DBC5 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -398,6 +400,7 @@
 		1EA097CC2CD9B0BF00B76917 /* ACTIVITY */ = {
 			isa = PBXGroup;
 			children = (
+				1EEC6EF12CDE642C0012965C /* SettingActivityView.swift */,
 				1E5863832CB6C0840080373A /* ActivitySequenceView.swift */,
 				DAE313002CB8375C001DD0A0 /* AddDailyActivityView.swift */,
 				1EBBC2332CB78EF200673D97 /* DailyActivityView.swift */,
@@ -624,6 +627,7 @@
 				1EA097CF2CD9B28100B76917 /* PECSView.swift in Sources */,
 				9B78DD0D2CB74C510069DBC5 /* HomePageView.swift in Sources */,
 				1EA096472CC2AF2400B76917 /* AACMenuView.swift in Sources */,
+				1EEC6EF22CDE64340012965C /* SettingActivityView.swift in Sources */,
 				DAE1E7822CBAF59A00F5F9D1 /* SettingActivityCard.swift in Sources */,
 				1ECB57392CD9C2FB009291E8 /* Profile.swift in Sources */,
 				103A0B272CD240F300221E2B /* CardsKamarMandiView.swift in Sources */,
