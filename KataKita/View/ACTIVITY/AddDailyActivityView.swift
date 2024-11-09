@@ -10,10 +10,13 @@ import SwiftUI
 struct AddDailyActivityView: View {
     @Environment(ScheduleManager.self) private var scheduleManager
     @Environment(ActivitiesManager.self) private var activitiesManager
+
     @Environment(\.dismiss) var dismiss
     
     @State private var searchText: String = ""
     @State private var selectedDayString: Int = 0
+    @Binding var toggleOn: Bool
+
     // Viewport size
     private let viewPortWidth: CGFloat = UIScreen.main.bounds.width - 100
     private let viewPortHeight: CGFloat = UIScreen.main.bounds.height - 100
@@ -49,29 +52,58 @@ struct AddDailyActivityView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             VStack(alignment: .leading, spacing: 30) {
-                Button {
-                    dismiss()
-                } label: {
-                    Image(systemName: "chevron.left")
-                        .resizable()
-                        .fontWeight(.medium)
-                        .foregroundStyle(Color.black)
-                        .frame(width: 15, height: 15)
-                    TextHeadline(
-                        text: "Pengaturan",
-                        size: 20,
-                        color: "Black",
-                        transparency: 1.0,
-                        weight: "Light"
-                    )
+//                Button {
+//                    dismiss()
+//                } label: {
+//                    Image(systemName: "chevron.left")
+//                        .resizable()
+//                        .fontWeight(.medium)
+//                        .foregroundStyle(Color.black)
+//                        .frame(width: 15, height: 15)
+//                    TextHeadline(
+//                        text: "Pengaturan",
+//                        size: 20,
+//                        color: "Black",
+//                        transparency: 1.0,
+//                        weight: "Light"
+//                    )
+//                }
+                HStack {
+//                    TextHeadline(
+//                        text: "Jadwal",
+//                        size: 36,
+//                        color: "Black",
+//                        transparency: 1.0,
+//                        weight: "Light"
+//                    )
+                    Spacer()
+                    ZStack {
+                                        Capsule()
+                                            .frame(width: 80, height: 44)
+                                            .foregroundColor(Color.gray)
+                                        ZStack {
+                                            Circle()
+                                                .frame(width: 40, height: 40)
+                                                .foregroundColor(.white)
+                                            Image(
+                                                systemName: toggleOn
+                                                ? "figure.and.child.holdinghands"
+                                                : "figure.child.and.lock.open")
+                                        }
+                                        .shadow(
+                                            color: .black.opacity(0.14), radius: 4,
+                                            x: 0, y: 2
+                                        )
+                                        .offset(x: toggleOn ? 18 : -18)
+                                        .padding(24)
+                                        .animation(.spring(duration: 0.25), value: toggleOn)
+                                    }
+                                    .onTapGesture {
+                                        toggleOn.toggle()
+                                    }
+                                    .animation(.spring(duration: 0.25), value: toggleOn)
                 }
-                TextHeadline(
-                    text: "Jadwal",
-                    size: 36,
-                    color: "Black",
-                    transparency: 1.0,
-                    weight: "Light"
-                )
+                .padding(.top, 50)
             }
             .padding(EdgeInsets(top: 50, leading: 50, bottom: 0, trailing: 50))
             .frame(height: 150, alignment: .topLeading)
@@ -183,13 +215,16 @@ struct AddDailyActivityView: View {
 
                 // View Kanan (Daftar aktivitas)
                 VStack(alignment: .leading) {
-                    TextHeadline (
-                        text: "Daftar Aktivitas",
-                        size: 24,
-                        color: "Black",
-                        transparency: 1.0,
-                        weight: "Light"
-                )
+                    HStack {
+                        TextHeadline (
+                            text: "Daftar Aktivitas",
+                            size: 24,
+                            color: "Black",
+                            transparency: 1.0,
+                            weight: "Light"
+                        )
+                        
+                    }
                     HStack {
                         Image(systemName: "magnifyingglass")
                         TextField("Search", text: $searchText)
@@ -231,3 +266,7 @@ struct AddDailyActivityView: View {
         .navigationBarBackButtonHidden(true)
     }
 }
+
+//#Preview {
+//    AddDailyActivityView()
+//}

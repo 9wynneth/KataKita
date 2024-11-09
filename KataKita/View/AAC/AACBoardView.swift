@@ -454,6 +454,7 @@ struct AACBoardView : View {
                 }
             }
         }
+        
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(
             GeometryReader{ geometry in
