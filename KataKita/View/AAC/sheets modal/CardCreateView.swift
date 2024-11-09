@@ -68,6 +68,7 @@ struct CardCreateView: View {
                 }
                 
                 HStack {
+                    
                     if let stickerURL = stickerManager.stickerImage,
                        let stickerImage = UIImage(contentsOfFile: stickerURL.path) {
                         // Display the sticker image if available
@@ -183,6 +184,9 @@ struct CardCreateView: View {
                     }
                     .pickerStyle(MenuPickerStyle())
                 }
+            }
+            .onAppear {
+                
             }
             .navigationDestination(isPresented: $showingAddImageView) {
                 AddImageCardView(

@@ -68,6 +68,7 @@ struct BoardCreateView: View {
                     }
                 }
             }
+            
             .navigationBarTitle("Buat Board Baru", displayMode: .inline)
             .navigationBarItems(
                 trailing: Button("Selesai") {

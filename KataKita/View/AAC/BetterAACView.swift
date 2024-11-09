@@ -255,6 +255,9 @@ struct BetterAACView: View {
                         }
                         if self.editing {
                             Button {
+                                boardName = ""
+                                selectedIcon = ""
+                                gridSize = "4 x 5"
                                 self.addingBoard = true
                                 showSheet = true
                             } label: {
@@ -295,6 +298,7 @@ struct BetterAACView: View {
                             isSystemImage: false,
                             action:
                                 {
+                                    
                                     showprofile = true
                                 }
                         )
@@ -331,6 +335,7 @@ struct BetterAACView: View {
                             board,
                             editing: self.$editing,
                             add: { colIndex in
+                                BetterAACView.navigateFromImage = false
                                 selectedColumnIndexValue = colIndex
                                 showAACSettings = true
                                 self.addingCard = colIndex
