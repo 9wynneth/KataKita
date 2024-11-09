@@ -7,7 +7,23 @@
 
 import SwiftUI
 import AVFoundation
+import Combine
 
+class SharedMaxCards: ObservableObject {
+    @Published var maxWidth: CGFloat
+    @Published var cardWidth: CGFloat = 50
+    @Published var spacing: CGFloat = 18
+    
+    init() {
+        // Dynamically set maxWidth based on screen width
+        maxWidth = UIScreen.main.bounds.width * 0.5
+    }
+    
+    var maxCardsToShow: Int {
+        Int((maxWidth + spacing) / (cardWidth + spacing))
+    }
+    
+}
 
 struct BetterAACView: View {
     @Environment(SecurityManager.self) private var securityManager
@@ -41,22 +57,24 @@ struct BetterAACView: View {
     @State private var showAlert = false
     @State private var hasSpoken = false
     
-    let colors: [Color] = [.black, .brown, .orange, .red, .purple, .pink, .blue, .green, .yellow]
+    let colors: [Color] = [Color(hex: "000000", transparency: 1.0), Color(hex: "835737", transparency: 1.0), Color(hex: "E9AE50", transparency: 1.0), Color(hex: "E54646", transparency: 1.0), Color(hex: "B378D8", transparency: 1.0), Color(hex: "EDB0DC", transparency: 1.0), Color(hex: "889AE4", transparency: 1.0), Color(hex: "B7D273", transparency: 1.0), Color(hex: "EFDB76", transparency: 1.0), Color(hex: "F2EFDE", transparency: 1.0)]
     let colorNames: [Color: String] = [
-        .black: "Hitam",
-        .brown: "Cokelat",
-        .orange: "Oranye",
-        .red: "Merah",
-        .purple: "Ungu",
-        .pink: "Pink",
-        .blue: "Biru",
-        .green: "Hijau",
-        .yellow: "Kuning"
+        Color(hex: "000000", transparency: 1.0): "Hitam",
+        Color(hex: "835737", transparency: 1.0): "Cokelat",
+        Color(hex: "E9AE50", transparency: 1.0): "Oranye",
+        Color(hex: "E54646", transparency: 1.0): "Merah",
+        Color(hex: "B378D8", transparency: 1.0): "Ungu",
+        Color(hex: "EDB0DC", transparency: 1.0): "Pink",
+        Color(hex: "889AE4", transparency: 1.0): "Biru",
+        Color(hex: "B7D273", transparency: 1.0): "Hijau",
+        Color(hex: "EFDB76", transparency: 1.0): "Kuning",
+        Color(hex: "F2EFDE", transparency: 1.0): "Putih"
     ]
     
     @State private var id = UUID()
     
     @EnvironmentObject var sharedState: SharedState
+    @EnvironmentObject var sharedCards: SharedMaxCards
     
     
     var selectedBoard: Board? {
@@ -68,6 +86,48 @@ struct BetterAACView: View {
         return nil
     }
     
+    @ViewBuilder
+    func cardView(for card: CardList) -> some View {
+        VStack {
+            if card.isIconTypeImage {
+                Image(uiImage: (UIImage(named: card.icon) ?? UIImage()))
+                    .resizable()
+                    .frame(width: 50, height: 50)
+            } else {
+                if viewModel.userProfile.gender {
+                    if AllAssets.genderAssets.contains(card.name) {
+                        Image(resolveIcon(for: "GIRL_" + card.icon))
+                            .resizable()
+                            .frame(width: 50, height: 50)
+                    } else {
+                        Image(resolveIcon(for: card.icon))
+                            .resizable()
+                            .frame(width: 50, height: 50)
+                    }
+                } else {
+                    if AllAssets.genderAssets.contains(card.name) {
+                        Image(resolveIcon(for: "BOY_" + card.icon))
+                            .resizable()
+                            .frame(width: 50, height: 50)
+                    } else {
+                        Image(resolveIcon(for: card.icon))
+                            .resizable()
+                            .frame(width: 50, height: 50)
+                    }
+                }
+            }
+            Text(LocalizedStringKey(card.name))
+                .font(.system(size: 18))
+                .lineLimit(1)
+                .minimumScaleFactor(0.5)
+                .foregroundColor(card.fontColor)
+        }
+        .frame(width: 80, height: 80)
+        .background(card.bgColor.opacity(card.bgTransparency))
+        .cornerRadius(8)
+    }
+    
+    
     var body: some View {
         ZStack {
             VStack(spacing: 0) {
@@ -78,65 +138,13 @@ struct BetterAACView: View {
                     }) {
                         ZStack {
                             HStack {
-                                HStack (spacing: 20){
-                                    ForEach(Array(sharedState.selectedCards.enumerated()), id: \.element.id) { index, card in
-                                        if index < 10 {
-                                            VStack {
-                                                if card.isIconTypeImage
-                                                {
-                                                    Image(uiImage: (UIImage(named: card.icon) ?? UIImage()))
-                                                        .resizable()
-                                                        .frame(width: 50, height: 50)
-                                                }
-                                                else
-                                                {
-                                                    if viewModel.userProfile.gender {
-                                                        if AllAssets.genderAssets.contains(card.name.lowercased()) {
-                                                            Image(resolveIcon(for: "GIRL_" + card.icon))  // icon name is passed from the card
-                                                                .resizable()
-                                                                .frame(width: 50, height: 50)
-                                                        }
-                                                        else
-                                                        {
-                                                            Image(resolveIcon(for: card.icon))  // icon name is passed from the card
-                                                                .resizable()
-                                                                .frame(width: 50, height: 50)
-                                                        }
-                                                    }
-                                                    else
-                                                    {
-                                                        if AllAssets.genderAssets.contains(card.name.lowercased())
-                                                        {
-                                                            Image(resolveIcon(for: "BOY_" + card.icon))  // icon name is passed from the card
-                                                                .resizable()
-                                                                .frame(width: 50, height: 50)
-                                                            
-                                                        }
-                                                        else
-                                                        {
-                                                            Image(resolveIcon(for: card.icon))  // icon name is passed from the card
-                                                                .resizable()
-                                                                .frame(width: 50, height: 50)
-                                                            
-                                                        }
-                                                    }
-                                                }
-                                                Text(LocalizedStringKey(card.name))
-                                                    .font(.system(size: 18))
-                                                    .lineLimit(1)
-                                                    .minimumScaleFactor(0.5)
-                                                    .foregroundColor(card.fontColor)
-                                                    
-                                            }
-                                            .frame(width: 80, height: 80)
-                                            .background(card.bgColor.opacity(card.bgTransparency)) // Apply the background color with transparency
-                                            .cornerRadius(8)
-                                        }
+                                HStack(spacing: 20) {
+                                    ForEach(Array(sharedState.selectedCards.prefix(sharedCards.maxCardsToShow)), id: \.id) { card in
+                                        cardView(for: card)
                                     }
                                 }
-                                
                                 .padding(.leading, 33)
-                                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+                                .frame(maxWidth: sharedCards.maxWidth, maxHeight: .infinity, alignment: .leading)
                                 
                                 Spacer()
                                 
