@@ -55,6 +55,10 @@ struct BetterAACView: View {
     let screenWidth = UIScreen.main.bounds.width
     let screenHeight = UIScreen.main.bounds.height
     let speechSynthesizer = AVSpeechSynthesizer()
+    
+    var maxCards: Int {
+        sharedState.selectedCards.count
+    }
 
     @State private var showAlert = false
     @State private var hasSpoken = false
@@ -183,6 +187,7 @@ struct BetterAACView: View {
                             }
                             .opacity(id == board.id ? 1 : 0)
                             .frame(maxHeight: .infinity)
+                            
                             if self.editing && id == board.id {
                                 CustomButton(
                                     icon: "xmark",
@@ -220,6 +225,8 @@ struct BetterAACView: View {
                             width: id == board.id ? 165 : 80,
                             alignment: .trailing
                         )
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.5)
                         .background(
                             Rectangle()
                                 .fill(
@@ -241,7 +248,9 @@ struct BetterAACView: View {
                         )
                         .onTapGesture {
                             id = board.id
+                            speakText(board.name)
                         }
+
                     }
                     if self.editing {
                         Button {
@@ -385,7 +394,7 @@ struct BetterAACView: View {
                             Alert(
                                 title: Text("Kotak Kata Penuh"),
                                 message: Text(
-                                    "Kamu hanya bisa memilih 10 kata. Hapus kata yang sudah dipilih untuk memilih kata baru."
+                                    "Kamu hanya bisa memilih \(maxCards) kata. Hapus kata yang sudah dipilih untuk memilih kata baru."
                                 ),
                                 dismissButton: .default(
                                     Text("OK"),
@@ -460,7 +469,13 @@ struct BetterAACView: View {
         .onChange(of: id) {
             boardManager.selectId(id)
             sharedState.selectedCards.removeAll()
+            
+            // Get the board name based on the id
+            if let boardName = boardManager.selectedName(for: id) {
+                speakText(boardName) // Speak the board's name
+            }
         }
+
         .onChange(of: securityManager.isCorrect) {
             if securityManager.isCorrect {
                 // Password is correct; toggle and reset values
