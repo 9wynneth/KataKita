@@ -22,6 +22,7 @@ struct AACBoardView : View {
     
     @EnvironmentObject var sharedState: SharedState
     @EnvironmentObject var viewModel: ProfileViewModel
+    @EnvironmentObject var sharedCards: SharedMaxCards
     
     @State private var imageFromLocal: URL?
     let board: Board
@@ -104,10 +105,17 @@ struct AACBoardView : View {
                                         cornerRadius: 13
                                     ){
                                         self.cardHandler(row)
-                                        if sharedState.selectedCards.count < 10 {
+                                        if sharedState.selectedCards.count < sharedCards.maxCardsToShow {
                                             showAlert = false
                                             speakText(row.name)
-                                            let cardListItem = CardList(name: row.name, icon: row.icon, bgColor: Color.white, bgTransparency: 0.0, fontColor: Color.black, isIconTypeImage: row.isIconTypeImage)
+                                            let cardListItem = CardList(
+                                                name: row.name,
+                                                icon: row.icon,
+                                                bgColor: Color.white,
+                                                bgTransparency: 0.0,
+                                                fontColor: Color.black,
+                                                isIconTypeImage: row.isIconTypeImage
+                                            )
                                             sharedState.selectedCards.append(cardListItem)
                                         } else {
                                             showAlert = true
@@ -140,7 +148,7 @@ struct AACBoardView : View {
                                             .alert(isPresented: $showAlert) {
                                                 Alert(
                                                     title: Text("Kotak Kata Penuh"),
-                                                    message: Text("Kamu hanya bisa memilih 10 kata. Hapus kata yang sudah dipilih untuk memilih kata baru."),
+                                                    message: Text("Kamu hanya bisa memilih \(sharedState.selectedCards.count) kata. Hapus kata yang sudah dipilih untuk memilih kata baru."),
                                                     dismissButton: .default(Text("OK"), action: {
                                                         hasSpoken = true
                                                     })
@@ -167,7 +175,7 @@ struct AACBoardView : View {
                                             .alert(isPresented: $showAlert) {
                                                 Alert(
                                                     title: Text("Kotak Kata Penuh"),
-                                                    message: Text("Kamu hanya bisa memilih 10 kata. Hapus kata yang sudah dipilih untuk memilih kata baru."),
+                                                    message: Text("Kamu hanya bisa memilih \(sharedState.selectedCards.count) kata. Hapus kata yang sudah dipilih untuk memilih kata baru."),
                                                     dismissButton: .default(Text("OK"), action: {
                                                         hasSpoken = true
                                                     })
@@ -196,7 +204,7 @@ struct AACBoardView : View {
                                             .alert(isPresented: $showAlert) {
                                                 Alert(
                                                     title: Text("Kotak Kata Penuh"),
-                                                    message: Text("Kamu hanya bisa memilih 10 kata. Hapus kata yang sudah dipilih untuk memilih kata baru."),
+                                                    message: Text("Kamu hanya bisa memilih \(sharedState.selectedCards.count) kata. Hapus kata yang sudah dipilih untuk memilih kata baru."),
                                                     dismissButton: .default(Text("OK"), action: {
                                                         hasSpoken = true
                                                     })
@@ -223,7 +231,7 @@ struct AACBoardView : View {
                                             .alert(isPresented: $showAlert) {
                                                 Alert(
                                                     title: Text("Kotak Kata Penuh"),
-                                                    message: Text("Kamu hanya bisa memilih 10 kata. Hapus kata yang sudah dipilih untuk memilih kata baru."),
+                                                    message: Text("Kamu hanya bisa memilih \(sharedState.selectedCards.count) kata. Hapus kata yang sudah dipilih untuk memilih kata baru."),
                                                     dismissButton: .default(Text("OK"), action: {
                                                         hasSpoken = true
                                                     })
@@ -249,10 +257,17 @@ struct AACBoardView : View {
                                                 cornerRadius: 13,
                                                 isSystemImage: false
                                             ) {
-                                                if sharedState.selectedCards.count < 10 {
+                                                if sharedState.selectedCards.count < sharedCards.maxCardsToShow {
                                                     showAlert = false
                                                     speakText(row.name)
-                                                    let cardListItem = CardList(name: row.name, icon: row.icon, bgColor: Color.white, bgTransparency: 0.0, fontColor: Color.black, isIconTypeImage: row.isIconTypeImage)
+                                                    let cardListItem = CardList(
+                                                        name: row.name,
+                                                        icon: row.icon,
+                                                        bgColor: Color.white,
+                                                        bgTransparency: 0.0,
+                                                        fontColor: Color.black,
+                                                        isIconTypeImage: row.isIconTypeImage
+                                                    )
                                                     sharedState.selectedCards.append(cardListItem)
                                                 } else {
                                                     showAlert = true
@@ -267,7 +282,7 @@ struct AACBoardView : View {
                                             .alert(isPresented: $showAlert) {
                                                 Alert(
                                                     title: Text("Kotak Kata Penuh"),
-                                                    message: Text("Kamu hanya bisa memilih 10 kata. Hapus kata yang sudah dipilih untuk memilih kata baru."),
+                                                    message: Text("Kamu hanya bisa memilih \(sharedState.selectedCards.count) kata. Hapus kata yang sudah dipilih untuk memilih kata baru."),
                                                     dismissButton: .default(Text("OK"), action: {
                                                         hasSpoken = true
                                                     })
@@ -291,10 +306,17 @@ struct AACBoardView : View {
                                                 cornerRadius: 13,
                                                 isSystemImage: false
                                             ) {
-                                                if sharedState.selectedCards.count < 10 {
+                                                if sharedState.selectedCards.count < sharedCards.maxCardsToShow {
                                                     showAlert = false
                                                     speakText(row.name)
-                                                    let cardListItem = CardList(name: row.name, icon: row.icon, bgColor: Color.white, bgTransparency: 0.0, fontColor: Color.black, isIconTypeImage: row.isIconTypeImage)
+                                                    let cardListItem = CardList(
+                                                        name: row.name,
+                                                        icon: row.icon,
+                                                        bgColor: Color.white,
+                                                        bgTransparency: 0.0,
+                                                        fontColor: Color.black,
+                                                        isIconTypeImage: row.isIconTypeImage
+                                                    )
                                                     sharedState.selectedCards.append(cardListItem)
                                                 } else {
                                                     showAlert = true
@@ -304,12 +326,11 @@ struct AACBoardView : View {
                                                     }
                                                 }
                                                 
-                                                
                                             }
                                             .alert(isPresented: $showAlert) {
                                                 Alert(
                                                     title: Text("Kotak Kata Penuh"),
-                                                    message: Text("Kamu hanya bisa memilih 10 kata. Hapus kata yang sudah dipilih untuk memilih kata baru."),
+                                                    message: Text("Kamu hanya bisa memilih \(sharedState.selectedCards.count) kata. Hapus kata yang sudah dipilih untuk memilih kata baru."),
                                                     dismissButton: .default(Text("OK"), action: {
                                                         hasSpoken = true
                                                     })
@@ -334,10 +355,17 @@ struct AACBoardView : View {
                                                 cornerRadius: 13,
                                                 isSystemImage: false
                                             ) {
-                                                if sharedState.selectedCards.count < 10 {
+                                                if sharedState.selectedCards.count < sharedCards.maxCardsToShow {
                                                     showAlert = false
                                                     speakText(row.name)
-                                                    let cardListItem = CardList(name: row.name, icon: row.icon, bgColor: Color.white, bgTransparency: 0.0, fontColor: Color.black, isIconTypeImage: row.isIconTypeImage)
+                                                    let cardListItem = CardList(
+                                                        name: row.name,
+                                                        icon: row.icon,
+                                                        bgColor: Color.white,
+                                                        bgTransparency: 0.0,
+                                                        fontColor: Color.black,
+                                                        isIconTypeImage: row.isIconTypeImage
+                                                    )
                                                     sharedState.selectedCards.append(cardListItem)
                                                 } else {
                                                     showAlert = true
@@ -346,13 +374,11 @@ struct AACBoardView : View {
                                                         speakText("Kotak Kata Penuh")
                                                     }
                                                 }
-                                                
-                                                
                                             }
                                             .alert(isPresented: $showAlert) {
                                                 Alert(
                                                     title: Text("Kotak Kata Penuh"),
-                                                    message: Text("Kamu hanya bisa memilih 10 kata. Hapus kata yang sudah dipilih untuk memilih kata baru."),
+                                                    message: Text("Kamu hanya bisa memilih \(sharedState.selectedCards.count) kata. Hapus kata yang sudah dipilih untuk memilih kata baru."),
                                                     dismissButton: .default(Text("OK"), action: {
                                                         hasSpoken = true
                                                     })
@@ -376,10 +402,17 @@ struct AACBoardView : View {
                                                 cornerRadius: 13,
                                                 isSystemImage: false
                                             ) {
-                                                if sharedState.selectedCards.count < 10 {
+                                                if sharedState.selectedCards.count < sharedCards.maxCardsToShow {
                                                     showAlert = false
                                                     speakText(row.name)
-                                                    let cardListItem = CardList(name: row.name, icon: row.icon, bgColor: Color.white, bgTransparency: 0.0, fontColor: Color.black, isIconTypeImage: row.isIconTypeImage)
+                                                    let cardListItem = CardList(
+                                                        name: row.name,
+                                                        icon: row.icon,
+                                                        bgColor: Color.white,
+                                                        bgTransparency: 0.0,
+                                                        fontColor: Color.black,
+                                                        isIconTypeImage: row.isIconTypeImage
+                                                    )
                                                     sharedState.selectedCards.append(cardListItem)
                                                 } else {
                                                     showAlert = true
@@ -388,13 +421,11 @@ struct AACBoardView : View {
                                                         speakText("Kotak Kata Penuh")
                                                     }
                                                 }
-                                                
-                                                
                                             }
                                             .alert(isPresented: $showAlert) {
                                                 Alert(
                                                     title: Text("Kotak Kata Penuh"),
-                                                    message: Text("Kamu hanya bisa memilih 10 kata. Hapus kata yang sudah dipilih untuk memilih kata baru."),
+                                                    message: Text("Kamu hanya bisa memilih \(sharedState.selectedCards.count) kata. Hapus kata yang sudah dipilih untuk memilih kata baru."),
                                                     dismissButton: .default(Text("OK"), action: {
                                                         hasSpoken = true
                                                     })
