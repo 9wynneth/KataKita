@@ -35,7 +35,9 @@ struct AllAssets {
         ]
     
     static let genderAssets: [String] = [
-        "ambil", "buang", "dia", "bermain", "dimana", "duduk", "iya", "kamu", "kapan", "kita", "makan", "mau", "membaca", "mengangkat", "mengunyah", "minum", "sakit", "saya", "siapa", "suka", "tidak mau", "tidak suka", "tidak"
+        "ambil", "buang", "dia", "bermain", "dimana", "duduk", "iya", "kamu", "kapan", "kita", "makan", "mau", "membaca", "mengangkat", "mengunyah", "minum", "sakit", "saya", "siapa", "suka", "tidak mau", "tidak suka", "tidak",
+//        "AMBIL", "BUANG", "DIA", "BERMAIN", "DIMANA", "DUDUK", "IYA", "KAMU", "KAPAN", "KITA", "MAKAN", "MAU", "MEMBACA", "MENGANGKAT", "MENGUNYAH", "MINUM", "SAKIT", "SAYA", "SIAPA", "SUKA", "TIDAK MAU", "TIDAK SUKA", "TIDAK", "TAKE", "THROW", "HE", "SHE", "PLAY", "WHERE", "SIT", "YES", "YOU", "WHEN", "WE", "EAT", "WANT", "READ ", "LIFT", "CHEWING", "DRINKING", "SICK", "ME", "WHO", "LIKES", "DON'T WANT", "DON'T LIKE", "NOT", 
+        "take", "throw", "he", "play", "where", "sit", "yes", "you", "when", "we", "eat", "want", "read ", "lift", "chew", "drink", "pain", "me", "who", "like", "don't want", "don't like", "don't"
         ]
     
     static let englishAssets: [String] = [

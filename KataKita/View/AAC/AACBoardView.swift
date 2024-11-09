@@ -121,7 +121,7 @@ struct AACBoardView : View {
                                     
                                 } else if self.cards != nil {
                                     if viewModel.userProfile.gender {
-                                        if AllAssets.genderAssets.contains(row.icon) {
+                                        if AllAssets.genderAssets.contains(row.icon.lowercased()) {
                                             CustomButton(
                                                 icon: resolveIcon(for: "GIRL_" + row.icon),
                                                 text: row.name,
@@ -177,7 +177,7 @@ struct AACBoardView : View {
                                     }
                                     else
                                     {
-                                        if AllAssets.genderAssets.contains(row.icon) {
+                                        if AllAssets.genderAssets.contains(row.icon.lowercased()) {
                                             CustomButton(
                                                 icon: resolveIcon(for: "BOY_" + row.icon),
                                                 text: row.name,
@@ -233,7 +233,7 @@ struct AACBoardView : View {
                                     }
                                 } else {
                                     if viewModel.userProfile.gender {
-                                        if AllAssets.genderAssets.contains(row.icon) {
+                                        if AllAssets.genderAssets.contains(row.icon.lowercased()) {
                                             CustomButton(
                                                 icon: resolveIcon(for: "GIRL_" + row.icon),
                                                 text: row.name,
@@ -318,7 +318,7 @@ struct AACBoardView : View {
                                         }
                                     }
                                     else {
-                                        if AllAssets.genderAssets.contains(row.icon) {
+                                        if AllAssets.genderAssets.contains(row.icon.lowercased()) {
                                             CustomButton(
                                                 icon: resolveIcon(for: "BOY_" + row.icon),
                                                 text: row.name,

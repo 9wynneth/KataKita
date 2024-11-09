@@ -54,18 +54,49 @@ struct CustomButtonBoard: View {
                 Spacer()
                 
                 if let icon = icon, !icon.isEmpty {
-                    let localizedIcon = NSLocalizedString(icon, comment: "") // Localize the icon name
-                    let iconbaru = localizedIcon
-  
-                    Image(iconbaru.uppercased()) // Use the localized name here
-                        .antialiased(true)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: CGFloat(iconWidth ?? 24), height: CGFloat(iconHeight ?? 24))
-                        .foregroundColor(Color(hex: fontColor, transparency: fontTransparency))
-                        .onAppear() {
-                            print("coba cek icon sebelum \(icon)" + "coba cek icon sesudah \(localizedIcon)" + "coba cek icon sesudah \(iconbaru)")
+                    let localizedIcon = NSLocalizedString(icon, comment: "")
+                    if Locale.current.languageCode == "en" {
+                        if icon.hasPrefix("GIRL_") {
+                            Image(icon.uppercased()) // Use the localized name here
+                                .antialiased(true)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: CGFloat(iconWidth ?? 24), height: CGFloat(iconHeight ?? 24))
+                                .foregroundColor(Color(hex: fontColor, transparency: fontTransparency))
                         }
+                        else if icon.hasPrefix("BOY_") {
+                            Image(icon.uppercased()) // Use the localized name here
+                                .antialiased(true)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: CGFloat(iconWidth ?? 24), height: CGFloat(iconHeight ?? 24))
+                                .foregroundColor(Color(hex: fontColor, transparency: fontTransparency))
+                        }
+                        else {
+                            Image(localizedIcon.uppercased()) // Use the localized name here
+                                .antialiased(true)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: CGFloat(iconWidth ?? 24), height: CGFloat(iconHeight ?? 24))
+                                .foregroundColor(Color(hex: fontColor, transparency: fontTransparency))
+                                .onAppear()
+                            {
+                                print("localization: \(localizedIcon)")
+                            }
+                        }
+                    }
+                    else {
+                        Image(icon.uppercased()) // Use the localized name here
+                            .antialiased(true)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: CGFloat(iconWidth ?? 24), height: CGFloat(iconHeight ?? 24))
+                            .foregroundColor(Color(hex: fontColor, transparency: fontTransparency))
+                            .onAppear()
+                        {
+                            print("icon: \(icon)")
+                        }
+                    }
                 }
                 
                 if let text = text, !text.isEmpty {

@@ -90,7 +90,7 @@ struct BetterAACView: View {
                                                 else
                                                 {
                                                     if viewModel.userProfile.gender {
-                                                        if AllAssets.genderAssets.contains(card.name) {
+                                                        if AllAssets.genderAssets.contains(card.name.lowercased()) {
                                                             Image(resolveIcon(for: "GIRL_" + card.icon))  // icon name is passed from the card
                                                                 .resizable()
                                                                 .frame(width: 50, height: 50)
@@ -104,7 +104,7 @@ struct BetterAACView: View {
                                                     }
                                                     else
                                                     {
-                                                        if AllAssets.genderAssets.contains(card.name)
+                                                        if AllAssets.genderAssets.contains(card.name.lowercased())
                                                         {
                                                             Image(resolveIcon(for: "BOY_" + card.icon))  // icon name is passed from the card
                                                                 .resizable()

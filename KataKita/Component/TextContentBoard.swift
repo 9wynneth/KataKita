@@ -8,28 +8,49 @@
 import SwiftUI
 
 struct TextContentBoard: View {
-let text: String
-let size: Int
-let color: String
-let transparency: Double
-let weight: String
-
-init(text: String, size:Int, color: String, transparency: Double = 1.0, weight: String) {
-    self.text = text
-    self.size = size
-    self.color = color
-    self.transparency = transparency
-    self.weight = weight
-}
-
-var body: some View {
-        var styledText: Text = Text((text))
-        .font(Font.custom("MADECarvingSoftPERSONALUSE-\(mapFontWeight(weight))", size: CGFloat(size)))
-            .foregroundColor(Color(hex: color, transparency: transparency))
-
-        return styledText
-
+    let text: String
+    let size: Int
+    let color: String
+    let transparency: Double
+    let weight: String
+    
+    init(text: String, size:Int, color: String, transparency: Double = 1.0, weight: String) {
+        self.text = text
+        self.size = size
+        self.color = color
+        self.transparency = transparency
+        self.weight = weight
     }
+    
+    var body: some View {
+        if Locale.current.languageCode == "en" {
+            if AllAssets.genderAssets.contains(text.lowercased())
+            {
+                var styledText: Text = Text(((text).lowercased()))
+                    .font(Font.custom("MADECarvingSoftPERSONALUSE-\(mapFontWeight(weight))", size: CGFloat(size)))
+                    .foregroundColor(Color(hex: color, transparency: transparency))
+                
+                return styledText
+            }
+            else {
+                var styledText: Text = Text((text).lowercased())
+                    .font(Font.custom("MADECarvingSoftPERSONALUSE-\(mapFontWeight(weight))", size: CGFloat(size)))
+                    .foregroundColor(Color(hex: color, transparency: transparency))
+                
+                return styledText
+            }
+        }
+        else
+        {
+            var styledText: Text = Text((text).lowercased())
+                .font(Font.custom("MADECarvingSoftPERSONALUSE-\(mapFontWeight(weight))", size: CGFloat(size)))
+                .foregroundColor(Color(hex: color, transparency: transparency))
+            
+            return styledText
+            
+        }
+    }
+   
     
     func mapFontWeight(_ weight: String) -> String {
         switch weight.lowercased() {
