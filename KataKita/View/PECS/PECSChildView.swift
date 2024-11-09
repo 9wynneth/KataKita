@@ -30,12 +30,14 @@ struct PECSChildView: View {
             ForEach(Array(self.cards.enumerated()), id: \.offset) { i, column in
                 VStack(spacing: 10) {
                     ForEach(Array(column.enumerated()), id: \.offset) { j, card in
+
                         PECSChildCard(
                             card,
                             (self.width, self.height),
                             card.isIconTypeImage ? nil : resolveIcon(for: "\(self.genderHandler(card.icon))\(card.icon)")
                         )
                         .draggable(card)
+
                     }
                 }
                 .padding(10)

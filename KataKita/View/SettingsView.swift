@@ -38,18 +38,23 @@ struct SettingsView: View {
                     }
                 }
                 // aplikasi
-                Section(header: Text(LocalizedStringKey("APLIKASI"))) {
-                    // CUSTOM SUARA
-                    HStack {
-                        Text(LocalizedStringKey("Suara"))
-                        Spacer()
-                        Picker("", selection: $sound) {
-                            Text("Default").tag(false)
-                            Text("Custom").tag(true)
-                        }
-                        .pickerStyle(MenuPickerStyle())
-                    }
-                }
+//                Section(header: Text(LocalizedStringKey("APLIKASI"))) {
+//                    // CUSTOM SUARA
+//                    HStack {
+//                        Text(LocalizedStringKey("Suara"))
+//                        Spacer()
+//                        Picker("", selection: $viewModel.userProfile.sound) {
+//                            Text("Default").tag(false)
+//                            Text("Custom").tag(true)
+//                        }
+//                        .pickerStyle(MenuPickerStyle())
+//                        .onChange(of: viewModel.userProfile.sound) { newValue in
+//                            if newValue {
+//                                checkPersonalVoice()
+//                            }
+//                        }
+//                    }
+//                }
 
             }
             .navigationTitle("Pengaturan")

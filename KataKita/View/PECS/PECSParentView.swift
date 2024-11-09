@@ -56,6 +56,7 @@ struct PECSParentView: View {
                             ) {
                                 self.cardToDelete = (i, j)
                                 self.showDeleteAlert = true
+
                             }
                             .offset(x: -5, y: 5)
                         }

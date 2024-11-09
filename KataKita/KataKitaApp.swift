@@ -44,6 +44,12 @@ struct KataKitaApp: App {
     @State private var stateManager = StateManager()
     @State private var securityManager = SecurityManager()
     @State private var pECSViewModel = PECSViewModel()
+
+    @State private var profileManager = ProfileViewModel()
+    @StateObject private var sharedState = SharedState()
+    @StateObject private var sharedCards = SharedMaxCards()
+    @State private var boardManager = BoardManager()
+
     @State private var stickerManager = StickerImageManager()
     @State private var originalImageManager = OriginalImageManager()
 
@@ -174,6 +180,10 @@ struct KataKitaApp: App {
         .environment(securityManager)
         .environment(pECSViewModel)
         .environmentObject(sharedState)
+
+        .environmentObject(sharedCards)
+        .environment(boardManager)
+
         .environment(stickerManager)
         .environment(originalImageManager)
 

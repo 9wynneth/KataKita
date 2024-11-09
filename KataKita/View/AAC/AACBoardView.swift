@@ -24,6 +24,10 @@ struct AACBoardView: View {
 
     @EnvironmentObject var sharedState: SharedState
 
+    @EnvironmentObject var viewModel: ProfileViewModel
+    @EnvironmentObject var sharedCards: SharedMaxCards
+    
+
     @State private var imageFromLocal: URL?
     let board: Board
     let spacing: CGFloat
@@ -82,8 +86,8 @@ struct AACBoardView: View {
                                 ) {
                                     if self.cards != nil {
                                         self.cardHandler(row)
-                                    } else {
-                                        if sharedState.selectedCards.count < 10 {
+
+                                        if sharedState.selectedCards.count < sharedCards.maxCardsToShow {
                                             showAlert = false
                                             speakText(row.name)
                                             let cardListItem = CardList(
@@ -100,6 +104,315 @@ struct AACBoardView: View {
                                             hasSpoken = false
                                             if hasSpoken == false {
                                                 speakText("Kotak Kata Penuh")
+                                            }
+                                        }
+                                    }
+
+
+                                    
+                                } else if self.cards != nil {
+                                    if viewModel.userProfile.gender {
+                                        if AllAssets.genderAssets.contains(row.icon.lowercased()) {
+                                            CustomButton(
+                                                icon: resolveIcon(for: "GIRL_" + row.icon),
+                                                text: row.name,
+                                                width: cellWidth,
+                                                height: cellHeight,
+                                                font: 24,
+                                                iconWidth: 80,
+                                                iconHeight: 60,
+                                                bgColor: row.category.getColorString(),
+                                                bgTransparency: self.getCardPos(row) == nil ? 0.3 : 1,
+                                                fontColor: "000000",
+                                                fontTransparency: 1.0, cornerRadius: 13, isSystemImage: false
+                                            ) {
+                                                self.cardHandler(row)
+                                            }
+                                            .alert(isPresented: $showAlert) {
+                                                Alert(
+                                                    title: Text("Kotak Kata Penuh"),
+                                                    message: Text("Kamu hanya bisa memilih \(sharedState.selectedCards.count) kata. Hapus kata yang sudah dipilih untuk memilih kata baru."),
+                                                    dismissButton: .default(Text("OK"), action: {
+                                                        hasSpoken = true
+                                                    })
+                                                )
+                                            }
+                                        }
+                                        else
+                                        {
+                                            CustomButton(
+                                                icon: resolveIcon(for: row.icon),
+                                                text: row.name,
+                                                width: cellWidth,
+                                                height: cellHeight,
+                                                font: 24,
+                                                iconWidth: 80,
+                                                iconHeight: 60,
+                                                bgColor: row.category.getColorString(),
+                                                bgTransparency: self.getCardPos(row) == nil ? 0.3 : 1,
+                                                fontColor: "000000",
+                                                fontTransparency: 1.0, cornerRadius: 13, isSystemImage: false
+                                            ) {
+                                                self.cardHandler(row)
+                                            }
+                                            .alert(isPresented: $showAlert) {
+                                                Alert(
+                                                    title: Text("Kotak Kata Penuh"),
+                                                    message: Text("Kamu hanya bisa memilih \(sharedState.selectedCards.count) kata. Hapus kata yang sudah dipilih untuk memilih kata baru."),
+                                                    dismissButton: .default(Text("OK"), action: {
+                                                        hasSpoken = true
+                                                    })
+                                                )
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if AllAssets.genderAssets.contains(row.icon.lowercased()) {
+                                            CustomButton(
+                                                icon: resolveIcon(for: "BOY_" + row.icon),
+                                                text: row.name,
+                                                width: cellWidth,
+                                                height: cellHeight,
+                                                font: 24,
+                                                iconWidth: 80,
+                                                iconHeight: 60,
+                                                bgColor: row.category.getColorString(),
+                                                bgTransparency: self.getCardPos(row) == nil ? 0.3 : 1,
+                                                fontColor: "000000",
+                                                fontTransparency: 1.0, cornerRadius: 13, isSystemImage: false
+                                            ) {
+                                                self.cardHandler(row)
+                                            }
+                                            .alert(isPresented: $showAlert) {
+                                                Alert(
+                                                    title: Text("Kotak Kata Penuh"),
+                                                    message: Text("Kamu hanya bisa memilih \(sharedState.selectedCards.count) kata. Hapus kata yang sudah dipilih untuk memilih kata baru."),
+                                                    dismissButton: .default(Text("OK"), action: {
+                                                        hasSpoken = true
+                                                    })
+                                                )
+                                            }
+                                        }
+                                        else
+                                        {
+                                            CustomButton(
+                                                icon: resolveIcon(for: row.icon),
+                                                text: row.name,
+                                                width: cellWidth,
+                                                height: cellHeight,
+                                                font: 24,
+                                                iconWidth: 80,
+                                                iconHeight: 60,
+                                                bgColor: row.category.getColorString(),
+                                                bgTransparency: self.getCardPos(row) == nil ? 0.3 : 1,
+                                                fontColor: "000000",
+                                                fontTransparency: 1.0, cornerRadius: 13, isSystemImage: false
+                                            ) {
+                                                self.cardHandler(row)
+                                            }
+                                            .alert(isPresented: $showAlert) {
+                                                Alert(
+                                                    title: Text("Kotak Kata Penuh"),
+                                                    message: Text("Kamu hanya bisa memilih \(sharedState.selectedCards.count) kata. Hapus kata yang sudah dipilih untuk memilih kata baru."),
+                                                    dismissButton: .default(Text("OK"), action: {
+                                                        hasSpoken = true
+                                                    })
+                                                )
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    if viewModel.userProfile.gender {
+                                        if AllAssets.genderAssets.contains(row.icon.lowercased()) {
+                                            CustomButton(
+                                                icon: resolveIcon(for: "GIRL_" + row.icon),
+                                                text: row.name,
+                                                width: cellWidth,
+                                                height: cellHeight,
+                                                font: 24,
+                                                iconWidth: 80,
+                                                iconHeight: 60,
+                                                bgColor: row.category.getColorString(),
+                                                bgTransparency: 0.65,
+                                                fontColor: "000000",
+                                                fontTransparency: 1.0,
+                                                cornerRadius: 13,
+                                                isSystemImage: false
+                                            ) {
+                                                if sharedState.selectedCards.count < sharedCards.maxCardsToShow {
+                                                    showAlert = false
+                                                    speakText(row.name)
+                                                    let cardListItem = CardList(
+                                                        name: row.name,
+                                                        icon: row.icon,
+                                                        bgColor: Color.white,
+                                                        bgTransparency: 0.0,
+                                                        fontColor: Color.black,
+                                                        isIconTypeImage: row.isIconTypeImage
+                                                    )
+                                                    sharedState.selectedCards.append(cardListItem)
+                                                } else {
+                                                    showAlert = true
+                                                    hasSpoken = false
+                                                    if hasSpoken == false {
+                                                        speakText("Kotak Kata Penuh")
+                                                    }
+                                                }
+                                                
+                                                
+                                            }
+                                            .alert(isPresented: $showAlert) {
+                                                Alert(
+                                                    title: Text("Kotak Kata Penuh"),
+                                                    message: Text("Kamu hanya bisa memilih \(sharedState.selectedCards.count) kata. Hapus kata yang sudah dipilih untuk memilih kata baru."),
+                                                    dismissButton: .default(Text("OK"), action: {
+                                                        hasSpoken = true
+                                                    })
+                                                )
+                                            }
+                                        }
+                                        else
+                                        {
+                                            CustomButton(
+                                                icon: resolveIcon(for: row.icon),
+                                                text: row.name,
+                                                width: cellWidth,
+                                                height: cellHeight,
+                                                font: 24,
+                                                iconWidth: 80,
+                                                iconHeight: 60,
+                                                bgColor: row.category.getColorString(),
+                                                bgTransparency: 0.65,
+                                                fontColor: "000000",
+                                                fontTransparency: 1.0,
+                                                cornerRadius: 13,
+                                                isSystemImage: false
+                                            ) {
+                                                if sharedState.selectedCards.count < sharedCards.maxCardsToShow {
+                                                    showAlert = false
+                                                    speakText(row.name)
+                                                    let cardListItem = CardList(
+                                                        name: row.name,
+                                                        icon: row.icon,
+                                                        bgColor: Color.white,
+                                                        bgTransparency: 0.0,
+                                                        fontColor: Color.black,
+                                                        isIconTypeImage: row.isIconTypeImage
+                                                    )
+                                                    sharedState.selectedCards.append(cardListItem)
+                                                } else {
+                                                    showAlert = true
+                                                    hasSpoken = false
+                                                    if hasSpoken == false {
+                                                        speakText("Kotak Kata Penuh")
+                                                    }
+                                                }
+                                                
+                                            }
+                                            .alert(isPresented: $showAlert) {
+                                                Alert(
+                                                    title: Text("Kotak Kata Penuh"),
+                                                    message: Text("Kamu hanya bisa memilih \(sharedState.selectedCards.count) kata. Hapus kata yang sudah dipilih untuk memilih kata baru."),
+                                                    dismissButton: .default(Text("OK"), action: {
+                                                        hasSpoken = true
+                                                    })
+                                                )
+                                            }
+                                        }
+                                    }
+                                    else {
+                                        if AllAssets.genderAssets.contains(row.icon.lowercased()) {
+                                            CustomButton(
+                                                icon: resolveIcon(for: "BOY_" + row.icon),
+                                                text: row.name,
+                                                width: cellWidth,
+                                                height: cellHeight,
+                                                font: 24,
+                                                iconWidth: 80,
+                                                iconHeight: 60,
+                                                bgColor: row.category.getColorString(),
+                                                bgTransparency: 0.65,
+                                                fontColor: "000000",
+                                                fontTransparency: 1.0,
+                                                cornerRadius: 13,
+                                                isSystemImage: false
+                                            ) {
+                                                if sharedState.selectedCards.count < sharedCards.maxCardsToShow {
+                                                    showAlert = false
+                                                    speakText(row.name)
+                                                    let cardListItem = CardList(
+                                                        name: row.name,
+                                                        icon: row.icon,
+                                                        bgColor: Color.white,
+                                                        bgTransparency: 0.0,
+                                                        fontColor: Color.black,
+                                                        isIconTypeImage: row.isIconTypeImage
+                                                    )
+                                                    sharedState.selectedCards.append(cardListItem)
+                                                } else {
+                                                    showAlert = true
+                                                    hasSpoken = false
+                                                    if hasSpoken == false {
+                                                        speakText("Kotak Kata Penuh")
+                                                    }
+                                                }
+                                            }
+                                            .alert(isPresented: $showAlert) {
+                                                Alert(
+                                                    title: Text("Kotak Kata Penuh"),
+                                                    message: Text("Kamu hanya bisa memilih \(sharedState.selectedCards.count) kata. Hapus kata yang sudah dipilih untuk memilih kata baru."),
+                                                    dismissButton: .default(Text("OK"), action: {
+                                                        hasSpoken = true
+                                                    })
+                                                )
+                                            }
+                                        }
+                                        else
+                                        {
+                                            CustomButton(
+                                                icon: resolveIcon(for: row.icon),
+                                                text: row.name,
+                                                width: cellWidth,
+                                                height: cellHeight,
+                                                font: 24,
+                                                iconWidth: 80,
+                                                iconHeight: 60,
+                                                bgColor: row.category.getColorString(),
+                                                bgTransparency: 0.65,
+                                                fontColor: "000000",
+                                                fontTransparency: 1.0,
+                                                cornerRadius: 13,
+                                                isSystemImage: false
+                                            ) {
+                                                if sharedState.selectedCards.count < sharedCards.maxCardsToShow {
+                                                    showAlert = false
+                                                    speakText(row.name)
+                                                    let cardListItem = CardList(
+                                                        name: row.name,
+                                                        icon: row.icon,
+                                                        bgColor: Color.white,
+                                                        bgTransparency: 0.0,
+                                                        fontColor: Color.black,
+                                                        isIconTypeImage: row.isIconTypeImage
+                                                    )
+                                                    sharedState.selectedCards.append(cardListItem)
+                                                } else {
+                                                    showAlert = true
+                                                    hasSpoken = false
+                                                    if hasSpoken == false {
+                                                        speakText("Kotak Kata Penuh")
+                                                    }
+                                                }
+                                            }
+                                            .alert(isPresented: $showAlert) {
+                                                Alert(
+                                                    title: Text("Kotak Kata Penuh"),
+                                                    message: Text("Kamu hanya bisa memilih \(sharedState.selectedCards.count) kata. Hapus kata yang sudah dipilih untuk memilih kata baru."),
+                                                    dismissButton: .default(Text("OK"), action: {
+                                                        hasSpoken = true
+                                                    })
+                                                )
                                             }
                                         }
                                     }
@@ -131,6 +444,7 @@ struct AACBoardView: View {
         .frame(
             maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading
         )
+
         .background(
             GeometryReader { geometry in
                 Color.clear
@@ -214,8 +528,13 @@ struct AACBoardView: View {
         // Menggunakan NSLocalizedString untuk mendapatkan string yang dilokalkan
         let localizedText = NSLocalizedString(text, comment: "")
 
+        
+        // Memeriksa bahasa perangkat
+        let languageCode = Locale.current.languageCode
+        let voiceLanguage = languageCode == "id" ? "id-ID" : "en-AU"
+
         let utterance = AVSpeechUtterance(string: localizedText)
-        utterance.voice = AVSpeechSynthesisVoice(language: "id-ID")
+        utterance.voice = AVSpeechSynthesisVoice(language: voiceLanguage)
         utterance.rate = 0.5
         speechSynthesizer.speak(utterance)
     }
@@ -228,11 +547,15 @@ struct AACBoardView: View {
             let localizedName = NSLocalizedString(card.name, comment: "")
             fullText += "\(localizedName) "
         }
-
+        
+        // Memeriksa bahasa perangkat
+        let languageCode = Locale.current.languageCode
+        let voiceLanguage = languageCode == "id" ? "id-ID" : "en-AU"
+        
         // Menggunakan AVSpeechSynthesizer untuk membaca teks lengkap
         let utterance = AVSpeechUtterance(string: fullText)
-        utterance.voice = AVSpeechSynthesisVoice(language: "id-ID")  // Bahasa Indonesia
-        utterance.rate = 0.5  // Menetapkan kecepatan bicara
+        utterance.voice = AVSpeechSynthesisVoice(language: voiceLanguage)
+        utterance.rate = 0.5
         speechSynthesizer.speak(utterance)
     }
 }
@@ -242,6 +565,7 @@ struct AACBoardPlusButton: View {
     let height: CGFloat
 
     let f: () -> Void
+
 
     init(_ size: (CGFloat, CGFloat), f: @escaping () -> Void) {
         self.width = size.0

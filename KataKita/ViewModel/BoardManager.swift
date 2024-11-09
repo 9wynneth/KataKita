@@ -38,7 +38,6 @@ class BoardManager {
                         Card(name: "dia", icon: "dia", category: .CORE, isIconTypeImage: false),
                         Card(name: "kita", icon: "kita", category: .CORE, isIconTypeImage: false),
                         Card(name: "ibu", icon: "ibu", category: .CORE, isIconTypeImage: false)
-
                     ],
                     [
                         Card(name: "apa", icon: "apa", category: .QUESTION, isIconTypeImage: false),

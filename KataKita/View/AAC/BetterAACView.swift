@@ -7,6 +7,23 @@
 
 import AVFoundation
 import SwiftUI
+import Combine
+
+class SharedMaxCards: ObservableObject {
+    @Published var maxWidth: CGFloat
+    @Published var cardWidth: CGFloat = 50
+    @Published var spacing: CGFloat = 18
+    
+    init() {
+        // Dynamically set maxWidth based on screen width
+        maxWidth = UIScreen.main.bounds.width * 0.5
+    }
+    
+    var maxCardsToShow: Int {
+        Int((maxWidth + spacing) / (cardWidth + spacing))
+    }
+    
+}
 
 struct BetterAACView: View {
     @Environment(SecurityManager.self) private var securityManager
@@ -28,6 +45,10 @@ struct BetterAACView: View {
     @State private var showprofile = false
     @State var isAskPassword = false
 
+    @EnvironmentObject var viewModel: ProfileViewModel
+    @Environment(StickerImageManager.self) var stickerManager
+    @Environment(OriginalImageManager.self) var originalImageManager
+    
     @State static var navigateFromImage = false
     @State private var selectedCategoryColor: String = "#FFFFFF"
     @State private var selectedColumnIndexValue: Int = -1
@@ -39,24 +60,27 @@ struct BetterAACView: View {
     @State private var showAlert = false
     @State private var hasSpoken = false
 
+
     @State private var id = UUID()
 
-    let colors: [Color] = [
-        .black, .brown, .orange, .red, .purple, .pink, .blue, .green, .yellow,
-    ]
+    
+    let colors: [Color] = [Color(hex: "000000", transparency: 1.0), Color(hex: "835737", transparency: 1.0), Color(hex: "E9AE50", transparency: 1.0), Color(hex: "E54646", transparency: 1.0), Color(hex: "B378D8", transparency: 1.0), Color(hex: "EDB0DC", transparency: 1.0), Color(hex: "889AE4", transparency: 1.0), Color(hex: "B7D273", transparency: 1.0), Color(hex: "EFDB76", transparency: 1.0), Color(hex: "F2EFDE", transparency: 1.0)]
     let colorNames: [Color: String] = [
-        .black: "Hitam",
-        .brown: "Cokelat",
-        .orange: "Oranye",
-        .red: "Merah",
-        .purple: "Ungu",
-        .pink: "Pink",
-        .blue: "Biru",
-        .green: "Hijau",
-        .yellow: "Kuning",
+        Color(hex: "000000", transparency: 1.0): "Hitam",
+        Color(hex: "835737", transparency: 1.0): "Cokelat",
+        Color(hex: "E9AE50", transparency: 1.0): "Oranye",
+        Color(hex: "E54646", transparency: 1.0): "Merah",
+        Color(hex: "B378D8", transparency: 1.0): "Ungu",
+        Color(hex: "EDB0DC", transparency: 1.0): "Pink",
+        Color(hex: "889AE4", transparency: 1.0): "Biru",
+        Color(hex: "B7D273", transparency: 1.0): "Hijau",
+        Color(hex: "EFDB76", transparency: 1.0): "Kuning",
+        Color(hex: "F2EFDE", transparency: 1.0): "Putih"
     ]
 
     @EnvironmentObject var sharedState: SharedState
+    @EnvironmentObject var sharedCards: SharedMaxCards
+    
 
     var selectedBoard: Board? {
         if let board = boardManager.boards.first(where: { $0.id == id }) {
@@ -65,6 +89,7 @@ struct BetterAACView: View {
 
         return nil
     }
+
 
     var body: some View {
         VStack(spacing: 0) {
@@ -76,17 +101,12 @@ struct BetterAACView: View {
                     ZStack {
                         HStack {
                             HStack(spacing: 20) {
-                                ForEach(
-                                    Array(
-                                        sharedState.selectedCards
-                                            .enumerated()), id: \.element.id
-                                ) { index, card in
-                                    if index < 10 {
+                                  ForEach(Array(sharedState.selectedCards.prefix(sharedCards.maxCardsToShow)), id: \.id) { card in
+                                     
                                         AACCard(
                                             card,
                                             card.isIconTypeImage ? nil : resolveIcon(for: "\(self.genderHandler(card.icon))\(card.icon)")
                                         )
-                                    }
                                 }
                             }
                             .padding(.leading, 33)
@@ -310,11 +330,14 @@ struct BetterAACView: View {
                     AACBoardView(
                         board,
                         editing: self.$editing,
-                        add: { colIndex in
-                            selectedColumnIndexValue = colIndex
-                            showAACSettings = true
-                            self.addingCard = colIndex
-                        },
+                            add: { colIndex in
+                                BetterAACView.navigateFromImage = false
+                                selectedColumnIndexValue = colIndex
+                                stickerManager.clearStickerImage()
+                                originalImageManager.clearImageFromLocal()
+                                showAACSettings = true
+                                self.addingCard = colIndex
+                            },
                         del: { colIndex, rowIndex in
                             self.id = UUID()
                             self.id = board.id
@@ -329,7 +352,7 @@ struct BetterAACView: View {
                     ForEach(Array(colors.enumerated()), id: \.offset) {
                         index, color in
                         Button {
-                            if sharedState.selectedCards.count < 10 {
+                            if sharedState.selectedCards.count < sharedCards.maxCardsToShow {
                                 showAlert = false
                                 let colorName =
                                     colorNames[color] ?? "Unknown"
@@ -468,10 +491,14 @@ struct BetterAACView: View {
     }
 
     func speakText(_ text: String) {
-        let localizedText = NSLocalizedString(
-            text, comment: "Text to be spoken")
+        let localizedText = NSLocalizedString(text, comment: "Text to be spoken")
+        
+        // Detect device language
+        let languageCode = Locale.current.languageCode
+        let voiceLanguage = languageCode == "id" ? "id-ID" : "en-AU"
+        
         let utterance = AVSpeechUtterance(string: localizedText)
-        utterance.voice = AVSpeechSynthesisVoice(language: "id-ID")
+        utterance.voice = AVSpeechSynthesisVoice(language: voiceLanguage)
         utterance.rate = 0.5
         speechSynthesizer.speak(utterance)
     }
@@ -480,15 +507,19 @@ struct BetterAACView: View {
         // Concatenate all the localized names from the Card models into a single text
         var fullText = ""
         for card in buttons {
-            let localizedName = NSLocalizedString(
-                card.name, comment: "Concatenated text for speech synthesis")
+
+            let localizedName = NSLocalizedString(card.name, comment: "Concatenated text for speech synthesis")
             fullText += "\(localizedName) "
         }
 
+        // Detect device language
+        let languageCode = Locale.current.languageCode
+        let voiceLanguage = languageCode == "id" ? "id-ID" : "en-AU"
+        
         // Use the AVSpeechSynthesizer to speak the full text
         let utterance = AVSpeechUtterance(string: fullText)
-        utterance.voice = AVSpeechSynthesisVoice(language: "id-ID")
-        utterance.rate = 0.5  // Set the speech rate
+        utterance.voice = AVSpeechSynthesisVoice(language: voiceLanguage)
+        utterance.rate = 0.5 // Set the speech rate
         speechSynthesizer.speak(utterance)
     }
 
@@ -544,6 +575,7 @@ struct AACCard: View {
         )  // Apply the background color with transparency
         .cornerRadius(8)
     }
+
 }
 
 #Preview {
