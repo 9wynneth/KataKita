@@ -5,7 +5,7 @@ func filterAssets(by input: String, for gender: Bool?) -> [String] {
     let assets = Locale.current.languageCode == "id" ? AllAssets.assets : AllAssets.englishAssets
     let girlAssets = Locale.current.languageCode == "id" ? AllAssets.girlAssets : AllAssets.girlAssets
     let boyAssets = Locale.current.languageCode == "id" ? AllAssets.boyAssets : AllAssets.boyAssets
-
+    let genderAssets = AllAssets.genderAssets
     if let gender = gender {
         if gender {
             // Filter for girl-specific assets with "GIRL_" prefix
@@ -23,8 +23,7 @@ func filterAssets(by input: String, for gender: Bool?) -> [String] {
     }
     
     // If no gender-specific match is found, fall back to general assets
-    return (assets + girlAssets.map { $0.replacingOccurrences(of: "GIRL_", with: "") }
-            + boyAssets.map { $0.replacingOccurrences(of: "BOY_", with: "") }).filter {
+    return (assets + genderAssets).filter {
         $0.lowercased().starts(with: input.lowercased())
     }
 }
