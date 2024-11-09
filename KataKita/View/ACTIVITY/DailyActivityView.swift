@@ -548,15 +548,13 @@ struct DailyActivityView: View {
     
     private func speakText(_ text: String) {
 
-        }
-
         // Detect the device language
         let languageCode = Locale.current.languageCode
         let voiceLanguage = languageCode == "id" ? "id-ID" : "en-AU"
         
         // Create a speech utterance
         let utterance = AVSpeechUtterance(string: text)
-        utterance.voice = AVSpeechSynthesisVoice(language: voiceLanguage) // Set the language based on the device language
+        utterance.voice = AVSpeechSynthesisVoice(language: voiceLanguage)
         
         // Speak the text
         speechSynthesizer.speak(utterance)
