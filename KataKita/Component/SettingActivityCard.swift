@@ -30,10 +30,19 @@ struct SettingActivityCard: View {
                 RoundedRectangle(cornerRadius: 10)
                     .fill(number != nil ? Color(hex: "F7F5F0", transparency: 1.0): Color(hex: "BDD4CE", transparency: 1.0))
                     .frame(width: 70, height: 70)
-                    .overlay(Image(activity.image)
-                        .resizable()
-                        .frame(width: 55, height: 55)
-                        )
+                   
+                    .overlay {
+                        if let uiImage = UIImage(contentsOfFile: activity.image) {
+                            Image(uiImage: uiImage)  // Use Image from UIImage
+                                .resizable()
+                                .frame(width: 55, height: 55)
+                        } else {
+                            Image(activity.image)
+                                .resizable()
+                                .frame(width: 55, height: 55)
+                        }
+                    }
+                                       
                 
                 TextContent(
                     text: "\(activity.name)",

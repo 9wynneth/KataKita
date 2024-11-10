@@ -82,6 +82,8 @@ struct CustomButton: View {
                     )
                     .padding(.horizontal)
                     .lineLimit(1)
+                    .minimumScaleFactor(0.5)
+                    .allowsTightening(true)
                     .frame(maxWidth: .infinity, alignment: .center)
                 }
                 

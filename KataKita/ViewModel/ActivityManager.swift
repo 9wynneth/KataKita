@@ -14,16 +14,20 @@ import UIKit
 class ActivityManager {
     var activity: Activity
     
-    init(_ activity: Activity = Activity(id: UUID(), name: "new activity", image: "", ruangan: Ruangan(id: UUID(), name: ""), sequence: [] )) {
+    init(_ activity: Activity = Activity(id: UUID(), name: "new activity", image: "", ruangan: Ruangan(id: UUID(), name: ""), sequence: [])) {
         self.activity = activity
     }
-    // kasih underscore di depan parameter pertama biar gausah ngisi nama parameter ketika dipanggil
+    
+    var steps: [Step] {
+        return activity.sequence
+    }
+
     func addStep(_ step: Step) {
         self.activity.sequence.append(step)
     }
-    
+
     func removeStep(_ index: Int) {
-        if(self.activity.sequence.count > index) {
+        if self.activity.sequence.count > index {
             self.activity.sequence.remove(at: index)
         }
     }
@@ -33,11 +37,11 @@ class ActivityManager {
     }
     
     func setImage(image: String) {
-        // Process image as String
+        self.activity.image = image
     }
-    
-//    func setImage(image: UIImage) {
-//        // Process image from camera / URL
-//    }
-    
+ 
+    func resetSteps() {
+        activity.sequence.removeAll() 
+    }
 }
+
