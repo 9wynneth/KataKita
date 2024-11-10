@@ -17,7 +17,7 @@ struct AddImageCardView: View {
     @Environment(\.dismiss) var dismiss
     @Binding var selectedColumnIndexValue: Int
     @Binding var CardName: String
-    @Environment(OriginalImageManager.self) var originalImageManager 
+    @Environment(OriginalImageManager.self) var originalImageManager
     @State private var tempImageURL: URL?
 
 
@@ -38,25 +38,27 @@ struct AddImageCardView: View {
                     .sheet(isPresented: $showImagePicker) {
                         ImagePicker(imageURL: $tempImageURL)
                             .onDisappear {
-                                                            // Once image is picked, update the originalImageManager
-                                                            if let selectedURL = tempImageURL {
-                                                                originalImageManager.imageFromLocal = selectedURL
-                                                            }
-                                                        }
+                                // Update the image URL after selection and clear the sticker image
+                                if let selectedURL = tempImageURL {
+                                    originalImageManager.imageFromLocal = selectedURL
+                                    stickerManager.stickerImage = nil // Reset the sticker when new image is chosen
+                                }
+                            }
                     }
 
                     Button("Take Photo...") {
                         showCamera = true
                     }
                     .sheet(isPresented: $showCamera) {
-                                            ImagePicker(sourceType: .camera, imageURL: $tempImageURL)
-                                                .onDisappear {
-                                                    // Once photo is taken, update the originalImageManager
-                                                    if let selectedURL = tempImageURL {
-                                                        originalImageManager.imageFromLocal = selectedURL
-                                                    }
-                                                }
-                                        }
+                        ImagePicker(sourceType: .camera, imageURL: $tempImageURL)
+                            .onDisappear {
+                                // Update the image URL after capture and clear the sticker image
+                                if let selectedURL = tempImageURL {
+                                    originalImageManager.imageFromLocal = selectedURL
+                                    stickerManager.stickerImage = nil // Reset the sticker when new photo is taken
+                                }
+                            }
+                    }
 
                     if isLoading {
                         ProgressView("Processing...")
@@ -71,6 +73,13 @@ struct AddImageCardView: View {
                                 gambar = "sticker"
                                 print(gambar)
                             }
+                            .onChange(of: stickerManager.stickerImage) { newSticker in
+                                    // Trigger any logic when the sticker image is updated
+                                    if newSticker != nil {
+                                        gambar = "sticker"
+                                        print("Sticker updated")
+                                    }
+                                }
                     } else if let imagePath = originalImageManager.imageFromLocal, let uiImage = UIImage(contentsOfFile: imagePath.path) {
                         Image(uiImage: uiImage)
                             .resizable()
@@ -78,13 +87,14 @@ struct AddImageCardView: View {
                             .frame(width: 100, height: 100)
                             .cornerRadius(20)
                             .onAppear {
-                                createSticker(from: uiImage)
-                                gambar = "original"
-                                print(gambar)
-
-
-
+                                // If it's a new image, create a sticker from it, otherwise do nothing
+                                if stickerManager.stickerImage == nil, let imagePath = originalImageManager.imageFromLocal, let uiImage = UIImage(contentsOfFile: imagePath.path) {
+                                    createSticker(from: uiImage)
+                                    gambar = "original"
+                                    print(gambar)
+                                }
                             }
+
                     } else {
                         Text("No image selected")
                             .foregroundColor(.red)

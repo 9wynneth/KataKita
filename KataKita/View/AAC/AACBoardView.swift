@@ -84,7 +84,7 @@ struct AACBoardView: View {
                                 ) {
                                     if self.cards != nil {
                                         self.cardHandler(row)
-
+                                    } else {
                                         if sharedState.selectedCards.count < sharedCards.maxCardsToShow {
                                             showAlert = false
                                             speakText(row.name)
@@ -105,8 +105,6 @@ struct AACBoardView: View {
                                             }
                                         }
                                     }
-
-
                                     
                                 }
                             
@@ -155,7 +153,7 @@ struct AACBoardView: View {
                 title: Text(
                     "Kotak Kata Penuh"),
                 message: Text(
-                    "Kamu hanya bisa memilih 10 kata. Hapus kata yang sudah dipilih untuk memilih kata baru."
+                    "Kamu hanya bisa memilih \(sharedState.selectedCards.count) kata. Hapus kata yang sudah dipilih untuk memilih kata baru."
                 ),
                 dismissButton: .default(
                     Text("OK"),
@@ -220,8 +218,6 @@ struct AACBoardView: View {
     func speakText(_ text: String) {
         // Menggunakan NSLocalizedString untuk mendapatkan string yang dilokalkan
         let localizedText = NSLocalizedString(text, comment: "")
-
-        
         // Memeriksa bahasa perangkat
         let languageCode = Locale.current.languageCode
         let voiceLanguage = languageCode == "id" ? "id-ID" : "en-AU"

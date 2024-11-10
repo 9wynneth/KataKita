@@ -145,13 +145,12 @@ struct DailyActivityView: View {
                             .animation(.spring(duration: 0.25), value: toggleOn)
                         }
                         .onTapGesture {
-                            toggleOn.toggle()
                             
-//                            if !toggleOn {
-//                                isAskPassword = true
-//                            } else {
-//                                toggleOn.toggle()
-//                            }
+                            if !toggleOn {
+                                isAskPassword = true
+                            } else {
+                                toggleOn.toggle()
+                            }
                         }
                         .animation(.spring(duration: 0.25), value: toggleOn)
                         
@@ -209,25 +208,52 @@ struct DailyActivityView: View {
                             ForEach(Array(self.extractActivity.enumerated()), id: \.offset) { index, activity in
                                 if self.stateManager.index <= index {
                                     
-                                    ActivityCard(
-                                        icon: "\(activity.image)",
-                                        nomor: "",
-                                        text: "\(activity.name)",
-                                        width: Int((viewPortWidth * 0.75 - 290) / 4),
-                                        height: Int(viewPortWidth * (180 / 1210.0)),
-                                        font: Int(viewPortWidth * (25 / 1210.0)),
-                                        iconWidth: Int(viewPortWidth * (90 / 1210.0)),
-                                        iconHeight: Int(viewPortHeight * (90 / 834.0)),
-                                        bgColor: "BDD4CE",
-                                        bgTransparency: index == self.stateManager.index ? 1.0 : 0,
-                                        fontColor: "000000",
-                                        fontTransparency: 1.0,
-                                        cornerRadius: 20,
-                                        isSystemImage: false,
-                                        action: {
-                                            speakText(activity.name)
-                                        }
-                                    )
+                                    if let uiImage = UIImage(contentsOfFile: activity.image) {
+                                        // The image was loaded from a file path, so it's not a system image
+                                        ActivityCard(
+                                            icon: activity.image,  // File path as string
+                                            nomor: "",
+                                            text: "\(activity.name)",
+                                            width: Int((viewPortWidth * 0.75 - 290) / 4),
+                                            height: Int(viewPortWidth * (180 / 1210.0)),
+                                            font: Int(viewPortWidth * (25 / 1210.0)),
+                                            iconWidth: Int(viewPortWidth * (90 / 1210.0)),
+                                            iconHeight: Int(viewPortHeight * (90 / 834.0)),
+                                            bgColor: "BDD4CE",
+                                            bgTransparency: index == self.stateManager.index ? 1.0 : 0,
+                                            fontColor: "000000",
+                                            fontTransparency: 1.0,
+                                            cornerRadius: 20,
+                                            isSystemImage: false,  // This is an actual image, not a system image
+                                            action: {
+                                                speakText(activity.name)
+                                            }
+                                        )
+                                    } else {
+                                        // If we cannot load the image from a file path, assume it's an asset image
+                                        ActivityCard(
+                                            icon: activity.image,  // Asset name
+                                            nomor: "",
+                                            text: "\(activity.name)",
+                                            width: Int((viewPortWidth * 0.75 - 290) / 4),
+                                            height: Int(viewPortWidth * (180 / 1210.0)),
+                                            font: Int(viewPortWidth * (25 / 1210.0)),
+                                            iconWidth: Int(viewPortWidth * (90 / 1210.0)),
+                                            iconHeight: Int(viewPortHeight * (90 / 834.0)),
+                                            bgColor: "BDD4CE",
+                                            bgTransparency: index == self.stateManager.index ? 1.0 : 0,
+                                            fontColor: "000000",
+                                            fontTransparency: 1.0,
+                                            cornerRadius: 20,
+                                            isSystemImage: false,  // This is from assets, not SF Symbols
+                                            action: {
+                                                speakText(activity.name)
+                                            }
+                                        )
+                                    }
+
+
+
                                     
                                 } else {
                                     EmptyView()
@@ -258,13 +284,17 @@ struct DailyActivityView: View {
                                     )
                                     if self.isCompleted {
                                         Spacer()
-                                        TextContent(
-                                            text: "Kamu telah menyelesaikan aktivitasmu!",
-                                            size: 24,
-                                            color: "Black",
-                                            transparency: 1.0,
-                                            weight: "Light"
-                                        )
+                                        HStack {
+                                            Spacer()
+                                            TextContent(
+                                                text: "Kamu telah menyelesaikan aktivitasmu!",
+                                                size: 24,
+                                                color: "Black",
+                                                transparency: 1.0,
+                                                weight: "Light"
+                                            )
+                                            Spacer()
+                                        }
                                         //                                .frame(maxWidth: .infinity)
                                         Spacer()
                                     } else {
@@ -517,6 +547,14 @@ struct DailyActivityView: View {
                     }
                 }
             )
+            .onChange(of: securityManager.isCorrect) {
+                if securityManager.isCorrect {
+                    // Password is correct; toggle and reset values
+                    toggleOn.toggle()
+                    isAskPassword = false
+                    securityManager.isCorrect = false
+                }
+            }
             
         NavigationLink(
             destination: destinationForSelectedRuangan(),
@@ -547,13 +585,14 @@ struct DailyActivityView: View {
     }
     
     private func speakText(_ text: String) {
+        let localizedText = NSLocalizedString(text, comment: "")
 
         // Detect the device language
         let languageCode = Locale.current.languageCode
         let voiceLanguage = languageCode == "id" ? "id-ID" : "en-AU"
         
         // Create a speech utterance
-        let utterance = AVSpeechUtterance(string: text)
+        let utterance = AVSpeechUtterance(string: localizedText)
         utterance.voice = AVSpeechSynthesisVoice(language: voiceLanguage)
         
         // Speak the text

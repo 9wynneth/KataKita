@@ -20,8 +20,19 @@ struct AddCardModalView: View {
     let screenWidth = UIScreen.main.bounds.width
     let screenHeight = UIScreen.main.bounds.height
     
-    let colors: [Color] = [.black, .brown, .orange, .red, .purple, .pink, .blue, .green, .yellow]
-    
+    let colors: [Color] = [Color(hex: "000000", transparency: 1.0), Color(hex: "835737", transparency: 1.0), Color(hex: "E9AE50", transparency: 1.0), Color(hex: "E54646", transparency: 1.0), Color(hex: "B378D8", transparency: 1.0), Color(hex: "EDB0DC", transparency: 1.0), Color(hex: "889AE4", transparency: 1.0), Color(hex: "B7D273", transparency: 1.0), Color(hex: "EFDB76", transparency: 1.0), Color(hex: "F2EFDE", transparency: 1.0)]
+    let colorNames: [Color: String] = [
+        Color(hex: "000000", transparency: 1.0): "Hitam",
+        Color(hex: "835737", transparency: 1.0): "Cokelat",
+        Color(hex: "E9AE50", transparency: 1.0): "Oranye",
+        Color(hex: "E54646", transparency: 1.0): "Merah",
+        Color(hex: "B378D8", transparency: 1.0): "Ungu",
+        Color(hex: "EDB0DC", transparency: 1.0): "Pink",
+        Color(hex: "889AE4", transparency: 1.0): "Biru",
+        Color(hex: "B7D273", transparency: 1.0): "Hijau",
+        Color(hex: "EFDB76", transparency: 1.0): "Kuning",
+        Color(hex: "F2EFDE", transparency: 1.0): "Putih"
+    ]
     @State private var id = UUID()
     //    @State private var searchText = ""
     @Environment(\.presentationMode) private var presentationMode // For dismissing the sheet
@@ -66,7 +77,8 @@ struct AddCardModalView: View {
                                     transparency: 1.0,
                                     weight: "medium"
                                 )
-                                
+                                .lineLimit(2)
+                                .minimumScaleFactor(0.5)
                                 Spacer(minLength: 60)
                             }
                             .opacity(id == board.id ? 1 : 0)

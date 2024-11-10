@@ -60,12 +60,14 @@ struct ActivitySequenceView: View {
     
     // Speak function
     func speakText(_ text: String) {
+        let localizedText = NSLocalizedString(text, comment: "")
+
         // Detect device language
         let languageCode = Locale.current.languageCode
         let voiceLanguage = languageCode == "id" ? "id-ID" : "en-AU" // Set voice language based on device language
         
         // Create the speech utterance
-        let utterance = AVSpeechUtterance(string: text)
+        let utterance = AVSpeechUtterance(string: localizedText)
         utterance.voice = AVSpeechSynthesisVoice(language: voiceLanguage) // Set the language accordingly
         utterance.rate = 0.5 // Set the speech rate
 

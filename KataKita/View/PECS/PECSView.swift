@@ -183,6 +183,7 @@ struct PECSView: View {
                                     }
                                 }
                                 .frame(height: 100)
+                               
                             }
                             .frame(maxWidth: .infinity)
                             .background(
@@ -196,11 +197,14 @@ struct PECSView: View {
                                 }
                             )
                         }
-                    }
-                    .onTapGesture{
-                        // speakText(for: droppedCards)
-                    }
+                      
 
+                    }
+                    .onTapGesture {
+                        // Pass all the dropped cards directly to the speakText function
+                        let validDroppedCards = droppedCards.compactMap { $0 } // Remove any nil cards
+                        speakText(for: validDroppedCards)
+                    }
                     Color.clear
                         .frame(height: 100)
                 }
@@ -210,6 +214,7 @@ struct PECSView: View {
                     RoundedRectangle(cornerRadius: 30)
                         .fill(Color(hex: "ffffff", transparency: toggleOn ? 0.0 : 1.0))
                 )
+               
                 
 //                .onDrop(of: [.cardType], isTargeted: nil) { items, _ in
 //                    print("x")

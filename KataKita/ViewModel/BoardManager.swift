@@ -181,7 +181,7 @@ class BoardManager {
                     [
                         Card(name: "toilet", icon: "toilet", category: .VERB, isIconTypeImage: false),
                         Card(name: "mandi", icon: "mandi", category: .VERB, isIconTypeImage: false),
-                        Card(name: "menyikat gigi", icon: "sikat gigi", category: .VERB, isIconTypeImage: false),
+                        Card(name: "menyikat gigi", icon: "menyikat gigi", category: .VERB, isIconTypeImage: false),
                         Card(name: "cuci tangan", icon: "cuci tangan", category: .VERB, isIconTypeImage: false),
                         Card(name: "ambil", icon: "ambil", category: .VERB, isIconTypeImage: false)
                     ],
@@ -214,7 +214,7 @@ class BoardManager {
                     ]
                 ],
                 name: "Kamar Mandi",
-                icon: "MANDI",
+                icon: "BAK MANDI",
                 gridSize: Grid(row: 5, column: 8)
             ),
             Board(
@@ -307,7 +307,7 @@ class BoardManager {
                     [
                         Card(name: "cuci piring", icon: "cuci piring", category: .VERB, isIconTypeImage: false),
                         Card(name: "potong", icon: "memotong", category: .VERB, isIconTypeImage: false),
-                        Card(name: "masak", icon: "masak", category: .VERB, isIconTypeImage: false),
+                        Card(name: "masak", icon: "wajan", category: .VERB, isIconTypeImage: false),
                         Card(name: "buka", icon: "buka", category: .VERB, isIconTypeImage: false),
                         Card(name: "tutup", icon: "tutup", category: .VERB, isIconTypeImage: false)
                     ],
@@ -396,15 +396,14 @@ class BoardManager {
                         Card(name: "netflix", icon: "netflix", category: .NOUN, isIconTypeImage: false),
                     ],
                     [
-                        Card(name: "di dalam", icon: "di dalam", category: .CONJUNCTION, isIconTypeImage: false),
-                        Card(name: "di luar", icon: "di luar", category: .CONJUNCTION, isIconTypeImage: false),
-                        Card(name: "di atas", icon: "di atas", category: .CONJUNCTION, isIconTypeImage: false),
-                        Card(name: "di bawah", icon: "di bawah", category: .CONJUNCTION, isIconTypeImage: false),
-                        Card(name: "di samping", icon: "di samping", category: .CONJUNCTION, isIconTypeImage: false),
-                    ]
+                        Card(name: "mobil", icon: "mobil", category: .NOUN, isIconTypeImage: false),
+                        Card(name: "bola", icon: "bola", category: .NOUN, isIconTypeImage: false),
+                        Card(name: "air", icon: "gelas", category: .NOUN, isIconTypeImage: false),
+                        Card(name: "snack", icon: "manis", category: .NOUN, isIconTypeImage: false)
+                    ],
                 ],
                 name: "Ruang Keluarga",
-                icon: "BOY_KITA",
+                icon: "televisi",
                 gridSize: Grid(row: 5, column: 8)
             )
         ]
@@ -424,6 +423,14 @@ class BoardManager {
     func selectId(_ id: UUID) {
         self.selectedID = id
     }
+    
+    func selectedName(for id: UUID) -> String? {
+        if let board = boards.first(where: { $0.id == id }) {
+            return board.name
+        }
+        return nil
+    }
+
     
     //MARK: CRUD Board
     func addBoard(_ board: Board) {
@@ -476,4 +483,3 @@ class BoardManager {
         }
     }
 }
-
