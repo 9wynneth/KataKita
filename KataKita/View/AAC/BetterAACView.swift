@@ -59,11 +59,20 @@ struct BetterAACView: View {
     @State private var showAlert = false
     @State private var hasSpoken = false
 
-
     @State private var id = UUID()
-
     
-    let colors: [Color] = [Color(hex: "000000", transparency: 1.0), Color(hex: "835737", transparency: 1.0), Color(hex: "E9AE50", transparency: 1.0), Color(hex: "E54646", transparency: 1.0), Color(hex: "B378D8", transparency: 1.0), Color(hex: "EDB0DC", transparency: 1.0), Color(hex: "889AE4", transparency: 1.0), Color(hex: "B7D273", transparency: 1.0), Color(hex: "EFDB76", transparency: 1.0), Color(hex: "F2EFDE", transparency: 1.0)]
+    let colors: [Color] = [
+        Color(hex: "000000", transparency: 1.0),
+        Color(hex: "835737", transparency: 1.0),
+        Color(hex: "E9AE50", transparency: 1.0),
+        Color(hex: "E54646", transparency: 1.0),
+        Color(hex: "B378D8", transparency: 1.0),
+        Color(hex: "EDB0DC", transparency: 1.0),
+        Color(hex: "889AE4", transparency: 1.0),
+        Color(hex: "B7D273", transparency: 1.0),
+        Color(hex: "EFDB76", transparency: 1.0),
+        // Color(hex: "F2EFDE", transparency: 1.0)
+    ]
     let colorNames: [Color: String] = [
         Color(hex: "000000", transparency: 1.0): "Hitam",
         Color(hex: "835737", transparency: 1.0): "Cokelat",
@@ -74,7 +83,7 @@ struct BetterAACView: View {
         Color(hex: "889AE4", transparency: 1.0): "Biru",
         Color(hex: "B7D273", transparency: 1.0): "Hijau",
         Color(hex: "EFDB76", transparency: 1.0): "Kuning",
-        Color(hex: "F2EFDE", transparency: 1.0): "Putih"
+        // Color(hex: "F2EFDE", transparency: 1.0): "Putih"
     ]
 
     @EnvironmentObject var sharedState: SharedState
