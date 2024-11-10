@@ -393,7 +393,7 @@ class BoardManager {
                         Card(name: "permainan", icon: "permainan", category: .NOUN, isIconTypeImage: false),
                         Card(name: "snack", icon: "piring", category: .NOUN, isIconTypeImage: false),
                         Card(name: "lampu", icon: "lampu", category: .NOUN, isIconTypeImage: false),
-                        Card(name: "netflix", icon: "netlix", category: .NOUN, isIconTypeImage: false),
+                        Card(name: "netflix", icon: "netflix", category: .NOUN, isIconTypeImage: false),
                     ],
                     [
                         Card(name: "mobil", icon: "mobil", category: .NOUN, isIconTypeImage: false),

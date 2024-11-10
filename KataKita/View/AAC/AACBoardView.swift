@@ -218,8 +218,6 @@ struct AACBoardView: View {
     func speakText(_ text: String) {
         // Menggunakan NSLocalizedString untuk mendapatkan string yang dilokalkan
         let localizedText = NSLocalizedString(text, comment: "")
-
-        
         // Memeriksa bahasa perangkat
         let languageCode = Locale.current.languageCode
         let voiceLanguage = languageCode == "id" ? "id-ID" : "en-AU"

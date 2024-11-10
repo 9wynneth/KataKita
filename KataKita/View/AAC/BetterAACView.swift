@@ -568,10 +568,12 @@ struct AACCard: View {
                 )
                 .resizable()
                 .frame(width: 50, height: 50)
+                .padding()
             } else if let icon = self.icon {
                 Image(icon)  // icon name is passed from the card
                     .resizable()
                     .frame(width: 50, height: 50)
+                    .padding()
             } else {
                 EmptyView()
             }

@@ -77,7 +77,8 @@ struct AddCardModalView: View {
                                     transparency: 1.0,
                                     weight: "medium"
                                 )
-                                
+                                .lineLimit(2)
+                                .minimumScaleFactor(0.5)
                                 Spacer(minLength: 60)
                             }
                             .opacity(id == board.id ? 1 : 0)
