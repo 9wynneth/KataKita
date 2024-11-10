@@ -48,7 +48,7 @@ struct ActivityCard: View {
         }) {
             VStack {
                 HStack {
-                    Text(nomor)
+                    Text(LocalizedStringKey(nomor))
                         .font(.system(size: CGFloat(font), weight: .medium))
                         .foregroundColor(Color(hex: fontColor, transparency: fontTransparency))
                         .padding(.leading,8)

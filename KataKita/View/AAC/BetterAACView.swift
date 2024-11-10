@@ -255,6 +255,8 @@ struct BetterAACView: View {
                     if self.editing {
                         Button {
                             self.addingBoard = true
+                            boardName = ""
+                            selectedIcon = ""
                             showSheet = true
                         } label: {
                             ZStack {
