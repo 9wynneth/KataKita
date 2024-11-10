@@ -38,12 +38,7 @@ struct SplashScreen: View {
                     backgroundColor
                         .ignoresSafeArea()
                     if currentAsset == 1 {
-                        Image("m1")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 150, height: 150)
-                            .transition(.opacity)
-                            .padding(.top, 230)
+                    
                     } else if currentAsset == 2 {
                         Image("m2")
                             .resizable()
