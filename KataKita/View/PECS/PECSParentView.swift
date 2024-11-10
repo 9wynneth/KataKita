@@ -37,7 +37,7 @@ struct PECSParentView: View {
                             PECSParentCard(
                                 card,
                                 (self.width, self.height),
-                                card.isIconTypeImage ? nil : resolveIcon(for: "\(self.genderHandler(card.icon))\(card.icon)")
+                                card.isImageType ? nil : resolveIcon(for: "\(self.genderHandler(card.icon))\(card.icon)")
                             )
                             CustomButton(
                                 icon: "xmark",
@@ -126,18 +126,18 @@ struct PECSParentCard: View {
     }
     
     var body: some View {
-        if self.card.isIconTypeImage {
+        if self.card.isImageType {
             CustomIcon(
                 icon: self.card.icon,
                 text: self.card.name,
-                width: (self.height - 60) / 5,
+                width: self.width - 20,
                 height: (self.height - 60) / 5,
                 font: 14,
                 iconWidth: (self.width - 20) / 3,
                 iconHeight: (self.width - 20) / 3,
                 bgColor: Color(hex: card.category.getColorString(), transparency: 1),
                 bgTransparency: 0.65,
-                fontColor: Color.black,
+                fontColor: "000000",
                 fontTransparency: 1.0,
                 cornerRadius: 13
             ) {}
@@ -145,12 +145,12 @@ struct PECSParentCard: View {
             CustomButton(
                 icon: icon,
                 text: self.card.name,
-                width: (self.height - 60) / 5,
+                width: self.width - 20,
                 height: (self.height - 60) / 5,
                 font: 14,
                 iconWidth: Int((self.width - 20) / 3),
                 iconHeight: Int ((self.width - 20) / 3),
-                bgColor: self.card.category.getColorString(),
+                bgColor: self.card.color ?? self.card.category.getColorString(),
                 bgTransparency: 0.65,
                 fontColor: "000000",
                 fontTransparency: 1.0, cornerRadius: 13, isSystemImage: false

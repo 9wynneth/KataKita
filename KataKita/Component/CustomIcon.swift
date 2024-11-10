@@ -10,7 +10,7 @@ struct CustomIcon: View {
     var iconHeight: CGFloat
     var bgColor: Color
     var bgTransparency: Double
-    var fontColor: Color
+    var fontColor: String
     var fontTransparency: Double
     var cornerRadius: CGFloat
     let action: (() -> Void)?
@@ -21,7 +21,7 @@ struct CustomIcon: View {
                 action()
             }
         } label: {
-            VStack(spacing: -10) { // Reduced spacing between Image and Text
+            VStack(spacing: 0) { // Reduced spacing between Image and Text
                 Image(uiImage: (UIImage(named: icon) ?? UIImage()))
                     .resizable()
                     .scaledToFit()
@@ -31,7 +31,7 @@ struct CustomIcon: View {
                 TextContent(
                     text: text,
                     size: Int(font),
-                    color: "#000000",
+                    color: fontColor,
                     transparency: fontTransparency,
                     weight: "medium"
                 )

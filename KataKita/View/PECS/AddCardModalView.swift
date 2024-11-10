@@ -20,19 +20,19 @@ struct AddCardModalView: View {
     let screenWidth = UIScreen.main.bounds.width
     let screenHeight = UIScreen.main.bounds.height
     
-    let colors: [Color] = [Color(hex: "000000", transparency: 1.0), Color(hex: "835737", transparency: 1.0), Color(hex: "E9AE50", transparency: 1.0), Color(hex: "E54646", transparency: 1.0), Color(hex: "B378D8", transparency: 1.0), Color(hex: "EDB0DC", transparency: 1.0), Color(hex: "889AE4", transparency: 1.0), Color(hex: "B7D273", transparency: 1.0), Color(hex: "EFDB76", transparency: 1.0), Color(hex: "F2EFDE", transparency: 1.0)]
-    let colorNames: [Color: String] = [
-        Color(hex: "000000", transparency: 1.0): "Hitam",
-        Color(hex: "835737", transparency: 1.0): "Cokelat",
-        Color(hex: "E9AE50", transparency: 1.0): "Oranye",
-        Color(hex: "E54646", transparency: 1.0): "Merah",
-        Color(hex: "B378D8", transparency: 1.0): "Ungu",
-        Color(hex: "EDB0DC", transparency: 1.0): "Pink",
-        Color(hex: "889AE4", transparency: 1.0): "Biru",
-        Color(hex: "B7D273", transparency: 1.0): "Hijau",
-        Color(hex: "EFDB76", transparency: 1.0): "Kuning",
-        Color(hex: "F2EFDE", transparency: 1.0): "Putih"
+    let colorCards: [Card] = [
+        Card(name: "Hitam", icon: "", category: .ADJECTIVE, isColorType: true, color: "000000"),
+        Card(name: "Cokelat", icon: "", category: .ADJECTIVE, isColorType: true, color: "835737"),
+        Card(name: "Oranye", icon: "", category: .ADJECTIVE, isColorType: true, color: "E9AE50"),
+        Card(name: "Merah", icon: "", category: .ADJECTIVE, isColorType: true, color: "E54646"),
+        Card(name: "Ungu", icon: "", category: .ADJECTIVE, isColorType: true, color: "B378D8"),
+        Card(name: "Pink", icon: "", category: .ADJECTIVE, isColorType: true, color: "EDB0DC"),
+        Card(name: "Biru", icon: "", category: .ADJECTIVE, isColorType: true, color: "889AE4"),
+        Card(name: "Hijau", icon: "", category: .ADJECTIVE, isColorType: true, color: "B7D273"),
+        Card(name: "Kuning", icon: "", category: .ADJECTIVE, isColorType: true, color: "EFDB76"),
+        Card(name: "Putih", icon: "", category: .ADJECTIVE, isColorType: true, color: "F2EFDE"),
     ]
+    
     @State private var id = UUID()
     //    @State private var searchText = ""
     @Environment(\.presentationMode) private var presentationMode // For dismissing the sheet
@@ -49,18 +49,6 @@ struct AddCardModalView: View {
         
         return nil
     }
-    
-    //    var filteredCards: [[Card]] {
-    //        guard let board = selectedBoard else { return [] }
-    //        if searchText.isEmpty {
-    //            return board.cards
-    //        }
-    //        return board.cards.map { column in
-    //            column.filter { card in
-    //                card.name.lowercased().contains(searchText.lowercased())
-    //            }
-    //        }
-    //    }
     
     var body: some View {
         VStack(spacing: 0) {
@@ -118,44 +106,25 @@ struct AddCardModalView: View {
             
             // MARK: BOARD
             VStack {
-                //                // MARK: Search Bar
-                //                HStack {
-                //                    HStack(spacing: 10) {
-                //                        TextField("Search words", text: $searchText)
-                //                            .padding(10)
-                //                            .background(Color.white)
-                //                            .cornerRadius(8)
-                //                            .shadow(radius: 2)
-                //
-                //                        Spacer()
-                //
-                ////                        TextContent(text: "Selesai", size: 20, color: "000000", weight: "bold")
-                ////                                                        .padding(.trailing, screenWidth * 0.04)
-                //                    }
-                //                    .frame(maxWidth: .infinity)
-                //                    .padding(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 10))
-                //
-                //                    Spacer()
-                //
-                //                }
-                
                 HStack(alignment: .top, spacing: 25) {
                     if let board = self.selectedBoard {
                         AACBoardView(board, cards: self.$pecsCards)
                     }
                     
                     VStack(spacing: screenHeight * 0.02) {
-                        ForEach(Array(colors.enumerated()), id: \.offset) {index, color in
-                            Button {} label: {
+                        ForEach(Array(colorCards.enumerated()), id: \.offset) {index, card in
+                            Button {
+                                self.cardHandler(card)
+                            } label: {
                                 RoundedRectangle(cornerRadius: 10)
-                                    .fill(color)
+                                    .fill(Color(hex: card.color ?? "FFFFFF", transparency: 1))
                                     .frame(width: 120, height: screenHeight * 0.05)
                             }
                         }
                     }
                 }
             }
-            .padding(.top, 10)
+            .padding(.top, 45)
             .padding(EdgeInsets(top: 5, leading: 0, bottom: 50, trailing: 0))
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
             .background(
@@ -166,11 +135,8 @@ struct AddCardModalView: View {
                     )
                     .frame(width: screenWidth)
                     .ignoresSafeArea()
-                   
-                
             )
         }
-        .offset(y: 50)
         .padding(EdgeInsets(top: 30, leading: 45, bottom: 40, trailing: 45))
         .frame(maxWidth: .infinity)
         .background(Color.clear)
@@ -188,9 +154,45 @@ struct AddCardModalView: View {
                 self.cards = cards
             }
         }
-        
     }
     
+    private func cardHandler(_ card: Card) {
+        if self.cards.count >= 2 {
+            if let pos = self.getCardPos(card) {
+                self.cards[pos.0].remove(at: pos.1)
+            } else {
+                if card.category == .CORE {
+                    if self.cards[0].count < 5 {
+                        self.cards[0].append(card)
+                    }
+                } else if let index = self.cards.firstIndex(where: {
+                    $0.contains(where: { $0.category == card.category })
+                }) {
+                    if self.cards[index].count < 5 {
+                        self.cards[index].append(card)
+                    }
+                } else if let index = self.cards[1...].firstIndex(where: {
+                    $0.isEmpty
+                }) {
+                    if self.cards[index].count < 5 {
+                        self.cards[index].append(card)
+                    }
+                }
+            }
+            self.pecsCards = self.cards
+        }
+    }
+    private func getCardPos(_ card: Card) -> (Int, Int)? {
+        for (colIndex, col) in self.cards.enumerated() {
+            for (rowIndex, row) in col.enumerated() {
+                if row.id == card.id {
+                    return (colIndex, rowIndex)
+                }
+            }
+        }
+
+        return nil
+    }
 }
 
 

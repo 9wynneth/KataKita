@@ -80,7 +80,7 @@ struct AACBoardView: View {
                                 AACBoardCard(
                                     row,
                                     (cellWidth, cellHeight),
-                                    row.isIconTypeImage ? nil : resolveIcon(for: "\(self.genderHandler(row.icon))\(row.icon)")
+                                    row.isImageType ? nil : resolveIcon(for: "\(self.genderHandler(row.icon))\(row.icon)")
                                 ) {
                                     if self.cards != nil {
                                         self.cardHandler(row)
@@ -94,7 +94,7 @@ struct AACBoardView: View {
                                                 bgColor: Color.white,
                                                 bgTransparency: 0.0,
                                                 fontColor: Color.black,
-                                                isIconTypeImage: row.isIconTypeImage
+                                                isImageType: row.isImageType
                                             )
                                             sharedState.selectedCards.append(cardListItem)
                                         } else {
@@ -105,7 +105,6 @@ struct AACBoardView: View {
                                             }
                                         }
                                     }
-                                    
                                 }
                             
                                 
@@ -327,7 +326,7 @@ struct AACBoardCard: View {
     }
     
     var body: some View {
-        if self.card.isIconTypeImage {
+        if self.card.isImageType {
             CustomIcon(
                 icon: self.card.icon,
                 text: self.card.name,
@@ -338,7 +337,7 @@ struct AACBoardCard: View {
                 iconHeight: self.width / 2,
                 bgColor: Color(hex: self.card.category.getColorString(), transparency: 1),
                 bgTransparency: 0.65,
-                fontColor: Color.black,
+                fontColor: "000000",
                 fontTransparency: 1.0,
                 cornerRadius: 13
             ) {

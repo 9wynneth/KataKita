@@ -114,10 +114,9 @@ struct BetterAACView: View {
                         HStack {
                             HStack(spacing: 20) {
                                   ForEach(Array(sharedState.selectedCards.prefix(sharedCards.maxCardsToShow)), id: \.id) { card in
-                                     
                                         AACCard(
                                             card,
-                                            card.isIconTypeImage ? nil : resolveIcon(for: "\(self.genderHandler(card.icon))\(card.icon)")
+                                            card.isImageType ? nil : resolveIcon(for: "\(self.genderHandler(card.icon))\(card.icon)")
                                         )
                                 }
                             }
@@ -381,8 +380,8 @@ struct BetterAACView: View {
                                     icon: "person.fill",
                                     bgColor: color,
                                     bgTransparency: 1.0,
-                                    fontColor: color,
-                                    isIconTypeImage: false
+                                    fontColor: Color(hex: "000000", transparency: 1),
+                                    isImageType: false
                                 )
                                 sharedState.selectedCards.append(
                                     cardListItem)
@@ -568,20 +567,20 @@ struct AACCard: View {
         self.icon = icon
     }
     var body: some View {
-        VStack {
-            if self.card.isIconTypeImage {
+        VStack(spacing: 0) {
+            if self.card.isImageType {
                 Image(
                     uiImage: (UIImage(
                         named: self.card.icon)
                         ?? UIImage())
                 )
                 .resizable()
-                .frame(width: 50, height: 50)
+                .frame(width: 30, height: 30)
                 .padding()
             } else if let icon = self.icon {
                 Image(icon)  // icon name is passed from the card
                     .resizable()
-                    .frame(width: 50, height: 50)
+                    .frame(width: 30, height: 30)
                     .padding()
             } else {
                 EmptyView()
@@ -590,10 +589,9 @@ struct AACCard: View {
             Text(
                 LocalizedStringKey(self.card.name)
             )
+            .foregroundColor(.black)
             .font(.system(size: 14))
             .lineLimit(1)
-            .minimumScaleFactor(0.5)
-            .foregroundColor(self.card.fontColor)
         }
         .frame(width: 80, height: 80)
         .background(

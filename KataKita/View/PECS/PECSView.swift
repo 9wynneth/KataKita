@@ -8,24 +8,34 @@
 import SwiftUI
 import AVFoundation
 
+enum DraggingState {
+    case idle
+    case reverting
+    case reset
+    case disappearing
+}
+
 struct PECSView: View {
     @Environment(PECSViewModel.self) var pECSViewModel
     @Environment(SecurityManager.self) var securityManager
     @Environment(ProfileViewModel.self) private var viewModel
 
     //MARK: Viewport size
-    let screenWidth = UIScreen.main.bounds.width
-    let screenHeight = UIScreen.main.bounds.height
+    private let screenWidth = UIScreen.main.bounds.width
+    private let screenHeight = UIScreen.main.bounds.height
 
     //MARK: Button color
-    let colors: [Color] = [
+    private let colors: [Color] = [
         .black, .brown, .orange, .red, .purple, .pink, .blue, .green, .yellow,
     ]
+    
+    private let speechSynthesizer = AVSpeechSynthesizer()
 
-    let templateWidth = 1366.0
-    let templateHeight = 1024.0
-
-    @State private var dragging: Card? = nil
+    @State private var draggingChild: Card? = nil
+    @State private var draggingChildState = DraggingState.idle
+    @State private var draggingDropped: Card? = nil
+    @State private var draggingDroppedState = DraggingState.idle
+    @State private var draggingDroppedIndex: Int? = nil
     @State private var dropOffset: CGFloat = 0
     @State private var dropZones: [(CGPoint, CGPoint)] = [
         (.zero, .zero),
@@ -37,37 +47,30 @@ struct PECSView: View {
         (.zero, .zero),
     ]
     @State private var droppedCards: [Card?] = [nil, nil, nil, nil, nil, nil, nil] // Binding to hold dropped cards
-    
-    @State private var deletedCards: [Card] = [] // Binding to hold dropped cards
-    private let speechSynthesizer = AVSpeechSynthesizer()
-
     @State private var childCards: [[Card]] = [[], [], [], [], []]
-    @State private var cards: [[Card]] = [[], [], [], [], []]
-    @State private var position = CGSize.zero
-    @State private var scale: CGFloat = 1.0  // State to track scale for pinch gesture
-    //    @State private var dragAmount: CGPoint?
-    @State private var dragAmounts: [UUID: CGPoint] = [:]  // Dictionary for each card's drag amount
-    @State var toggleOn = false
 
-    @State var isAskPassword = false
+    @State private var deletedCards: [Card] = [] // Binding to hold dropped cards
+
+    @State private var cards: [[Card]] = [[], [], [], [], []]
+    @State private var toggleOn = false
+
+    @State private var isAskPassword = false
     @State private var showAlert = false
     @State private var isAddCard = false
-
+    
     var body: some View {
-        VStack(alignment: .leading, spacing: 5) {
+        VStack(alignment: .leading, spacing: 20) {
             // MARK: PECS PARENT AND CHILD
             HStack(alignment: .top, spacing: 20) {
                 //whiteboard
                 ZStack {
-                    PECSChildView(self.$childCards) { dragging in
-                        self.dragging = dragging
+                    PECSChildView(self.$childCards, self.$draggingChildState) { draggingChild in
+                        self.draggingChild = draggingChild
                     }
-                    .opacity(toggleOn ? 0 : 1)
-                    .animation(.easeInOut(duration: 0.5), value: toggleOn)
 
                     PECSParentView(self.$cards)
                         .opacity(toggleOn ? 1 : 0)
-                        .animation(.easeInOut(duration: 0.5), value: toggleOn)
+                        .animation(.easeInOut(duration: 0.25), value: toggleOn)
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(
@@ -104,6 +107,8 @@ struct PECSView: View {
                             isAskPassword = true
                         } else {
                             toggleOn.toggle()
+                            droppedCards = [nil, nil, nil, nil, nil, nil, nil]
+                            restoreDeletedCards()
                         }
                     }
                     .animation(.spring(duration: 0.25), value: toggleOn)
@@ -166,24 +171,32 @@ struct PECSView: View {
                 ZStack(alignment: .topLeading) {
                     HStack(spacing: 10) {
                         ForEach(Array(droppedCards.enumerated()), id: \.offset) { i, card in
-                            VStack {
-                                Group {
-                                    if let card {
-                                        PECSCard(
-                                            card,
-                                            card.isIconTypeImage ? nil : resolveIcon(for: "\(self.genderHandler(card.icon))\(card.icon)")
-                                        )
-                                        .onAppear{
-                                            speakCardName(card)
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 20)
+                                    .fill(Color(hex: "f0f0f0", transparency: 1))
+                                    .frame(height: 100)
+                                    .opacity(self.draggingChild != nil || self.draggingDropped != nil ? 1 : 0)
+                                    .animation(.linear(duration: 0.15), value: self.draggingChild != nil || self.draggingDropped != nil)
+                                
+                                if let card {
+                                    PECSCard(
+                                        self.$draggingDroppedState,
+                                        card,
+                                        card.isImageType ? nil : resolveIcon(for: "\(self.genderHandler(card.icon))\(card.icon)")
+                                    ) { draggingDropped in
+                                        if let draggingDropped {
+                                            self.draggingDropped = draggingDropped
+                                            self.draggingDroppedIndex = i
+                                        } else {
+                                            self.draggingDropped = nil
+                                            self.draggingDroppedIndex = nil
                                         }
-                                    } else {
-                                        RoundedRectangle(cornerRadius: 20)
-                                            .fill(.clear)
-                                            .strokeBorder(.gray, lineWidth: 2)
+                                    }
+                                    .frame(height: 100)
+                                    .onAppear{
+                                        speakCardName(card)
                                     }
                                 }
-                                .frame(height: 100)
-                               
                             }
                             .frame(maxWidth: .infinity)
                             .background(
@@ -196,9 +209,8 @@ struct PECSView: View {
                                         }
                                 }
                             )
+                            .zIndex(self.draggingDroppedIndex == i ? 2 : 1)
                         }
-                      
-
                     }
                     .onTapGesture {
                         // Pass all the dropped cards directly to the speakText function
@@ -212,24 +224,9 @@ struct PECSView: View {
                 .frame(maxWidth: .infinity)
                 .background(
                     RoundedRectangle(cornerRadius: 30)
-                        .fill(Color(hex: "ffffff", transparency: toggleOn ? 0.0 : 1.0))
+                        .fill(Color(hex: "ffffff", transparency: 1.0))
                 )
                
-                
-//                .onDrop(of: [.cardType], isTargeted: nil) { items, _ in
-//                    print("x")
-//                    guard let item = items.first else { return false }
-//
-//                    let _ = item.loadTransferable(type: Card.self) { result in
-//                        if let loadedCard = try? result.get() {
-//                            droppedCards.append(loadedCard)
-//                            removeCard(loadedCard)
-//                        } else {
-//                            print("Failed to load dropped card.")
-//                        }
-//                    }
-//                    return true
-//                }
                 CustomButton(
                     icon: "trash",
                     width: 80,
@@ -248,7 +245,8 @@ struct PECSView: View {
                     }
                 )
             }
-            .zIndex(1)
+            .opacity(self.toggleOn ? 0 : 1)
+            .zIndex(self.draggingDropped != nil ? 3 : 1)
         }
         .navigationBarBackButtonHidden(true)
         .padding(EdgeInsets(top: 0, leading: 45, bottom: 30, trailing: 45))
@@ -303,6 +301,8 @@ struct PECSView: View {
             if securityManager.isCorrect {
                 // Password is correct; toggle and reset values
                 toggleOn.toggle()
+                droppedCards = [nil, nil, nil, nil, nil, nil, nil]
+                restoreDeletedCards()
                 isAskPassword = false
                 securityManager.isCorrect = false
             }
@@ -328,7 +328,6 @@ struct PECSView: View {
                     .edgesIgnoringSafeArea(.all)
                     
                 AddCardModalView(self.$cards)
-                    .offset(y: 20)
                     .frame(width: screenWidth)
                     .cornerRadius(15)
                     .shadow(radius: 10)
@@ -336,29 +335,68 @@ struct PECSView: View {
                     .onTapGesture {
                         // Prevent sheet dismissal when tapping on the modal itself
                     }
-
             }
             .onTapGesture {
                 isAddCard = false
             }
+            .offset(y: 80)
         }
         .simultaneousGesture(
             DragGesture()
                 .onEnded { value in
-                    print("PARENT POSITION: ", value.location.x, value.location.y)
-                    
-                    guard let card = self.dragging else { return }
-                    
-                    let x = value.location.x
-                    let y = value.location.y + self.dropOffset
-                    if let index = self.dropZones.firstIndex(where: {
-                        x >= $0.0.x &&
-                        x <= $0.1.x &&
-                        y >= $0.0.y &&
-                        y <= $0.1.y
-                    }) {
-                        self.droppedCards[index] = card
-                        print("DROPPED AT \(index)")
+                    if let card = self.draggingChild {
+                        let x = value.location.x
+                        let y = value.location.y + self.dropOffset
+                        if let index = self.dropZones.firstIndex(where: {
+                            x >= $0.0.x &&
+                            x <= $0.1.x &&
+                            y >= $0.0.y &&
+                            y <= $0.1.y
+                        }) {
+                            if self.droppedCards[index] != nil {
+                                self.draggingChildState = .reverting
+                            } else {
+                                self.draggingChildState = .disappearing
+                                self.droppedCards[index] = card
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
+                                    self.removeCard(card)
+                                }
+                            }
+                        } else {
+                            self.draggingChildState = .reverting
+                        }
+                    }
+                    if let card = self.draggingDropped, let oldIndex = self.draggingDroppedIndex {
+                        let x = value.location.x
+                        let y = value.location.y + self.dropOffset
+                        if let index = self.dropZones.firstIndex(where: {
+                            x >= $0.0.x &&
+                            x <= $0.1.x &&
+                            y >= $0.0.y &&
+                            y <= $0.1.y
+                        }) {
+                            if self.droppedCards[index] != nil {
+                                self.draggingDroppedState = .reset
+                                self.droppedCards[oldIndex] = self.droppedCards[index]
+                            } else {
+                                self.droppedCards[oldIndex] = nil
+                            }
+                            
+                            self.droppedCards[index] = card
+                            self.draggingDropped = nil
+                            self.draggingDroppedIndex = nil
+                        } else if y < self.screenHeight - 200 {
+                            self.draggingDroppedState = .disappearing
+                            
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
+                                if let index = self.cards.firstIndex(where: { $0.first?.category == card.category }) {
+                                    self.childCards[index].append(card)
+                                }
+                                self.droppedCards[oldIndex] = nil
+                            }
+                        } else {
+                            self.draggingDroppedState = .reverting
+                        }
                     }
                 }
         )
@@ -374,7 +412,7 @@ struct PECSView: View {
         return ""
     }
     
-    func removeCard(_ card: Card) {
+    private func removeCard(_ card: Card) {
         for (i, column) in self.childCards.enumerated() {
             if let index = column.firstIndex(where: { $0.id == card.id }) {
                 self.childCards[i].remove(at: index)
@@ -385,11 +423,11 @@ struct PECSView: View {
     }
 
     //TODO: RESET BASED ON COLUMNS BEFORE (ini masi template)
-    func restoreDeletedCards() {
+    private func restoreDeletedCards() {
         self.childCards = self.cards
     }
     
-    func speakCardName(_ card: Card) {
+    private func speakCardName(_ card: Card) {
         // Localize the card name
         let localizedName = NSLocalizedString(card.name, comment: "Card name for speech synthesis")
         
@@ -407,7 +445,7 @@ struct PECSView: View {
         synthesizer.speak(utterance)
     }
 
-    func speakText(for cards: [Card]) {
+    private func speakText(for cards: [Card]) {
         // Concatenate all the localized names from the Card models into a single text
         let fullText = cards.map { NSLocalizedString($0.name, comment: "Card name for speech synthesis") }.joined(separator: ", ")
 
@@ -439,29 +477,37 @@ struct BackgroundClearView: UIViewRepresentable {
 }
 
 struct PECSCard: View {
+    @Binding var state: DraggingState
+    
+    @State private var offsetCurr: CGPoint = .zero
+    @State private var offsetLast: CGSize = .zero
+    @State private var opacity = 1.0
+    @State private var dragging = false
+    
     let card: Card
     let icon: String?
+    let f: (Card?) -> Void
 
-    init(_ card: Card, _ icon: String?) {
+    init(_ state: Binding<DraggingState>, _ card: Card, _ icon: String?, f: @escaping (Card?) -> Void) {
+        self._state = state
         self.card = card
         self.icon = icon
+        self.f = f
     }
     
     var body: some View {
         VStack(spacing: 0) {
-            if let icon = self.icon {
-                if self.card.isIconTypeImage {
-                    Image(uiImage: (UIImage(named: self.card.icon) ?? UIImage()))
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 50, height: 50)
-                } else {
-                    Image(icon)
-                        .antialiased(true)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 50, height: 50)
-                }
+            if self.card.isImageType {
+                Image(uiImage: (UIImage(named: self.card.icon) ?? UIImage()))
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 50, height: 50)
+            } else if let icon = self.icon {
+                Image(icon)
+                    .antialiased(true)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 50, height: 50)
             } else {
                 Color.clear
                     .frame(width: 50, height: 50)
@@ -480,26 +526,61 @@ struct PECSCard: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(
-            RoundedRectangle(cornerRadius: 13)
-                .fill(Color(hex: self.card.category.getColorString(), transparency: 1))
+            RoundedRectangle(cornerRadius: 20)
+                .fill(Color(hex: self.card.color ?? self.card.category.getColorString(), transparency: 1))
         )
+        .offset(x: self.offsetCurr.x, y: self.offsetCurr.y)
+        .opacity(self.opacity)
+        .gesture(self.makeDragGesture())
+        .onChange(of: self.state) {
+            if self.dragging {
+                if self.state == .disappearing {
+                    withAnimation(.linear(duration: 0.15)) {
+                        self.opacity = 0
+                    } completion: {
+                        self.offsetCurr = .zero
+                        self.offsetLast = .zero
+                        self.opacity = 1
+                        self.state = .idle
+                        self.dragging = false
+                        self.f(nil)
+                    }
+                } else if self.state == .reverting {
+                    withAnimation {
+                        self.offsetCurr = .zero
+                        self.offsetLast = .zero
+                    } completion: {
+                        self.state = .idle
+                        self.dragging = false
+                        self.f(nil)
+                    }
+                } else if self.state == .reset {
+                    self.offsetCurr = .zero
+                    self.offsetLast = .zero
+                    self.state = .idle
+                    self.dragging = false
+                    self.f(nil)
+                }
+            }
+        }
+    }
+    
+    private func makeDragGesture() -> some Gesture {
+        DragGesture()
+            .onChanged { value in
+                if !self.dragging {
+                    self.dragging = true
+                    self.f(self.card)
+                }
+                let diff = CGPoint(
+                    x: value.translation.width - self.offsetLast.width,
+                    y: value.translation.height - self.offsetLast.height
+                )
+                self.offsetCurr = CGPoint(
+                    x: self.offsetCurr.x + diff.x,
+                    y: self.offsetCurr.y + diff.y
+                )
+                self.offsetLast = value.translation
+            }
     }
 }
-//extension PECSView: DropDelegate {
-//    func performDrop(info: DropInfo) -> Bool {
-//        guard let item = info.itemProviders(for: ["public.text"]).first else { return false }
-//
-//        item.loadObject(ofClass: String.self) { (string, error) in
-//            if let text = string as? String {
-//                print("Dropped text: \(text)") // Handle the dropped text
-//                // Here you can update your model or UI as needed
-//            }
-//        }
-//        return true
-//    }
-////}
-//#Preview {
-//    PECSView()
-//        .environment(SecurityManager())
-//        .environment(PECSViewModel())
-//}

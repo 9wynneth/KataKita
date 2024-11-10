@@ -46,7 +46,7 @@ struct CardCreateView: View {
     @Binding var selectedColumnIndexValue: Int
     @Binding var showAACSettings: Bool
     
-    @State private var isIconTypeImage = false
+    @State private var isImageType = false
     @State private var selectedCategory: Category = .CORE
     @State private var filteredAssets: [String] = []
     @Environment(ProfileViewModel.self) private var viewModel
@@ -77,7 +77,7 @@ struct CardCreateView: View {
                             .frame(width: 50, height: 50)
                             .cornerRadius(20)
                             .onAppear {
-                                isIconTypeImage = true
+                                isImageType = true
                                 print("STICKER")
                             }
                     } else if let imageURL = originalImageManager.imageFromLocal, let uiImage = UIImage(contentsOfFile: imageURL.path) {
@@ -88,7 +88,7 @@ struct CardCreateView: View {
                             .frame(width: 50, height: 50)
                             .cornerRadius(20)
                             .onAppear {
-                                isIconTypeImage = true
+                                isImageType = true
                                 print("ORIGINALc")
                             }
                     } else {
@@ -125,7 +125,7 @@ struct CardCreateView: View {
                                                     isGender = false
                                                 }
                                                 filteredAssets = [assetName]
-                                                isIconTypeImage = false
+                                                isImageType = false
                                             }
                                         )
                                         .onAppear {
@@ -213,7 +213,7 @@ struct CardCreateView: View {
         // Check if it's a sticker
         if let stickerURL = stickerManager.stickerImage {
             selectedIcon = stickerURL.path
-        } else if isIconTypeImage {
+        } else if isImageType {
             selectedIcon = originalImageManager.imageFromLocal?.path ?? ""
         } else {
             selectedIcon = textToSpeak.lowercased()
@@ -266,7 +266,7 @@ struct CardCreateView: View {
         print("Handling done action: Icon: \(selectedIcon), Text: \(textToSpeak), Background Color: \(color)")
 
         // Add card to board
-        boardManager.addCard(Card(name: textToSpeak, icon: selectedIcon, category: selectedCategory, isIconTypeImage: isIconTypeImage), column: selectedColumnIndexValue)
+        boardManager.addCard(Card(name: textToSpeak, icon: selectedIcon, category: selectedCategory, isImageType: isImageType), column: selectedColumnIndexValue)
 
 
         // Reset the image state after the card has been added
