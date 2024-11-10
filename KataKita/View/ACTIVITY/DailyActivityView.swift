@@ -361,7 +361,7 @@ struct DailyActivityView: View {
                                                 .frame(height: 100)
                                                 .overlay(
                                                     CustomButtonSide(
-                                                        icon: resolveIcon(for: "SELESAI 1"),
+                                                        icon: resolveIcon(for: "SELESAI"),
                                                         text: "Selesai",
                                                         width: 250,
                                                         height: 80,
