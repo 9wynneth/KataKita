@@ -13,7 +13,7 @@ struct SettingActivityView: View {
         NavigationStack {
             Form {
                 // Profil Pengguna Section
-                Section(header: Text("PROFIL PENGGUNA")) {
+                Section(header: Text(LocalizedStringKey("PROFIL PENGGUNA"))) {
                     HStack {
                         Text("testsubject@icloud.com")
                         Spacer()
