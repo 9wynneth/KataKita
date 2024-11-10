@@ -403,7 +403,7 @@ class BoardManager {
                     ],
                 ],
                 name: "Ruang Keluarga",
-                icon: "TELEVISI",
+                icon: "televisi",
                 gridSize: Grid(row: 5, column: 8)
             )
         ]
