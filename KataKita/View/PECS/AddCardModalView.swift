@@ -183,7 +183,6 @@ struct AddCardModalView: View {
             boardManager.selectId(id)
         }
         .onChange(of: self.pecsCards) {
-            print(self.pecsCards)
             if let cards = self.pecsCards {
                 self.cards = cards
             }

@@ -156,7 +156,25 @@ struct BoardCreateView: View {
         @Environment(\.dismiss) private var dismiss
         @State private var searchText = ""
         @Environment(ProfileViewModel.self) private var viewModel
-        let allIcons = AllAssets.shared.assets + AllAssets.shared.girlAssets + AllAssets.shared.boyAssets
+
+        // Select assets based on the device language (Indonesian or English)
+        var allIcons: [String] {
+            let locale = Locale.current.languageCode
+            if viewModel.userProfile.gender == true {
+                if locale == "id" {
+                    return AllAssets.shared.assets + AllAssets.shared.girlAssets
+                } else {
+                    return AllAssets.englishAssets + AllAssets.girlAssets
+                }
+            }
+            else {
+                if locale == "id" {
+                    return AllAssets.shared.assets + AllAssets.shared.boyAssets
+                } else {
+                    return AllAssets.englishAssets + AllAssets.boyAssets
+                }
+            }
+        }
         
         var filteredIcons: [String] {
             if !searchText.isEmpty {

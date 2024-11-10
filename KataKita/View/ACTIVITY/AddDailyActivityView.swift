@@ -13,6 +13,7 @@ struct AddDailyActivityView: View {
 
     @Environment(\.dismiss) var dismiss
     
+    @State private var isAdd = false
     @State private var searchText: String = ""
     @State private var selectedDayString: Int = 0
     @Binding var toggleOn: Bool
@@ -20,7 +21,11 @@ struct AddDailyActivityView: View {
     // Viewport size
     private let viewPortWidth: CGFloat = UIScreen.main.bounds.width - 100
     private let viewPortHeight: CGFloat = UIScreen.main.bounds.height - 100
-
+    
+    init(toggleOn: Binding<Bool>) {
+         _toggleOn = toggleOn
+         _selectedDayString = State(initialValue: Calendar.current.component(.weekday, from: Date()) - 1)
+     }
     /// Computed Property
     var selectedDay: Day {
         switch selectedDayString {
@@ -47,6 +52,15 @@ struct AddDailyActivityView: View {
     }
     var extractActivity: [Activity] {
         return self.day.extractActivities()
+    }
+    var filteredActivities: [Activity] {
+        if searchText.isEmpty {
+            return activitiesManager.activities
+        } else {
+            return activitiesManager.activities.filter { activity in
+                activity.name.lowercased().contains(searchText.lowercased())
+            }
+        }
     }
     
     var body: some View {
@@ -226,6 +240,26 @@ struct AddDailyActivityView: View {
                         
                     }
                     HStack {
+                        Spacer()
+                        Button {
+                            isAdd = true
+                        } label: {
+                            RoundedRectangle(cornerRadius: 10)
+                                .fill(
+                                    Color(hex: "013C5A", transparency: 1)
+                                )
+                                .frame(width: 160, height: 40)
+                                .overlay(
+                                    TextContent(
+                                        text: "Tambah Aktivitas",
+                                        size: 15,
+                                        color: "FBFBFB",
+                                        weight: "semibold"
+                                    )
+                                )
+                        }
+                    }
+                    HStack {
                         Image(systemName: "magnifyingglass")
                         TextField("Search", text: $searchText)
                     }
@@ -238,13 +272,24 @@ struct AddDailyActivityView: View {
 
                     ScrollView {
                         LazyVStack(spacing: 0) {
-                            ForEach(activitiesManager.activities) { activity in
-                                SettingActivityCard(activity)
-                                    .onTapGesture {
-                                        /// Click handler
-                                        self.scheduleManager.addActivity(
-                                            activity, day: self.day)
-                                    }
+                            
+                            ForEach(Array(filteredActivities.enumerated()),
+                                    id: \.offset) { index, activity in
+                                HStack {
+                                    SettingActivityCard(activity)
+                                        .onTapGesture {
+                                            self.scheduleManager.addActivity(activity, day: self.day)
+                                        }
+                                        .overlay(
+                                            Button(role: .destructive) {
+                                                self.activitiesManager.removeActivity(index)
+                                            }
+                                            label: {
+                                                Label("", systemImage: "trash")
+                                            }, alignment: .leading
+                                        )
+                                }
+                                    
                             }
                         }
                     }
@@ -264,9 +309,12 @@ struct AddDailyActivityView: View {
                 .ignoresSafeArea()
         )
         .navigationBarBackButtonHidden(true)
+        .sheet(isPresented: $isAdd) {
+            AddActivityView()
+        }
     }
 }
 
 //#Preview {
-//    AddDailyActivityView()
+//    AddDailyActivityView(toggle)
 //}

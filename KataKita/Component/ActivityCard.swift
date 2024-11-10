@@ -59,24 +59,35 @@ struct ActivityCard: View {
                 Spacer()
                 VStack(spacing: 4) {
                     Spacer()
-                    
                     if let icon = icon, !icon.isEmpty {
                         if isSystemImage {
+                            // If it's a system image, use the systemName initializer
                             Image(systemName: icon)
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: CGFloat(iconWidth ?? 24), height: CGFloat(iconHeight ?? 24))
                                 .foregroundColor(Color(hex: fontColor, transparency: fontTransparency))
-                                .padding(.trailing,8)
+                                .padding(.trailing, 8)
                         } else {
-                            Image(icon)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: CGFloat(iconWidth ?? 24), height: CGFloat(iconHeight ?? 24))
-                                .foregroundColor(Color(hex: fontColor, transparency: fontTransparency))
-                                .padding(.trailing,8)
+                            // First, attempt to load the image from a file path
+                            if let uiImage = UIImage(contentsOfFile: icon) {
+                                Image(uiImage: uiImage)  // Use the loaded UIImage if it's a valid file path
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: CGFloat(iconWidth ?? 24), height: CGFloat(iconHeight ?? 24))
+                                    .padding(.trailing, 8)
+                            } else {
+                                // If the file path is invalid or it's actually an asset image, load from assets
+                                Image(icon)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: CGFloat(iconWidth ?? 24), height: CGFloat(iconHeight ?? 24))
+                                    .padding(.trailing, 8)
+                            }
                         }
                     }
+
+
                     
                     if let text = text, !text.isEmpty {
                         TextContent(
@@ -88,8 +99,8 @@ struct ActivityCard: View {
                         )
                         .padding(2)
                         .multilineTextAlignment(.center)
-                        .lineLimit(2)  // Limit the text to two lines
-                        .minimumScaleFactor(0.5)  // Shrink the font if text overflows two lines
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.5)  
                         .allowsTightening(true)
    
                     }

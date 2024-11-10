@@ -41,6 +41,8 @@ struct KataKitaApp: App {
     
     @State private var scheduleManager = ScheduleManager()
     @State private var activitiesManager = ActivitiesManager()
+    @State private var activityManager = ActivityManager()
+
     @State private var stateManager = StateManager()
     @State private var securityManager = SecurityManager()
     @State private var pECSViewModel = PECSViewModel()
@@ -100,7 +102,7 @@ struct KataKitaApp: App {
                         Activity(
                             id: UUID(),
                             name: "Makan",
-                            image: resolveIcon(for: "MAKAN"),
+                            image: resolveIcon(for: "boy_makan"),
                             ruangan: Ruangan(id: UUID(), name: "RuangMakan"),
                             sequence: [
                                 Step(image: resolveIcon(for: ""), description: "Ambil piring"),
@@ -116,7 +118,7 @@ struct KataKitaApp: App {
                         Activity(
                             id: UUID(),
                             name: "Cuci Tangan",
-                            image: resolveIcon(for: "cucitangan"),
+                            image: resolveIcon(for: "cuci tangan"),
                             ruangan: Ruangan(id: UUID(), name: "KamarMandi"),
                             sequence: [
                                         Step(image: resolveIcon(for: "keran"), description: "Buka keran air"),
@@ -174,6 +176,7 @@ struct KataKitaApp: App {
         .modelContainer(modelContainer)
         .environment(scheduleManager)
         .environment(activitiesManager)
+        .environment(activityManager)
         .environment(stateManager)
         .environment(securityManager)
         .environment(pECSViewModel)
@@ -182,6 +185,7 @@ struct KataKitaApp: App {
         .environment(self.boardManager)
         .environment(stickerManager)
         .environment(originalImageManager)
+        .environment(profileManager)
 
     }
 }

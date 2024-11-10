@@ -11,18 +11,21 @@ struct PECSChildView: View {
     @Environment(ProfileViewModel.self) private var viewModel
     
     @Binding var cards: [[Card]]
-    
+    let f: (Card?) -> Void
+
     @State private var width: CGFloat = 0.0
     @State private var height: CGFloat = 0.0
-    
+    @State private var draggingIndex: Int? = nil
+
     //MARK: Button color
     let colors: [Color] = [.black, .brown, .orange, .red, .purple, .pink, .blue, .green, .yellow]
     
     let screenWidth = UIScreen.main.bounds.width
     let screenHeight = UIScreen.main.bounds.height
     
-    init(_ cards: Binding<[[Card]]>) {
+    init(_ cards: Binding<[[Card]]>, f: @escaping (Card?) -> Void) {
         self._cards = cards
+        self.f = f
     }
     
     var body: some View {
@@ -30,14 +33,18 @@ struct PECSChildView: View {
             ForEach(Array(self.cards.enumerated()), id: \.offset) { i, column in
                 VStack(spacing: 10) {
                     ForEach(Array(column.enumerated()), id: \.offset) { j, card in
-
                         PECSChildCard(
                             card,
                             (self.width, self.height),
                             card.isIconTypeImage ? nil : resolveIcon(for: "\(self.genderHandler(card.icon))\(card.icon)")
-                        )
-                        .draggable(card)
-
+                        ) { dragging in
+                            self.f(dragging)
+                            if dragging != nil {
+                                self.draggingIndex = i
+                            } else {
+                                self.draggingIndex = nil
+                            }
+                        }
                     }
                 }
                 .padding(10)
@@ -52,6 +59,7 @@ struct PECSChildView: View {
                             }
                     }
                 )
+                .zIndex(self.draggingIndex == i ? 2 : 1)
             }
         }
         .padding(20)
@@ -79,54 +87,92 @@ struct PECSChildView: View {
 }
 
 struct PECSChildCard: View {
+    @State private var offsetCurr: CGPoint = .zero
+    @State private var offsetLast: CGSize = .zero
+    @State private var dragging = false
+    
     let card: Card
     let width: CGFloat
     let height: CGFloat
     let icon: String?
+    let f: (Card?) -> Void
 
-    init(_ card: Card, _ size: (CGFloat, CGFloat), _ icon: String?) {
+    init(_ card: Card, _ size: (CGFloat, CGFloat), _ icon: String?, f: @escaping (Card?) -> Void) {
         self.card = card
         self.width = size.0
         self.height = size.1
         self.icon = icon
+        self.f = f
     }
     
     var body: some View {
-        if self.card.isIconTypeImage {
-            CustomIcon(
-                icon: self.card.icon,
+        VStack(spacing: 0) {
+            if let icon = self.icon {
+                if self.card.isIconTypeImage {
+                    Image(uiImage: (UIImage(named: self.card.icon) ?? UIImage()))
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: (self.width - 20) / 3, height: (self.width - 20) / 3)
+                } else {
+                    Image(icon)
+                        .antialiased(true)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: (self.width - 20) / 3, height: (self.width - 20) / 3)
+                }
+            } else {
+                Color.clear
+                    .frame(width: (self.width - 20) / 3, height: (self.width - 20) / 3)
+            }
+            
+            TextContent(
                 text: self.card.name,
-                width: (self.height - 60) / 5,
-                height: (self.height - 60) / 5,
-                font: 14,
-                iconWidth: (self.width - 20) / 3,
-                iconHeight: (self.width - 20) / 3,
-                bgColor: Color(hex: card.category.getColorString(), transparency: 1),
-                bgTransparency: 0.65,
-                fontColor: Color.black,
-                fontTransparency: 1.0,
-                cornerRadius: 13
-            ) {}
-        } else if let icon = self.icon {
-            CustomButton(
-                icon: icon,
-                text: self.card.name,
-                width: (self.height - 60) / 5,
-                height: (self.height - 60) / 5,
-                font: 14,
-                iconWidth: Int((self.width - 20) / 3),
-                iconHeight: Int ((self.width - 20) / 3),
-                bgColor: self.card.category.getColorString(),
-                bgTransparency: 0.65,
-                fontColor: "000000",
-                fontTransparency: 1.0, cornerRadius: 13, isSystemImage: false
+                size: 14,
+                color: "000000",
+                transparency: 1,
+                weight: "medium"
             )
-        } else {
-            EmptyView()
+            .padding(.horizontal)
+            .lineLimit(1)
+            .frame(maxWidth: .infinity, alignment: .center)
         }
+        .frame(width: (self.height - 60) / 5, height: (self.height - 60) / 5)
+        .background(
+            RoundedRectangle(cornerRadius: 13)
+                .fill(Color(hex: self.card.category.getColorString(), transparency: 1))
+        )
+        .offset(x: self.offsetCurr.x, y: self.offsetCurr.y)
+        .gesture(self.makeDragGesture())
+        .zIndex(self.dragging ? 2 : 1)
     }
-}
-
-#Preview {
-    PECSChildView(Binding.constant([[],[],[],[],[]]))
+    
+    private func makeDragGesture() -> some Gesture {
+        DragGesture()
+            .onChanged { value in
+                if !self.dragging {
+                    self.dragging = true
+                    self.f(self.card)
+                }
+                let diff = CGPoint(
+                    x: value.translation.width - self.offsetLast.width,
+                    y: value.translation.height - self.offsetLast.height
+                )
+                self.offsetCurr = CGPoint(
+                    x: self.offsetCurr.x + diff.x,
+                    y: self.offsetCurr.y + diff.y
+                )
+                self.offsetLast = value.translation
+            }
+            .onEnded { value in
+                print(value.startLocation.x, value.startLocation.y)
+                print(value.location.x, value.location.y)
+                withAnimation {
+                    self.offsetCurr = .zero
+                    self.offsetLast = .zero
+                } completion: {
+                    self.dragging = false
+                    self.f(nil)
+                }
+            }
+    }
 }

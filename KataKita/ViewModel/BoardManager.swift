@@ -181,7 +181,7 @@ class BoardManager {
                     [
                         Card(name: "toilet", icon: "toilet", category: .VERB, isIconTypeImage: false),
                         Card(name: "mandi", icon: "mandi", category: .VERB, isIconTypeImage: false),
-                        Card(name: "menyikat gigi", icon: "sikat gigi", category: .VERB, isIconTypeImage: false),
+                        Card(name: "menyikat gigi", icon: "menyikat gigi", category: .VERB, isIconTypeImage: false),
                         Card(name: "cuci tangan", icon: "cuci tangan", category: .VERB, isIconTypeImage: false),
                         Card(name: "ambil", icon: "ambil", category: .VERB, isIconTypeImage: false)
                     ],
@@ -307,7 +307,7 @@ class BoardManager {
                     [
                         Card(name: "cuci piring", icon: "cuci piring", category: .VERB, isIconTypeImage: false),
                         Card(name: "potong", icon: "memotong", category: .VERB, isIconTypeImage: false),
-                        Card(name: "masak", icon: "masak", category: .VERB, isIconTypeImage: false),
+                        Card(name: "masak", icon: "wajan", category: .VERB, isIconTypeImage: false),
                         Card(name: "buka", icon: "buka", category: .VERB, isIconTypeImage: false),
                         Card(name: "tutup", icon: "tutup", category: .VERB, isIconTypeImage: false)
                     ],
@@ -393,12 +393,12 @@ class BoardManager {
                         Card(name: "permainan", icon: "permainan", category: .NOUN, isIconTypeImage: false),
                         Card(name: "snack", icon: "piring", category: .NOUN, isIconTypeImage: false),
                         Card(name: "lampu", icon: "lampu", category: .NOUN, isIconTypeImage: false),
-                        Card(name: "netflix", icon: "netflix", category: .NOUN, isIconTypeImage: false),
+                        Card(name: "netflix", icon: "netlix", category: .NOUN, isIconTypeImage: false),
                     ],
                     [
                         Card(name: "mobil", icon: "mobil", category: .NOUN, isIconTypeImage: false),
                         Card(name: "bola", icon: "bola", category: .NOUN, isIconTypeImage: false),
-                        Card(name: "air", icon: "gelas air", category: .NOUN, isIconTypeImage: false),
+                        Card(name: "air", icon: "gelas", category: .NOUN, isIconTypeImage: false),
                         Card(name: "snack", icon: "manis", category: .NOUN, isIconTypeImage: false)
                     ],
                 ],
@@ -483,4 +483,3 @@ class BoardManager {
         }
     }
 }
-

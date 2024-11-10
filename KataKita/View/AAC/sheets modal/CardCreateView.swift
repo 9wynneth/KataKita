@@ -1,31 +1,29 @@
 import SwiftUI
 
 func filterAssets(by input: String, for gender: Bool?) -> [String] {
-    // Create an instance or use a shared instance of AllAssets
+    // Determine the asset set based on device language
     let assets = Locale.current.languageCode == "id" ? AllAssets.shared.assets : AllAssets.englishAssets
-    let girlAssets = Locale.current.languageCode == "id" ? AllAssets.shared.girlAssets : AllAssets.shared.girlAssets
-    let boyAssets = Locale.current.languageCode == "id" ? AllAssets.shared.boyAssets : AllAssets.shared.boyAssets
-    let genderAssets = AllAssets.shared.genderAssets
-
+    let girlAssets = Locale.current.languageCode == "id" ? AllAssets.girlAssets : AllAssets.girlAssets
+    let boyAssets = Locale.current.languageCode == "id" ? AllAssets.boyAssets : AllAssets.boyAssets
+    let genderAssets = AllAssets.genderAssets
     if let gender = gender {
         if gender {
             // Filter for girl-specific assets with "GIRL_" prefix
-            let girlAssets = AllAssets.shared.girlAssets.filter {
-                $0.lowercased().starts(with: "girl_\(input.lowercased())")
+            let filteredGirlAssets = girlAssets.filter {
+                $0.lowercased().starts(with: "GIRL_\(input.lowercased())")
             }
-            if !girlAssets.isEmpty { return girlAssets }
+            if !filteredGirlAssets.isEmpty { return filteredGirlAssets }
         } else {
             // Filter for boy-specific assets with "BOY_" prefix
-            let boyAssets = AllAssets.shared.boyAssets.filter {
-                $0.lowercased().starts(with: "boy_\(input.lowercased())")
+            let filteredBoyAssets = boyAssets.filter {
+                $0.lowercased().starts(with: "BOY_\(input.lowercased())")
             }
-            if !boyAssets.isEmpty { return boyAssets }
+            if !filteredBoyAssets.isEmpty { return filteredBoyAssets }
         }
     }
-
+    
     // If no gender-specific match is found, fall back to general assets
-    return (AllAssets.shared.assets + AllAssets.shared.girlAssets.map { $0.replacingOccurrences(of: "GIRL_", with: "") }
-            + AllAssets.shared.boyAssets.map { $0.replacingOccurrences(of: "BOY_", with: "") }).filter {
+    return (assets + genderAssets).filter {
         $0.lowercased().starts(with: input.lowercased())
     }
 }
@@ -33,11 +31,6 @@ func filterAssets(by input: String, for gender: Bool?) -> [String] {
 
 // Updated CardCreateView
 struct CardCreateView: View {
-    @Environment(StickerImageManager.self) var stickerManager
-    @Environment(OriginalImageManager.self) var originalImageManager
-    @Environment(ProfileViewModel.self) private var viewModel
-    @Environment(BoardManager.self) private var boardManager
-
     @State private var textToSpeak: String = ""
     @State private var selectedIcon: String = ""
     @State private var showingAddImageView = false
@@ -45,7 +38,10 @@ struct CardCreateView: View {
     @State private var navigateToCekVMView = false
     @State private var addingCard: Int? = nil
     @State private var isGender = false
-       
+    @Environment(StickerImageManager.self) var stickerManager
+    @Environment(OriginalImageManager.self) var originalImageManager
+
+    
     @Binding var navigateFromImage: Bool
     @Binding var selectedColumnIndexValue: Int
     @Binding var showAACSettings: Bool
@@ -53,8 +49,8 @@ struct CardCreateView: View {
     @State private var isIconTypeImage = false
     @State private var selectedCategory: Category = .CORE
     @State private var filteredAssets: [String] = []
-    
-
+    @Environment(ProfileViewModel.self) private var viewModel
+    @Environment(BoardManager.self) private var boardManager
 
     var body: some View {
         NavigationStack {
@@ -352,16 +348,14 @@ struct CardCreateView: View {
 // Updated SearchIconView
 
 struct SearchIconsView: View {
-    @Environment(ProfileViewModel.self) private var viewModel
-
     @Binding var selectedIcon: String
     @Environment(\.dismiss) private var dismiss
     @State private var searchText = ""
-    
+    @Environment(ProfileViewModel.self) private var viewModel
+
     // Step 1: Fetch all assets localized to the user's language
     var localizedAssets: [(original: String, localized: String)] {
-        let allAssetsInstance = AllAssets()
-        let allAssets = allAssetsInstance.assets + allAssetsInstance.boyAssets + allAssetsInstance.girlAssets + allAssetsInstance.genderAssets
+        let allAssets = AllAssets.shared.assets + AllAssets.shared.boyAssets + AllAssets.shared.girlAssets + AllAssets.shared.genderAssets
         return allAssets.map { asset in
             (original: asset, localized: NSLocalizedString(asset, comment: ""))
         }
