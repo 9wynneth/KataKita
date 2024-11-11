@@ -77,7 +77,7 @@ class BoardManager {
                         Card(name: "garpu", icon: "garpu", category: .NOUN, isImageType: false),
                         Card(name: "piring", icon: "piring", category: .NOUN, isImageType: false),
                         Card(name: "mangkok", icon: "sup", category: .NOUN, isImageType: false),
-                        Card(name: "gelas", icon: "gelas", category: .NOUN, isImageType: false)
+                        Card(name: "air", icon: "gelas", category: .NOUN, isImageType: false)
                     ],
                     [
                         Card(name: "ayam goreng", icon: "ayam goreng", category: .NOUN, isImageType: false),
