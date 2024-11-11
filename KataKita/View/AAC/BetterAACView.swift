@@ -258,6 +258,7 @@ struct BetterAACView: View {
                             id = board.id
                             speakText(board.name)
                         }
+                            
 
                     }
                     if self.editing {
@@ -561,7 +562,6 @@ struct BetterAACView: View {
 struct AACCard: View {
     let card: CardList
     let icon: String?
-
     init(_ card: CardList, _ icon: String?) {
         self.card = card
         self.icon = icon
@@ -582,10 +582,10 @@ struct AACCard: View {
                     .resizable()
                     .frame(width: 30, height: 30)
                     .padding()
+
             } else {
                 EmptyView()
             }
-
             Text(
                 LocalizedStringKey(self.card.name)
             )
@@ -600,7 +600,6 @@ struct AACCard: View {
         )  // Apply the background color with transparency
         .cornerRadius(8)
     }
-
 }
 
 #Preview {

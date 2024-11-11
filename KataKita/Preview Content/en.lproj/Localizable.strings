@@ -367,6 +367,13 @@
 "RUANG KELUARGA" = "LIVING ROOM";
 "BELAJAR" = "LEARN";
 
+"Ruang Makan" = "DINING ROOM";
+"Ruang Belajar" = "STUDY ROOM";
+"Kamar Mandi" = "BATHROOM";
+"Kamar Tidur" = "BEDROOM";
+"Dapur" = "KITCHEN";
+"Ruang Keluarga" = "LIVING ROOM";
+
 "Pengaturan" = "Settings";
 "PROFIL PENGGUNA" = "USER PROFILE";
 "Nama" = "Name";

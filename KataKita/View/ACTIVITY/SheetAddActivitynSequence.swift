@@ -145,6 +145,10 @@ struct AddStepView: View {
             }
         }
         .navigationBarTitle("Add Step", displayMode: .inline)
+        .navigationBarItems(trailing: Button("Save") {
+            addStep()
+            dismiss()
+        })
     }
 
     private func addStep() {
