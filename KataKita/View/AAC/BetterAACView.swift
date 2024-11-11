@@ -367,7 +367,7 @@ struct BetterAACView: View {
                     )
                 }
 
-                VStack(spacing: screenHeight * 0.02) {
+                VStack(spacing: screenHeight * 0.015) {
                     ForEach(Array(colors.enumerated()), id: \.offset) {
                         index, color in
                         Button {
