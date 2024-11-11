@@ -65,28 +65,23 @@ struct Grid : Codable {
 }
 
 //MARK: Kartu yang ada pada board
-struct Card: Identifiable, Codable, Equatable, Transferable {
+struct Card: Identifiable, Codable, Equatable {
     var id = UUID()
     var name: String
     var icon: String
     var category: Category
-    var isIconTypeImage: Bool
-    var bgTransparency: Double = 1.0 // Default to fully visible
-    var isBeingDragged: Bool = false  // New property to track drag state
+    var isImageType: Bool
+    var isColorType: Bool
+    var color: String?
 
-       
-
-    init(name: String, icon: String, category: Category, isIconTypeImage: Bool) {
+    init(name: String, icon: String, category: Category, isImageType: Bool = false, isColorType: Bool = false, color: String? = nil) {
         self.icon = icon
         self.name = name
         self.category = category
-        self.isIconTypeImage = isIconTypeImage
+        self.isImageType = isImageType
+        self.isColorType = isColorType
+        self.color = color
     }
-    static var transferRepresentation: some TransferRepresentation {
-            CodableRepresentation(contentType: .cardType)
-        }
-    
-    
 }
 extension UTType {
     static let cardType = UTType(exportedAs: "com.example.KataKita.card")
@@ -99,7 +94,7 @@ struct CardList: Identifiable {
     var bgColor: Color  // Background color
     var bgTransparency: Double  // Background transparency
     var fontColor: Color
-    var isIconTypeImage: Bool
+    var isImageType: Bool
 }
 
 @Model

@@ -309,9 +309,9 @@ struct AddDailyActivityView: View {
                 .ignoresSafeArea()
         )
         .navigationBarBackButtonHidden(true)
-        .sheet(isPresented: $isAdd) {
-            AddActivityView()
-        }
+//        .sheet(isPresented: $isAdd) {
+//            AddActivityView()
+//        }
     }
 }
 

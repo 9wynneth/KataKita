@@ -52,7 +52,6 @@
 		1EEC6E5E2CDCDBA60012965C /* SpeechManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EEC6E5D2CDCDBA20012965C /* SpeechManager.swift */; };
 		1EEC6EF02CDDC73D0012965C /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EEC6EEF2CDDC7380012965C /* SplashScreenView.swift */; };
 		1EEC6EF22CDE64340012965C /* SettingActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EEC6EF12CDE642C0012965C /* SettingActivityView.swift */; };
-		1EEC6F662CE070CE0012965C /* SheetAddActivitynSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EEC6F652CE070CD0012965C /* SheetAddActivitynSequence.swift */; };
 		9B3EBEC52CC8ADA8009F448E /* AllAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B3EBEC42CC8ADA8009F448E /* AllAssets.swift */; };
 		9B78DD172CBC89850069DBC5 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B78DD162CBC89850069DBC5 /* SettingsView.swift */; };
 		9B78DD282CBDE9C60069DBC5 /* ImageCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B78DD272CBDE9C60069DBC5 /* ImageCard.swift */; };
@@ -157,7 +156,6 @@
 		1EEC6E5D2CDCDBA20012965C /* SpeechManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechManager.swift; sourceTree = "<group>"; };
 		1EEC6EEF2CDDC7380012965C /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
 		1EEC6EF12CDE642C0012965C /* SettingActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingActivityView.swift; sourceTree = "<group>"; };
-		1EEC6F652CE070CD0012965C /* SheetAddActivitynSequence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetAddActivitynSequence.swift; sourceTree = "<group>"; };
 		9B3EBEC42CC8ADA8009F448E /* AllAssets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllAssets.swift; sourceTree = "<group>"; };
 		9B78DD162CBC89850069DBC5 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		9B78DD272CBDE9C60069DBC5 /* ImageCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCard.swift; sourceTree = "<group>"; };
@@ -359,7 +357,6 @@
 		1EA097CC2CD9B0BF00B76917 /* ACTIVITY */ = {
 			isa = PBXGroup;
 			children = (
-				1EEC6F652CE070CD0012965C /* SheetAddActivitynSequence.swift */,
 				1EEC6EF12CDE642C0012965C /* SettingActivityView.swift */,
 				1E5863832CB6C0840080373A /* ActivitySequenceView.swift */,
 				DAE313002CB8375C001DD0A0 /* AddDailyActivityView.swift */,
@@ -582,7 +579,6 @@
 				1EEC6EF22CDE64340012965C /* SettingActivityView.swift in Sources */,
 				DAE1E7822CBAF59A00F5F9D1 /* SettingActivityCard.swift in Sources */,
 				1ECB57392CD9C2FB009291E8 /* Profile.swift in Sources */,
-				1EEC6F662CE070CE0012965C /* SheetAddActivitynSequence.swift in Sources */,
 				9B831C112CDA934A0065536F /* ProfileViewModel.swift in Sources */,
 				1E84D89B2CB4D99A0078B648 /* Item.swift in Sources */,
 				9B3EBEC52CC8ADA8009F448E /* AllAssets.swift in Sources */,
@@ -782,7 +778,9 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"KataKita/Preview Content\"";
+
 				DEVELOPMENT_TEAM = NLFHS29F76;
+
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = KataKita/Info.plist;
@@ -793,7 +791,6 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -821,6 +818,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"KataKita/Preview Content\"";
+
 				DEVELOPMENT_TEAM = NLFHS29F76;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -832,7 +830,6 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
