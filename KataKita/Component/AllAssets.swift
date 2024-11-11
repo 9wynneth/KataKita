@@ -68,21 +68,21 @@ struct AllAssets {
         "talenan",
         "menonton",
         "mendengar",
-        "buku cerita",
+        "buku cerita","menggambar", "mendengar", "gelap", "terang"
     ]
     
     static let boyAssets: [String] = [
-        "BOY_AMBIL", "BOY_BERMAIN", "BOY_BUANG", "BOY_DIA", "BOY_DIMANA", "BOY_DUDUK", "BOY_IYA", "BOY_KAMU", "BOY_KAPAN", "BOY_KITA", "BOY_MAKAN", "BOY_MAU", "BOY_MEMBACA", "BOY_MENGANGKAT", "BOY_MENGUNYAH", "BOY_MINUM", "BOY_SAKIT", "BOY_SAYA", "BOY_SIAPA", "BOY_SUKA", "BOY_TIDAK MAU", "BOY_TIDAK SUKA", "BOY_TIDAK"
+        "BOY_AMBIL", "BOY_BERMAIN", "BOY_BUANG", "BOY_DIA", "BOY_DIMANA", "BOY_DUDUK", "BOY_IYA", "BOY_KAMU", "BOY_KAPAN", "BOY_KITA", "BOY_MAKAN", "BOY_MAU", "BOY_MEMBACA", "BOY_MENGANGKAT", "BOY_MENGUNYAH", "BOY_MINUM", "BOY_SAKIT", "BOY_SAYA", "BOY_SIAPA", "BOY_SUKA", "BOY_TIDAK MAU", "BOY_TIDAK SUKA", "BOY_TIDAK","GIRL_MENGANTUK","BOY_GATAL"
         ]
     
     static let girlAssets: [String] = [
-        "GIRL_AMBIL", "GIRL_BUANG", "GIRL_DIA", "GIRL_BERMAIN", "GIRL_DIMANA", "GIRL_DUDUK", "GIRL_IYA", "GIRL_KAMU", "GIRL_KAPAN", "GIRL_KITA", "GIRL_MAKAN", "GIRL_MAU", "GIRL_MEMBACA", "GIRL_MENGANGKAT", "GIRL_MENGUNYAH", "GIRL_MINUM", "GIRL_SAKIT", "GIRL_SAYA", "GIRL_SIAPA", "GIRL_SUKA", "GIRL_TIDAK MAU", "GIRL_TIDAK SUKA", "GIRL_TIDAK"
+        "GIRL_AMBIL", "GIRL_BUANG", "GIRL_DIA", "GIRL_BERMAIN", "GIRL_DIMANA", "GIRL_DUDUK", "GIRL_IYA", "GIRL_KAMU", "GIRL_KAPAN", "GIRL_KITA", "GIRL_MAKAN", "GIRL_MAU", "GIRL_MEMBACA", "GIRL_MENGANGKAT", "GIRL_MENGUNYAH", "GIRL_MINUM", "GIRL_SAKIT", "GIRL_SAYA", "GIRL_SIAPA", "GIRL_SUKA", "GIRL_TIDAK MAU", "GIRL_TIDAK SUKA", "GIRL_TIDAK", "GIRL_MENGANTUK", "GIRL_GATAL"
         ]
     
     static let genderAssets: [String] = [
-        "ambil", "buang", "dia", "bermain", "dimana", "duduk", "iya", "kamu", "kapan", "kita", "makan", "mau", "membaca", "mengangkat", "mengunyah", "minum", "sakit", "saya", "siapa", "suka", "tidak mau", "tidak suka", "tidak",
-//        "AMBIL", "BUANG", "DIA", "BERMAIN", "DIMANA", "DUDUK", "IYA", "KAMU", "KAPAN", "KITA", "MAKAN", "MAU", "MEMBACA", "MENGANGKAT", "MENGUNYAH", "MINUM", "SAKIT", "SAYA", "SIAPA", "SUKA", "TIDAK MAU", "TIDAK SUKA", "TIDAK", "TAKE", "THROW", "HE", "SHE", "PLAY", "WHERE", "SIT", "YES", "YOU", "WHEN", "WE", "EAT", "WANT", "READ ", "LIFT", "CHEWING", "DRINKING", "SICK", "ME", "WHO", "LIKES", "DON'T WANT", "DON'T LIKE", "NOT", 
-        "take", "throw", "he", "play", "where", "sit", "yes", "you", "when", "we", "eat", "want", "read ", "lift", "chew", "drink", "pain", "me", "who", "like", "don't want", "don't like", "don't"
+        "ambil", "buang", "dia", "bermain", "dimana", "duduk", "iya", "kamu", "kapan", "kita", "makan", "mau", "membaca", "mengangkat", "mengunyah", "minum", "sakit", "saya", "siapa", "suka", "tidak mau", "tidak suka", "tidak","mengantuk","gatal",
+//        "AMBIL", "BUANG", "DIA", "BERMAIN", "DIMANA", "DUDUK", "IYA", "KAMU", "KAPAN", "KITA", "MAKAN", "MAU", "MEMBACA", "MENGANGKAT", "MENGUNYAH", "MINUM", "SAKIT", "SAYA", "SIAPA", "SUKA", "TIDAK MAU", "TIDAK SUKA", "TIDAK", "TAKE", "THROW", "HE", "SHE", "PLAY", "WHERE", "SIT", "YES", "YOU", "WHEN", "WE", "EAT", "WANT", "READ ", "LIFT", "CHEWING", "DRINKING", "SICK", "ME", "WHO", "LIKES", "DON'T WANT", "DON'T LIKE", "NOT",
+        "take", "throw", "he", "play", "where", "sit", "yes", "you", "when", "we", "eat", "want", "read ", "lift", "chew", "drink", "pain", "me", "who", "like", "don't want", "don't like", "don't","sleepy","itchy"
         ]
     
     static let englishAssets: [String] = [
@@ -119,7 +119,7 @@ struct AllAssets {
         "BOY_DUDUK", "BOY_IYA", "BOY_KAMU", "BOY_KAPAN", "BOY_KITA",
         "BOY_MAKAN", "BOY_MAU", "BOY_MEMBACA", "BOY_MENGANGKAT",
         "BOY_MENGUNYAH", "BOY_MINUM", "BOY_SAKIT", "BOY_SAYA", "BOY_SIAPA",
-        "BOY_SUKA", "BOY_TIDAK MAU", "BOY_TIDAK SUKA", "BOY_TIDAK",
+        "BOY_SUKA", "BOY_TIDAK MAU", "BOY_TIDAK SUKA", "BOY_TIDAK","GIRL_MENGANTUK","BOY_GATAL"
     ]
 
     let girlAssets: [String] = [
@@ -127,13 +127,13 @@ struct AllAssets {
         "GIRL_DUDUK", "GIRL_IYA", "GIRL_KAMU", "GIRL_KAPAN", "GIRL_KITA",
         "GIRL_MAKAN", "GIRL_MAU", "GIRL_MEMBACA", "GIRL_MENGANGKAT",
         "GIRL_MENGUNYAH", "GIRL_MINUM", "GIRL_SAKIT", "GIRL_SAYA", "GIRL_SIAPA",
-        "GIRL_SUKA", "GIRL_TIDAK MAU", "GIRL_TIDAK SUKA", "GIRL_TIDAK",
+        "GIRL_SUKA", "GIRL_TIDAK MAU", "GIRL_TIDAK SUKA", "GIRL_TIDAK","GIRL_MENGANTUK","GIRL_GATAL"
     ]
 
     let genderAssets: [String] = [
         "ambil", "buang", "dia", "bermain", "dimana", "duduk", "iya", "kamu",
         "kapan", "kita", "makan", "mau", "membaca", "mengangkat", "mengunyah",
         "minum", "sakit", "saya", "siapa", "suka", "tidak mau", "tidak suka",
-        "tidak",
+        "tidak","mengantuk","gatal"
     ]
 }

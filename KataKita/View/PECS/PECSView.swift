@@ -427,41 +427,41 @@ struct PECSView: View {
         self.childCards = self.cards
     }
     
-    private func speakCardName(_ card: Card) {
-        // Localize the card name
-        let localizedName = NSLocalizedString(card.name, comment: "Card name for speech synthesis")
+    func speakCardName(_ card: Card) {
+            // Localize the card name
+            // Menggunakan NSLocalizedString untuk mendapatkan string yang dilokalkan
+            let localizedText = NSLocalizedString(card.name, comment: "")
+            // Memeriksa bahasa perangkat
+            let languageCode = Locale.current.languageCode
+            let voiceLanguage = languageCode == "id" ? "id-ID" : "en-AU"
+
+            let utterance = AVSpeechUtterance(string: localizedText)
+            utterance.voice = AVSpeechSynthesisVoice(language: voiceLanguage)
+            utterance.rate = 0.5
+            speechSynthesizer.speak(utterance)
+        }
         
-        // Detect device language
-        let languageCode = Locale.current.languageCode
-        let voiceLanguage = languageCode == "id" ? "id-ID" : "en-AU" // Set the voice language based on device language
-        
-        // Create an utterance with the localized card name
-        let utterance = AVSpeechUtterance(string: localizedName)
-        utterance.voice = AVSpeechSynthesisVoice(language: voiceLanguage) // Set voice based on device language
-        utterance.rate = 0.5 // Optional: set the speech rate
+        func speakText(_ text: String) {
+           
+        }
 
-        // Use the AVSpeechSynthesizer to speak the localized card name
-        let synthesizer = AVSpeechSynthesizer()
-        synthesizer.speak(utterance)
-    }
+        func speakText(for cards: [Card]) {
+            // Concatenate all the localized names from the Card models into a single text
+            let fullText = cards.map { NSLocalizedString($0.name, comment: "Card name for speech synthesis") }.joined(separator: ", ")
 
-    private func speakText(for cards: [Card]) {
-        // Concatenate all the localized names from the Card models into a single text
-        let fullText = cards.map { NSLocalizedString($0.name, comment: "Card name for speech synthesis") }.joined(separator: ", ")
+            // Detect device language
+            let languageCode = Locale.current.languageCode
+            let voiceLanguage = languageCode == "id" ? "id-ID" : "en-AU" // Set the voice language based on device language
+            
+            // Create an utterance for the localized text
+            let utterance = AVSpeechUtterance(string: fullText)
+            utterance.voice = AVSpeechSynthesisVoice(language: voiceLanguage) // Set voice based on device language
+            utterance.rate = 0.5 // Adjust the speech rate if needed
 
-        // Detect device language
-        let languageCode = Locale.current.languageCode
-        let voiceLanguage = languageCode == "id" ? "id-ID" : "en-AU" // Set the voice language based on device language
-        
-        // Create an utterance for the localized text
-        let utterance = AVSpeechUtterance(string: fullText)
-        utterance.voice = AVSpeechSynthesisVoice(language: voiceLanguage) // Set voice based on device language
-        utterance.rate = 0.5 // Adjust the speech rate if needed
-
-        // Use the AVSpeechSynthesizer to speak the full text
-        let synthesizer = AVSpeechSynthesizer()
-        synthesizer.speak(utterance)
-    }
+            // Use the AVSpeechSynthesizer to speak the full text
+            let synthesizer = AVSpeechSynthesizer()
+            synthesizer.speak(utterance)
+        }
 }
 
 struct BackgroundClearView: UIViewRepresentable {

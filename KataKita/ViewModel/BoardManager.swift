@@ -241,10 +241,10 @@ class BoardManager {
                     ],
                     [
                         Card(name: "tidur", icon: "kasur", category: .VERB, isImageType: false),
-                        Card(name: "mengantuk", icon: "mengantuk", category: .VERB, isImageType: false),
+//                        Card(name: "mengantuk", icon: "mengantuk", category: .VERB, isImageType: false),
                         Card(name: "mendengar", icon: "mendengar", category: .VERB, isImageType: false),
                         Card(name: "membaca", icon: "membaca", category: .VERB, isImageType: false),
-                        Card(name: "ganti baju", icon: "ganti baju", category: .VERB, isImageType: false)
+//                        Card(name: "ganti baju", icon: "ganti baju", category: .VERB, isImageType: false)
                     ],
                     [
                         Card(name: "toilet", icon: "toilet", category: .VERB, isImageType: false),
@@ -266,9 +266,9 @@ class BoardManager {
                     [
                         Card(name: "tempat tidur", icon: "kasur", category: .NOUN, isImageType: false),
                         Card(name: "bantal", icon: "bantal", category: .NOUN, isImageType: false),
-                        Card(name: "guling", icon: "guling", category: .NOUN, isImageType: false),
-                        Card(name: "selimut", icon: "selimut", category: .NOUN, isImageType: false),
-                        Card(name: "buku cerita", icon: "buku cerita", category: .NOUN, isImageType: false),
+//                        Card(name: "guling", icon: "guling", category: .NOUN, isImageType: false),
+//                        Card(name: "selimut", icon: "selimut", category: .NOUN, isImageType: false),
+//                        Card(name: "buku cerita", icon: "buku cerita", category: .NOUN, isImageType: false),
                     ],
                     [
                         Card(name: "meja", icon: "meja", category: .NOUN, isImageType: false),
@@ -314,7 +314,7 @@ class BoardManager {
                     [
                         Card(name: "masukkan", icon: "MASUK", category: .VERB, isImageType: false),
                         Card(name: "ambil", icon: "ambil", category: .VERB, isImageType: false),
-                        Card(name: "aduk", icon: "aduk", category: .VERB, isImageType: false),
+//                        Card(name: "aduk", icon: "aduk", category: .VERB, isImageType: false),
                         Card(name: "buang", icon: "buang", category: .VERB, isImageType: false),
 
 
@@ -328,8 +328,8 @@ class BoardManager {
 
                     ],
                     [
-                        Card(name: "pisau", icon: "pisau", category: .NOUN, isImageType: false),
-                        Card(name: "talenan", icon: "talenan", category: .NOUN, isImageType: false),
+//                        Card(name: "pisau", icon: "pisau", category: .NOUN, isImageType: false),
+//                        Card(name: "talenan", icon: "talenan", category: .NOUN, isImageType: false),
                         Card(name: "keran", icon: "keran", category: .NOUN, isImageType: false),
                         Card(name: "kompor", icon: "kompor", category: .NOUN, isImageType: false),
                         Card(name: "panci", icon: "panci", category: .NOUN, isImageType: false),
@@ -369,7 +369,7 @@ class BoardManager {
                     [
                         Card(name: "makan", icon: "makan", category: .VERB, isImageType: false),
                         Card(name: "membaca", icon: "membaca", category: .VERB, isImageType: false),
-                        Card(name: "menonton", icon: "menonton", category: .VERB, isImageType: false),
+//                        Card(name: "menonton", icon: "menonton", category: .VERB, isImageType: false),
                         Card(name: "mendengar", icon: "mendengar", category: .VERB, isImageType: false),
                         Card(name: "ambil", icon: "ambil", category: .VERB, isImageType: false)
                     ],
