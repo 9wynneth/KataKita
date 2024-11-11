@@ -217,6 +217,7 @@ struct PECSView: View {
                         let validDroppedCards = droppedCards.compactMap { $0 } // Remove any nil cards
                         speakText(for: validDroppedCards)
                     }
+                    
                     Color.clear
                         .frame(height: 100)
                 }
@@ -450,9 +451,6 @@ struct PECSView: View {
             speechSynthesizer.speak(utterance)
         }
         
-        func speakText(_ text: String) {
-           
-        }
 
         func speakText(for cards: [Card]) {
             stopSpeech()
