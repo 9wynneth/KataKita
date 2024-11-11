@@ -602,6 +602,7 @@ struct AACCard: View {
             .foregroundColor(.black)
             .font(.system(size: 14))
             .lineLimit(1)
+            .minimumScaleFactor(0.5)
         }
         .frame(width: 80, height: 80)
         .background(
