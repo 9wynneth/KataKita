@@ -131,6 +131,9 @@ struct AACBoardView: View {
                 }
             }
         }
+        .onDisappear{
+            stopSpeech()
+        }
         .frame(
             maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading
         )
@@ -215,6 +218,7 @@ struct AACBoardView: View {
     }
 
     func speakText(_ text: String) {
+        stopSpeech()
         // Menggunakan NSLocalizedString untuk mendapatkan string yang dilokalkan
         let localizedText = NSLocalizedString(text, comment: "")
         // Memeriksa bahasa perangkat
@@ -228,6 +232,7 @@ struct AACBoardView: View {
     }
 
     func speakAllText(from buttons: [CardList]) {
+        stopSpeech()
         // Menggabungkan semua nama dari model Card menjadi satu teks
         var fullText = ""
         for card in buttons {
@@ -246,6 +251,13 @@ struct AACBoardView: View {
         utterance.rate = 0.5
         speechSynthesizer.speak(utterance)
     }
+    
+    private func stopSpeech() {
+            if speechSynthesizer.isSpeaking {
+                speechSynthesizer.stopSpeaking(at: .immediate)
+            }
+        }
+        
 }
 
 struct AACBoardPlusButton: View {
