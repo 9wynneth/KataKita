@@ -226,6 +226,11 @@ struct PECSView: View {
                     RoundedRectangle(cornerRadius: 30)
                         .fill(Color(hex: "ffffff", transparency: 1.0))
                 )
+                .onTapGesture {
+                    // Pass all the dropped cards directly to the speakText function
+                    let validDroppedCards = droppedCards.compactMap { $0 } // Remove any nil cards
+                    speakText(for: validDroppedCards)
+                }
                
                 CustomButton(
                     icon: "trash",
