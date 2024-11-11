@@ -67,7 +67,18 @@ struct BetterAACView: View {
     @State private var id = UUID()
 
     
-    let colors: [Color] = [Color(hex: "000000", transparency: 1.0), Color(hex: "835737", transparency: 1.0), Color(hex: "E9AE50", transparency: 1.0), Color(hex: "E54646", transparency: 1.0), Color(hex: "B378D8", transparency: 1.0), Color(hex: "EDB0DC", transparency: 1.0), Color(hex: "889AE4", transparency: 1.0), Color(hex: "B7D273", transparency: 1.0), Color(hex: "EFDB76", transparency: 1.0), Color(hex: "F2EFDE", transparency: 1.0)]
+    let colors: [Color] = [
+            Color(hex: "000000", transparency: 1.0),
+            Color(hex: "835737", transparency: 1.0),
+            Color(hex: "E9AE50", transparency: 1.0),
+            Color(hex: "E54646", transparency: 1.0),
+            Color(hex: "B378D8", transparency: 1.0),
+            Color(hex: "EDB0DC", transparency: 1.0),
+            Color(hex: "889AE4", transparency: 1.0),
+            Color(hex: "B7D273", transparency: 1.0),
+            Color(hex: "EFDB76", transparency: 1.0),
+             Color(hex: "F2EFDE", transparency: 1.0)
+        ]
     let colorNames: [Color: String] = [
         Color(hex: "000000", transparency: 1.0): "Hitam",
         Color(hex: "835737", transparency: 1.0): "Cokelat",
@@ -108,7 +119,7 @@ struct BetterAACView: View {
                                      
                                         AACCard(
                                             card,
-                                            card.isIconTypeImage ? nil : resolveIcon(for: "\(self.genderHandler(card.icon))\(card.icon)")
+                                            card.isImageType ? nil : resolveIcon(for: "\(self.genderHandler(card.icon))\(card.icon)")
                                         )
                                 }
                             }
@@ -373,8 +384,8 @@ struct BetterAACView: View {
                                     icon: "person.fill",
                                     bgColor: color,
                                     bgTransparency: 1.0,
-                                    fontColor: color,
-                                    isIconTypeImage: false
+                                    fontColor: Color(hex: "000000", transparency: 1),
+                                    isImageType: false
                                 )
                                 sharedState.selectedCards.append(
                                     cardListItem)
@@ -560,18 +571,18 @@ struct AACCard: View {
     }
     var body: some View {
         VStack {
-            if self.card.isIconTypeImage {
+            if self.card.isImageType {
                 Image(
                     uiImage: (UIImage(
                         named: self.card.icon)
                         ?? UIImage())
                 )
                 .resizable()
-                .frame(width: 50, height: 50)
+                .frame(width: 30, height: 30)
             } else if let icon = self.icon {
                 Image(icon)  // icon name is passed from the card
                     .resizable()
-                    .frame(width: 50, height: 50)
+                    .frame(width: 30, height: 30)
             } else {
                 EmptyView()
             }
@@ -581,7 +592,7 @@ struct AACCard: View {
             .font(.system(size: 14))
             .lineLimit(1)
             .minimumScaleFactor(0.5)
-            .foregroundColor(self.card.fontColor)
+            .foregroundColor(.black)
         }
         .frame(width: 80, height: 80)
         .background(

@@ -37,7 +37,7 @@ struct PECSParentView: View {
                             PECSParentCard(
                                 card,
                                 (self.width, self.height),
-                                card.isIconTypeImage ? nil : resolveIcon(for: "\(self.genderHandler(card.icon))\(card.icon)")
+                                card.isImageType ? nil : resolveIcon(for: "\(self.genderHandler(card.icon))\(card.icon)")
                             )
                             CustomButton(
                                 icon: "xmark",
@@ -126,7 +126,7 @@ struct PECSParentCard: View {
     }
     
     var body: some View {
-        if self.card.isIconTypeImage {
+        if self.card.isImageType {
             CustomIcon(
                 icon: self.card.icon,
                 text: self.card.name,
@@ -137,7 +137,7 @@ struct PECSParentCard: View {
                 iconHeight: (self.width - 20) / 3,
                 bgColor: Color(hex: card.category.getColorString(), transparency: 1),
                 bgTransparency: 0.65,
-                fontColor: Color.black,
+                fontColor: "000000",
                 fontTransparency: 1.0,
                 cornerRadius: 13
             ) {}
