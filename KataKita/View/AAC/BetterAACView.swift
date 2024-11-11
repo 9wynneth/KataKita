@@ -75,7 +75,7 @@ struct BetterAACView: View {
         Color(hex: "889AE4", transparency: 1.0),
         Color(hex: "B7D273", transparency: 1.0),
         Color(hex: "EFDB76", transparency: 1.0),
-        // Color(hex: "F2EFDE", transparency: 1.0)
+         Color(hex: "F2EFDE", transparency: 1.0)
     ]
     let colorNames: [Color: String] = [
         Color(hex: "000000", transparency: 1.0): "Hitam",
@@ -87,7 +87,7 @@ struct BetterAACView: View {
         Color(hex: "889AE4", transparency: 1.0): "Biru",
         Color(hex: "B7D273", transparency: 1.0): "Hijau",
         Color(hex: "EFDB76", transparency: 1.0): "Kuning",
-        // Color(hex: "F2EFDE", transparency: 1.0): "Putih"
+         Color(hex: "F2EFDE", transparency: 1.0): "Putih"
     ]
 
     @EnvironmentObject var sharedState: SharedState
@@ -575,13 +575,11 @@ struct AACCard: View {
                         ?? UIImage())
                 )
                 .resizable()
-                .frame(width: 30, height: 30)
-                .padding()
+                .frame(width: 50, height: 50)
             } else if let icon = self.icon {
                 Image(icon)  // icon name is passed from the card
                     .resizable()
-                    .frame(width: 30, height: 30)
-                    .padding()
+                    .frame(width: 50, height: 50)
 
             } else {
                 EmptyView()
