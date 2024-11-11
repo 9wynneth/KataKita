@@ -161,7 +161,7 @@ struct KataKitaApp: App {
                                         Step(image: resolveIcon(for: "buka buku dan alat pewarna"), description: "Buka buku dan siapkan alat pewarna"),
                                         Step(image: resolveIcon(for: "mewarnai"), description: "Mulai mewarnai tugas yang diberikan"),
                                         Step(image: resolveIcon(for: "rapikan alat dan buku"), description: "Setelah selesai, rapikan alat mewarnai"),
-                                        Step(image: resolveIcon(for: "kembaliukan ke tempat asalnya"), description: "Kembalikan peralatan pada tempatnya")
+                                        Step(image: resolveIcon(for: "kembalikan ke tempat asalnya"), description: "Kembalikan peralatan pada tempatnya")
                             ]
                         )
                     ]

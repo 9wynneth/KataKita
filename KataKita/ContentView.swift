@@ -31,6 +31,7 @@ struct ContentView: View {
             
             if self.selectedSegment == 0 {
                 BetterAACView()
+                    
             } else if self.selectedSegment == 1 {
                 PECSView()
             } else {

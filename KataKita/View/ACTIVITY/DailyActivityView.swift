@@ -565,6 +565,9 @@ struct DailyActivityView: View {
             
             
     }
+        .onDisappear{
+            stopSpeech()
+        }
        
         
     }
@@ -585,6 +588,7 @@ struct DailyActivityView: View {
     }
     
     private func speakText(_ text: String) {
+        stopSpeech()
         let localizedText = NSLocalizedString(text, comment: "")
 
         // Detect the device language
@@ -598,6 +602,12 @@ struct DailyActivityView: View {
         // Speak the text
         speechSynthesizer.speak(utterance)
     }
+    
+    private func stopSpeech() {
+            if speechSynthesizer.isSpeaking {
+                speechSynthesizer.stopSpeaking(at: .immediate)
+            }
+        }
 
     
     func resolveIcon(for iconName: String) -> String {

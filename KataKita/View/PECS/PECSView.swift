@@ -217,6 +217,7 @@ struct PECSView: View {
                         let validDroppedCards = droppedCards.compactMap { $0 } // Remove any nil cards
                         speakText(for: validDroppedCards)
                     }
+                    
                     Color.clear
                         .frame(height: 100)
                 }
@@ -405,6 +406,9 @@ struct PECSView: View {
                     }
                 }
         )
+        .onDisappear{
+            stopSpeech()
+        }
     }
 
     private func genderHandler(_ name: String) -> String {
@@ -433,6 +437,7 @@ struct PECSView: View {
     }
     
     func speakCardName(_ card: Card) {
+        stopSpeech()
             // Localize the card name
             // Menggunakan NSLocalizedString untuk mendapatkan string yang dilokalkan
             let localizedText = NSLocalizedString(card.name, comment: "")
@@ -446,11 +451,9 @@ struct PECSView: View {
             speechSynthesizer.speak(utterance)
         }
         
-        func speakText(_ text: String) {
-           
-        }
 
         func speakText(for cards: [Card]) {
+            stopSpeech()
             // Concatenate all the localized names from the Card models into a single text
             let fullText = cards.map { NSLocalizedString($0.name, comment: "Card name for speech synthesis") }.joined(separator: ", ")
 
@@ -467,6 +470,13 @@ struct PECSView: View {
             let synthesizer = AVSpeechSynthesizer()
             synthesizer.speak(utterance)
         }
+    
+    private func stopSpeech() {
+            if speechSynthesizer.isSpeaking {
+                speechSynthesizer.stopSpeaking(at: .immediate)
+            }
+        }
+        
 }
 
 struct BackgroundClearView: UIViewRepresentable {

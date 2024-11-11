@@ -513,9 +513,14 @@ struct BetterAACView: View {
         .sheet(isPresented: $showprofile) {
             SettingsView()
         }
+        .onDisappear{
+            stopSpeech()
+        }
     }
 
     func speakText(_ text: String) {
+        stopSpeech()
+
         let localizedText = NSLocalizedString(text, comment: "Text to be spoken")
         
         // Detect device language
@@ -529,6 +534,7 @@ struct BetterAACView: View {
     }
 
     func speakAllText(from buttons: [CardList]) {
+        stopSpeech()
         // Concatenate all the localized names from the Card models into a single text
         var fullText = ""
         for card in buttons {
@@ -547,7 +553,13 @@ struct BetterAACView: View {
         utterance.rate = 0.5 // Set the speech rate
         speechSynthesizer.speak(utterance)
     }
-
+    
+    private func stopSpeech() {
+            if speechSynthesizer.isSpeaking {
+                speechSynthesizer.stopSpeaking(at: .immediate)
+            }
+        }
+        
     private func genderHandler(_ name: String) -> String {
         if AllAssets.shared.genderAssets.contains(name) {
             if self.viewModel.userProfile.gender {
