@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1E2640932CE25774009AA5BC /* SheetAddActivitynSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E2640922CE25774009AA5BC /* SheetAddActivitynSequence.swift */; };
 		1E5863742CB637C00080373A /* TextHeadline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5863732CB637B90080373A /* TextHeadline.swift */; };
 		1E5863782CB63C640080373A /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5863772CB63C600080373A /* CustomButton.swift */; };
 		1E58637C2CB681130080373A /* ActivityCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E58637B2CB6810E0080373A /* ActivityCard.swift */; };
@@ -115,6 +116,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1E2640922CE25774009AA5BC /* SheetAddActivitynSequence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetAddActivitynSequence.swift; sourceTree = "<group>"; };
 		1E5863732CB637B90080373A /* TextHeadline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextHeadline.swift; sourceTree = "<group>"; };
 		1E5863772CB63C600080373A /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		1E58637B2CB6810E0080373A /* ActivityCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityCard.swift; sourceTree = "<group>"; };
@@ -357,6 +359,7 @@
 		1EA097CC2CD9B0BF00B76917 /* ACTIVITY */ = {
 			isa = PBXGroup;
 			children = (
+				1E2640922CE25774009AA5BC /* SheetAddActivitynSequence.swift */,
 				1EEC6EF12CDE642C0012965C /* SettingActivityView.swift */,
 				1E5863832CB6C0840080373A /* ActivitySequenceView.swift */,
 				DAE313002CB8375C001DD0A0 /* AddDailyActivityView.swift */,
@@ -567,6 +570,7 @@
 				1EA097D32CD9B2D900B76917 /* PECSChildView.swift in Sources */,
 				9B831C582CDAF0470065536F /* CustomIcon.swift in Sources */,
 				1EA097D12CD9B2B500B76917 /* PECSParentView.swift in Sources */,
+				1E2640932CE25774009AA5BC /* SheetAddActivitynSequence.swift in Sources */,
 				1EEC6EF02CDDC73D0012965C /* SplashScreenView.swift in Sources */,
 				DAE313052CB85677001DD0A0 /* ScheduleManager.swift in Sources */,
 				1E5863842CB6C08C0080373A /* ActivitySequenceView.swift in Sources */,
