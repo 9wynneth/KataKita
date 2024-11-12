@@ -176,12 +176,18 @@ struct CardCreateView: View {
                 Section(header: Text("Pilih Kategori")) {
                     Picker("Kategori", selection: $selectedCategory) {
                         ForEach(Category.allCases, id: \.self) { category in
-                            Text(category.rawValue)
-                                .foregroundColor(category.getColor())
-                                .tag(category)
+                            Label {
+                                Text(category.rawValue)
+                                    .foregroundColor(.primary)
+                            } icon: {
+                                Circle()
+                                    .fill(category.getColor())
+                                    .frame(width: 10, height: 10)
+                            }
+                            .tag(category)
                         }
                     }
-                    .pickerStyle(MenuPickerStyle())
+                    .pickerStyle(.inline) // Use inline or another style if needed
                 }
             }
             .onAppear {

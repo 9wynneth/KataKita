@@ -471,6 +471,28 @@ class BoardManager {
         }
     }
     
+    func updateCard(column: Int, row: Int, updatedCard: Card) {
+        guard let id = self.selectedID else { return } // Ensure there's a selected board
+        if let boardIndex = self.boards.firstIndex(where: { $0.id == id }) {
+            // Check if the specified column and row are within bounds
+            guard column >= 0 && column < self.boards[boardIndex].cards.count,
+                  row >= 0 && row < self.boards[boardIndex].cards[column].count else {
+                print("UPDATE ERROR: Invalid column or row index")
+                return
+            }
+            
+            // Update the card at the specified column and row
+            self.boards[boardIndex].cards[column][row] = updatedCard
+            
+            // Save changes to the model
+            do {
+                try self.model.save()
+            } catch {
+                print("SAVE ERROR: Unable to save updated card")
+            }
+        }
+    }
+    
     func removeCard( column: Int, row: Int) {
         guard let id = self.selectedID else { return } // clausal guard in CPP
         if let index = self.boards.firstIndex(where: { $0.id == id } ) {
