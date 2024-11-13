@@ -1,11 +1,12 @@
 import SwiftUI
 
 func filterAssets(by input: String, for gender: Bool?) -> [String] {
+    let lang = Locale.current.language.languageCode?.identifier ?? "id"
     // Determine the asset set based on device language
-    let assets = Locale.current.languageCode == "id" ? AllAssets.shared.assets : AllAssets.englishAssets
-    let girlAssets = Locale.current.languageCode == "id" ? AllAssets.girlAssets : AllAssets.girlAssets
-    let boyAssets = Locale.current.languageCode == "id" ? AllAssets.boyAssets : AllAssets.boyAssets
-    let genderAssets = AllAssets.genderAssets
+    let assets = lang == "id" ? AllAssets.shared.assets : AllAssets.shared.englishAssets
+    let girlAssets = lang == "id" ? AllAssets.shared.girlAssets : AllAssets.shared.girlAssets
+    let boyAssets = lang == "id" ? AllAssets.shared.boyAssets : AllAssets.shared.boyAssets
+    let genderAssets = AllAssets.shared.genderAssets
     if let gender = gender {
         if gender {
             // Filter for girl-specific assets with "GIRL_" prefix
@@ -40,18 +41,22 @@ struct CardCreateView: View {
     @State private var isGender = false
     @Environment(StickerImageManager.self) var stickerManager
     @Environment(OriginalImageManager.self) var originalImageManager
-
+    
     
     @Binding var navigateFromImage: Bool
     @Binding var selectedColumnIndexValue: Int
     @Binding var showAACSettings: Bool
+    
+    @State private var name = ""
+    @State private var category = Category.CORE
+    @State private var type: CardType? = nil
     
     @State private var isImageType = false
     @State private var selectedCategory: Category = .CORE
     @State private var filteredAssets: [String] = []
     @Environment(ProfileViewModel.self) private var viewModel
     @Environment(BoardManager.self) private var boardManager
-
+    
     var body: some View {
         NavigationStack {
             Form {
@@ -67,7 +72,6 @@ struct CardCreateView: View {
                 }
                 
                 HStack {
-                    
                     if let stickerURL = stickerManager.stickerImage,
                        let stickerImage = UIImage(contentsOfFile: stickerURL.path) {
                         // Display the sticker image if available
@@ -77,6 +81,10 @@ struct CardCreateView: View {
                             .frame(width: 50, height: 50)
                             .cornerRadius(20)
                             .onAppear {
+                                guard let data = stickerImage.pngData() else {
+                                    return
+                                }
+                                self.type = .image(data)
                                 isImageType = true
                                 print("STICKER")
                             }
@@ -88,8 +96,11 @@ struct CardCreateView: View {
                             .frame(width: 50, height: 50)
                             .cornerRadius(20)
                             .onAppear {
+                                guard let data = uiImage.pngData() else {
+                                    return
+                                }
+                                self.type = .image(data)
                                 isImageType = true
-                                print("ORIGINALc")
                             }
                     } else {
                         // Display icons if no image is selected
@@ -192,11 +203,11 @@ struct CardCreateView: View {
                     selectedColumnIndexValue: $selectedColumnIndexValue,
                     CardName: $textToSpeak
                 )
-//                .onDisappear {
-//                      // Reset image selection when navigating back
-//                      originalImageManager.imageFromLocal = nil
-//                      stickerManager.stickerImage = nil
-//                  }
+                //                .onDisappear {
+                //                      // Reset image selection when navigating back
+                //                      originalImageManager.imageFromLocal = nil
+                //                      stickerManager.stickerImage = nil
+                //                  }
             }
             .navigationBarItems(
                 trailing: Button(LocalizedStringKey("Selesai")) {
@@ -211,26 +222,23 @@ struct CardCreateView: View {
     
     private func handleDoneAction() {
         // Check if it's a sticker
-        if let stickerURL = stickerManager.stickerImage {
-            selectedIcon = stickerURL.path
-        } else if isImageType {
-            selectedIcon = originalImageManager.imageFromLocal?.path ?? ""
-        } else {
+        if stickerManager.stickerImage == nil && !isImageType {
             selectedIcon = textToSpeak.lowercased()
+            self.type = .icon(selectedIcon)
         }
 
         // Handle the card creation
         
         if Locale.current.languageCode == "en" {
             if viewModel.userProfile.gender == true {
-                if AllAssets.genderAssets.contains(selectedIcon.lowercased()) {
+                if AllAssets.shared.genderAssets.contains(selectedIcon.lowercased()) {
                     selectedIcon = "GIRL_" + selectedIcon.uppercased()
                 } else {
                     selectedIcon = NSLocalizedString(selectedIcon, comment: "")
                 }
             }
             else {
-                if AllAssets.genderAssets.contains(selectedIcon.lowercased()) {
+                if AllAssets.shared.genderAssets.contains(selectedIcon.lowercased()) {
                     selectedIcon = "BOY_" + selectedIcon.uppercased()
                 } else {
                     selectedIcon = NSLocalizedString(selectedIcon, comment: "")
@@ -245,14 +253,14 @@ struct CardCreateView: View {
         // Localize only when displaying in SwiftUI
         if Locale.current.languageCode == "en" {
             if viewModel.userProfile.gender == true {
-                if AllAssets.genderAssets.contains(textToSpeak.lowercased()) {
+                if AllAssets.shared.genderAssets.contains(textToSpeak.lowercased()) {
                     selectedIcon = "GIRL_" + textToSpeak.uppercased()
                 } else {
                     textToSpeak = NSLocalizedString(textToSpeak, comment: "")
                 }
             }
             else {
-                if AllAssets.genderAssets.contains(textToSpeak.lowercased()) {
+                if AllAssets.shared.genderAssets.contains(textToSpeak.lowercased()) {
                     selectedIcon = "BOY_" + textToSpeak.uppercased()
                 } else {
                     textToSpeak = NSLocalizedString(textToSpeak, comment: "")
@@ -266,8 +274,7 @@ struct CardCreateView: View {
         print("Handling done action: Icon: \(selectedIcon), Text: \(textToSpeak), Background Color: \(color)")
 
         // Add card to board
-        boardManager.addCard(Card(name: textToSpeak, icon: selectedIcon, category: selectedCategory, isImageType: isImageType), column: selectedColumnIndexValue)
-
+        boardManager.addCard(Card(name: textToSpeak, category: selectedCategory, type: self.type), column: selectedColumnIndexValue)
 
         // Reset the image state after the card has been added
         originalImageManager.imageFromLocal = nil
@@ -280,7 +287,7 @@ struct CardCreateView: View {
     private func getDisplayText(for icon: String) -> String {
         if Locale.current.languageCode == "en" {
             let localizedIcon = NSLocalizedString(icon.lowercased(), comment: "")
-            if AllAssets.genderAssets.contains(icon.lowercased()) {
+            if AllAssets.shared.genderAssets.contains(icon.lowercased()) {
                 return localizedIcon
             }
             else {
@@ -310,14 +317,14 @@ struct CardCreateView: View {
     private func getDisplayIcon(for icon: String) -> String {
         if Locale.current.languageCode == "en" {
             if viewModel.userProfile.gender == true {
-                if AllAssets.genderAssets.contains(icon.lowercased()) {
+                if AllAssets.shared.genderAssets.contains(icon.lowercased()) {
                     return "GIRL_" + icon.uppercased()
                 } else {
                     return icon
                 }
             }
             else {
-                if AllAssets.genderAssets.contains(icon.lowercased()) {
+                if AllAssets.shared.genderAssets.contains(icon.lowercased()) {
                     return "BOY_" + icon.uppercased()
                 } else {
                     return icon
@@ -327,14 +334,14 @@ struct CardCreateView: View {
         }
         else {
             if viewModel.userProfile.gender == true {
-                if AllAssets.genderAssets.contains(icon.lowercased()) {
+                if AllAssets.shared.genderAssets.contains(icon.lowercased()) {
                     return "GIRL_" + icon.uppercased()
                 } else {
                     return icon
                 }
             }
             else {
-                if AllAssets.genderAssets.contains(icon.lowercased()) {
+                if AllAssets.shared.genderAssets.contains(icon.lowercased()) {
                     return "BOY_" + icon.uppercased()
                 } else {
                     return icon
@@ -417,7 +424,7 @@ struct SearchIconsView: View {
     private func getDisplayText(for icon: String) -> String {
         if Locale.current.languageCode == "en" {
             let localizedIcon = NSLocalizedString(icon.lowercased(), comment: "")
-            if AllAssets.genderAssets.contains(icon.lowercased()) {
+            if AllAssets.shared.genderAssets.contains(icon.lowercased()) {
                 
                 return localizedIcon
             }

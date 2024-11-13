@@ -65,6 +65,8 @@
 		9B831DE62CDE86BB0065536F /* TextContentBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B831DE52CDE86BB0065536F /* TextContentBoard.swift */; };
 		DA34C3882CD333F500ADD738 /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA34C3872CD333F200ADD738 /* Board.swift */; };
 		DA34C38A2CD338FD00ADD738 /* BoardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA34C3892CD338F800ADD738 /* BoardManager.swift */; };
+		DA534F962CE3C5C600D55BAE /* Icon.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA534F952CE3C5C300D55BAE /* Icon.swift */; };
+		DA534F982CE3D67700D55BAE /* AACViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA534F972CE3D66F00D55BAE /* AACViewModel.swift */; };
 		DADB2B4D2CD3EAF20049838B /* AACBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADB2B4C2CD3EAEA0049838B /* AACBoardView.swift */; };
 		DADB2B592CD6999B0049838B /* BetterAACView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADB2B582CD699960049838B /* BetterAACView.swift */; };
 		DAE1E7822CBAF59A00F5F9D1 /* SettingActivityCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE1E7812CBAF57F00F5F9D1 /* SettingActivityCard.swift */; };
@@ -171,6 +173,8 @@
 		9B831DE52CDE86BB0065536F /* TextContentBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextContentBoard.swift; sourceTree = "<group>"; };
 		DA34C3872CD333F200ADD738 /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
 		DA34C3892CD338F800ADD738 /* BoardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardManager.swift; sourceTree = "<group>"; };
+		DA534F952CE3C5C300D55BAE /* Icon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icon.swift; sourceTree = "<group>"; };
+		DA534F972CE3D66F00D55BAE /* AACViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AACViewModel.swift; sourceTree = "<group>"; };
 		DADB2B4C2CD3EAEA0049838B /* AACBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AACBoardView.swift; sourceTree = "<group>"; };
 		DADB2B582CD699960049838B /* BetterAACView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetterAACView.swift; sourceTree = "<group>"; };
 		DAE1E7812CBAF57F00F5F9D1 /* SettingActivityCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingActivityCard.swift; sourceTree = "<group>"; };
@@ -296,6 +300,7 @@
 		1E84D8C42CB6160C0078B648 /* Component */ = {
 			isa = PBXGroup;
 			children = (
+				DA534F952CE3C5C300D55BAE /* Icon.swift */,
 				1EA095662CBE6B7D00B76917 /* TextContent.swift */,
 				DAE1E7812CBAF57F00F5F9D1 /* SettingActivityCard.swift */,
 				1E5863802CB6B9A70080373A /* CustomButtonSide.swift */,
@@ -402,6 +407,7 @@
 		DAE312F92CB833D6001DD0A0 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				DA534F972CE3D66F00D55BAE /* AACViewModel.swift */,
 				1EEC6E5D2CDCDBA20012965C /* SpeechManager.swift */,
 				1ECB573A2CD9C325009291E8 /* PECSViewModel.swift */,
 				1EA097D42CD9B34700B76917 /* SecurityManager.swift */,
@@ -576,6 +582,7 @@
 				1E5863842CB6C08C0080373A /* ActivitySequenceView.swift in Sources */,
 				1EA097D52CD9B34A00B76917 /* SecurityManager.swift in Sources */,
 				1EA095672CBE6B8500B76917 /* TextContent.swift in Sources */,
+				DA534F982CE3D67700D55BAE /* AACViewModel.swift in Sources */,
 				9B831DE22CDE82390065536F /* TextContentSearch.swift in Sources */,
 				1E84D8C82CB61AC70078B648 /* colorConverter.swift in Sources */,
 				DAE1E7942CC0474400F5F9D1 /* StateManager.swift in Sources */,
@@ -589,6 +596,7 @@
 				DAE313072CB86921001DD0A0 /* ActivitiesManager.swift in Sources */,
 				1EBBC2342CB78EF200673D97 /* DailyActivityView.swift in Sources */,
 				9B831DE62CDE86BB0065536F /* TextContentBoard.swift in Sources */,
+				DA534F962CE3C5C600D55BAE /* Icon.swift in Sources */,
 				9B831DE02CDE82270065536F /* CustomButtonSearch.swift in Sources */,
 				1E84D8972CB4D99A0078B648 /* KataKitaApp.swift in Sources */,
 				9B78DD282CBDE9C60069DBC5 /* ImageCard.swift in Sources */,

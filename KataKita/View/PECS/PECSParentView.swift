@@ -9,7 +9,7 @@ import SwiftUI
 
 struct PECSParentView: View {
     @Environment(ProfileViewModel.self) private var viewModel
-    @Binding var cards: [[Card]]
+    @Environment(PECSViewModel.self) private var pecsViewModel
     
     @State private var width: CGFloat = 0.0
     @State private var height: CGFloat = 0.0
@@ -23,21 +23,16 @@ struct PECSParentView: View {
     @State private var showDeleteAlert = false
     @State private var cardToDelete: (Int, Int)? = nil // To track which card to delete
     
-    init(_ cards: Binding<[[Card]]>) {
-        self._cards = cards
-    }
-    
     var body: some View {
         HStack(alignment: .top, spacing: 20) {
-            ForEach(Array(self.cards.enumerated()), id: \.offset) { i, column in
+            ForEach(Array(self.pecsViewModel.cards.enumerated()), id: \.offset) { i, column in
                 //rectangle
                 VStack(spacing: 10) {
                     ForEach(Array(column.enumerated()), id: \.offset) { j, card in
                         ZStack(alignment: .topTrailing) {
                             PECSParentCard(
                                 card,
-                                (self.width, self.height),
-                                card.isImageType ? nil : resolveIcon(for: "\(self.genderHandler(card.icon))\(card.icon)")
+                                (self.width, self.height)
                             )
                             CustomButton(
                                 icon: "xmark",
@@ -83,7 +78,7 @@ struct PECSParentView: View {
                 message: Text("Are you sure you want to delete this card?"),
                 primaryButton: .destructive(Text("Delete")) {
                     if let cardToDelete = self.cardToDelete {
-                        self.cards[cardToDelete.0].remove(at: cardToDelete.1)
+                        self.pecsViewModel.cards[cardToDelete.0].remove(at: cardToDelete.1)
                     }
                 },
                 secondaryButton: .cancel()
@@ -116,51 +111,49 @@ struct PECSParentCard: View {
     let card: Card
     let width: CGFloat
     let height: CGFloat
-    let icon: String?
 
-    init(_ card: Card, _ size: (CGFloat, CGFloat), _ icon: String?) {
+    init(_ card: Card, _ size: (CGFloat, CGFloat)) {
         self.card = card
         self.width = size.0
         self.height = size.1
-        self.icon = icon
     }
     
     var body: some View {
-        if self.card.isImageType {
-            CustomIcon(
-                icon: self.card.icon,
+        VStack(spacing: 0) {
+            if case let .image(data) = self.card.type {
+                Image(uiImage: UIImage(data: data) ?? UIImage())
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: (self.width - 20) / 3, height: (self.width - 20) / 3)
+            } else if case let .icon(icon) = self.card.type {
+                Icon(icon, ((self.width - 20) / 3, (self.width - 20) / 3))
+            } else {
+                Color.clear
+                    .frame(width: (self.width - 20) / 3, height: (self.width - 20) / 3)
+            }
+            
+            TextContent(
                 text: self.card.name,
-                width: self.width - 20,
-                height: (self.height - 60) / 5,
-                font: 14,
-                iconWidth: (self.width - 20) / 3,
-                iconHeight: (self.width - 20) / 3,
-                bgColor: Color(hex: card.category.getColorString(), transparency: 1),
-                bgTransparency: 0.65,
-                fontColor: "000000",
-                fontTransparency: 1.0,
-                cornerRadius: 13
-            ) {}
-        } else if let icon = self.icon {
-            CustomButton(
-                icon: icon,
-                text: self.card.name,
-                width: self.width - 20,
-                height: (self.height - 60) / 5,
-                font: 14,
-                iconWidth: Int((self.width - 20) / 3),
-                iconHeight: Int ((self.width - 20) / 3),
-                bgColor: self.card.color ?? self.card.category.getColorString(),
-                bgTransparency: 0.65,
-                fontColor: "000000",
-                fontTransparency: 1.0, cornerRadius: 13, isSystemImage: false
+                size: 14,
+                color: "000000",
+                transparency: 1,
+                weight: "medium"
             )
-        } else {
-            EmptyView()
+            .padding(.horizontal)
+            .lineLimit(1)
+            .frame(maxWidth: .infinity, alignment: .center)
         }
+        .frame(width: self.width - 20, height: (self.height - 60) / 5)
+        .background(
+            Group {
+                if case let .color(color) = self.card.type {
+                    RoundedRectangle(cornerRadius: 13)
+                        .fill(Color(hex: color, transparency: 1))
+                } else {
+                    RoundedRectangle(cornerRadius: 13)
+                        .fill(Color(hex: self.card.category.getColorString(), transparency: 1))
+                }
+            }
+        )
     }
-}
-
-#Preview {
-    PECSParentView(Binding.constant([[],[],[],[],[]]))
 }

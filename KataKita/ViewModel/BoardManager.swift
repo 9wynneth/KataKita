@@ -33,58 +33,58 @@ class BoardManager {
             Board(
                 cards: [
                     [
-                        Card(name: "saya", icon: "saya", category: .CORE, isImageType: false),
-                        Card(name: "kamu", icon: "kamu", category: .CORE, isImageType: false),
-                        Card(name: "dia", icon: "dia", category: .CORE, isImageType: false),
-                        Card(name: "kita", icon: "kita", category: .CORE, isImageType: false),
-                        Card(name: "ibu", icon: "ibu", category: .CORE, isImageType: false)
+                        Card(name: "saya", category: .CORE, type: .icon("saya")),
+                        Card(name: "kamu", category: .CORE, type: .icon("kamu")),
+                        Card(name: "dia", category: .CORE, type: .icon("dia")),
+                        Card(name: "kita", category: .CORE, type: .icon("kita")),
+                        Card(name: "ibu", category: .CORE, type: .icon("ibu"))
                     ],
                     [
-                        Card(name: "apa", icon: "apa", category: .QUESTION, isImageType: false),
-                        Card(name: "dimana", icon: "dimana", category: .QUESTION, isImageType: false),
-                        Card(name: "kapan", icon: "kapan", category: .QUESTION, isImageType: false),
-                        Card(name: "siapa", icon: "siapa", category: .QUESTION, isImageType: false),
+                        Card(name: "apa", category: .QUESTION, type: .icon("apa")),
+                        Card(name: "dimana", category: .QUESTION, type: .icon("dimana")),
+                        Card(name: "kapan", category: .QUESTION, type: .icon("kapan")),
+                        Card(name: "siapa", category: .QUESTION, type: .icon("siapa")),
                     ],
                     [
-                        Card(name: "suka", icon: "suka", category: .SOCIAL, isImageType: false),
-                        Card(name: "tidak suka", icon: "tidak suka", category: .SOCIAL, isImageType: false),
-                        Card(name: "mau", icon: "mau", category: .SOCIAL, isImageType: false),
-                        Card(name: "tidak mau", icon: "tidak mau", category: .SOCIAL, isImageType: false),
-                        Card(name: "tolong", icon: "tolong", category: .SOCIAL, isImageType: false)
+                        Card(name: "suka", category: .SOCIAL, type: .icon("suka")),
+                        Card(name: "tidak suka", category: .SOCIAL, type: .icon("tidak suka")),
+                        Card(name: "mau", category: .SOCIAL, type: .icon("mau")),
+                        Card(name: "tidak mau", category: .SOCIAL, type: .icon("tidak mau")),
+                        Card(name: "tolong", category: .SOCIAL, type: .icon("tolong"))
                     ],
                     [
-                        Card(name: "makan", icon: "makan", category: .VERB, isImageType: false),
-                        Card(name: "minum", icon: "minum", category: .VERB, isImageType: false),
-                        Card(name: "putar", icon: "putar", category: .VERB, isImageType: false),
-                        Card(name: "buka", icon: "buka", category: .VERB, isImageType: false),
-                        Card(name: "tutup", icon: "tutup", category: .VERB, isImageType: false)
+                        Card(name: "makan", category: .VERB, type: .icon("makan")),
+                        Card(name: "minum", category: .VERB, type: .icon("minum")),
+                        Card(name: "putar", category: .VERB, type: .icon("putar")),
+                        Card(name: "buka", category: .VERB, type: .icon("buka")),
+                        Card(name: "tutup", category: .VERB, type: .icon("tutup"))
                     ],
                     [
-                        Card(name: "ambil", icon: "ambil", category: .VERB, isImageType: false),
-                        Card(name: "kunyah", icon: "mengunyah", category: .VERB, isImageType: false),
-                        Card(name: "potong", icon: "memotong", category: .VERB, isImageType: false),
-                        Card(name: "buang", icon: "buang", category: .VERB, isImageType: false),
-                        Card(name: "masukkan", icon: "MASUK", category: .VERB, isImageType: false)
+                        Card(name: "ambil", category: .VERB, type: .icon("ambil")),
+                        Card(name: "kunyah", category: .VERB, type: .icon("mengunyah")),
+                        Card(name: "potong", category: .VERB, type: .icon("memotong")),
+                        Card(name: "buang", category: .VERB, type: .icon("buang")),
+                        Card(name: "masukkan", category: .VERB, type: .icon("MASUK"))
                     ],
                     [
-                        Card(name: "dingin", icon: "dingin", category: .ADJECTIVE, isImageType: false),
-                        Card(name: "panas", icon: "panas", category: .ADJECTIVE, isImageType: false),
-                        Card(name: "asin", icon: "asin", category: .ADJECTIVE, isImageType: false),
-                        Card(name: "manis", icon: "manis", category: .ADJECTIVE, isImageType: false)
+                        Card(name: "dingin", category: .ADJECTIVE, type: .icon("dingin")),
+                        Card(name: "panas", category: .ADJECTIVE, type: .icon("panas")),
+                        Card(name: "asin", category: .ADJECTIVE, type: .icon("asin")),
+                        Card(name: "manis", category: .ADJECTIVE, type: .icon("manis"))
                     ],
                     [
-                        Card(name: "sendok", icon: "sendok", category: .NOUN, isImageType: false),
-                        Card(name: "garpu", icon: "garpu", category: .NOUN, isImageType: false),
-                        Card(name: "piring", icon: "piring", category: .NOUN, isImageType: false),
-                        Card(name: "mangkok", icon: "sup", category: .NOUN, isImageType: false),
-                        Card(name: "air", icon: "gelas", category: .NOUN, isImageType: false)
+                        Card(name: "sendok", category: .NOUN, type: .icon("sendok")),
+                        Card(name: "garpu", category: .NOUN, type: .icon("garpu")),
+                        Card(name: "piring", category: .NOUN, type: .icon("piring")),
+                        Card(name: "mangkok", category: .NOUN, type: .icon("sup")),
+                        Card(name: "air", category: .NOUN, type: .icon("gelas"))
                     ],
                     [
-                        Card(name: "ayam goreng", icon: "ayam goreng", category: .NOUN, isImageType: false),
-                        Card(name: "nasi", icon: "nasi", category: .NOUN, isImageType: false),
-                        Card(name: "mie", icon: "mie", category: .NOUN, isImageType: false),
-                        Card(name: "susu", icon: "susu", category: .NOUN, isImageType: false),
-                        Card(name: "teh", icon: "teh", category: .NOUN, isImageType: false)
+                        Card(name: "ayam goreng", category: .NOUN, type: .icon("ayam goreng")),
+                        Card(name: "nasi", category: .NOUN, type: .icon("nasi")),
+                        Card(name: "mie", category: .NOUN, type: .icon("mie")),
+                        Card(name: "susu", category: .NOUN, type: .icon("susu")),
+                        Card(name: "teh", category: .NOUN, type: .icon("teh"))
                     ]
                     
                 ],
@@ -95,61 +95,61 @@ class BoardManager {
             Board(
                 cards: [
                     [
-                        Card(name: "saya", icon: "saya", category: .CORE, isImageType: false),
-                        Card(name: "kamu", icon: "kamu", category: .CORE, isImageType: false),
-                        Card(name: "dia", icon: "dia", category: .CORE, isImageType: false),
-                        Card(name: "kita", icon: "kita", category: .CORE, isImageType: false),
-                        Card(name: "ibu", icon: "ibu", category: .CORE, isImageType: false)
+                        Card(name: "saya", category: .CORE, type: .icon("saya")),
+                        Card(name: "kamu", category: .CORE, type: .icon("kamu")),
+                        Card(name: "dia", category: .CORE, type: .icon("dia")),
+                        Card(name: "kita", category: .CORE, type: .icon("kita")),
+                        Card(name: "ibu", category: .CORE, type: .icon("ibu"))
                     ],
                     [
-                        Card(name: "apa", icon: "apa", category: .QUESTION, isImageType: false),
-                        Card(name: "dimana", icon: "dimana", category: .QUESTION, isImageType: false),
-                        Card(name: "kapan", icon: "kapan", category: .QUESTION, isImageType: false),
-                        Card(name: "siapa", icon: "siapa", category: .QUESTION, isImageType: false),
+                        Card(name: "apa", category: .QUESTION, type: .icon("apa")),
+                        Card(name: "dimana", category: .QUESTION, type: .icon("dimana")),
+                        Card(name: "kapan", category: .QUESTION, type: .icon("kapan")),
+                        Card(name: "siapa", category: .QUESTION, type: .icon("siapa")),
                     ],
                     [
-                        Card(name: "mau", icon: "mau", category: .SOCIAL, isImageType: false),
-                        Card(name: "suka", icon: "suka", category: .SOCIAL, isImageType: false),
-                        Card(name: "iya", icon: "iya", category: .SOCIAL, isImageType: false),
-                        Card(name: "tidak", icon: "tidak", category: .SOCIAL, isImageType: false),
-                        Card(name: "tolong", icon: "tolong", category: .SOCIAL, isImageType: false)
+                        Card(name: "mau", category: .SOCIAL, type: .icon("mau")),
+                        Card(name: "suka", category: .SOCIAL, type: .icon("suka")),
+                        Card(name: "iya", category: .SOCIAL, type: .icon("iya")),
+                        Card(name: "tidak", category: .SOCIAL, type: .icon("tidak")),
+                        Card(name: "tolong", category: .SOCIAL, type: .icon("tolong"))
                     ],
                     [
-                        Card(name: "menulis", icon: "menulis", category: .VERB, isImageType: false),
-                        Card(name: "membaca", icon: "membaca", category: .VERB, isImageType: false),
-                        Card(name: "menggambar", icon: "menggambar", category: .VERB, isImageType: false),
-                        Card(name: "mewarnai", icon: "mewarnai", category: .VERB, isImageType: false),
-                        Card(name: "menggunting", icon: "menggunting", category: .VERB, isImageType: false)
+                        Card(name: "menulis", category: .VERB, type: .icon("menulis")),
+                        Card(name: "membaca", category: .VERB, type: .icon("membaca")),
+                        Card(name: "menggambar", category: .VERB, type: .icon("menggambar")),
+                        Card(name: "mewarnai", category: .VERB, type: .icon("mewarnai")),
+                        Card(name: "menggunting", category: .VERB, type: .icon("menggunting"))
                     ],
                     [
-                        Card(name: "berat", icon: "berat", category: .ADJECTIVE, isImageType: false),
-                        Card(name: "besar", icon: "besar", category: .ADJECTIVE, isImageType: false),
-                        Card(name: "kecil", icon: "kecil", category: .ADJECTIVE, isImageType: false),
-                        Card(name: "panas", icon: "panas", category: .ADJECTIVE, isImageType: false),
-                        Card(name: "dingin", icon: "dingin", category: .ADJECTIVE, isImageType: false)
+                        Card(name: "berat", category: .ADJECTIVE, type: .icon("berat")),
+                        Card(name: "besar", category: .ADJECTIVE, type: .icon("besar")),
+                        Card(name: "kecil", category: .ADJECTIVE, type: .icon("kecil")),
+                        Card(name: "panas", category: .ADJECTIVE, type: .icon("panas")),
+                        Card(name: "dingin", category: .ADJECTIVE, type: .icon("dingin"))
 
                     ],
                     [
-                        Card(name: "kertas", icon: "kertas", category: .NOUN, isImageType: false),
-                        Card(name: "buku", icon: "buku", category: .NOUN, isImageType: false),
-                        Card(name: "pensil", icon: "pensil", category: .NOUN, isImageType: false),
-                        Card(name: "rautan", icon: "rautan", category: .NOUN, isImageType: false),
-                        Card(name: "crayon", icon: "crayon", category: .NOUN, isImageType: false)
+                        Card(name: "kertas", category: .NOUN, type: .icon("kertas")),
+                        Card(name: "buku", category: .NOUN, type: .icon("buku")),
+                        Card(name: "pensil", category: .NOUN, type: .icon("pensil")),
+                        Card(name: "rautan", category: .NOUN, type: .icon("rautan")),
+                        Card(name: "crayon", category: .NOUN, type: .icon("crayon"))
                         
                     ],
                     [
-                        Card(name: "kursi", icon: "kursi", category: .NOUN, isImageType: false),
-                        Card(name: "meja", icon: "meja", category: .NOUN, isImageType: false),
-                        Card(name: "tong sampah", icon: "tong sampah", category: .NOUN, isImageType: false),
-                        Card(name: "lem", icon: "lem", category: .NOUN, isImageType: false),
-                        Card(name: "gunting", icon: "gunting", category: .NOUN, isImageType: false),
+                        Card(name: "kursi", category: .NOUN, type: .icon("kursi")),
+                        Card(name: "meja", category: .NOUN, type: .icon("meja")),
+                        Card(name: "tong sampah", category: .NOUN, type: .icon("tong sampah")),
+                        Card(name: "lem", category: .NOUN, type: .icon("lem")),
+                        Card(name: "gunting", category: .NOUN, type: .icon("gunting")),
                     ],
                     [
-                        Card(name: "di dalam", icon: "di dalam", category: .CONJUNCTION, isImageType: false),
-                        Card(name: "di luar", icon: "di luar", category: .CONJUNCTION, isImageType: false),
-                        Card(name: "di atas", icon: "di atas", category: .CONJUNCTION, isImageType: false),
-                        Card(name: "di bawah", icon: "di bawah", category: .CONJUNCTION, isImageType: false),
-                        Card(name: "di samping", icon: "di samping", category: .CONJUNCTION, isImageType: false),
+                        Card(name: "di dalam", category: .CONJUNCTION, type: .icon("di dalam")),
+                        Card(name: "di luar", category: .CONJUNCTION, type: .icon("di luar")),
+                        Card(name: "di atas", category: .CONJUNCTION, type: .icon("di atas")),
+                        Card(name: "di bawah", category: .CONJUNCTION, type: .icon("di bawah")),
+                        Card(name: "di samping", category: .CONJUNCTION, type: .icon("di samping")),
                     ]
                 ],
                 name: "Ruang Belajar",
@@ -159,58 +159,58 @@ class BoardManager {
             Board(
                 cards: [
                     [
-                        Card(name: "saya", icon: "saya", category: .CORE, isImageType: false),
-                        Card(name: "kamu", icon: "kamu", category: .CORE, isImageType: false),
-                        Card(name: "dia", icon: "dia", category: .CORE, isImageType: false),
-                        Card(name: "kita", icon: "kita", category: .CORE, isImageType: false),
-                        Card(name: "ibu", icon: "ibu", category: .CORE, isImageType: false)
+                        Card(name: "saya", category: .CORE, type: .icon("saya")),
+                        Card(name: "kamu", category: .CORE, type: .icon("kamu")),
+                        Card(name: "dia", category: .CORE, type: .icon("dia")),
+                        Card(name: "kita", category: .CORE, type: .icon("kita")),
+                        Card(name: "ibu", category: .CORE, type: .icon("ibu"))
                     ],
                     [
-                        Card(name: "apa", icon: "apa", category: .QUESTION, isImageType: false),
-                        Card(name: "dimana", icon: "dimana", category: .QUESTION, isImageType: false),
-                        Card(name: "kapan", icon: "kapan", category: .QUESTION, isImageType: false),
-                        Card(name: "siapa", icon: "siapa", category: .QUESTION, isImageType: false),
+                        Card(name: "apa", category: .QUESTION, type: .icon("apa")),
+                        Card(name: "dimana", category: .QUESTION, type: .icon("dimana")),
+                        Card(name: "kapan", category: .QUESTION, type: .icon("kapan")),
+                        Card(name: "siapa", category: .QUESTION, type: .icon("siapa")),
                     ],
                     [
-                        Card(name: "mau", icon: "mau", category: .SOCIAL, isImageType: false),
-                        Card(name: "suka", icon: "suka", category: .SOCIAL, isImageType: false),
-                        Card(name: "iya", icon: "iya", category: .SOCIAL, isImageType: false),
-                        Card(name: "tidak", icon: "tidak", category: .SOCIAL, isImageType: false),
-                        Card(name: "tolong", icon: "tolong", category: .SOCIAL, isImageType: false)
+                        Card(name: "mau", category: .SOCIAL, type: .icon("mau")),
+                        Card(name: "suka", category: .SOCIAL, type: .icon("suka")),
+                        Card(name: "iya", category: .SOCIAL, type: .icon("iya")),
+                        Card(name: "tidak", category: .SOCIAL, type: .icon("tidak")),
+                        Card(name: "tolong", category: .SOCIAL, type: .icon("tolong"))
                     ],
                     [
-                        Card(name: "toilet", icon: "toilet", category: .VERB, isImageType: false),
-                        Card(name: "mandi", icon: "mandi", category: .VERB, isImageType: false),
-                        Card(name: "menyikat gigi", icon: "menyikat gigi", category: .VERB, isImageType: false),
-                        Card(name: "cuci tangan", icon: "cuci tangan", category: .VERB, isImageType: false),
-                        Card(name: "ambil", icon: "ambil", category: .VERB, isImageType: false)
+                        Card(name: "toilet", category: .VERB, type: .icon("toilet")),
+                        Card(name: "mandi", category: .VERB, type: .icon("mandi")),
+                        Card(name: "menyikat gigi", category: .VERB, type: .icon("menyikat gigi")),
+                        Card(name: "cuci tangan", category: .VERB, type: .icon("cuci tangan")),
+                        Card(name: "ambil", category: .VERB, type: .icon("ambil"))
                     ],
                     [
-                        Card(name: "keras", icon: "keras", category: .ADJECTIVE, isImageType: false),
-                        Card(name: "berat", icon: "berat", category: .ADJECTIVE, isImageType: false),
-                        Card(name: "panas", icon: "panas", category: .ADJECTIVE, isImageType: false),
-                        Card(name: "dingin", icon: "dingin", category: .ADJECTIVE, isImageType: false)
+                        Card(name: "keras", category: .ADJECTIVE, type: .icon("keras")),
+                        Card(name: "berat", category: .ADJECTIVE, type: .icon("berat")),
+                        Card(name: "panas", category: .ADJECTIVE, type: .icon("panas")),
+                        Card(name: "dingin", category: .ADJECTIVE, type: .icon("dingin"))
 
                     ],
                     [
-                        Card(name: "sampo", icon: "shampo", category: .NOUN, isImageType: false),
-                        Card(name: "sabun", icon: "sabun", category: .NOUN, isImageType: false),
-                        Card(name: "pasta gigi", icon: "pasta gigi", category: .NOUN, isImageType: false),
-                        Card(name: "sikat gigi", icon: "sikat gigi", category: .NOUN, isImageType: false),
-                        Card(name: "handuk", icon: "handuk", category: .NOUN, isImageType: false)
+                        Card(name: "sampo", category: .NOUN, type: .icon("shampo")),
+                        Card(name: "sabun", category: .NOUN, type: .icon("sabun")),
+                        Card(name: "pasta gigi", category: .NOUN, type: .icon("pasta gigi")),
+                        Card(name: "sikat gigi", category: .NOUN, type: .icon("sikat gigi")),
+                        Card(name: "handuk", category: .NOUN, type: .icon("handuk"))
                         
                     ],
                     [
-                        Card(name: "baju", icon: "baju", category: .NOUN, isImageType: false),
-                        Card(name: "celana pendek", icon: "celana pendek", category: .NOUN, isImageType: false),
-                        Card(name: "air", icon: "air", category: .NOUN, isImageType: false),
-                        Card(name: "gelas", icon: "gelas", category: .NOUN, isImageType: false),
-                        Card(name: "lemari", icon: "lemari", category: .NOUN, isImageType: false),
+                        Card(name: "baju", category: .NOUN, type: .icon("baju")),
+                        Card(name: "celana pendek", category: .NOUN, type: .icon("celana pendek")),
+                        Card(name: "air", category: .NOUN, type: .icon("air")),
+                        Card(name: "gelas", category: .NOUN, type: .icon("gelas")),
+                        Card(name: "lemari", category: .NOUN, type: .icon("lemari")),
                     ],
                     [
-                        Card(name: "di", icon: "di", category: .CONJUNCTION, isImageType: false),
-                        Card(name: "ke", icon: "ke", category: .CONJUNCTION, isImageType: false),
-                        Card(name: "dan", icon: "dan", category: .CONJUNCTION, isImageType: false),
+                        Card(name: "di", category: .CONJUNCTION, type: .icon("di")),
+                        Card(name: "ke", category: .CONJUNCTION, type: .icon("ke")),
+                        Card(name: "dan", category: .CONJUNCTION, type: .icon("dan")),
                     ]
                 ],
                 name: "Kamar Mandi",
@@ -220,62 +220,62 @@ class BoardManager {
             Board(
                 cards: [
                     [
-                        Card(name: "saya", icon: "saya", category: .CORE, isImageType: false),
-                        Card(name: "kamu", icon: "kamu", category: .CORE, isImageType: false),
-                        Card(name: "dia", icon: "dia", category: .CORE, isImageType: false),
-                        Card(name: "kita", icon: "kita", category: .CORE, isImageType: false),
-                        Card(name: "ibu", icon: "ibu", category: .CORE, isImageType: false)
+                        Card(name: "saya", category: .CORE, type: .icon("saya")),
+                        Card(name: "kamu", category: .CORE, type: .icon("kamu")),
+                        Card(name: "dia", category: .CORE, type: .icon("dia")),
+                        Card(name: "kita", category: .CORE, type: .icon("kita")),
+                        Card(name: "ibu", category: .CORE, type: .icon("ibu"))
                     ],
                     [
-                        Card(name: "apa", icon: "apa", category: .QUESTION, isImageType: false),
-                        Card(name: "dimana", icon: "dimana", category: .QUESTION, isImageType: false),
-                        Card(name: "kapan", icon: "kapan", category: .QUESTION, isImageType: false),
-                        Card(name: "siapa", icon: "siapa", category: .QUESTION, isImageType: false),
+                        Card(name: "apa", category: .QUESTION, type: .icon("apa")),
+                        Card(name: "dimana", category: .QUESTION, type: .icon("dimana")),
+                        Card(name: "kapan", category: .QUESTION, type: .icon("kapan")),
+                        Card(name: "siapa", category: .QUESTION, type: .icon("siapa")),
                     ],
                     [
-                        Card(name: "mau", icon: "mau", category: .SOCIAL, isImageType: false),
-                        Card(name: "tidak mau", icon: "tidak mau", category: .SOCIAL, isImageType: false),
-                        Card(name: "iya", icon: "iya", category: .SOCIAL, isImageType: false),
-                        Card(name: "tidak", icon: "tidak", category: .SOCIAL, isImageType: false),
-                        Card(name: "tolong", icon: "tolong", category: .SOCIAL, isImageType: false)
+                        Card(name: "mau", category: .SOCIAL, type: .icon("mau")),
+                        Card(name: "tidak mau", category: .SOCIAL, type: .icon("tidak mau")),
+                        Card(name: "iya", category: .SOCIAL, type: .icon("iya")),
+                        Card(name: "tidak", category: .SOCIAL, type: .icon("tidak")),
+                        Card(name: "tolong", category: .SOCIAL, type: .icon("tolong"))
                     ],
                     [
-                        Card(name: "tidur", icon: "kasur", category: .VERB, isImageType: false),
-//                        Card(name: "mengantuk", icon: "mengantuk", category: .VERB, isImageType: false),
-                        Card(name: "mendengar", icon: "mendengar", category: .VERB, isImageType: false),
-                        Card(name: "membaca", icon: "membaca", category: .VERB, isImageType: false),
-//                        Card(name: "ganti baju", icon: "ganti baju", category: .VERB, isImageType: false)
+                        Card(name: "tidur", category: .VERB, type: .icon("kasur")),
+    //                        Card(name: "mengantuk", category: .VERB, type: .icon("mengantuk")),
+                        Card(name: "mendengar", category: .VERB, type: .icon("mendengar")),
+                        Card(name: "membaca", category: .VERB, type: .icon("membaca")),
+    //                        Card(name: "ganti baju", category: .VERB, type: .icon("ganti baju"))
                     ],
                     [
-                        Card(name: "toilet", icon: "toilet", category: .VERB, isImageType: false),
-                        Card(name: "mandi", icon: "mandi", category: .VERB, isImageType: false),
-                        Card(name: "minum", icon: "minum", category: .VERB, isImageType: false),
-                        Card(name: "sakit", icon: "sakit", category: .VERB, isImageType: false),
-                        Card(name: "gatal", icon: "gatal", category: .VERB, isImageType: false),
+                        Card(name: "toilet", category: .VERB, type: .icon("toilet")),
+                        Card(name: "mandi", category: .VERB, type: .icon("mandi")),
+                        Card(name: "minum", category: .VERB, type: .icon("minum")),
+                        Card(name: "sakit", category: .VERB, type: .icon("sakit")),
+                        Card(name: "gatal", category: .VERB, type: .icon("gatal")),
 
 
 
                     ],
                     [
-                        Card(name: "gelap", icon: "gelap", category: .ADJECTIVE, isImageType: false),
-                        Card(name: "terang", icon: "terang", category: .ADJECTIVE, isImageType: false),
-                        Card(name: "panas", icon: "panas", category: .ADJECTIVE, isImageType: false),
-                        Card(name: "dingin", icon: "dingin", category: .ADJECTIVE, isImageType: false)
+                        Card(name: "gelap", category: .ADJECTIVE, type: .icon("gelap")),
+                        Card(name: "terang", category: .ADJECTIVE, type: .icon("terang")),
+                        Card(name: "panas", category: .ADJECTIVE, type: .icon("panas")),
+                        Card(name: "dingin", category: .ADJECTIVE, type: .icon("dingin"))
 
                     ],
                     [
-                        Card(name: "tempat tidur", icon: "kasur", category: .NOUN, isImageType: false),
-                        Card(name: "bantal", icon: "bantal", category: .NOUN, isImageType: false),
-//                        Card(name: "guling", icon: "guling", category: .NOUN, isImageType: false),
-//                        Card(name: "selimut", icon: "selimut", category: .NOUN, isImageType: false),
-//                        Card(name: "buku cerita", icon: "buku cerita", category: .NOUN, isImageType: false),
+                        Card(name: "tempat tidur", category: .NOUN, type: .icon("kasur")),
+                        Card(name: "bantal", category: .NOUN, type: .icon("bantal")),
+    //                        Card(name: "guling", category: .NOUN, type: .icon("guling")),
+    //                        Card(name: "selimut", category: .NOUN, type: .icon("selimut")),
+    //                        Card(name: "buku cerita", category: .NOUN, type: .icon("buku cerita")),
                     ],
                     [
-                        Card(name: "meja", icon: "meja", category: .NOUN, isImageType: false),
-                        Card(name: "kursi", icon: "kursi", category: .NOUN, isImageType: false),
-                        Card(name: "lampu", icon: "lampu", category: .NOUN, isImageType: false),
-                        Card(name: "jam", icon: "jam", category: .NOUN, isImageType: false),
-                        Card(name: "lemari", icon: "lemari", category: .NOUN, isImageType: false),
+                        Card(name: "meja", category: .NOUN, type: .icon("meja")),
+                        Card(name: "kursi", category: .NOUN, type: .icon("kursi")),
+                        Card(name: "lampu", category: .NOUN, type: .icon("lampu")),
+                        Card(name: "jam", category: .NOUN, type: .icon("jam")),
+                        Card(name: "lemari", category: .NOUN, type: .icon("lemari")),
                     ]
                 ],
                 name: "Kamar Tidur",
@@ -285,59 +285,59 @@ class BoardManager {
             Board(
                 cards: [
                     [
-                        Card(name: "saya", icon: "saya", category: .CORE, isImageType: false),
-                        Card(name: "kamu", icon: "kamu", category: .CORE, isImageType: false),
-                        Card(name: "dia", icon: "dia", category: .CORE, isImageType: false),
-                        Card(name: "kita", icon: "kita", category: .CORE, isImageType: false),
-                        Card(name: "ibu", icon: "ibu", category: .CORE, isImageType: false)
+                        Card(name: "saya", category: .CORE, type: .icon("saya")),
+                        Card(name: "kamu", category: .CORE, type: .icon("kamu")),
+                        Card(name: "dia", category: .CORE, type: .icon("dia")),
+                        Card(name: "kita", category: .CORE, type: .icon("kita")),
+                        Card(name: "ibu", category: .CORE, type: .icon("ibu"))
                     ],
                     [
-                        Card(name: "apa", icon: "apa", category: .QUESTION, isImageType: false),
-                        Card(name: "dimana", icon: "dimana", category: .QUESTION, isImageType: false),
-                        Card(name: "kapan", icon: "kapan", category: .QUESTION, isImageType: false),
-                        Card(name: "siapa", icon: "siapa", category: .QUESTION, isImageType: false),
+                        Card(name: "apa", category: .QUESTION, type: .icon("apa")),
+                        Card(name: "dimana", category: .QUESTION, type: .icon("dimana")),
+                        Card(name: "kapan", category: .QUESTION, type: .icon("kapan")),
+                        Card(name: "siapa", category: .QUESTION, type: .icon("siapa")),
                     ],
                     [
-                        Card(name: "suka", icon: "suka", category: .SOCIAL, isImageType: false),
-                        Card(name: "tidak suka", icon: "tidak suka", category: .SOCIAL, isImageType: false),
-                        Card(name: "iya", icon: "iya", category: .SOCIAL, isImageType: false),
-                        Card(name: "tidak", icon: "tidak", category: .SOCIAL, isImageType: false),
-                        Card(name: "tolong", icon: "tolong", category: .SOCIAL, isImageType: false)
+                        Card(name: "suka", category: .SOCIAL, type: .icon("suka")),
+                        Card(name: "tidak suka", category: .SOCIAL, type: .icon("tidak suka")),
+                        Card(name: "iya", category: .SOCIAL, type: .icon("iya")),
+                        Card(name: "tidak", category: .SOCIAL, type: .icon("tidak")),
+                        Card(name: "tolong", category: .SOCIAL, type: .icon("tolong"))
                     ],
                     [
-                        Card(name: "cuci piring", icon: "cuci piring", category: .VERB, isImageType: false),
-                        Card(name: "potong", icon: "memotong", category: .VERB, isImageType: false),
-                        Card(name: "masak", icon: "wajan", category: .VERB, isImageType: false),
-                        Card(name: "buka", icon: "buka", category: .VERB, isImageType: false),
-                        Card(name: "tutup", icon: "tutup", category: .VERB, isImageType: false)
+                        Card(name: "cuci piring", category: .VERB, type: .icon("cuci piring")),
+                        Card(name: "potong", category: .VERB, type: .icon("memotong")),
+                        Card(name: "masak", category: .VERB, type: .icon("wajan")),
+                        Card(name: "buka", category: .VERB, type: .icon("buka")),
+                        Card(name: "tutup", category: .VERB, type: .icon("tutup"))
                     ],
                     [
-                        Card(name: "masukkan", icon: "MASUK", category: .VERB, isImageType: false),
-                        Card(name: "ambil", icon: "ambil", category: .VERB, isImageType: false),
-//                        Card(name: "aduk", icon: "aduk", category: .VERB, isImageType: false),
-                        Card(name: "buang", icon: "buang", category: .VERB, isImageType: false),
+                        Card(name: "masukkan", category: .VERB, type: .icon("MASUK")),
+                        Card(name: "ambil", category: .VERB, type: .icon("ambil")),
+    //                        Card(name: "aduk", category: .VERB, type: .icon("aduk")),
+                        Card(name: "buang", category: .VERB, type: .icon("buang")),
 
 
                     ],
                     [
-                        Card(name: "asin", icon: "asin", category: .ADJECTIVE, isImageType: false),
-                        Card(name: "manis", icon: "manis", category: .ADJECTIVE, isImageType: false),
-                        Card(name: "selesai", icon: "selesai", category: .ADJECTIVE, isImageType: false),
-                        Card(name: "panas", icon: "panas", category: .ADJECTIVE, isImageType: false),
-                        Card(name: "dingin", icon: "dingin", category: .ADJECTIVE, isImageType: false)
+                        Card(name: "asin", category: .ADJECTIVE, type: .icon("asin")),
+                        Card(name: "manis", category: .ADJECTIVE, type: .icon("manis")),
+                        Card(name: "selesai", category: .ADJECTIVE, type: .icon("selesai")),
+                        Card(name: "panas", category: .ADJECTIVE, type: .icon("panas")),
+                        Card(name: "dingin", category: .ADJECTIVE, type: .icon("dingin"))
 
                     ],
                     [
-//                        Card(name: "pisau", icon: "pisau", category: .NOUN, isImageType: false),
-//                        Card(name: "talenan", icon: "talenan", category: .NOUN, isImageType: false),
-                        Card(name: "keran", icon: "keran", category: .NOUN, isImageType: false),
-                        Card(name: "kompor", icon: "kompor", category: .NOUN, isImageType: false),
-                        Card(name: "panci", icon: "panci", category: .NOUN, isImageType: false),
+    //                        Card(name: "pisau", category: .NOUN, type: .icon("pisau")),
+    //                        Card(name: "talenan", category: .NOUN, type: .icon("talenan")),
+                        Card(name: "keran", category: .NOUN, type: .icon("keran")),
+                        Card(name: "kompor", category: .NOUN, type: .icon("kompor")),
+                        Card(name: "panci", category: .NOUN, type: .icon("panci")),
                     ],
                     [
-                        Card(name: "sendok", icon: "sendok", category: .NOUN, isImageType: false),
-                        Card(name: "garpu", icon: "garpu", category: .NOUN, isImageType: false),
-                        Card(name: "piring", icon: "piring", category: .NOUN, isImageType: false)
+                        Card(name: "sendok", category: .NOUN, type: .icon("sendok")),
+                        Card(name: "garpu", category: .NOUN, type: .icon("garpu")),
+                        Card(name: "piring", category: .NOUN, type: .icon("piring"))
                     ]
                 ],
                 name: "Dapur",
@@ -347,59 +347,59 @@ class BoardManager {
             Board(
                 cards: [
                     [
-                        Card(name: "saya", icon: "saya", category: .CORE, isImageType: false),
-                        Card(name: "kamu", icon: "kamu", category: .CORE, isImageType: false),
-                        Card(name: "dia", icon: "dia", category: .CORE, isImageType: false),
-                        Card(name: "kita", icon: "kita", category: .CORE, isImageType: false),
-                        Card(name: "ibu", icon: "ibu", category: .CORE, isImageType: false)
+                        Card(name: "saya", category: .CORE, type: .icon("saya")),
+                        Card(name: "kamu", category: .CORE, type: .icon("kamu")),
+                        Card(name: "dia", category: .CORE, type: .icon("dia")),
+                        Card(name: "kita", category: .CORE, type: .icon("kita")),
+                        Card(name: "ibu", category: .CORE, type: .icon("ibu"))
                     ],
                     [
-                        Card(name: "apa", icon: "apa", category: .QUESTION, isImageType: false),
-                        Card(name: "dimana", icon: "dimana", category: .QUESTION, isImageType: false),
-                        Card(name: "kapan", icon: "kapan", category: .QUESTION, isImageType: false),
-                        Card(name: "siapa", icon: "siapa", category: .QUESTION, isImageType: false),
+                        Card(name: "apa", category: .QUESTION, type: .icon("apa")),
+                        Card(name: "dimana", category: .QUESTION, type: .icon("dimana")),
+                        Card(name: "kapan", category: .QUESTION, type: .icon("kapan")),
+                        Card(name: "siapa", category: .QUESTION, type: .icon("siapa")),
                     ],
                     [
-                        Card(name: "suka", icon: "suka", category: .SOCIAL, isImageType: false),
-                        Card(name: "tidak suka", icon: "tidak suka", category: .SOCIAL, isImageType: false),
-                        Card(name: "iya", icon: "iya", category: .SOCIAL, isImageType: false),
-                        Card(name: "tidak", icon: "tidak", category: .SOCIAL, isImageType: false),
-                        Card(name: "tolong", icon: "tolong", category: .SOCIAL, isImageType: false)
+                        Card(name: "suka", category: .SOCIAL, type: .icon("suka")),
+                        Card(name: "tidak suka", category: .SOCIAL, type: .icon("tidak suka")),
+                        Card(name: "iya", category: .SOCIAL, type: .icon("iya")),
+                        Card(name: "tidak", category: .SOCIAL, type: .icon("tidak")),
+                        Card(name: "tolong", category: .SOCIAL, type: .icon("tolong"))
                     ],
                     [
-                        Card(name: "makan", icon: "makan", category: .VERB, isImageType: false),
-                        Card(name: "membaca", icon: "membaca", category: .VERB, isImageType: false),
-//                        Card(name: "menonton", icon: "menonton", category: .VERB, isImageType: false),
-                        Card(name: "mendengar", icon: "mendengar", category: .VERB, isImageType: false),
-                        Card(name: "ambil", icon: "ambil", category: .VERB, isImageType: false)
+                        Card(name: "makan", category: .VERB, type: .icon("makan")),
+                        Card(name: "membaca", category: .VERB, type: .icon("membaca")),
+    //                        Card(name: "menonton", category: .VERB, type: .icon("menonton")),
+                        Card(name: "mendengar", category: .VERB, type: .icon("mendengar")),
+                        Card(name: "ambil", category: .VERB, type: .icon("ambil"))
                     ],
                     [
-                        Card(name: "keras", icon: "keras", category: .ADJECTIVE, isImageType: false),
-                        Card(name: "besar", icon: "besar", category: .ADJECTIVE, isImageType: false),
-                        Card(name: "kecil", icon: "kecil", category: .ADJECTIVE, isImageType: false),
-                        Card(name: "panas", icon: "panas", category: .ADJECTIVE, isImageType: false),
-                        Card(name: "dingin", icon: "dingin", category: .ADJECTIVE, isImageType: false)
+                        Card(name: "keras", category: .ADJECTIVE, type: .icon("keras")),
+                        Card(name: "besar", category: .ADJECTIVE, type: .icon("besar")),
+                        Card(name: "kecil", category: .ADJECTIVE, type: .icon("kecil")),
+                        Card(name: "panas", category: .ADJECTIVE, type: .icon("panas")),
+                        Card(name: "dingin", category: .ADJECTIVE, type: .icon("dingin"))
 
                     ],
                     [
-                        Card(name: "televisi", icon: "televisi", category: .NOUN, isImageType: false),
-                        Card(name: "meja", icon: "meja", category: .NOUN, isImageType: false),
-                        Card(name: "kursi", icon: "kursi", category: .NOUN, isImageType: false),
-                        Card(name: "buku", icon: "buku", category: .NOUN, isImageType: false),
-                        Card(name: "mainan", icon: "mainan", category: .NOUN, isImageType: false),
+                        Card(name: "televisi", category: .NOUN, type: .icon("televisi")),
+                        Card(name: "meja", category: .NOUN, type: .icon("meja")),
+                        Card(name: "kursi", category: .NOUN, type: .icon("kursi")),
+                        Card(name: "buku", category: .NOUN, type: .icon("buku")),
+                        Card(name: "mainan", category: .NOUN, type: .icon("mainan")),
                     ],
                     [
-                        Card(name: "youtube", icon: "youtube", category: .NOUN, isImageType: false),
-                        Card(name: "permainan", icon: "permainan", category: .NOUN, isImageType: false),
-                        Card(name: "snack", icon: "piring", category: .NOUN, isImageType: false),
-                        Card(name: "lampu", icon: "lampu", category: .NOUN, isImageType: false),
-                        Card(name: "netflix", icon: "netflix", category: .NOUN, isImageType: false),
+                        Card(name: "youtube", category: .NOUN, type: .icon("youtube")),
+                        Card(name: "permainan", category: .NOUN, type: .icon("permainan")),
+                        Card(name: "snack", category: .NOUN, type: .icon("piring")),
+                        Card(name: "lampu", category: .NOUN, type: .icon("lampu")),
+                        Card(name: "netflix", category: .NOUN, type: .icon("netflix")),
                     ],
                     [
-                        Card(name: "mobil", icon: "mobil", category: .NOUN, isImageType: false),
-                        Card(name: "bola", icon: "bola", category: .NOUN, isImageType: false),
-                        Card(name: "air", icon: "gelas", category: .NOUN, isImageType: false),
-                        Card(name: "snack", icon: "manis", category: .NOUN, isImageType: false)
+                        Card(name: "mobil", category: .NOUN, type: .icon("mobil")),
+                        Card(name: "bola", category: .NOUN, type: .icon("bola")),
+                        Card(name: "air", category: .NOUN, type: .icon("gelas")),
+                        Card(name: "snack", category: .NOUN, type: .icon("manis"))
                     ],
                 ],
                 name: "Ruang Keluarga",

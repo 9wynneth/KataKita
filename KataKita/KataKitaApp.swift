@@ -35,21 +35,16 @@ func resolveIcon(for iconName: String) -> String {
 
 @main
 struct KataKitaApp: App {
-//    @StateObject var ruangBelajarViewModel = AACRuangBelajarViewModel()
-//    @StateObject var ruangMakanViewModel = AACRuangMakanViewModel()
-//    @StateObject var kamarMandiViewModel = AACKamarMandiViewModel()
-    
     @State private var scheduleManager = ScheduleManager()
     @State private var activitiesManager = ActivitiesManager()
     @State private var activityManager = ActivityManager()
 
     @State private var stateManager = StateManager()
     @State private var securityManager = SecurityManager()
-    @State private var pECSViewModel = PECSViewModel()
+    @State private var pecsViewModel = PECSViewModel()
+    @State private var aacViewModel = AACViewModel()
 
     @State private var profileManager = ProfileViewModel()
-    @StateObject private var sharedState = SharedState()
-    @StateObject private var sharedCards = SharedMaxCards()
     @State private var boardManager: BoardManager
 
     @State private var stickerManager = StickerImageManager()
@@ -64,12 +59,11 @@ struct KataKitaApp: App {
         
         self.modelContainer = model
         self._boardManager = State(initialValue: BoardManager(model.mainContext))  // Pass the context to BoardManager
-
     }
 
     var body: some Scene {
         WindowGroup {
-            SplashScreen(modelContainer.mainContext)
+            SplashScreen(self.modelContainer.mainContext)
                 .onAppear {
                     self.scheduleManager.schedules = [
                         Schedule(id: UUID(), day: .MONDAY([])),
@@ -166,26 +160,19 @@ struct KataKitaApp: App {
                         )
                     ]
                 }
-//                
-//                .environmentObject(ruangBelajarViewModel)
-//                .environmentObject(ruangMakanViewModel)
-//                .environmentObject(kamarMandiViewModel)
-            
-           
         }
-        .modelContainer(modelContainer)
-        .environment(scheduleManager)
-        .environment(activitiesManager)
-        .environment(activityManager)
-        .environment(stateManager)
-        .environment(securityManager)
-        .environment(pECSViewModel)
-        .environmentObject(sharedState)
-        .environmentObject(sharedCards)
+        .modelContainer(self.modelContainer)
+        .environment(self.scheduleManager)
+        .environment(self.activitiesManager)
+        .environment(self.activityManager)
+        .environment(self.stateManager)
+        .environment(self.securityManager)
+        .environment(self.pecsViewModel)
+        .environment(self.aacViewModel)
         .environment(self.boardManager)
-        .environment(stickerManager)
-        .environment(originalImageManager)
-        .environment(profileManager)
+        .environment(self.stickerManager)
+        .environment(self.originalImageManager)
+        .environment(self.profileManager)
 
     }
 }

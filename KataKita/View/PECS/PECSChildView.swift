@@ -10,8 +10,8 @@ import SwiftUI
 struct PECSChildView: View {
     @Environment(ProfileViewModel.self) private var viewModel
     
-    @Binding var state: DraggingState
     @Binding var cards: [[Card]]
+    
     let f: (Card?) -> Void
 
     @State private var width: CGFloat = 0.0
@@ -24,9 +24,8 @@ struct PECSChildView: View {
     let screenWidth = UIScreen.main.bounds.width
     let screenHeight = UIScreen.main.bounds.height
     
-    init(_ cards: Binding<[[Card]]>, _ state: Binding<DraggingState>, f: @escaping (Card?) -> Void) {
+    init(_ cards: Binding<[[Card]]>, f: @escaping (Card?) -> Void) {
         self._cards = cards
-        self._state = state
         self.f = f
     }
     
@@ -36,10 +35,8 @@ struct PECSChildView: View {
                 VStack(spacing: 10) {
                     ForEach(Array(column.enumerated()), id: \.offset) { j, card in
                         PECSChildCard(
-                            self.$state,
                             card,
-                            (self.width, self.height),
-                            card.isImageType ? nil : resolveIcon(for: "\(self.genderHandler(card.icon))\(card.icon)")
+                            (self.width, self.height)
                         ) { dragging in
                             self.f(dragging)
                             if dragging != nil {
@@ -92,44 +89,34 @@ struct PECSChildView: View {
 struct PECSChildCard: View {
     @State private var offsetCurr: CGPoint = .zero
     @State private var offsetLast: CGSize = .zero
-    @State private var opacity = 1.0
     @State private var dragging = false
-    
-    @Binding var state: DraggingState
     
     let card: Card
     let width: CGFloat
     let height: CGFloat
-    let icon: String?
     let f: (Card?) -> Void
 
-    init(_ state: Binding<DraggingState>, _ card: Card, _ size: (CGFloat, CGFloat), _ icon: String?, f: @escaping (Card?) -> Void) {
-        self._state = state
+    init(_ card: Card, _ size: (CGFloat, CGFloat), f: @escaping (Card?) -> Void) {
         self.card = card
         self.width = size.0
         self.height = size.1
-        self.icon = icon
         self.f = f
     }
     
     var body: some View {
         VStack(spacing: 0) {
-            if self.card.isImageType {
-                Image(uiImage: (UIImage(named: self.card.icon) ?? UIImage()))
+            if case let .image(data) = self.card.type {
+                Image(uiImage: UIImage(data: data) ?? UIImage())
                     .resizable()
                     .scaledToFit()
                     .frame(width: (self.width - 20) / 3, height: (self.width - 20) / 3)
-            } else if let icon = self.icon {
-                Image(icon)
-                    .antialiased(true)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: (self.width - 20) / 3, height: (self.width - 20) / 3)
+            } else if case let .icon(icon) = self.card.type {
+                Icon(icon, ((self.width - 20) / 3, (self.width - 20) / 3))
             } else {
                 Color.clear
                     .frame(width: (self.width - 20) / 3, height: (self.width - 20) / 3)
             }
-            
+
             TextContent(
                 text: self.card.name,
                 size: 14,
@@ -143,38 +130,19 @@ struct PECSChildCard: View {
         }
         .frame(width: self.width - 20, height: (self.height - 60) / 5)
         .background(
-            RoundedRectangle(cornerRadius: 13)
-                .fill(Color(hex: self.card.color ?? self.card.category.getColorString(), transparency: 1))
+            Group {
+                if case let .color(color) = self.card.type {
+                    RoundedRectangle(cornerRadius: 13)
+                        .fill(Color(hex: color, transparency: 1))
+                } else {
+                    RoundedRectangle(cornerRadius: 13)
+                        .fill(Color(hex: self.card.category.getColorString(), transparency: 1))
+                }
+            }
         )
         .offset(x: self.offsetCurr.x, y: self.offsetCurr.y)
         .gesture(self.makeDragGesture())
         .zIndex(self.dragging ? 2 : 1)
-        .opacity(self.opacity)
-        .onChange(of: self.state) {
-            if self.dragging {
-                if self.state == .disappearing {
-                    withAnimation(.linear(duration: 0.15)) {
-                        self.opacity = 0
-                    } completion: {
-                        self.offsetCurr = .zero
-                        self.offsetLast = .zero
-                        self.opacity = 1
-                        self.state = .idle
-                        self.dragging = false
-                        self.f(nil)
-                    }
-                } else if self.state == .reverting {
-                    withAnimation {
-                        self.offsetCurr = .zero
-                        self.offsetLast = .zero
-                    } completion: {
-                        self.state = .idle
-                        self.dragging = false
-                        self.f(nil)
-                    }
-                }
-            }
-        }
     }
     
     private func makeDragGesture() -> some Gesture {
@@ -193,6 +161,12 @@ struct PECSChildCard: View {
                     y: self.offsetCurr.y + diff.y
                 )
                 self.offsetLast = value.translation
+            }
+            .onEnded { _ in
+                self.offsetCurr = .zero
+                self.offsetLast = .zero
+                self.dragging = false
+                self.f(nil)
             }
     }
 }
