@@ -15,57 +15,58 @@ struct SettingsView: View {
     var body: some View {
         NavigationStack {
             Form {
+                HStack {
+                    Image(systemName: "person.circle.fill")
+                        .font(.system(size: 50))
+                        .foregroundColor(.gray)
+                    Text(name)
+                        .font(.title2)
+                        .fontWeight(.bold)
+                    Spacer()
+                }
+                
                 // Profil Pengguna Section
-                Section(header: Text(LocalizedStringKey("PROFIL PENGGUNA"))) {
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Profil pengguna")
+                        .font(.subheadline)
+                        .foregroundColor(.gray)
+                    
                     // Name TextField
                     HStack {
-                        Text(LocalizedStringKey("Nama"))
-                        TextField(
-                            LocalizedStringKey("Ketik namamu"), text: $name
-                        )
-                        .multilineTextAlignment(.trailing)
+                        Text("Nama")
+                        Spacer()
+                        TextField("Ketik namamu", text: $name)
+                            .multilineTextAlignment(.trailing)
+                            .foregroundColor(.gray)
                     }
-
+                    
                     // Gender Selection
                     HStack {
-                        Text(LocalizedStringKey("Jenis Kelamin"))
+                        Text("Jenis Kelamin")
                         Spacer()
                         Picker("", selection: $gender) {
-                            Text(LocalizedStringKey("Laki-laki")).tag(false)
-                            Text(LocalizedStringKey("Perempuan")).tag(true)
+                            Text("Laki-laki").tag(false)
+                            Text("Perempuan").tag(true)
                         }
                         .pickerStyle(MenuPickerStyle())
                     }
                 }
-                // aplikasi
-//                Section(header: Text(LocalizedStringKey("APLIKASI"))) {
-//                    // CUSTOM SUARA
-//                    HStack {
-//                        Text(LocalizedStringKey("Suara"))
-//                        Spacer()
-//                        Picker("", selection: $viewModel.userProfile.sound) {
-//                            Text("Default").tag(false)
-//                            Text("Custom").tag(true)
-//                        }
-//                        .pickerStyle(MenuPickerStyle())
-//                        .onChange(of: viewModel.userProfile.sound) { newValue in
-//                            if newValue {
-//                                checkPersonalVoice()
-//                            }
-//                        }
-//                    }
-//                }
-
             }
-            .navigationTitle("Pengaturan")
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    HStack {
+                        Image(systemName: "gearshape.fill")
+                        Text("Pengaturan")
+                            .font(.headline)                    }
+                }
+            }
             .onAppear(perform: checkPersonalVoice)
             .onChange(of: viewModel.userProfile.sound) {
                 if viewModel.userProfile.sound {
                     checkPersonalVoice()
                 }
             }
-            .onAppear()
-            {
+            .onAppear {
                 gender = viewModel.userProfile.gender
                 name = viewModel.userProfile.name
                 sound = viewModel.userProfile.sound
@@ -101,7 +102,6 @@ struct SettingsView: View {
                         })
                 )
             }
-
         }
     }
 
@@ -120,7 +120,6 @@ struct SettingsView: View {
             UIApplication.shared.open(settingsUrl)
         }
     }
-
 }
 
 #Preview {
