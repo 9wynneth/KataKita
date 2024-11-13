@@ -28,9 +28,12 @@ class SharedMaxCards: ObservableObject {
 struct BetterAACView: View {
     @Environment(SecurityManager.self) private var securityManager
     @Environment(BoardManager.self) private var boardManager
+    @Environment(AACViewModel.self) private var aacViewModel
     @Environment(ProfileViewModel.self) private var viewModel
 
-    //MARK: Viewport Size
+    @Environment(StickerImageManager.self) var stickerManager
+    @Environment(OriginalImageManager.self) var originalImageManager
+
     @State private var addingCard: Int? = nil
     @State private var addingBoard = false
     @State private var editing = false
@@ -43,10 +46,7 @@ struct BetterAACView: View {
     @State private var defaultButton: Int = 4
     @State private var showAACSettings = false
     @State private var showprofile = false
-    @State var isAskPassword = false
-
-    @Environment(StickerImageManager.self) var stickerManager
-    @Environment(OriginalImageManager.self) var originalImageManager
+    @State private var isAskPassword = false
     
     @State static var navigateFromImage = false
     @State private var selectedCategoryColor: String = "#FFFFFF"
@@ -56,50 +56,33 @@ struct BetterAACView: View {
     let screenHeight = UIScreen.main.bounds.height
     let speechSynthesizer = AVSpeechSynthesizer()
     
-    var maxCards: Int {
-        sharedState.selectedCards.count
-    }
-
     @State private var showAlert = false
     @State private var hasSpoken = false
 
     @State private var id = UUID()
     
-    let colors: [Color] = [
-        Color(hex: "000000", transparency: 1.0),
-        Color(hex: "835737", transparency: 1.0),
-        Color(hex: "E9AE50", transparency: 1.0),
-        Color(hex: "E54646", transparency: 1.0),
-        Color(hex: "B378D8", transparency: 1.0),
-        Color(hex: "EDB0DC", transparency: 1.0),
-        Color(hex: "889AE4", transparency: 1.0),
-        Color(hex: "B7D273", transparency: 1.0),
-        Color(hex: "EFDB76", transparency: 1.0),
-         Color(hex: "F2EFDE", transparency: 1.0)
+    let colorCards: [Card] = [
+        Card(name: "Hitam", category: .ADJECTIVE, type: .color("000000")),
+        Card(name: "Cokelat", category: .ADJECTIVE, type: .color("835737")),
+        Card(name: "Oranye", category: .ADJECTIVE, type: .color("E9AE50")),
+        Card(name: "Merah", category: .ADJECTIVE, type: .color("E54646")),
+        Card(name: "Ungu", category: .ADJECTIVE, type: .color("B378D8")),
+        Card(name: "Pink", category: .ADJECTIVE, type: .color("EDB0DC")),
+        Card(name: "Biru", category: .ADJECTIVE, type: .color("889AE4")),
+        Card(name: "Hijau", category: .ADJECTIVE, type: .color("B7D273")),
+        Card(name: "Kuning", category: .ADJECTIVE, type: .color("EFDB76")),
+        Card(name: "Putih", category: .ADJECTIVE, type: .color("F2EFDE")),
     ]
-    let colorNames: [Color: String] = [
-        Color(hex: "000000", transparency: 1.0): "Hitam",
-        Color(hex: "835737", transparency: 1.0): "Cokelat",
-        Color(hex: "E9AE50", transparency: 1.0): "Oranye",
-        Color(hex: "E54646", transparency: 1.0): "Merah",
-        Color(hex: "B378D8", transparency: 1.0): "Ungu",
-        Color(hex: "EDB0DC", transparency: 1.0): "Pink",
-        Color(hex: "889AE4", transparency: 1.0): "Biru",
-        Color(hex: "B7D273", transparency: 1.0): "Hijau",
-        Color(hex: "EFDB76", transparency: 1.0): "Kuning",
-         Color(hex: "F2EFDE", transparency: 1.0): "Putih"
-    ]
-
-    @EnvironmentObject var sharedState: SharedState
-    @EnvironmentObject var sharedCards: SharedMaxCards
     
-
     var selectedBoard: Board? {
         if let board = boardManager.boards.first(where: { $0.id == id }) {
             return board
         }
 
         return nil
+    }
+    var maxSelectedCard: Int {
+        return Int(self.screenWidth * 0.5 / 65)
     }
 
 
@@ -108,19 +91,16 @@ struct BetterAACView: View {
             // MARK: Textfield && Delete
             HStack {
                 Button(action: {
-                    speakAllText(from: sharedState.selectedCards)
+                    speakAllText(from: self.aacViewModel.cards)
                 }) {
                     ZStack {
                         HStack {
-                            HStack(spacing: 20) {
-                                  ForEach(Array(sharedState.selectedCards.prefix(sharedCards.maxCardsToShow)), id: \.id) { card in
-                                        AACCard(
-                                            card,
-                                            card.isImageType ? nil : resolveIcon(for: "\(self.genderHandler(card.icon))\(card.icon)")
-                                        )
+                            HStack(spacing: 15) {
+                                ForEach(Array(self.aacViewModel.cards), id: \.id) { card in
+                                    AACCard(card)
                                 }
                             }
-                            .padding(.leading, 33)
+                            .padding(.leading, 30)
                             .frame(
                                 maxWidth: .infinity, maxHeight: .infinity,
                                 alignment: .leading)
@@ -141,10 +121,9 @@ struct BetterAACView: View {
                                 cornerRadius: 20,
                                 isSystemImage: false
                             ) {
-                                if !sharedState.selectedCards.isEmpty {
-                                    sharedState.selectedCards.removeLast()
-                                    speechSynthesizer.stopSpeaking(
-                                        at: .immediate)
+                                if !self.aacViewModel.cards.isEmpty {
+                                    self.aacViewModel.cards.removeLast()
+                                    speechSynthesizer.stopSpeaking(at: .immediate)
                                 }
                             }
                         }
@@ -169,8 +148,8 @@ struct BetterAACView: View {
                     cornerRadius: 20,
                     isSystemImage: false
                 ) {
-                    if !sharedState.selectedCards.isEmpty {
-                        sharedState.selectedCards.removeAll()
+                    if !self.aacViewModel.cards.isEmpty {
+                        self.aacViewModel.cards.removeAll()
                         speechSynthesizer.stopSpeaking(at: .immediate)
                     }
 
@@ -368,50 +347,39 @@ struct BetterAACView: View {
                 }
 
                 VStack(spacing: screenHeight * 0.015) {
-                    ForEach(Array(colors.enumerated()), id: \.offset) {
-                        index, color in
+                    ForEach(Array(colorCards.enumerated()), id: \.offset) { index, color in
                         Button {
-                            if sharedState.selectedCards.count < sharedCards.maxCardsToShow {
-                                showAlert = false
-                                let colorName =
-                                    colorNames[color] ?? "Unknown"
-
-                                let cardListItem = CardList(
-                                    name: colorName,
-                                    icon: "person.fill",
-                                    bgColor: color,
-                                    bgTransparency: 1.0,
-                                    fontColor: Color(hex: "000000", transparency: 1),
-                                    isImageType: false
-                                )
-                                sharedState.selectedCards.append(
-                                    cardListItem)
-                                speakText(colorName)
-                            } else {
+                            if !self.aacViewModel.addCard(color) {
                                 showAlert = true
                                 hasSpoken = false
-                                if hasSpoken == false {
-                                    speakText("Kotak Kata Penuh")
-                                }
+                                speakText("Kotak Kata Penuh")
                             }
                         } label: {
-                            RoundedRectangle(cornerRadius: 10)
-                                .fill(color)
-                                .frame(
-                                    width: 120, height: screenHeight * 0.045
-                                )
+                            Group {
+                                if case let .color(color) = color.type {
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .fill(Color(hex: color, transparency: 1))
+                                } else {
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .fill(Color(hex: "F47455", transparency: 1))
+                                }
+                            }
+                            .frame(
+                                width: 120, height: screenHeight * 0.045
+                            )
                         }
                         .alert(isPresented: $showAlert) {
                             Alert(
                                 title: Text("Kotak Kata Penuh"),
                                 message: Text(
-                                    "Kamu hanya bisa memilih \(maxCards) kata. Hapus kata yang sudah dipilih untuk memilih kata baru."
+                                    "Kamu hanya bisa memilih \(self.aacViewModel.cards) kata. Hapus kata yang sudah dipilih untuk memilih kata baru."
                                 ),
                                 dismissButton: .default(
                                     Text("OK"),
                                     action: {
                                         hasSpoken = true
-                                    })
+                                    }
+                                )
                             )
                         }
                     }
@@ -479,7 +447,6 @@ struct BetterAACView: View {
         }
         .onChange(of: id) {
             boardManager.selectId(id)
-            sharedState.selectedCards.removeAll()
             
             // Get the board name based on the id
             if let boardName = boardManager.selectedName(for: id) {
@@ -533,7 +500,7 @@ struct BetterAACView: View {
         speechSynthesizer.speak(utterance)
     }
 
-    func speakAllText(from buttons: [CardList]) {
+    func speakAllText(from buttons: [Card]) {
         stopSpeech()
         // Concatenate all the localized names from the Card models into a single text
         var fullText = ""
@@ -572,44 +539,35 @@ struct BetterAACView: View {
 }
 
 struct AACCard: View {
-    let card: CardList
-    let icon: String?
-    init(_ card: CardList, _ icon: String?) {
+    let card: Card
+    
+    init(_ card: Card) {
         self.card = card
-        self.icon = icon
     }
+    
     var body: some View {
-        VStack(spacing: 0) {
-            if self.card.isImageType {
-                Image(
-                    uiImage: (UIImage(
-                        named: self.card.icon)
-                        ?? UIImage())
-                )
-                .resizable()
-                .frame(width: 50, height: 50)
-            } else if let icon = self.icon {
-                Image(icon)  // icon name is passed from the card
+        VStack(spacing: 10) {
+            if case let .image(data) = self.card.type {
+                Image(uiImage: UIImage(data: data) ?? UIImage())
                     .resizable()
+                    .scaledToFit()
                     .frame(width: 50, height: 50)
-
+            } else if case let .icon(icon) = self.card.type {
+                Icon(icon, (50, 50))
             } else {
-                EmptyView()
+                Color.clear
+                    .frame(width: 50, height: 50)
             }
+            
             Text(
                 LocalizedStringKey(self.card.name)
             )
-            .foregroundColor(.black)
+            .foregroundStyle(.black)
             .font(.system(size: 14))
             .lineLimit(1)
-            .minimumScaleFactor(0.5)
         }
         .frame(width: 80, height: 80)
-        .background(
-            self.card.bgColor.opacity(
-                self.card.bgTransparency)
-        )  // Apply the background color with transparency
-        .cornerRadius(8)
+        .background(Color.clear)
     }
 }
 

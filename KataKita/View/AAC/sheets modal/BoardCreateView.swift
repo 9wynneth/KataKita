@@ -159,19 +159,19 @@ struct BoardCreateView: View {
 
         // Select assets based on the device language (Indonesian or English)
         var allIcons: [String] {
-            let locale = Locale.current.languageCode
+            let lang = Locale.current.language.languageCode?.identifier ?? "id"
             if viewModel.userProfile.gender == true {
-                if locale == "id" {
+                if lang == "id" {
                     return AllAssets.shared.assets + AllAssets.shared.girlAssets
                 } else {
-                    return AllAssets.englishAssets + AllAssets.girlAssets
+                    return AllAssets.shared.englishAssets + AllAssets.shared.girlAssets
                 }
             }
             else {
-                if locale == "id" {
+                if lang == "id" {
                     return AllAssets.shared.assets + AllAssets.shared.boyAssets
                 } else {
-                    return AllAssets.englishAssets + AllAssets.boyAssets
+                    return AllAssets.shared.englishAssets + AllAssets.shared.boyAssets
                 }
             }
         }

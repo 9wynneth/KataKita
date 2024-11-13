@@ -8,7 +8,6 @@ import SwiftUI
 import SwiftData
 import UniformTypeIdentifiers
 
-
 enum Category: String, Codable, CaseIterable {
     case CORE
     case QUESTION
@@ -17,7 +16,6 @@ enum Category: String, Codable, CaseIterable {
     case NOUN
     case ADJECTIVE
     case CONJUNCTION
-
     
     func getColor() -> Color {
         switch self {
@@ -66,35 +64,36 @@ struct Grid : Codable {
 
 //MARK: Kartu yang ada pada board
 struct Card: Identifiable, Codable, Equatable {
-    var id = UUID()
+    var id: UUID
     var name: String
-    var icon: String
     var category: Category
-    var isImageType: Bool
-    var isColorType: Bool
-    var color: String?
+    var type: CardType?
 
-    init(name: String, icon: String, category: Category, isImageType: Bool = false, isColorType: Bool = false, color: String? = nil) {
-        self.icon = icon
+    init(name: String, category: Category, type: CardType? = nil) {
+        self.id = UUID()
         self.name = name
         self.category = category
-        self.isImageType = isImageType
-        self.isColorType = isColorType
-        self.color = color
+        self.type = type
     }
 }
-extension UTType {
-    static let cardType = UTType(exportedAs: "com.example.KataKita.card")
+
+enum CardType: Codable, Equatable {
+    case icon(String)
+    case image(Data)
+    case color(String)
+    
+    static func == (lhs: CardType, rhs: CardType) -> Bool {
+        switch (lhs, rhs) {
+            case (.icon(_), .icon(_)): return true
+            case (.image(_), .image(_)): return true
+            case (.color(_), .color(_)): return true
+            default: return false
+        }
+    }
 }
 
-struct CardList: Identifiable {
-    var id = UUID()
-    var name: String
-    var icon: String
-    var bgColor: Color  // Background color
-    var bgTransparency: Double  // Background transparency
-    var fontColor: Color
-    var isImageType: Bool
+extension UTType {
+    static let cardType = UTType(exportedAs: "com.example.KataKita.card")
 }
 
 @Model

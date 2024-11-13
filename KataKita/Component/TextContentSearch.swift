@@ -24,7 +24,7 @@ struct TextContentSearch: View {
     
     var body: some View {
         if Locale.current.languageCode == "en" {
-            if AllAssets.genderAssets.contains(text.lowercased())
+            if AllAssets.shared.genderAssets.contains(text.lowercased())
             {
                 var styledText: Text = Text(((text).lowercased()))
                     .font(Font.custom("MADECarvingSoftPERSONALUSE-\(mapFontWeight(weight))", size: CGFloat(size)))
