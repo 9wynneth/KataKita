@@ -27,4 +27,11 @@ class ActivitiesManager {
         }
     }
     
+    // Update existing activity
+        func updateActivity(_ updatedActivity: Activity) {
+            if let index = activities.firstIndex(where: { $0.id == updatedActivity.id }) {
+                activities[index] = updatedActivity
+            }
+        }
+    
 }
