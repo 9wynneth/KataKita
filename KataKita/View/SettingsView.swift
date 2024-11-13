@@ -64,6 +64,12 @@ struct SettingsView: View {
                     checkPersonalVoice()
                 }
             }
+            .onAppear()
+            {
+                gender = viewModel.userProfile.gender
+                name = viewModel.userProfile.name
+                sound = viewModel.userProfile.sound
+            }
             .onChange(of: name) {
                 viewModel.userProfile.name = name
             }
