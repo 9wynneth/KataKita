@@ -35,7 +35,7 @@ struct ActivitySequenceView: View {
                             fontColor: "000000", fontTransparency: 1.0,
                             cornerRadius: 20, isSystemImage: false,
                             action: {
-                                speakText(steps[index])
+                                SpeechManager.shared.speakCardAAC(steps[index]) 
                             }
                         )
                         .padding(8)
@@ -56,24 +56,24 @@ struct ActivitySequenceView: View {
             
         }
     }
-    let speechSynthesizer = AVSpeechSynthesizer()
-    
-    // Speak function
-    func speakText(_ text: String) {
-        let localizedText = NSLocalizedString(text, comment: "")
-
-        // Detect device language
-        let languageCode = Locale.current.languageCode
-        let voiceLanguage = languageCode == "id" ? "id-ID" : "en-AU" // Set voice language based on device language
-        
-        // Create the speech utterance
-        let utterance = AVSpeechUtterance(string: localizedText)
-        utterance.voice = AVSpeechSynthesisVoice(language: voiceLanguage) // Set the language accordingly
-        utterance.rate = 0.5 // Set the speech rate
-
-        // Speak the text
-        speechSynthesizer.speak(utterance)
-    }
+//    let speechSynthesizer = AVSpeechSynthesizer()
+//    
+//    // Speak function
+//    func speakText(_ text: String) {
+//        let localizedText = NSLocalizedString(text, comment: "")
+//
+//        // Detect device language
+//        let languageCode = Locale.current.languageCode
+//        let voiceLanguage = languageCode == "id" ? "id-ID" : "en-AU" // Set voice language based on device language
+//        
+//        // Create the speech utterance
+//        let utterance = AVSpeechUtterance(string: localizedText)
+//        utterance.voice = AVSpeechSynthesisVoice(language: voiceLanguage) // Set the language accordingly
+//        utterance.rate = 0.5 // Set the speech rate
+//
+//        // Speak the text
+//        speechSynthesizer.speak(utterance)
+//    }
 
     
 }

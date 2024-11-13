@@ -9,41 +9,75 @@ import AVFoundation
 
 class SpeechManager {
     static let shared = SpeechManager()  // Singleton instance
-
-    private init() {}  // Private initializer to enforce singleton
-
-    // Function to speak a single card's name
-    func speakCardName(_ card: Card) {
+    let synthesizer = AVSpeechSynthesizer()
+    
+    private init() {}  
+    
+    func speakCardNamePECS(_ card: Card) {
+        stopSpeech()
+        
         let localizedName = NSLocalizedString(card.name, comment: "Concatenated text for speech synthesis")
-        // Detect device language
         let languageCode = Locale.current.languageCode
-        let voiceLanguage = languageCode == "id" ? "id-ID" : "en-AU" // Set the voice language based on device language
+        let voiceLanguage = languageCode == "id" ? "id-ID" : "en-AU"
         
-        // Create an utterance for the card name
         let utterance = AVSpeechUtterance(string: localizedName)
-        utterance.voice = AVSpeechSynthesisVoice(language: voiceLanguage) // Set voice based on device language
+        utterance.voice = AVSpeechSynthesisVoice(language: voiceLanguage)
         
-        // Use the AVSpeechSynthesizer to speak the card name
-        let synthesizer = AVSpeechSynthesizer()
+        //        let synthesizer = AVSpeechSynthesizer()
         synthesizer.speak(utterance)
     }
-
-    // Function to speak the names of multiple cards
-    func speakText(for cards: [Card]) {
-        // Concatenate all the card names into a single text
+    
+    func speakAllTextPECS(for cards: [Card]) {
+        stopSpeech()
+        
         let fullText = cards.map { NSLocalizedString($0.name, comment: "Card name for speech synthesis") }.joined(separator: ", ")
         
-        // Detect device language
         let languageCode = Locale.current.languageCode
-        let voiceLanguage = languageCode == "id" ? "id-ID" : "en-AU" // Set the voice language based on device language
+        let voiceLanguage = languageCode == "id" ? "id-ID" : "en-AU"
         
-        // Create an utterance for the concatenated text
         let utterance = AVSpeechUtterance(string: fullText)
-        utterance.voice = AVSpeechSynthesisVoice(language: voiceLanguage) // Set voice based on device language
+        utterance.voice = AVSpeechSynthesisVoice(language: voiceLanguage)
         
-        // Use the AVSpeechSynthesizer to speak the full text
-        let synthesizer = AVSpeechSynthesizer()
+        //        let synthesizer = AVSpeechSynthesizer()
         synthesizer.speak(utterance)
     }
-
+    
+    func speakCardAAC(_ text: String) {
+        stopSpeech()
+        // Menggunakan NSLocalizedString untuk mendapatkan string yang dilokalkan
+        let localizedText = NSLocalizedString(text, comment: "")
+        // Memeriksa bahasa perangkat
+        let lang = Locale.current.language.languageCode?.identifier ?? "id"
+        let voiceLanguage = lang == "id" ? "id-ID" : "en-AU"
+        
+        let utterance = AVSpeechUtterance(string: localizedText)
+        utterance.voice = AVSpeechSynthesisVoice(language: voiceLanguage)
+        utterance.rate = 0.5
+        synthesizer.speak(utterance)
+    }
+    
+    func speakAllTextAAC(from buttons: [Card]) {
+        stopSpeech()
+        var fullText = ""
+        for card in buttons {
+            // Menggunakan NSLocalizedString untuk setiap nama kartu
+            let localizedName = NSLocalizedString(card.name, comment: "")
+            fullText += "\(localizedName) "
+        }
+        
+        let lang = Locale.current.language.languageCode?.identifier ?? "id"
+        let voiceLanguage = lang == "id" ? "id-ID" : "en-AU"
+        
+        let utterance = AVSpeechUtterance(string: fullText)
+        utterance.voice = AVSpeechSynthesisVoice(language: voiceLanguage)
+        utterance.rate = 0.5
+        synthesizer.speak(utterance)
+    }
+    
+    func stopSpeech() {
+        if self.synthesizer.isSpeaking {
+            self.synthesizer.stopSpeaking(at: .immediate)
+        }
+    }
+    
 }

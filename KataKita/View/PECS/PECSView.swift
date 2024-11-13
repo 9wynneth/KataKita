@@ -201,7 +201,7 @@ struct PECSView: View {
                                     }
                                     .frame(height: 100)
                                     .onAppear {
-                                        speakCardName(card)
+                                        SpeechManager.shared.speakCardNamePECS(card)
                                     }
                                 }
                             }
@@ -228,9 +228,8 @@ struct PECSView: View {
                         }
                     }
                     .onTapGesture {
-                        // Pass all the dropped cards directly to the speakText function
-                        let validDroppedCards = droppedCards.compactMap { $0 }  // Remove any nil cards
-                        speakText(for: validDroppedCards)
+                        let validDroppedCards = droppedCards.compactMap { $0 }
+                        SpeechManager.shared.speakAllTextPECS(for: validDroppedCards)
                     }
 
                     Color.clear
@@ -245,7 +244,7 @@ struct PECSView: View {
                 .onTapGesture {
                     // Pass all the dropped cards directly to the speakText function
                     let validDroppedCards = droppedCards.compactMap { $0 }  // Remove any nil cards
-                    speakText(for: validDroppedCards)
+                    SpeechManager.shared.speakAllTextPECS(for: validDroppedCards)
                 }
 
                 CustomButton(
@@ -396,7 +395,7 @@ struct PECSView: View {
                 }
         )
         .onDisappear {
-            stopSpeech()
+            SpeechManager.shared.stopSpeech()
         }
     }
 
@@ -414,48 +413,6 @@ struct PECSView: View {
         self.childCards = self.pecsViewModel.cards
     }
 
-    private func speakCardName(_ card: Card) {
-        stopSpeech()
-        // Localize the card name
-        // Menggunakan NSLocalizedString untuk mendapatkan string yang dilokalkan
-        let localizedText = NSLocalizedString(card.name, comment: "")
-        // Memeriksa bahasa perangkat
-        let lang = Locale.current.language.languageCode?.identifier ?? "id"
-        let voiceLanguage = lang == "id" ? "id-ID" : "en-AU"
-
-        let utterance = AVSpeechUtterance(string: localizedText)
-        utterance.voice = AVSpeechSynthesisVoice(language: voiceLanguage)
-        utterance.rate = 0.5
-        speechSynthesizer.speak(utterance)
-    }
-
-    private func speakText(for cards: [Card]) {
-        stopSpeech()
-        // Concatenate all the localized names from the Card models into a single text
-        let fullText = cards.map {
-            NSLocalizedString(
-                $0.name, comment: "Card name for speech synthesis")
-        }.joined(separator: ", ")
-
-        // Detect device language
-        let lang = Locale.current.language.languageCode?.identifier ?? "id"
-        let voiceLanguage = lang == "id" ? "id-ID" : "en-AU"  // Set the voice language based on device language
-
-        // Create an utterance for the localized text
-        let utterance = AVSpeechUtterance(string: fullText)
-        utterance.voice = AVSpeechSynthesisVoice(language: voiceLanguage)  // Set voice based on device language
-        utterance.rate = 0.5  // Adjust the speech rate if needed
-
-        // Use the AVSpeechSynthesizer to speak the full text
-        let synthesizer = AVSpeechSynthesizer()
-        synthesizer.speak(utterance)
-    }
-
-    private func stopSpeech() {
-        if speechSynthesizer.isSpeaking {
-            speechSynthesizer.stopSpeaking(at: .immediate)
-        }
-    }
 
 }
 

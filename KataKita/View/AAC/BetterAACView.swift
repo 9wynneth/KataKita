@@ -91,7 +91,7 @@ struct BetterAACView: View {
             // MARK: Textfield && Delete
             HStack {
                 Button(action: {
-                    speakAllText(from: self.aacViewModel.cards)
+                    SpeechManager.shared.speakAllTextAAC(from: self.aacViewModel.cards)
                 }) {
                     ZStack {
                         HStack {
@@ -235,7 +235,7 @@ struct BetterAACView: View {
                         )
                         .onTapGesture {
                             id = board.id
-                            speakText(board.name)
+                            SpeechManager.shared.speakCardAAC(board.name)
                         }
                             
 
@@ -352,7 +352,7 @@ struct BetterAACView: View {
                             if !self.aacViewModel.addCard(color) {
                                 showAlert = true
                                 hasSpoken = false
-                                speakText("Kotak Kata Penuh")
+                                SpeechManager.shared.speakCardAAC("Kotak Kata Penuh")
                             }
                         } label: {
                             Group {
@@ -450,7 +450,7 @@ struct BetterAACView: View {
             
             // Get the board name based on the id
             if let boardName = boardManager.selectedName(for: id) {
-                speakText(boardName) // Speak the board's name
+                SpeechManager.shared.speakCardAAC(boardName)
             }
         }
 
@@ -481,51 +481,9 @@ struct BetterAACView: View {
             SettingsView()
         }
         .onDisappear{
-            stopSpeech()
+            SpeechManager.shared.stopSpeech()
         }
     }
-
-    func speakText(_ text: String) {
-        stopSpeech()
-
-        let localizedText = NSLocalizedString(text, comment: "Text to be spoken")
-        
-        // Detect device language
-        let languageCode = Locale.current.languageCode
-        let voiceLanguage = languageCode == "id" ? "id-ID" : "en-AU"
-        
-        let utterance = AVSpeechUtterance(string: localizedText)
-        utterance.voice = AVSpeechSynthesisVoice(language: voiceLanguage)
-        utterance.rate = 0.5
-        speechSynthesizer.speak(utterance)
-    }
-
-    func speakAllText(from buttons: [Card]) {
-        stopSpeech()
-        // Concatenate all the localized names from the Card models into a single text
-        var fullText = ""
-        for card in buttons {
-
-            let localizedName = NSLocalizedString(card.name, comment: "Concatenated text for speech synthesis")
-            fullText += "\(localizedName) "
-        }
-
-        // Detect device language
-        let languageCode = Locale.current.languageCode
-        let voiceLanguage = languageCode == "id" ? "id-ID" : "en-AU"
-        
-        // Use the AVSpeechSynthesizer to speak the full text
-        let utterance = AVSpeechUtterance(string: fullText)
-        utterance.voice = AVSpeechSynthesisVoice(language: voiceLanguage)
-        utterance.rate = 0.5 // Set the speech rate
-        speechSynthesizer.speak(utterance)
-    }
-    
-    private func stopSpeech() {
-            if speechSynthesizer.isSpeaking {
-                speechSynthesizer.stopSpeaking(at: .immediate)
-            }
-        }
         
     private func genderHandler(_ name: String) -> String {
         if AllAssets.shared.genderAssets.contains(name) {
@@ -568,6 +526,7 @@ struct AACCard: View {
         }
         .frame(width: 80, height: 80)
         .background(Color.clear)
+        
     }
 }
 

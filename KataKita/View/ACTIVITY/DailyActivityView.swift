@@ -16,7 +16,7 @@ struct DailyActivityView: View {
     @Environment(\.dismiss) var dismiss
     @Environment(StateManager.self) private var stateManager
     
-    private let speechSynthesizer = AVSpeechSynthesizer()
+//    private let speechSynthesizer = AVSpeechSynthesizer()
     @State private var showsettings = false
 
     @State private var selectedRuangan: String = ""
@@ -226,7 +226,7 @@ struct DailyActivityView: View {
                                             cornerRadius: 20,
                                             isSystemImage: false,  // This is an actual image, not a system image
                                             action: {
-                                                speakText(activity.name)
+                                                SpeechManager.shared.speakCardAAC(activity.name)
                                             }
                                         )
                                     } else {
@@ -247,7 +247,7 @@ struct DailyActivityView: View {
                                             cornerRadius: 20,
                                             isSystemImage: false,  // This is from assets, not SF Symbols
                                             action: {
-                                                speakText(activity.name)
+                                                SpeechManager.shared.speakCardAAC(activity.name)
                                             }
                                         )
                                     }
@@ -320,7 +320,7 @@ struct DailyActivityView: View {
                                                         fontColor: "000000", fontTransparency: 1.0,
                                                         cornerRadius: 20, isSystemImage: false,
                                                         action: {
-                                                            speakText(step.description)
+                                                            SpeechManager.shared.speakCardAAC(step.description)
                                                         }
                                                     )
                                                     
@@ -380,7 +380,8 @@ struct DailyActivityView: View {
                                                             if self.stateManager.index < self.extractActivity.count {
                                                                 selectedRuangan = self.extractActivity[self.stateManager.index].ruangan.name
                                                                 let currentActivity = self.extractActivity[self.stateManager.index]
-                                                                speakText(currentActivity.name)
+                                                                SpeechManager.shared.speakCardAAC(currentActivity.name)
+
                                                             } else {
                                                                 selectedRuangan = getSelectedRuangan()
                                                             }
@@ -505,9 +506,9 @@ struct DailyActivityView: View {
                         selectedRuangan = self.extractActivity[self.stateManager.index].ruangan.name
                         
                         let currentActivity = self.extractActivity[self.stateManager.index]
-                        speakText(currentActivity.name)
+                        SpeechManager.shared.speakCardAAC(currentActivity.name)
                     } else {
-                        selectedRuangan = getSelectedRuangan() // Fallback to the top one
+                        selectedRuangan = getSelectedRuangan() 
                     }
                     
                     
@@ -566,7 +567,7 @@ struct DailyActivityView: View {
             
     }
         .onDisappear{
-            stopSpeech()
+            SpeechManager.shared.stopSpeech()
         }
        
         
@@ -587,27 +588,27 @@ struct DailyActivityView: View {
         }
     }
     
-    private func speakText(_ text: String) {
-        stopSpeech()
-        let localizedText = NSLocalizedString(text, comment: "")
-
-        // Detect the device language
-        let languageCode = Locale.current.languageCode
-        let voiceLanguage = languageCode == "id" ? "id-ID" : "en-AU"
-        
-        // Create a speech utterance
-        let utterance = AVSpeechUtterance(string: localizedText)
-        utterance.voice = AVSpeechSynthesisVoice(language: voiceLanguage)
-        
-        // Speak the text
-        speechSynthesizer.speak(utterance)
-    }
-    
-    private func stopSpeech() {
-            if speechSynthesizer.isSpeaking {
-                speechSynthesizer.stopSpeaking(at: .immediate)
-            }
-        }
+//    private func speakText(_ text: String) {
+//        stopSpeech()
+//        let localizedText = NSLocalizedString(text, comment: "")
+//
+//        // Detect the device language
+//        let languageCode = Locale.current.languageCode
+//        let voiceLanguage = languageCode == "id" ? "id-ID" : "en-AU"
+//        
+//        // Create a speech utterance
+//        let utterance = AVSpeechUtterance(string: localizedText)
+//        utterance.voice = AVSpeechSynthesisVoice(language: voiceLanguage)
+//        
+//        // Speak the text
+//        speechSynthesizer.speak(utterance)
+//    }
+//    
+//    private func stopSpeech() {
+//            if speechSynthesizer.isSpeaking {
+//                speechSynthesizer.stopSpeaking(at: .immediate)
+//            }
+//        }
 
     
     func resolveIcon(for iconName: String) -> String {

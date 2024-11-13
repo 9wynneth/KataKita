@@ -78,11 +78,14 @@ struct AACBoardView: View {
                                 ) {
                                     if self.pecs {
                                         self.pecsViewModel.cardHandler(row)
-                                    } else {
+                                        SpeechManager.shared.speakCardAAC(row.name)
+                                
+                                    }
+                                    else {
                                         if !self.aacViewModel.addCard(row) {
                                             self.showAlert = true
                                             self.hasSpoken = false
-                                            self.speakText("Kotak Kata Penuh")
+                                            SpeechManager.shared.speakCardAAC("Kotak Kata Penuh")
                                         }
                                     }
                                 }
@@ -111,7 +114,7 @@ struct AACBoardView: View {
             }
         }
         .onDisappear{
-            stopSpeech()
+            SpeechManager.shared.stopSpeech()
         }
         .frame(
             maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading
@@ -146,46 +149,7 @@ struct AACBoardView: View {
         }
     }
 
-    private func speakText(_ text: String) {
-        stopSpeech()
-        // Menggunakan NSLocalizedString untuk mendapatkan string yang dilokalkan
-        let localizedText = NSLocalizedString(text, comment: "")
-        // Memeriksa bahasa perangkat
-        let lang = Locale.current.language.languageCode?.identifier ?? "id"
-        let voiceLanguage = lang == "id" ? "id-ID" : "en-AU"
-
-        let utterance = AVSpeechUtterance(string: localizedText)
-        utterance.voice = AVSpeechSynthesisVoice(language: voiceLanguage)
-        utterance.rate = 0.5
-        speechSynthesizer.speak(utterance)
-    }
-
-    private func speakAllText(from buttons: [Card]) {
-        stopSpeech()
-        // Menggabungkan semua nama dari model Card menjadi satu teks
-        var fullText = ""
-        for card in buttons {
-            // Menggunakan NSLocalizedString untuk setiap nama kartu
-            let localizedName = NSLocalizedString(card.name, comment: "")
-            fullText += "\(localizedName) "
-        }
-        
-        // Memeriksa bahasa perangkat
-        let lang = Locale.current.language.languageCode?.identifier ?? "id"
-        let voiceLanguage = lang == "id" ? "id-ID" : "en-AU"
-        
-        // Menggunakan AVSpeechSynthesizer untuk membaca teks lengkap
-        let utterance = AVSpeechUtterance(string: fullText)
-        utterance.voice = AVSpeechSynthesisVoice(language: voiceLanguage)
-        utterance.rate = 0.5
-        speechSynthesizer.speak(utterance)
-    }
     
-    private func stopSpeech() {
-        if self.speechSynthesizer.isSpeaking {
-            self.speechSynthesizer.stopSpeaking(at: .immediate)
-        }
-    }
         
 }
 
@@ -266,6 +230,8 @@ struct AACBoardCard: View {
     var body: some View {
         Button {
             f()
+            SpeechManager.shared.speakCardAAC(self.card.name)
+
         } label: {
             VStack(spacing: 10) { // Reduced spacing between Image and Text
                 if case let .image(data) = self.card.type {
@@ -300,6 +266,10 @@ struct AACBoardCard: View {
                 }
                 .opacity(0.65)
             )
+//            .onTapGesture {
+//                SpeechManager.shared.speakCardAAC(self.card.name)
+//
+//            }
             .cornerRadius(13)
         }
     }
