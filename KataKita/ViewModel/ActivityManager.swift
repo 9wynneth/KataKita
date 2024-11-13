@@ -25,6 +25,18 @@ class ActivityManager {
     func addStep(_ step: Step) {
         self.activity.sequence.append(step)
     }
+    
+    func updateStep(_ updatedStep: Step, at index: Int) {
+            if self.activity.sequence.indices.contains(index) {
+                self.activity.sequence[index] = updatedStep
+            }
+        }
+    
+    func updateStepDescription(description: String, at index: Int) {
+            if self.activity.sequence.indices.contains(index) {
+                self.activity.sequence[index].description = description
+            }
+        }
 
     func removeStep(_ index: Int) {
         if self.activity.sequence.count > index {
@@ -39,9 +51,15 @@ class ActivityManager {
     func setImage(image: String) {
         self.activity.image = image
     }
+    
+    func setStepImage(image: String, at index: Int) {
+            if self.activity.sequence.indices.contains(index) {
+                self.activity.sequence[index].image = image
+            }
+        }
  
     func resetSteps() {
-        activity.sequence.removeAll() 
+        activity.sequence.removeAll()
     }
 }
 

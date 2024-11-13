@@ -131,40 +131,40 @@ struct SplashScreen: View {
                 self.boarded = true
             }
             self.boardManager.load()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 6.5) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 4.5) {
                 self.isActive = false
             }
         }
     }
     private func animateSequence() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            withAnimation(.easeIn(duration: 0.5)) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            withAnimation(.easeIn(duration: 0.3)) {
                 currentAsset = 2
             }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                withAnimation(.easeIn(duration: 0.5)) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                withAnimation(.easeIn(duration: 0.3)) {
                     currentAsset = 3
                 }
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    withAnimation(.easeIn(duration: 0.5)) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    withAnimation(.easeIn(duration: 0.3)) {
                         backgroundColor = Color(hex: "#C6DBD5", transparency: 1)
                     }
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                         showTransitionToMakkata = true
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                                 currentAsset = 4 // Display `makkata1`
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                                withAnimation(.easeInOut(duration: 1)) {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                withAnimation(.easeInOut(duration: 0.5)) {
                                     currentAsset = 5 // Display `line`
                                     showLine = true
                                 }
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                                    withAnimation(.easeInOut(duration: 1)) {
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                    withAnimation(.easeInOut(duration: 0.5)) {
                                         currentAsset = 6 // Display `dog1`
                                         showDog = true
                                         showTail = true // Start showing the tail after dog1
                                     }
-                                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                                         currentAsset = 7 // Change to `dog2`
                                         
                                     }

@@ -10,39 +10,41 @@ import SwiftUI
 struct AddDailyActivityView: View {
     @Environment(ScheduleManager.self) private var scheduleManager
     @Environment(ActivitiesManager.self) private var activitiesManager
-
-    @Environment(\.dismiss) var dismiss
     
+    @Environment(\.dismiss) var dismiss
+    @State private var showEditActivityView = false
+      @State private var selectedActivity: Activity?
     @State private var isAdd = false
     @State private var searchText: String = ""
     @State private var selectedDayString: Int = 0
     @Binding var toggleOn: Bool
-
+    @State private var activityToEdit: Activity?
+    
     // Viewport size
     private let viewPortWidth: CGFloat = UIScreen.main.bounds.width - 100
     private let viewPortHeight: CGFloat = UIScreen.main.bounds.height - 100
     
     init(toggleOn: Binding<Bool>) {
-         _toggleOn = toggleOn
-         _selectedDayString = State(initialValue: Calendar.current.component(.weekday, from: Date()) - 1)
-     }
+        _toggleOn = toggleOn
+        _selectedDayString = State(initialValue: Calendar.current.component(.weekday, from: Date()) - 1)
+    }
     /// Computed Property
     var selectedDay: Day {
         switch selectedDayString {
-            case 0:
-                return .SUNDAY([])
-            case 1:
-                return .MONDAY([])
-            case 2:
-                return .TUESDAY([])
-            case 3:
-                return .WEDNESDAY([])
-            case 4:
-                return .THURSDAY([])
-            case 5:
-                return .FRIDAY([])
-            default:
-                return .SATURDAY([])
+        case 0:
+            return .SUNDAY([])
+        case 1:
+            return .MONDAY([])
+        case 2:
+            return .TUESDAY([])
+        case 3:
+            return .WEDNESDAY([])
+        case 4:
+            return .THURSDAY([])
+        case 5:
+            return .FRIDAY([])
+        default:
+            return .SATURDAY([])
         }
     }
     var day: Day {
@@ -66,56 +68,56 @@ struct AddDailyActivityView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             VStack(alignment: .leading, spacing: 30) {
-//                Button {
-//                    dismiss()
-//                } label: {
-//                    Image(systemName: "chevron.left")
-//                        .resizable()
-//                        .fontWeight(.medium)
-//                        .foregroundStyle(Color.black)
-//                        .frame(width: 15, height: 15)
-//                    TextHeadline(
-//                        text: "Pengaturan",
-//                        size: 20,
-//                        color: "Black",
-//                        transparency: 1.0,
-//                        weight: "Light"
-//                    )
-//                }
+                //                Button {
+                //                    dismiss()
+                //                } label: {
+                //                    Image(systemName: "chevron.left")
+                //                        .resizable()
+                //                        .fontWeight(.medium)
+                //                        .foregroundStyle(Color.black)
+                //                        .frame(width: 15, height: 15)
+                //                    TextHeadline(
+                //                        text: "Pengaturan",
+                //                        size: 20,
+                //                        color: "Black",
+                //                        transparency: 1.0,
+                //                        weight: "Light"
+                //                    )
+                //                }
                 HStack {
-//                    TextHeadline(
-//                        text: "Jadwal",
-//                        size: 36,
-//                        color: "Black",
-//                        transparency: 1.0,
-//                        weight: "Light"
-//                    )
+                    //                    TextHeadline(
+                    //                        text: "Jadwal",
+                    //                        size: 36,
+                    //                        color: "Black",
+                    //                        transparency: 1.0,
+                    //                        weight: "Light"
+                    //                    )
                     Spacer()
                     ZStack {
-                                        Capsule()
-                                            .frame(width: 80, height: 44)
-                                            .foregroundColor(Color.gray)
-                                        ZStack {
-                                            Circle()
-                                                .frame(width: 40, height: 40)
-                                                .foregroundColor(.white)
-                                            Image(
-                                                systemName: toggleOn
-                                                ? "figure.and.child.holdinghands"
-                                                : "figure.child.and.lock.open")
-                                        }
-                                        .shadow(
-                                            color: .black.opacity(0.14), radius: 4,
-                                            x: 0, y: 2
-                                        )
-                                        .offset(x: toggleOn ? 18 : -18)
-                                        .padding(24)
-                                        .animation(.spring(duration: 0.25), value: toggleOn)
-                                    }
-                                    .onTapGesture {
-                                        toggleOn.toggle()
-                                    }
-                                    .animation(.spring(duration: 0.25), value: toggleOn)
+                        Capsule()
+                            .frame(width: 80, height: 44)
+                            .foregroundColor(Color.gray)
+                        ZStack {
+                            Circle()
+                                .frame(width: 40, height: 40)
+                                .foregroundColor(.white)
+                            Image(
+                                systemName: toggleOn
+                                ? "figure.and.child.holdinghands"
+                                : "figure.child.and.lock.open")
+                        }
+                        .shadow(
+                            color: .black.opacity(0.14), radius: 4,
+                            x: 0, y: 2
+                        )
+                        .offset(x: toggleOn ? 18 : -18)
+                        .padding(24)
+                        .animation(.spring(duration: 0.25), value: toggleOn)
+                    }
+                    .onTapGesture {
+                        toggleOn.toggle()
+                    }
+                    .animation(.spring(duration: 0.25), value: toggleOn)
                 }
                 .padding(.top, 50)
             }
@@ -153,7 +155,7 @@ struct AddDailyActivityView: View {
                     .padding(15)
                     .background (
                         RoundedRectangle(cornerRadius: 10)
-                            
+                        
                             .fill(Color(hex: "F7F5F0", transparency: 1.0))
                     )
                     ZStack {
@@ -226,7 +228,7 @@ struct AddDailyActivityView: View {
                 .background(
                     RoundedRectangle(cornerRadius: 30)
                         .fill(Color(hex: "BDD4CE", transparency: 1.0)))
-
+                
                 // View Kanan (Daftar aktivitas)
                 VStack(alignment: .leading) {
                     HStack {
@@ -243,6 +245,7 @@ struct AddDailyActivityView: View {
                         Spacer()
                         Button {
                             isAdd = true
+                            activityToEdit = nil
                         } label: {
                             RoundedRectangle(cornerRadius: 10)
                                 .fill(
@@ -269,7 +272,7 @@ struct AddDailyActivityView: View {
                         RoundedRectangle(cornerRadius: 14)
                             .fill(Color(hex: "E0E0E1", transparency: 1.0))
                     )
-
+                    
                     ScrollView {
                         LazyVStack(spacing: 0) {
                             
@@ -281,15 +284,26 @@ struct AddDailyActivityView: View {
                                             self.scheduleManager.addActivity(activity, day: self.day)
                                         }
                                         .overlay(
-                                            Button(role: .destructive) {
-                                                self.activitiesManager.removeActivity(index)
-                                            }
-                                            label: {
-                                                Label("", systemImage: "trash")
+                                            HStack {
+                                                Button {
+                                                    self.activitiesManager.removeActivity(index)
+                                                } label: {
+                                                    Label("", systemImage: "trash")
+                                                }
+                                                .padding(.leading)
+                                                
+                                                Spacer()
+                                                Button {
+                                                    selectedActivity = self.activitiesManager.activities[index]
+                                                    showEditActivityView = true
+                                                } label: {
+                                                    Label("", systemImage: "pencil")
+                                                }
+                                                .padding(.trailing, viewPortWidth * 0.03)
                                             }, alignment: .leading
                                         )
                                 }
-                                    
+                                
                             }
                         }
                     }
@@ -309,12 +323,14 @@ struct AddDailyActivityView: View {
                 .ignoresSafeArea()
         )
         .navigationBarBackButtonHidden(true)
-        .sheet(isPresented: $isAdd) {
+        .sheet(isPresented: $isAdd){
             AddActivityView()
         }
+        .sheet(isPresented: $showEditActivityView){
+            AddActivityView(activityToEdit: selectedActivity, isEditing: true)
+        }
+        
     }
+  
+    
 }
-
-//#Preview {
-//    AddDailyActivityView(toggle)
-//}
