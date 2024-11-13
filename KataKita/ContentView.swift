@@ -23,7 +23,7 @@ struct ContentView: View {
             Picker("Select View", selection: $selectedSegment) {
                 Text("JADWAL").tag(2)
                 Text("AAC").tag(0)
-                Text("BELAJAR").tag(1)
+                Text("PECS").tag(1)
 
             }
             .pickerStyle(SegmentedPickerStyle())

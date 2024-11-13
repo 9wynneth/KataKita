@@ -372,7 +372,8 @@ struct BetterAACView: View {
                             Alert(
                                 title: Text("Kotak Kata Penuh"),
                                 message: Text(
-                                    "Kamu hanya bisa memilih \(self.aacViewModel.cards) kata. Hapus kata yang sudah dipilih untuk memilih kata baru."
+//                                    "Kamu hanya bisa memilih \(self.aacViewModel.cards.count) kata. Hapus kata yang sudah dipilih untuk memilih kata baru."
+                                    "Kamu hanya bisa memilih 10 kata. Hapus kata yang sudah dipilih untuk memilih kata baru."
                                 ),
                                 dismissButton: .default(
                                     Text("OK"),

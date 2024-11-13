@@ -408,7 +408,6 @@
 
 "Kotak Kata Penuh" = "Word Box Full";
 "Kamu hanya bisa memilih 10 kata. Hapus kata yang sudah dipilih untuk memilih kata baru." = "You can only choose 10 words. Delete selected words to choose new one";
-
 "Hitam" = "Black";
 "Cokelat" = "Chocolate";
 "Oranye" = "Orange";
@@ -418,6 +417,7 @@
 "Biru" = "Blue";
 "Hijau" = "Green";
 "Kuning" = "Yellow";
+"Putih" = "White";
 
 "water" = "air";
 "address" = "alamat";
