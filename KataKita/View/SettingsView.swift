@@ -56,10 +56,14 @@ struct SettingsView: View {
                 ToolbarItem(placement: .principal) {
                     HStack {
                         Image(systemName: "gearshape.fill")
+                            .foregroundColor(.white)
                         Text("Pengaturan")
-                            .font(.headline)                    }
+                            .font(.headline)
+                            .foregroundColor(.white)
+                    }
                 }
             }
+            .background(Color.black)
             .onAppear(perform: checkPersonalVoice)
             .onChange(of: viewModel.userProfile.sound) {
                 if viewModel.userProfile.sound {
