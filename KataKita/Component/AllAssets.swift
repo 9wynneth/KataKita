@@ -109,7 +109,7 @@ struct AllAssets {
         "BOY_MAKAN", "BOY_MAU", "BOY_MEMBACA", "BOY_MENGANGKAT",
         "BOY_MENGUNYAH", "BOY_MINUM", "BOY_SAKIT", "BOY_SAYA", "BOY_SIAPA",
         "BOY_SUKA", "BOY_TIDAK MAU", "BOY_TIDAK SUKA", "BOY_TIDAK",
-        "GIRL_MENGANTUK", "BOY_GATAL",
+        "BOY_MENGANTUK", "BOY_GATAL",
     ]
 
     let girlAssets: [String] = [
@@ -120,11 +120,30 @@ struct AllAssets {
         "GIRL_SUKA", "GIRL_TIDAK MAU", "GIRL_TIDAK SUKA", "GIRL_TIDAK",
         "GIRL_MENGANTUK", "GIRL_GATAL",
     ]
+    
+    let girlEnglishAssets: [String] = [
+        "GIRL_TAKE", "GIRL_THROW", "GIRL_SHE", "GIRL_PLAY", "GIRL_WHERE",
+        "GIRL_SIT", "GIRL_YES", "GIRL_YOU", "GIRL_WHEN", "GIRL_US",
+        "GIRL_EAT", "GIRL_WANT", "GIRL_READ", "GIRL_LIFT",
+        "GIRL_CHEW", "GIRL_DRINK", "GIRL_SICK", "GIRL_I", "GIRL_WHO",
+        "GIRL_LIKE", "GIRL_DONT WANT", "GIRL_DONT LIKE", "GIRL_NO",
+        "GIRL_SLEEPY", "GIRL_itchy",
+    ]
+    
+    let boyEnglishAssets: [String] = [
+        "BOY_TAKE", "BOY_THROW", "BOY_SHE", "BOY_PLAY", "BOY_WHERE",
+        "BOY_SIT", "BOY_YES", "BOY_YOU", "BOY_WHEN", "BOY_US",
+        "BOY_EAT", "BOY_WANT", "BOY_READ", "BOY_LIFT",
+        "BOY_CHEW", "BOY_DRINK", "BOY_SICK", "BOY_I", "BOY_WHO",
+        "BOY_LIKE", "BOY_DONT WANT", "BOY_DONT LIKE", "BOY_NO",
+        "BOY_SLEEPY", "BOY_ITCHY",
+    ]
 
     let genderAssets: [String] = [
         "ambil", "buang", "dia", "bermain", "dimana", "duduk", "iya", "kamu",
         "kapan", "kita", "makan", "mau", "membaca", "mengangkat", "mengunyah",
         "minum", "sakit", "saya", "siapa", "suka", "tidak mau", "tidak suka",
-        "tidak", "mengantuk", "gatal",
+        "tidak", "mengantuk", "gatal", "take", "throw", "she", "play", "where", "sit", "yes", "you",
+        "when", "us", "eat", "want", "read", "lift", "chew", "drink", "sick", "i", "who", "like", "dont want", "dont like", "no", "sleepy", "itchy",
     ]
 }
