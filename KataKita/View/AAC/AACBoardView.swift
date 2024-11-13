@@ -78,7 +78,6 @@ struct AACBoardView: View {
                                 ) {
                                     if self.pecs {
                                         self.pecsViewModel.cardHandler(row)
-                                        SpeechManager.shared.speakCardAAC(row.name)
                                 
                                     }
                                     else {
