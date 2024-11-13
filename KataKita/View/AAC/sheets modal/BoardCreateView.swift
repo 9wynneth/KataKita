@@ -13,63 +13,113 @@ struct BoardCreateView: View {
     
     var body: some View {
         NavigationView {
-            Form {
-                Section(header: Text("Nama Board")) {
-                    TextField("Masukkan nama board", text: $boardName)
-                }
+            ZStack {
+                Color(hex: "BDD4CE", transparency: 1) // Background color for the whole view
+                    .ignoresSafeArea()
                 
-                Section(header: Text("Pilih Icon / Gambar")) {
-                    VStack {
-                        HStack {
-                            Text("Icon yang dipilih: ")
-                            Spacer()
-                            NavigationLink("Pilih Icon") {
-                                SearchIconView(selectedIcon: $selectedIcon)
+                VStack(spacing: 20) {
+                    Text("Buat Board Baru")
+                        .font(.system(size: 24, weight: .bold))
+                        .foregroundColor(.white)
+                        .padding(.top, 20)
+                        .padding(.bottom, 10)
+                    
+                    VStack(spacing: 16) {
+                        // Nama Board Section
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("NAMA BOARD")
+                                .font(.caption)
+                                .foregroundColor(.white)
+                            TextField("Masukkan nama board", text: $boardName)
+                                .padding()
+                                .background(Color.white)
+                                .cornerRadius(10)
+                                .shadow(radius: 1)
+                        }
+                        
+                        // Pilih Icon / Gambar Section
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("PILIH ICON / GAMBAR")
+                                .font(.caption)
+                                .foregroundColor(.white)
+                            
+                            HStack {
+                                Text("Icon yang dipilih :")
+                                    .foregroundColor(.black)
+                                Spacer()
+                                NavigationLink(destination: SearchIconView(selectedIcon: $selectedIcon)) {
+                                    Image(systemName: "chevron.right") // Replacing text with an arrow icon
+                                        .foregroundColor(.black)
+                                }
+                                .foregroundColor(.black)
+                            }
+                            .padding()
+                            .background(Color.white)
+                            .cornerRadius(10)
+                            .shadow(radius: 1)
+                            
+                            // Display selected icon if available
+                            if !selectedIcon.isEmpty {
+                                HStack{
+                                    Spacer()
+                                    CustomButtonBoard(
+                                        icon: getDisplayIcon(for: selectedIcon),
+                                        text: getDisplayText(for: selectedIcon),
+                                        width: 100,
+                                        height: 100,
+                                        font: 20,
+                                        iconWidth: 50,
+                                        iconHeight: 50,
+                                        bgColor: "#FFFFFF",
+                                        bgTransparency: 1.0,
+                                        fontColor: "#000000",
+                                        fontTransparency: 1.0,
+                                        cornerRadius: 20,
+                                        isSystemImage: selectedIcon.contains("person.fill")
+                                    )
+                                    .padding(.top, 8)
+                                    Spacer()
+                                }
                             }
                         }
-                        if !selectedIcon.isEmpty {
-                            CustomButtonBoard(
-                                icon: (getDisplayIcon(for: selectedIcon)),
-                                text: (getDisplayText(for: selectedIcon)),
-                                width: 100,
-                                height: 100,
-                                font: 20,
-                                iconWidth: 50,
-                                iconHeight: 50,
-                                bgColor: "#FFFFFF",
-                                bgTransparency: 1.0,
-                                fontColor: "#000000",
-                                fontTransparency: 1.0,
-                                cornerRadius: 20,
-                                isSystemImage: selectedIcon.contains("person.fill")
-                            )
+                        
+                        // Pilih Ukuran Grid Section
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("PILIH UKURAN GRID")
+                                .font(.caption)
+                                .foregroundColor(.white)
+                            
+                            Picker("Ukuran Grid", selection: $gridSize) {
+                                Text("4 x 5").tag("4 x 5")
+                                Text("4 x 7").tag("4 x 7")
+                                Text("5 x 8").tag("5 x 8")
+                            }
+                            .pickerStyle(SegmentedPickerStyle())
+                            .background(Color.white)
+                            .cornerRadius(10)
+                            .shadow(radius: 1)
+                            .onChange(of: gridSize) { newValue in
+                                switch newValue {
+                                case "4 x 5":
+                                    totalgrid = 20
+                                case "4 x 7":
+                                    totalgrid = 28
+                                case "5 x 8":
+                                    totalgrid = 40
+                                default:
+                                    totalgrid = 20
+                                }
+                            }
                         }
                     }
-                }
-                
-                Section(header: Text("Pilih Ukuran Grid")) {
-                    Picker("Ukuran Grid", selection: $gridSize) {
-                        Text("4 x 5").tag("4 x 5")
-                        Text("4 x 7").tag("4 x 7")
-                        Text("5 x 8").tag("5 x 8")
-                    }
-                    .pickerStyle(SegmentedPickerStyle())
-                    .onChange(of: gridSize) { newValue in
-                        switch newValue {
-                        case "4 x 5":
-                            totalgrid = 20
-                        case "4 x 7":
-                            totalgrid = 28
-                        case "5 x 8":
-                            totalgrid = 40
-                        default:
-                            totalgrid = 20
-                        }
-                    }
+                    .padding()
+                    .background(Color("D6E3DF")) // Inner card background
+                    .cornerRadius(20)
+                    .padding(.horizontal)
+                    
+                    Spacer()
                 }
             }
-            
-            .navigationBarTitle("Buat Board Baru", displayMode: .inline)
             .navigationBarItems(
                 trailing: Button("Selesai") {
                     if !boardName.isEmpty {
@@ -78,28 +128,14 @@ struct BoardCreateView: View {
                         let localizedIcon = NSLocalizedString(selectedIcon.uppercased(), comment: "")
                         let localizedIcon2 = NSLocalizedString(selectedIcon, comment: "")
                         if Locale.current.languageCode == "en" {
-                            
                             if viewModel.userProfile.gender == true {
-                                if selectedIcon.hasPrefix("GIRL_") {
-                                    selectedIcon = localizedIcon
-                                } else {
-                                    selectedIcon = localizedIcon2
-                                    
-                                }
+                                selectedIcon = selectedIcon.hasPrefix("GIRL_") ? localizedIcon : localizedIcon2
+                            } else {
+                                selectedIcon = selectedIcon.hasPrefix("BOY_") ? localizedIcon : localizedIcon2
                             }
-                            else {
-                                if selectedIcon.hasPrefix("BOY_") {
-                                    selectedIcon = localizedIcon
-                                } else {
-                                    selectedIcon = localizedIcon2
-                                    
-                                }
-                            }
-                        }
-                        else {
+                        } else {
                             selectedIcon = localizedIcon2
                         }
-                        print("INI ISINYA " + selectedIcon)
                         boardManager.addBoard(
                             Board(
                                 cards: Array(repeating: [], count: gridRows),
@@ -108,11 +144,9 @@ struct BoardCreateView: View {
                                 gridSize: Grid(row: gridColumns, column: gridRows)
                             )
                         )
-                        
                         addingBoard = false
                         presentationMode.wrappedValue.dismiss()
                     }
-
                 }
             )
         }
@@ -122,68 +156,17 @@ struct BoardCreateView: View {
         if Locale.current.languageCode == "en" {
             let localizedIcon = NSLocalizedString(icon, comment: "")
             let localizedIcon2 = NSLocalizedString(localizedIcon, comment: "")
-            if viewModel.userProfile.gender == true {
-                if icon.hasPrefix("GIRL_") {
-                    return localizedIcon2
-                } else {
-                    return icon
-                    
-                }
-            }
-            else {
-                if icon.hasPrefix("BOY_") {
-                    return localizedIcon2
-                } else {
-                    return icon
-                    
-                }
-            }
+            return (viewModel.userProfile.gender && icon.hasPrefix("GIRL_")) || (!viewModel.userProfile.gender && icon.hasPrefix("BOY_")) ? localizedIcon2 : icon
+        } else {
+            return viewModel.userProfile.gender && icon.hasPrefix("GIRL_") || !viewModel.userProfile.gender && icon.hasPrefix("BOY_") ? icon.replacingOccurrences(of: "GIRL_", with: "").replacingOccurrences(of: "BOY_", with: "") : icon
         }
-        else {
-            if viewModel.userProfile.gender == true {
-                if icon.hasPrefix("GIRL_") {
-                    return icon.replacingOccurrences(of: "GIRL_", with: "")
-                } else {
-                    return icon
-                    
-                }
-            }
-            else {
-                if icon.hasPrefix("BOY_") {
-                    return icon.replacingOccurrences(of: "BOY_", with: "")
-                } else {
-                    return icon
-                    
-                }
-            }
-        }
-        
     }
     
     private func getDisplayIcon(for icon: String) -> String {
-        if Locale.current.languageCode == "en" {
-            let localizedIcon = NSLocalizedString(icon.uppercased(), comment: "")
-            if viewModel.userProfile.gender == true {
-                if icon.hasPrefix("GIRL_") {
-                    return localizedIcon
-                } else {
-                    return icon
-                    
-                }
-            }
-            else {
-                if icon.hasPrefix("BOY_") {
-                    return localizedIcon
-                } else {
-                    return icon
-                    
-                }
-            }
-        }
-        else {
-            return icon
-        }
+        return Locale.current.languageCode == "en" && ((viewModel.userProfile.gender && icon.hasPrefix("GIRL_")) || (!viewModel.userProfile.gender && icon.hasPrefix("BOY_"))) ? NSLocalizedString(icon.uppercased(), comment: "") : icon
     }
+
+
 
     
     // MARK: - SearchIconView for Icon Selection
