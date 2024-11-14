@@ -41,23 +41,20 @@ struct CardUpdateView: View {
                 }
                 
                 HStack {
-                    if let stickerURL = stickerManager.stickerImage,
-                       let stickerImage = UIImage(contentsOfFile: stickerURL.path) {
+                    if let data = stickerManager.stickerImage,
+                       let uiImage = UIImage(data: data) {
                         // Display the sticker image if available
-                        Image(uiImage: stickerImage)
+                        Image(uiImage: uiImage)
                             .resizable()
                             .scaledToFit()
                             .frame(width: 50, height: 50)
                             .cornerRadius(20)
                             .onAppear {
-                                guard let data = stickerImage.pngData() else {
-                                    return
-                                }
                                 self.type = .image(data)
                                 isImageType = true
                                 print("STICKER")
                             }
-                    } else if let imageURL = originalImageManager.imageFromLocal, let uiImage = UIImage(contentsOfFile: imageURL.path) {
+                    } else if let data = originalImageManager.imageFromLocal, let uiImage = UIImage(data: data) {
                         // Fallback to image from local if sticker is not set
                         Image(uiImage: uiImage)
                             .resizable()
@@ -65,9 +62,6 @@ struct CardUpdateView: View {
                             .frame(width: 50, height: 50)
                             .cornerRadius(20)
                             .onAppear {
-                                guard let data = uiImage.pngData() else {
-                                    return
-                                }
                                 self.type = .image(data)
                                 isImageType = true
                             }

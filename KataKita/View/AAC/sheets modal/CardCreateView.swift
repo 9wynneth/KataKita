@@ -93,23 +93,20 @@ struct CardCreateView: View {
                                         .frame(height: 130)
                                     
                                     HStack {
-                                        if let stickerURL = stickerManager.stickerImage,
-                                           let stickerImage = UIImage(contentsOfFile: stickerURL.path) {
+                                        if let data = self.stickerManager.stickerImage,
+                                           let uIImage = UIImage(data: data) {
                                             // Display the sticker image if available
-                                            Image(uiImage: stickerImage)
+                                            Image(uiImage: uIImage)
                                                 .resizable()
                                                 .scaledToFit()
                                                 .frame(width: 50, height: 50)
                                                 .cornerRadius(20)
                                                 .onAppear {
-                                                    guard let data = stickerImage.pngData() else {
-                                                        return
-                                                    }
                                                     self.type = .image(data)
-                                                    isImageType = true
+                                                    self.isImageType = true
                                                 }
-                                        } else if let imageURL = originalImageManager.imageFromLocal,
-                                                  let uiImage = UIImage(contentsOfFile: imageURL.path) {
+                                        } else if let data = self.originalImageManager.imageFromLocal,
+                                                  let uiImage = UIImage(data: data) {
                                             // Fallback to image from local if sticker is not set
                                             Image(uiImage: uiImage)
                                                 .resizable()
@@ -117,11 +114,8 @@ struct CardCreateView: View {
                                                 .frame(width: 50, height: 50)
                                                 .cornerRadius(20)
                                                 .onAppear {
-                                                    guard let data = uiImage.pngData() else {
-                                                        return
-                                                    }
                                                     self.type = .image(data)
-                                                    isImageType = true
+                                                    self.isImageType = true
                                                 }
                                         } else {
                                             // Display icons if no image is selected

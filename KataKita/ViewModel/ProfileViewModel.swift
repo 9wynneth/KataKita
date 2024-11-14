@@ -4,6 +4,18 @@ import SwiftUI
 class ProfileViewModel {
     var userProfile = UserProfile()
     
+    func load() {
+        let defaults = UserDefaults.standard
+        
+        if let raw = defaults.object(forKey: "user") as? Data {
+            guard let user = try? JSONDecoder().decode(UserProfile.self, from: raw) else {
+                return
+            }
+            self.userProfile = user
+        } else {
+            self.userProfile = UserProfile()
+        }
+    }
     func updateProfile(name: String, gender: Bool, sound: Bool) {
         userProfile.name = name
         userProfile.gender = gender

@@ -10,8 +10,13 @@ import SwiftUI
 
 struct SplashScreen: View {
     @AppStorage("boarded") private var boarded = false
-    
+    @AppStorage("activitied") private var activitied = false
+
+    @State private var activitiesManager: ActivitiesManager
     @State private var boardManager: BoardManager
+    
+    @State private var scheduleManager: ScheduleManager
+    @State private var stateManager: StateManager
     @State private var profileManager: ProfileViewModel
 
     // Track if the splash screen is visible
@@ -27,7 +32,11 @@ struct SplashScreen: View {
     @State private var backgroundColor: Color = .white
     
     init(_ model: ModelContext) {
+        self._activitiesManager = State(initialValue: ActivitiesManager(model))
         self._boardManager = State(initialValue: BoardManager(model))
+        
+        self._scheduleManager = State(initialValue: ScheduleManager())
+        self._stateManager  = State(initialValue: StateManager())
         self._profileManager = State(initialValue: ProfileViewModel())
     }
 
@@ -112,25 +121,28 @@ struct SplashScreen: View {
                 ContentView()
             }
         }
+        .environment(self.activitiesManager)
         .environment(self.boardManager)
+        .environment(self.scheduleManager)
+        .environment(self.stateManager)
         .environment(self.profileManager)
         .onAppear {
-            let defaults = UserDefaults.standard
-            
-            if let raw = defaults.object(forKey: "user") as? Data {
-                guard let user = try? JSONDecoder().decode(UserProfile.self, from: raw) else {
-                    return
-                }
-                self.profileManager.userProfile = user
-            } else {
-                self.profileManager.userProfile = UserProfile()
-            }
+            self.profileManager.load()
+            self.scheduleManager.load()
+            self.stateManager.load()
             
             if !self.boarded {
                 self.boardManager.populate()
                 self.boarded = true
             }
             self.boardManager.load()
+            
+            if !self.activitied {
+                self.activitiesManager.populate()
+                self.activitied = true
+            }
+            self.activitiesManager.load()
+            
             DispatchQueue.main.asyncAfter(deadline: .now() + 4.5) {
                 self.isActive = false
             }

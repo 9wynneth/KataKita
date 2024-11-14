@@ -4,20 +4,19 @@
 //
 //  Created by Alvito Dwi Heldy Muhammad on 11/10/24.
 
-import Foundation
-import UIKit
-
+import SwiftUI
+import SwiftData
 
 // CRUD for Activity : Editing image, name, sequence
 
 @Observable
 class ActivityManager {
     var activity: Activity
-    
-    init(_ activity: Activity = Activity(id: UUID(), name: "new activity", image: "", ruangan: Ruangan(id: UUID(), name: ""), sequence: [])) {
+
+    init(_ activity: Activity = Activity(name: "new activity", sequence: [])) {
         self.activity = activity
     }
-    
+
     var steps: [Step] {
         return activity.sequence
     }
@@ -25,41 +24,38 @@ class ActivityManager {
     func addStep(_ step: Step) {
         self.activity.sequence.append(step)
     }
-    
-    func updateStep(_ updatedStep: Step, at index: Int) {
-            if self.activity.sequence.indices.contains(index) {
-                self.activity.sequence[index] = updatedStep
-            }
-        }
-    
-    func updateStepDescription(description: String, at index: Int) {
-            if self.activity.sequence.indices.contains(index) {
-                self.activity.sequence[index].description = description
-            }
-        }
 
     func removeStep(_ index: Int) {
         if self.activity.sequence.count > index {
             self.activity.sequence.remove(at: index)
         }
     }
-    
-    func setName(name: String) {
+
+    func setName(_ name: String) {
         self.activity.name = name
     }
-    
-    func setImage(image: String) {
-        self.activity.image = image
+
+    func setType(_ type: ActivityType?) {
+        self.activity.type = type
     }
-    
-    func setStepImage(image: String, at index: Int) {
-            if self.activity.sequence.indices.contains(index) {
-                self.activity.sequence[index].image = image
-            }
+
+    func setStep(_ updatedStep: Step, at index: Int) {
+        if self.activity.sequence.indices.contains(index) {
+            self.activity.sequence[index] = updatedStep
         }
- 
+    }
+    func setStepDescription(description: String, at index: Int) {
+        if self.activity.sequence.indices.contains(index) {
+            self.activity.sequence[index].description = description
+        }
+    }
+    func setStepType(_ type: ActivityType?, at index: Int) {
+        if self.activity.sequence.indices.contains(index) {
+            self.activity.sequence[index].type = type
+        }
+    }
+
     func resetSteps() {
-        activity.sequence.removeAll()
+        self.activity.sequence.removeAll()
     }
 }
-

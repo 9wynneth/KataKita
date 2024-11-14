@@ -12,7 +12,6 @@
 		1E5863782CB63C640080373A /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5863772CB63C600080373A /* CustomButton.swift */; };
 		1E58637C2CB681130080373A /* ActivityCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E58637B2CB6810E0080373A /* ActivityCard.swift */; };
 		1E5863812CB6B9B30080373A /* CustomButtonSide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5863802CB6B9A70080373A /* CustomButtonSide.swift */; };
-		1E5863842CB6C08C0080373A /* ActivitySequenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5863832CB6C0840080373A /* ActivitySequenceView.swift */; };
 		1E84D8972CB4D99A0078B648 /* KataKitaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E84D8962CB4D99A0078B648 /* KataKitaApp.swift */; };
 		1E84D8992CB4D99A0078B648 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E84D8982CB4D99A0078B648 /* ContentView.swift */; };
 		1E84D89B2CB4D99A0078B648 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E84D89A2CB4D99A0078B648 /* Item.swift */; };
@@ -123,7 +122,6 @@
 		1E5863772CB63C600080373A /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		1E58637B2CB6810E0080373A /* ActivityCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityCard.swift; sourceTree = "<group>"; };
 		1E5863802CB6B9A70080373A /* CustomButtonSide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtonSide.swift; sourceTree = "<group>"; };
-		1E5863832CB6C0840080373A /* ActivitySequenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitySequenceView.swift; sourceTree = "<group>"; };
 		1E84D8932CB4D99A0078B648 /* KataKita.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KataKita.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1E84D8962CB4D99A0078B648 /* KataKitaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KataKitaApp.swift; sourceTree = "<group>"; };
 		1E84D8982CB4D99A0078B648 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -366,7 +364,6 @@
 			children = (
 				1E2640922CE25774009AA5BC /* SheetAddActivitynSequence.swift */,
 				1EEC6EF12CDE642C0012965C /* SettingActivityView.swift */,
-				1E5863832CB6C0840080373A /* ActivitySequenceView.swift */,
 				DAE313002CB8375C001DD0A0 /* AddDailyActivityView.swift */,
 				1EBBC2332CB78EF200673D97 /* DailyActivityView.swift */,
 			);
@@ -412,8 +409,8 @@
 				1ECB573A2CD9C325009291E8 /* PECSViewModel.swift */,
 				1EA097D42CD9B34700B76917 /* SecurityManager.swift */,
 				DA34C3892CD338F800ADD738 /* BoardManager.swift */,
-				DAE313022CB84EC4001DD0A0 /* ActivityManager.swift */,
 				DAE313042CB85677001DD0A0 /* ScheduleManager.swift */,
+				DAE313022CB84EC4001DD0A0 /* ActivityManager.swift */,
 				DAE313062CB86921001DD0A0 /* ActivitiesManager.swift */,
 				DAE1E7932CC0474400F5F9D1 /* StateManager.swift */,
 				9B831C102CDA934A0065536F /* ProfileViewModel.swift */,
@@ -579,7 +576,6 @@
 				1E2640932CE25774009AA5BC /* SheetAddActivitynSequence.swift in Sources */,
 				1EEC6EF02CDDC73D0012965C /* SplashScreenView.swift in Sources */,
 				DAE313052CB85677001DD0A0 /* ScheduleManager.swift in Sources */,
-				1E5863842CB6C08C0080373A /* ActivitySequenceView.swift in Sources */,
 				1EA097D52CD9B34A00B76917 /* SecurityManager.swift in Sources */,
 				1EA095672CBE6B8500B76917 /* TextContent.swift in Sources */,
 				DA534F982CE3D67700D55BAE /* AACViewModel.swift in Sources */,

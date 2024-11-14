@@ -11,52 +11,52 @@ struct AddDailyActivityView: View {
     @Environment(ScheduleManager.self) private var scheduleManager
     @Environment(ActivitiesManager.self) private var activitiesManager
     @Environment(StateManager.self) private var stateManager
-    
     @Environment(\.dismiss) var dismiss
+    
+    @Binding var toggleOn: Bool
+    
     @State private var showEditActivityView = false
-      @State private var selectedActivity: Activity?
+    @State private var selectedActivity: Activity?
     @State private var isAdd = false
     @State private var searchText: String = ""
     @State private var selectedDayString: Int = 0
-    @Binding var toggleOn: Bool
     @State private var activityToEdit: Activity?
     @State private var editUlang = false
 
-    
     // Viewport size
     private let viewPortWidth: CGFloat = UIScreen.main.bounds.width - 100
     private let viewPortHeight: CGFloat = UIScreen.main.bounds.height - 100
-    
+
     init(toggleOn: Binding<Bool>) {
         _toggleOn = toggleOn
-        _selectedDayString = State(initialValue: Calendar.current.component(.weekday, from: Date()) - 1)
+        _selectedDayString = State(
+            initialValue: Calendar.current.component(.weekday, from: Date()) - 1
+        )
     }
-    /// Computed Property
-    var selectedDay: Day {
-        switch selectedDayString {
-        case 0:
-            return .SUNDAY([])
-        case 1:
-            return .MONDAY([])
-        case 2:
-            return .TUESDAY([])
-        case 3:
-            return .WEDNESDAY([])
-        case 4:
-            return .THURSDAY([])
-        case 5:
-            return .FRIDAY([])
-        default:
-            return .SATURDAY([])
+    
+    var activities: [Activity] {
+        let ids = switch self.day {
+            case .SUNDAY: self.scheduleManager.schedule.sunday
+            case .MONDAY: self.scheduleManager.schedule.monday
+            case .TUESDAY: self.scheduleManager.schedule.tuesday
+            case .WEDNESDAY: self.scheduleManager.schedule.wednesday
+            case .THURSDAY: self.scheduleManager.schedule.thursday
+            case .FRIDAY: self.scheduleManager.schedule.friday
+            case .SATURDAY: self.scheduleManager.schedule.saturday
         }
+        
+        return self.activitiesManager.activities.filter({ ids.contains($0.id) })
     }
     var day: Day {
-        return self.scheduleManager.schedules.first(where: {
-            $0.day == selectedDay
-        })?.day ?? selectedDay
-    }
-    var extractActivity: [Activity] {
-        return self.day.extractActivities()
+        switch self.selectedDayString {
+            case 0: return .SUNDAY
+            case 1: return .MONDAY
+            case 2: return .TUESDAY
+            case 3: return .WEDNESDAY
+            case 4: return .THURSDAY
+            case 5: return .FRIDAY
+            default: return .SATURDAY
+        }
     }
     var filteredActivities: [Activity] {
         if searchText.isEmpty {
@@ -67,65 +67,52 @@ struct AddDailyActivityView: View {
             }
         }
     }
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            VStack(alignment: .leading, spacing: 30) {
-                //                Button {
-                //                    dismiss()
-                //                } label: {
-                //                    Image(systemName: "chevron.left")
-                //                        .resizable()
-                //                        .fontWeight(.medium)
-                //                        .foregroundStyle(Color.black)
-                //                        .frame(width: 15, height: 15)
-                //                    TextHeadline(
-                //                        text: "Pengaturan",
-                //                        size: 20,
-                //                        color: "Black",
-                //                        transparency: 1.0,
-                //                        weight: "Light"
-                //                    )
-                //                }
-                HStack {
-                    //                    TextHeadline(
-                    //                        text: "Jadwal",
-                    //                        size: 36,
-                    //                        color: "Black",
-                    //                        transparency: 1.0,
-                    //                        weight: "Light"
-                    //                    )
-                    Spacer()
+            // MARK: - Header
+            HStack {
+                VStack(alignment: .leading) {
+                    TextHeadline(
+                        text: "Bank aktivitas",
+                        size: 36,
+                        color: "Black",
+                        transparency: 1.0,
+                        weight: "Light"
+                    )
+                }
+                Spacer()
+                ZStack {
+                    Capsule()
+                        .frame(width: 80, height: 44)
+                        .foregroundColor(Color.gray)
                     ZStack {
-                        Capsule()
-                            .frame(width: 80, height: 44)
-                            .foregroundColor(Color.gray)
-                        ZStack {
-                            Circle()
-                                .frame(width: 40, height: 40)
-                                .foregroundColor(.white)
-                            Image(
-                                systemName: toggleOn
+                        Circle()
+                            .frame(width: 40, height: 40)
+                            .foregroundColor(.white)
+                        Image(
+                            systemName: self.toggleOn
                                 ? "figure.and.child.holdinghands"
                                 : "figure.child.and.lock.open")
-                        }
-                        .shadow(
-                            color: .black.opacity(0.14), radius: 4,
-                            x: 0, y: 2
-                        )
-                        .offset(x: toggleOn ? 18 : -18)
-                        .padding(24)
-                        .animation(.spring(duration: 0.25), value: toggleOn)
                     }
-                    .onTapGesture {
-                        toggleOn.toggle()
-                    }
-                    .animation(.spring(duration: 0.25), value: toggleOn)
+                    .shadow(
+                        color: .black.opacity(0.14), radius: 4,
+                        x: 0, y: 2
+                    )
+                    .offset(x: self.toggleOn ? 18 : -18)
+                    .padding(24)
+                    .animation(
+                        .spring(duration: 0.25), value: self.toggleOn)
                 }
-                .padding(.top, 50)
+                .onTapGesture {
+                    self.toggleOn.toggle()
+                }
+                .animation(
+                    .spring(duration: 0.25), value: self.toggleOn)
             }
-            .padding(EdgeInsets(top: 50, leading: 50, bottom: 0, trailing: 50))
-            .frame(height: 150, alignment: .topLeading)
+            .padding(.horizontal, 45)
+            .frame(height: self.viewPortHeight * 0.15)
+            
             HStack {
                 VStack(alignment: .leading) {
                     TextHeadline(
@@ -136,7 +123,7 @@ struct AddDailyActivityView: View {
                         weight: "Light"
                     )
                     HStack(spacing: 20) {
-                        TextHeadline (
+                        TextHeadline(
                             text: "Hari",
                             size: 20,
                             color: "Black",
@@ -156,24 +143,22 @@ struct AddDailyActivityView: View {
                         .accentColor(Color(hex: "B4B4B5", transparency: 1))
                     }
                     .padding(15)
-                    .background (
+                    .background(
                         RoundedRectangle(cornerRadius: 10)
-                        
                             .fill(Color(hex: "F7F5F0", transparency: 1.0))
                     )
                     ZStack {
-                        if extractActivity.isEmpty {
+                        if activities.isEmpty {
                             TextContent(
                                 text: "Jadwal kosong",
                                 size: 20,
                                 color: "616161",
                                 weight: "Light")
-                        }
-                        else {
+                        } else {
                             ScrollView {
                                 LazyVStack(spacing: 0) {
                                     ForEach(
-                                        Array(extractActivity.enumerated()),
+                                        Array(activities.enumerated()),
                                         id: \.offset
                                     ) { index, activity in
                                         SettingActivityCard(
@@ -183,12 +168,12 @@ struct AddDailyActivityView: View {
                                                 if index < self.stateManager.index {
                                                     self.stateManager.index -= 1
                                                 }
-                                                self.scheduleManager.removeActivity(
-                                                    index: index, day: self.day)
+                                                self.scheduleManager.removeActivity(index, day: self.day)
                                             }
                                         )
                                     }
-                                }.padding(.bottom, 140)
+                                }
+                                .padding(.bottom, 140)
                             }
                         }
                         VStack(spacing: 0) {
@@ -196,7 +181,13 @@ struct AddDailyActivityView: View {
                             Rectangle()
                                 .fill(
                                     LinearGradient(
-                                        colors: [Color(hex: "BDD4CE", transparency: 0), Color(hex: "BDD4CE", transparency: 1.0)],
+                                        colors: [
+                                            Color(
+                                                hex: "BDD4CE", transparency: 0),
+                                            Color(
+                                                hex: "BDD4CE", transparency: 1.0
+                                            ),
+                                        ],
                                         startPoint: .top, endPoint: .bottom)
                                 )
                                 .frame(height: 70)
@@ -207,7 +198,7 @@ struct AddDailyActivityView: View {
                         VStack {
                             Spacer()
                             Button {
-                                self.scheduleManager.removeAll(self.day)
+                                self.scheduleManager.removeActivities(day: self.day)
                                 self.stateManager.reset()
                             } label: {
                                 RoundedRectangle(cornerRadius: 10)
@@ -235,20 +226,17 @@ struct AddDailyActivityView: View {
                 .background(
                     RoundedRectangle(cornerRadius: 30)
                         .fill(Color(hex: "BDD4CE", transparency: 1.0)))
-                
+
                 // View Kanan (Daftar aktivitas)
                 VStack(alignment: .leading) {
                     HStack {
-                        TextHeadline (
+                        TextHeadline(
                             text: "Daftar Aktivitas",
                             size: 24,
                             color: "Black",
                             transparency: 1.0,
                             weight: "Light"
                         )
-                        
-                    }
-                    HStack {
                         Spacer()
                         Button {
                             isAdd = true
@@ -279,37 +267,30 @@ struct AddDailyActivityView: View {
                         RoundedRectangle(cornerRadius: 14)
                             .fill(Color(hex: "E0E0E1", transparency: 1.0))
                     )
-                    
-                    ScrollView() {
+
+                    ScrollView {
                         LazyVStack(spacing: 0) {
-                            ForEach(Array(filteredActivities.enumerated()),
-                                    id: \.offset) { index, activity in
+                            ForEach(
+                                Array(filteredActivities.enumerated()),
+                                id: \.offset
+                            ) { index, activity in
                                 HStack {
-                                    SettingActivityCard(activity)
-                                        .onTapGesture {
-                                            self.scheduleManager.addActivity(activity, day: self.day)
+                                    SettingActivityCard(
+                                        activity,
+                                        number: index + 1,
+                                        add: {
+                                            self.scheduleManager.addActivity(activity.id, day: self.day)
+                                        },
+                                        delete: {
+                                            self.activitiesManager.removeActivity(index)
+                                        },
+                                        edit: {
+                                            selectedActivity = self.activitiesManager.activities[index]
+                                            showEditActivityView = true
                                         }
-                                        .overlay(
-                                            HStack {
-                                                Button {
-                                                    self.activitiesManager.removeActivity(index)
-                                                } label: {
-                                                    Label("", systemImage: "trash")
-                                                }
-                                                .padding(.leading)
-                                                
-                                                Spacer()
-                                                Button {
-                                                    selectedActivity = self.activitiesManager.activities[index]
-                                                    showEditActivityView = true
-                                                } label: {
-                                                    Label("", systemImage: "pencil")
-                                                }
-                                                .padding(.trailing, viewPortWidth * 0.03)
-                                            }, alignment: .leading
-                                        )
+                                    ) 
                                 }
-                                
+
                             }
                         }
                     }
@@ -320,34 +301,33 @@ struct AddDailyActivityView: View {
                     alignment: .topLeading
                 )
             }
-            .padding(EdgeInsets(top: 0, leading: 50, bottom: 50, trailing: 50))
-            .frame(height: viewPortHeight - 50)
+            .padding(.horizontal, 45)
+            .frame(maxWidth: .infinity, alignment: .topLeading)
         }
         .background(
             Rectangle()
                 .fill(Color(hex: "FBFBFB", transparency: 1.0))
                 .ignoresSafeArea()
         )
-        .navigationBarBackButtonHidden(true)
-        .sheet(isPresented: $isAdd){
-                    AddActivityView(activityToEdit: $selectedActivity, editUlang: $editUlang)
-                        .onDisappear{
-                            print("Remove Selected Activity")
-                            selectedActivity = nil
-                            editUlang = false
-                        }
-                }
-                .sheet(isPresented: $showEditActivityView){
-                    AddActivityView(activityToEdit: $selectedActivity, editUlang: $editUlang)
-                        .onDisappear{
-                            print("Remove Selected Activity")
-                            selectedActivity = nil
-                            editUlang = false
-                        }
-
-                }
-        
+        .sheet(isPresented: $isAdd) {
+            AddActivityView(
+                activityToEdit: $selectedActivity, editUlang: $editUlang
+            )
+            .onDisappear {
+                print("Remove Selected Activity")
+                selectedActivity = nil
+                editUlang = false
+            }
+        }
+        .sheet(isPresented: $showEditActivityView) {
+            AddActivityView(
+                activityToEdit: $selectedActivity, editUlang: $editUlang
+            )
+            .onDisappear {
+                print("Remove Selected Activity")
+                selectedActivity = nil
+                editUlang = false
+            }
+        }
     }
-  
-    
 }
