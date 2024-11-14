@@ -7,12 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1E2640932CE25774009AA5BC /* SheetAddActivitynSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E2640922CE25774009AA5BC /* SheetAddActivitynSequence.swift */; };
+		1E2640932CE25774009AA5BC /* AddActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E2640922CE25774009AA5BC /* AddActivityView.swift */; };
 		1E5863742CB637C00080373A /* TextHeadline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5863732CB637B90080373A /* TextHeadline.swift */; };
 		1E5863782CB63C640080373A /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5863772CB63C600080373A /* CustomButton.swift */; };
 		1E58637C2CB681130080373A /* ActivityCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E58637B2CB6810E0080373A /* ActivityCard.swift */; };
 		1E5863812CB6B9B30080373A /* CustomButtonSide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5863802CB6B9A70080373A /* CustomButtonSide.swift */; };
 		1E5863842CB6C08C0080373A /* ActivitySequenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5863832CB6C0840080373A /* ActivitySequenceView.swift */; };
+		1E5BC6D12CE4CE1D005365DB /* AddNewActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5BC6D02CE4CE1D005365DB /* AddNewActivityView.swift */; };
+		1E5BC6D32CE4E413005365DB /* UpdateDailyActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5BC6D22CE4E40C005365DB /* UpdateDailyActivityView.swift */; };
 		1E84D8972CB4D99A0078B648 /* KataKitaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E84D8962CB4D99A0078B648 /* KataKitaApp.swift */; };
 		1E84D8992CB4D99A0078B648 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E84D8982CB4D99A0078B648 /* ContentView.swift */; };
 		1E84D89B2CB4D99A0078B648 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E84D89A2CB4D99A0078B648 /* Item.swift */; };
@@ -118,12 +120,14 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		1E2640922CE25774009AA5BC /* SheetAddActivitynSequence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetAddActivitynSequence.swift; sourceTree = "<group>"; };
+		1E2640922CE25774009AA5BC /* AddActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddActivityView.swift; sourceTree = "<group>"; };
 		1E5863732CB637B90080373A /* TextHeadline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextHeadline.swift; sourceTree = "<group>"; };
 		1E5863772CB63C600080373A /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		1E58637B2CB6810E0080373A /* ActivityCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityCard.swift; sourceTree = "<group>"; };
 		1E5863802CB6B9A70080373A /* CustomButtonSide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtonSide.swift; sourceTree = "<group>"; };
 		1E5863832CB6C0840080373A /* ActivitySequenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitySequenceView.swift; sourceTree = "<group>"; };
+		1E5BC6D02CE4CE1D005365DB /* AddNewActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewActivityView.swift; sourceTree = "<group>"; };
+		1E5BC6D22CE4E40C005365DB /* UpdateDailyActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateDailyActivityView.swift; sourceTree = "<group>"; };
 		1E84D8932CB4D99A0078B648 /* KataKita.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KataKita.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1E84D8962CB4D99A0078B648 /* KataKitaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KataKitaApp.swift; sourceTree = "<group>"; };
 		1E84D8982CB4D99A0078B648 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -229,6 +233,14 @@
 				9B78DD162CBC89850069DBC5 /* SettingsView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		1E5BC6CF2CE4CDD9005365DB /* FORM */ = {
+			isa = PBXGroup;
+			children = (
+				1E5BC6D02CE4CE1D005365DB /* AddNewActivityView.swift */,
+			);
+			path = FORM;
 			sourceTree = "<group>";
 		};
 		1E84D88A2CB4D99A0078B648 = {
@@ -364,7 +376,9 @@
 		1EA097CC2CD9B0BF00B76917 /* ACTIVITY */ = {
 			isa = PBXGroup;
 			children = (
-				1E2640922CE25774009AA5BC /* SheetAddActivitynSequence.swift */,
+				1E5BC6CF2CE4CDD9005365DB /* FORM */,
+				1E2640922CE25774009AA5BC /* AddActivityView.swift */,
+				1E5BC6D22CE4E40C005365DB /* UpdateDailyActivityView.swift */,
 				1EEC6EF12CDE642C0012965C /* SettingActivityView.swift */,
 				1E5863832CB6C0840080373A /* ActivitySequenceView.swift */,
 				DAE313002CB8375C001DD0A0 /* AddDailyActivityView.swift */,
@@ -576,7 +590,7 @@
 				1EA097D32CD9B2D900B76917 /* PECSChildView.swift in Sources */,
 				9B831C582CDAF0470065536F /* CustomIcon.swift in Sources */,
 				1EA097D12CD9B2B500B76917 /* PECSParentView.swift in Sources */,
-				1E2640932CE25774009AA5BC /* SheetAddActivitynSequence.swift in Sources */,
+				1E2640932CE25774009AA5BC /* AddActivityView.swift in Sources */,
 				1EEC6EF02CDDC73D0012965C /* SplashScreenView.swift in Sources */,
 				DAE313052CB85677001DD0A0 /* ScheduleManager.swift in Sources */,
 				1E5863842CB6C08C0080373A /* ActivitySequenceView.swift in Sources */,
@@ -585,6 +599,7 @@
 				DA534F982CE3D67700D55BAE /* AACViewModel.swift in Sources */,
 				9B831DE22CDE82390065536F /* TextContentSearch.swift in Sources */,
 				1E84D8C82CB61AC70078B648 /* colorConverter.swift in Sources */,
+				1E5BC6D12CE4CE1D005365DB /* AddNewActivityView.swift in Sources */,
 				DAE1E7942CC0474400F5F9D1 /* StateManager.swift in Sources */,
 				1EA097CF2CD9B28100B76917 /* PECSView.swift in Sources */,
 				1EEC6EF22CDE64340012965C /* SettingActivityView.swift in Sources */,
@@ -593,6 +608,7 @@
 				9B831C112CDA934A0065536F /* ProfileViewModel.swift in Sources */,
 				1E84D89B2CB4D99A0078B648 /* Item.swift in Sources */,
 				9B3EBEC52CC8ADA8009F448E /* AllAssets.swift in Sources */,
+				1E5BC6D32CE4E413005365DB /* UpdateDailyActivityView.swift in Sources */,
 				DAE313072CB86921001DD0A0 /* ActivitiesManager.swift in Sources */,
 				1EBBC2342CB78EF200673D97 /* DailyActivityView.swift in Sources */,
 				9B831DE62CDE86BB0065536F /* TextContentBoard.swift in Sources */,

@@ -13,17 +13,17 @@ struct AddDailyActivityView: View {
     
     @Environment(\.dismiss) var dismiss
     @State private var showEditActivityView = false
-      @State private var selectedActivity: Activity?
+    @State private var selectedActivity: Activity?
     @State private var isAdd = false
     @State private var searchText: String = ""
     @State private var selectedDayString: Int = 0
     @Binding var toggleOn: Bool
     @State private var activityToEdit: Activity?
-    
-    // Viewport size
+    // Viewport si  ze
     private let viewPortWidth: CGFloat = UIScreen.main.bounds.width - 100
     private let viewPortHeight: CGFloat = UIScreen.main.bounds.height - 100
-    
+    @State private var editUlang = false 
+
     init(toggleOn: Binding<Bool>) {
         _toggleOn = toggleOn
         _selectedDayString = State(initialValue: Calendar.current.component(.weekday, from: Date()) - 1)
@@ -246,6 +246,7 @@ struct AddDailyActivityView: View {
                         Button {
                             isAdd = true
                             activityToEdit = nil
+                            editUlang = false
                         } label: {
                             RoundedRectangle(cornerRadius: 10)
                                 .fill(
@@ -290,12 +291,13 @@ struct AddDailyActivityView: View {
                                                 } label: {
                                                     Label("", systemImage: "trash")
                                                 }
-                                                .padding(.leading)
+                                                .padding(.leading, viewPortWidth * -0.001)
                                                 
                                                 Spacer()
                                                 Button {
                                                     selectedActivity = self.activitiesManager.activities[index]
                                                     showEditActivityView = true
+                                                    editUlang = true
                                                 } label: {
                                                     Label("", systemImage: "pencil")
                                                 }
@@ -324,10 +326,21 @@ struct AddDailyActivityView: View {
         )
         .navigationBarBackButtonHidden(true)
         .sheet(isPresented: $isAdd){
-            AddActivityView()
+            AddActivityView(activityToEdit: $selectedActivity, editUlang: $editUlang)
+                .onDisappear{
+                    print("Remove Selected Activity")
+                    selectedActivity = nil
+                    editUlang = false
+                }
         }
         .sheet(isPresented: $showEditActivityView){
-            AddActivityView(activityToEdit: selectedActivity, isEditing: true)
+            AddActivityView(activityToEdit: $selectedActivity, editUlang: $editUlang)
+                .onDisappear{
+                    print("Remove Selected Activity")
+                    selectedActivity = nil
+                    editUlang = false
+                }
+
         }
         
     }

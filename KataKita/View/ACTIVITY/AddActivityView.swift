@@ -13,6 +13,7 @@ struct AddActivityView: View {
     @Environment(ActivityManager.self) private var activityManager
     @Environment(ActivitiesManager.self) private var activitiesManager
     @Environment(StateManager.self) private var stateManager
+
     
     @State private var stepDescription = ""
     @State private var showImagePicker = false
@@ -20,17 +21,12 @@ struct AddActivityView: View {
     @State private var activityName = ""
     @State private var navigateToAddStep = false
     @State private var showCamera = false
-    @State private var isEditing = false // New State for Edit Mode
     var stepIndex: Int?
     @State private var selectedStepIndex: Int?
-    var activityToEdit: Activity?
+    @Binding var activityToEdit: Activity?
+    @State var isEditing: Bool = false
     
-    init(activityToEdit: Activity? = nil, isEditing: Bool = false) {
-           self.activityToEdit = activityToEdit
-           self._isEditing = State(initialValue: isEditing) // Initialize isEditing from parameter
-           _activityName = State(initialValue: activityToEdit?.name ?? "")
-           _tempImageURL = State(initialValue: activityToEdit != nil ? URL(fileURLWithPath: activityToEdit!.image) : nil)
-       }
+    @Binding var editUlang: Bool
     
     let viewPortWidth = UIScreen.main.bounds.width
     let viewPortHeight = UIScreen.main.bounds.height
@@ -46,6 +42,7 @@ struct AddActivityView: View {
                         .onChange(of: activityName) { newName in
                             activityManager.setName(name: newName)
                         }
+                    
                     
                     Button("Take Photo...") {
                         showCamera = true
@@ -91,14 +88,11 @@ struct AddActivityView: View {
                     Button("Add Step") {
                         navigateToAddStep = true
                     }
-                    .navigationDestination(isPresented: $navigateToAddStep) {
-                        AddStepView()
-                    }
                     
                     
                     ForEach(Array(getSteps().enumerated()), id: \.offset) { index, step in
                         VStack(alignment: .leading) {
-                            if activityToEdit != nil || isEditing {
+                            if activityToEdit != nil || editUlang {
                                 // Editable description
                                 TextField("Step Description", text: Binding(
                                     get: { step.description },
@@ -106,6 +100,9 @@ struct AddActivityView: View {
                                         activityManager.updateStepDescription(description: newDescription, at: index)
                                     }
                                 ))
+                                .onAppear{
+                                    print("isoo\(editUlang)")
+                                }
                                 
                                 // Button to change image
                                 Button("Change Step Image") {
@@ -140,6 +137,9 @@ struct AddActivityView: View {
                                         .scaledToFit()
                                         .frame(width: 100, height: 100)
                                         .cornerRadius(20)
+                                        .onAppear{
+                                            print("gaiso\(editUlang)")
+                                        }
                                 }
                             }
                         }
@@ -148,6 +148,20 @@ struct AddActivityView: View {
                     
                 }
             }
+            .onAppear {
+               if let activity = activityToEdit {
+                   activityManager.activity = activity
+                   activityName = activity.name
+                   tempImageURL = URL(fileURLWithPath: activityToEdit!.image)
+               }
+            }
+            .onDisappear {
+                activityManager.activity = Activity(id: UUID(), name: "new activity", image: "", ruangan: Ruangan(id: UUID(), name: ""), sequence: [])
+            }
+            .navigationDestination(isPresented: $navigateToAddStep) {
+                AddStepView()
+            }
+            
             .navigationBarTitle(activityToEdit != nil ? "Edit Activity" : "Add New Activity", displayMode: .inline)
             .navigationBarItems(
                 leading: Button(isEditing ? "Cancel" : "Edit") {
@@ -156,6 +170,7 @@ struct AddActivityView: View {
                 trailing: Button(isEditing ? "Save" : "Done") {
                     saveOrUpdateActivity()
                     dismiss()
+                    isEditing = false
                 }
             )
         }
