@@ -458,16 +458,27 @@ struct PECSCard: View {
                     .frame(width: 50, height: 50)
             }
 
-            TextContent(
-                text: self.card.name,
-                size: 14,
-                color: "000000",
-                transparency: 1,
-                weight: "medium"
-            )
-            .padding(.horizontal)
-            .lineLimit(1)
-            .frame(maxWidth: .infinity, alignment: .center)
+            if ["Hitam", "Cokelat", "Oranye", "Merah", "Ungu", "Pink", "Biru", "Hijau", "Kuning", "Putih"].contains(card.name) {
+                TextContent(
+                    text: card.name,
+                    size: 14,
+                    color: "000000",
+                    transparency: 0,
+                    weight: "medium"
+                )
+            } else {
+                TextContent(
+                    text: card.name,
+                    size: 14,
+                    color: "000000",
+                    transparency: 1,
+                    weight: "medium"
+                )
+                .padding(.horizontal)
+                .lineLimit(1)
+                .frame(maxWidth: .infinity, alignment: .center)
+            }
+
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(

@@ -117,16 +117,27 @@ struct PECSChildCard: View {
                     .frame(width: (self.width - 20) / 3, height: (self.width - 20) / 3)
             }
 
-            TextContent(
-                text: self.card.name,
-                size: 14,
-                color: "000000",
-                transparency: 1,
-                weight: "medium"
-            )
-            .padding(.horizontal)
-            .lineLimit(1)
-            .frame(maxWidth: .infinity, alignment: .center)
+            if ["Hitam", "Cokelat", "Oranye", "Merah", "Ungu", "Pink", "Biru", "Hijau", "Kuning", "Putih"].contains(card.name) {
+                TextContent(
+                    text: card.name,
+                    size: 14,
+                    color: "000000",
+                    transparency: 0,
+                    weight: "medium"
+                )
+            } else {
+                TextContent(
+                    text: card.name,
+                    size: 14,
+                    color: "000000",
+                    transparency: 1,
+                    weight: "medium"
+                )
+                .padding(.horizontal)
+                .lineLimit(1)
+                .frame(maxWidth: .infinity, alignment: .center)
+            }
+
         }
         .frame(width: self.width - 20, height: (self.height - 60) / 5)
         .background(
