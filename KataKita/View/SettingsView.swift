@@ -23,9 +23,9 @@ struct SettingsView: View {
                     Image(systemName: "gearshape.fill")
                         .font(.title)
                         .foregroundColor(.white)
-                    Text("Pengaturan")
-                        .font(.title)
-                        .foregroundColor(.white)
+                    TextContent(
+                        text: "Pengaturan", size: 25, color: "FFFFFF", transparency: 1.0,
+                        weight: "medium")
                 }
                 .padding(.top, 40)
                 .padding(.bottom, 50)
@@ -43,9 +43,9 @@ struct SettingsView: View {
                                 .font(.system(size: 50))
                                 .foregroundColor(.gray)
                             
-                            Text(name.isEmpty ? "Ve" : name)
-                                .font(.title2)
-                                .fontWeight(.bold)
+                            TextContent(
+                                text: name.isEmpty ? "Ve" : name, size: 35, color: "000000", transparency: 1.0,
+                                weight: "regular")
                             Spacer()
                         }
                         .padding(.top, 20)
@@ -54,13 +54,15 @@ struct SettingsView: View {
                         
                         // Profile Information Section
                         VStack(alignment: .leading, spacing: 15) {
-                            Text("Profil pengguna")
-                                .font(.subheadline)
-                                .foregroundColor(.gray)
+                            TextContent(
+                                text: "Profil pengguna", size: 20, color: "ADADAD", transparency: 1.0,
+                                weight: "regular")
                             
                             // Name TextField
                             HStack {
-                                Text("Nama")
+                                TextContent(
+                                    text: "Nama", size: 15, color: "000000", transparency: 1.0,
+                                    weight: "regular")
                                 Spacer()
                                 TextField("Ketik namamu", text: $name)
                                     .multilineTextAlignment(.trailing)
@@ -70,7 +72,9 @@ struct SettingsView: View {
                             
                             // Gender Selection
                             HStack {
-                                Text("Jenis Kelamin")
+                                TextContent(
+                                    text: "Jenis Kelamin", size: 15, color: "000000", transparency: 1.0,
+                                    weight: "regular")
                                 Spacer()
                                 Picker("", selection: $gender) {
                                     Text("Laki-laki").tag(false)

@@ -68,9 +68,9 @@ struct CardCreateView: View {
                             VStack{
                                 if !navigateFromImage {
                                     VStack(alignment: .leading, spacing: 4) {
-                                        Text(LocalizedStringKey("NAMA ICON"))
-                                            .font(.caption)
-                                            .foregroundColor(.white)
+                                        TextContent(
+                                            text: "NAMA ICON", size: 15, color: "FFFFFF", transparency: 1.0,
+                                            weight: "regular")
                                         VStack(alignment: .leading, spacing: 4) {
                                             TextField(LocalizedStringKey("Tambah Kata Baru"), text: $textToSpeak)
                                                 .onChange(of: textToSpeak) { newValue in
@@ -209,9 +209,9 @@ struct CardCreateView: View {
                             VStack{
                                 Section(header:
                                             HStack {
-                                    Text(LocalizedStringKey("PILIH KATEGORI"))
-                                        .font(.footnote)
-                                        .foregroundColor(.white)
+                                    TextContent(
+                                        text: "PILIH KATEGORI", size: 15, color: "FFFFFF", transparency: 1.0,
+                                        weight: "regular")
                                     Spacer() // Pushes the text to the left
                                 }
                                     .padding(.leading) // Optional: Adds some padding to the left
@@ -243,9 +243,9 @@ struct CardCreateView: View {
             }
                         .toolbar {
                             ToolbarItem(placement: .principal) {
-                                Text(LocalizedStringKey("Tambah Icon Baru"))
-                                    .foregroundColor(.white)
-                                    .font(.headline)
+                                TextContent(
+                                    text: "Tambah Icon Baru", size: 25, color: "FFFFFF", transparency: 1.0,
+                                    weight: "medium")
                             }
                         }
             .navigationDestination(isPresented: $showingAddImageView) {

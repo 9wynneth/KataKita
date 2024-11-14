@@ -22,9 +22,9 @@ struct BoardCreateView: View {
                     VStack(spacing: 16) {
                         // Nama Board Section
                         VStack(alignment: .leading, spacing: 4) {
-                            Text("NAMA BOARD")
-                                .font(.caption)
-                                .foregroundColor(.white)
+                            TextContent(
+                                text: "NAMA BOARD", size: 15, color: "FFFFFF", transparency: 1.0,
+                                weight: "regular")
                             TextField("Masukkan nama board", text: $boardName)
                                 .padding()
                                 .background(Color.white)
@@ -34,10 +34,9 @@ struct BoardCreateView: View {
                         
                         // Pilih Icon / Gambar Section
                         VStack(alignment: .leading, spacing: 4) {
-                            Text("PILIH ICON / GAMBAR")
-                                .font(.caption)
-                                .foregroundColor(.white)
-                            
+                            TextContent(
+                                text: "PILIH ICON / GAMBAR", size: 15, color: "FFFFFF", transparency: 1.0,
+                                weight: "regular")
                             HStack {
                                 Text(LocalizedStringKey("Icon yang dipilih :"))
                                     .foregroundColor(.black)
@@ -80,10 +79,9 @@ struct BoardCreateView: View {
                         
                         // Pilih Ukuran Grid Section
                         VStack(alignment: .leading, spacing: 4) {
-                            Text("PILIH UKURAN GRID")
-                                .font(.caption)
-                                .foregroundColor(.white)
-                            
+                            TextContent(
+                                text: "PILIH UKURAN GRID", size: 15, color: "FFFFFF", transparency: 1.0,
+                                weight: "regular")
                             Picker("Ukuran Grid", selection: $gridSize) {
                                 Text("4 x 5").tag("4 x 5")
                                 Text("4 x 7").tag("4 x 7")
@@ -118,9 +116,9 @@ struct BoardCreateView: View {
             }
             .toolbar {
                 ToolbarItem(placement: .principal) {
-                    Text(LocalizedStringKey("Tambah Board Baru"))
-                        .foregroundColor(.white)
-                        .font(.headline)
+                    TextContent(
+                        text: "Tambah Board Baru", size: 25, color: "FFFFFF", transparency: 1.0,
+                        weight: "medium")
                 }
             }
             .navigationBarItems(
