@@ -37,20 +37,24 @@ struct BoardCreateView: View {
                             TextContent(
                                 text: "PILIH ICON / GAMBAR", size: 15, color: "FFFFFF", transparency: 1.0,
                                 weight: "regular")
-                            HStack {
-                                Text(LocalizedStringKey("Icon yang dipilih :"))
-                                    .foregroundColor(.black)
-                                Spacer()
-                                NavigationLink(destination: SearchIconView(selectedIcon: $selectedIcon)) {
-                                    Image(systemName: "chevron.right") // Replacing text with an arrow icon
+                            NavigationLink(destination: SearchIconView(selectedIcon: $selectedIcon)) {
+                                HStack {
+                                    Text(LocalizedStringKey("Icon yang dipilih :"))
                                         .foregroundColor(.black)
+                                    Spacer()
+                                    NavigationLink(destination: SearchIconView(selectedIcon: $selectedIcon)) {
+                                        Image(systemName: "chevron.right") // Replacing text with an arrow icon
+                                            .foregroundColor(.black)
+                                    }
+                                    .foregroundColor(.black)
                                 }
-                                .foregroundColor(.black)
+                                .padding()
+                                .background(Color.white)
+                                .cornerRadius(10)
+                                .shadow(radius: 1)
                             }
-                            .padding()
-                            .background(Color.white)
-                            .cornerRadius(10)
-                            .shadow(radius: 1)
+                            .foregroundColor(.black)
+                            
                             
                             // Display selected icon if available
                             if !selectedIcon.isEmpty {
@@ -105,6 +109,35 @@ struct BoardCreateView: View {
                             }
                         }
                         Spacer()
+                        
+                        CustomButton(text: "SELESAI", width: 350, height: 50, font: 16, bgColor: "#013C5A", bgTransparency: 1.0, fontColor: "#ffffff", fontTransparency: 1.0, cornerRadius: 30) {
+                            if !boardName.isEmpty {
+                                let gridRows = totalgrid == 20 ? 5 : totalgrid == 28 ? 7 : 8
+                                let gridColumns = totalgrid == 20 || totalgrid == 28 ? 4 : 5
+                                let localizedIcon = NSLocalizedString(selectedIcon.uppercased(), comment: "")
+                                let localizedIcon2 = NSLocalizedString(selectedIcon, comment: "")
+                                if Locale.current.language.languageCode?.identifier == "en" {
+                                    if viewModel.userProfile.gender == true {
+                                        selectedIcon = selectedIcon.hasPrefix("GIRL_") ? localizedIcon : localizedIcon2
+                                    } else {
+                                        selectedIcon = selectedIcon.hasPrefix("BOY_") ? localizedIcon : localizedIcon2
+                                    }
+                                } else {
+                                    selectedIcon = localizedIcon2
+                                }
+                                boardManager.addBoard(
+                                    Board(
+                                        cards: Array(repeating: [], count: gridRows),
+                                        name: boardName,
+                                        icon: selectedIcon,
+                                        gridSize: Grid(row: gridColumns, column: gridRows)
+                                    )
+                                )
+                                addingBoard = false
+                                presentationMode.wrappedValue.dismiss()
+                            }
+                        }
+                        .padding(.bottom, 20)
                     }
                     .padding()
                     .background(Color("D6E3DF")) // Inner card background
@@ -117,39 +150,10 @@ struct BoardCreateView: View {
             .toolbar {
                 ToolbarItem(placement: .principal) {
                     TextContent(
-                        text: "Tambah Board Baru", size: 25, color: "FFFFFF", transparency: 1.0,
+                        text: "Buat Board Baru", size: 25, color: "FFFFFF", transparency: 1.0,
                         weight: "medium")
                 }
             }
-            .navigationBarItems(
-                trailing: Button("Selesai") {
-                    if !boardName.isEmpty {
-                        let gridRows = totalgrid == 20 ? 5 : totalgrid == 28 ? 7 : 8
-                        let gridColumns = totalgrid == 20 || totalgrid == 28 ? 4 : 5
-                        let localizedIcon = NSLocalizedString(selectedIcon.uppercased(), comment: "")
-                        let localizedIcon2 = NSLocalizedString(selectedIcon, comment: "")
-                        if Locale.current.language.languageCode?.identifier == "en" {
-                            if viewModel.userProfile.gender == true {
-                                selectedIcon = selectedIcon.hasPrefix("GIRL_") ? localizedIcon : localizedIcon2
-                            } else {
-                                selectedIcon = selectedIcon.hasPrefix("BOY_") ? localizedIcon : localizedIcon2
-                            }
-                        } else {
-                            selectedIcon = localizedIcon2
-                        }
-                        boardManager.addBoard(
-                            Board(
-                                cards: Array(repeating: [], count: gridRows),
-                                name: boardName,
-                                icon: selectedIcon,
-                                gridSize: Grid(row: gridColumns, column: gridRows)
-                            )
-                        )
-                        addingBoard = false
-                        presentationMode.wrappedValue.dismiss()
-                    }
-                }
-            )
         }
     }
     

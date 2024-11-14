@@ -12,7 +12,7 @@ struct AllAssets {
         "bola", "botol", "bowling", "buah", "buka", "buku", "bulan", "bumi",
         "bunga", "burger", "burung", "busa", "capung", "celana panjang",
         "celana pendek", "cermin kecil", "cermin", "coklat", "crayon",
-        "cinta rumah", "cuci tangan", "cuci piring", "dan", "delete",
+        "cinta rumah", "cuci tangan", "cuci piring", "dan",
         "deodoran", "deterjen", "di", "di atas", "di bawah", "di dalam",
         "di luar", "di samping", "dingin", "dokter", "dokter bedah", "donut",
         "es krim", "drum", "foto", "gajah", "gambar", "garam", "garpu",
