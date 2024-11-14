@@ -40,14 +40,14 @@ struct AddActivityView: View {
     var body: some View {
         NavigationStack {
             Form {
-                Section(header: Text("Activity Details")) {
-                    TextField("Enter Activity Name", text: $activityName)
+                Section(header: Text(LocalizedStringKey("Activity Details"))) {
+                    TextField(LocalizedStringKey("Enter Activity Name"), text: $activityName)
                     
                         .onChange(of: activityName) { newName in
                             activityManager.setName(name: newName)
                         }
                     
-                    Button("Take Photo...") {
+                    Button(LocalizedStringKey("Take Photo...")) {
                         showCamera = true
                     }
                     
@@ -60,7 +60,7 @@ struct AddActivityView: View {
                             }
                     }
                     
-                    Button("Choose Activity Image...") {
+                    Button(LocalizedStringKey("Choose Activity Image...")) {
                         showImagePicker = true
                     }
                     
@@ -87,8 +87,8 @@ struct AddActivityView: View {
                 
                 
                 
-                Section(header: Text("Steps")) {
-                    Button("Add Step") {
+                Section(header: Text(LocalizedStringKey("Steps"))) {
+                    Button(LocalizedStringKey("Add Step")) {
                         navigateToAddStep = true
                     }
                     .navigationDestination(isPresented: $navigateToAddStep) {
@@ -100,7 +100,7 @@ struct AddActivityView: View {
                         VStack(alignment: .leading) {
                             if activityToEdit != nil || isEditing {
                                 // Editable description
-                                TextField("Step Description", text: Binding(
+                                TextField(LocalizedStringKey("Step Description"), text: Binding(
                                     get: { step.description },
                                     set: { newDescription in
                                         activityManager.updateStepDescription(description: newDescription, at: index)
@@ -108,7 +108,7 @@ struct AddActivityView: View {
                                 ))
                                 
                                 // Button to change image
-                                Button("Change Step Image") {
+                                Button(LocalizedStringKey("Change Step Image")) {
                                     selectedStepIndex = index
                                     showImagePicker = true
                                 }
@@ -129,7 +129,7 @@ struct AddActivityView: View {
                                         .frame(width: 100, height: 100)
                                         .cornerRadius(20)
                                 } else {
-                                    Text("Image not available")
+                                    Text(LocalizedStringKey("Image not available"))
                                 }
                             } else {
                                 // Non-editable step view
