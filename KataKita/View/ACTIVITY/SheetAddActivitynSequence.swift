@@ -5,32 +5,29 @@
 //  Created by Gwynneth Isviandhy on 10/11/24.
 //
 
-
 import SwiftUI
 import UIKit
+
 
 struct AddActivityView: View {
     @Environment(ActivityManager.self) private var activityManager
     @Environment(ActivitiesManager.self) private var activitiesManager
     @Environment(StateManager.self) private var stateManager
-    
+
     @State private var stepDescription = ""
     @State private var showImagePicker = false
-    @State private var tempImageURL: URL?
+    @State private var showStepImagePicker = false // Separate state for step image picker
+    @State private var tempImageURL: URL? // Used only for activity image
+    @State private var tempStepImageURL: URL? // Separate for step images
     @State private var activityName = ""
     @State private var navigateToAddStep = false
     @State private var showCamera = false
-    @State private var isEditing = false // New State for Edit Mode
     var stepIndex: Int?
     @State private var selectedStepIndex: Int?
-    var activityToEdit: Activity?
+    @Binding var activityToEdit: Activity?
+    @State var isEditing: Bool = false
     
-    init(activityToEdit: Activity? = nil, isEditing: Bool = false) {
-           self.activityToEdit = activityToEdit
-           self._isEditing = State(initialValue: isEditing) // Initialize isEditing from parameter
-           _activityName = State(initialValue: activityToEdit?.name ?? "")
-           _tempImageURL = State(initialValue: activityToEdit != nil ? URL(fileURLWithPath: activityToEdit!.image) : nil)
-       }
+    @Binding var editUlang: Bool
     
     let viewPortWidth = UIScreen.main.bounds.width
     let viewPortHeight = UIScreen.main.bounds.height
@@ -40,17 +37,15 @@ struct AddActivityView: View {
     var body: some View {
         NavigationStack {
             Form {
-                Section(header: Text(LocalizedStringKey("Activity Details"))) {
-                    TextField(LocalizedStringKey("Enter Activity Name"), text: $activityName)
-                    
+                Section(header: Text("Activity Details")) {
+                    TextField("Enter Activity Name", text: $activityName)
                         .onChange(of: activityName) { newName in
                             activityManager.setName(name: newName)
                         }
                     
-                    Button(LocalizedStringKey("Take Photo...")) {
+                    Button("Take Photo...") {
                         showCamera = true
                     }
-                    
                     .sheet(isPresented: $showCamera) {
                         ImagePicker(sourceType: .camera, imageURL: $tempImageURL)
                             .onDisappear {
@@ -60,10 +55,9 @@ struct AddActivityView: View {
                             }
                     }
                     
-                    Button(LocalizedStringKey("Choose Activity Image...")) {
+                    Button("Choose Activity Image...") {
                         showImagePicker = true
                     }
-                    
                     .sheet(isPresented: $showImagePicker) {
                         ImagePicker(imageURL: $tempImageURL)
                             .onDisappear {
@@ -79,49 +73,39 @@ struct AddActivityView: View {
                             .scaledToFit()
                             .frame(width: 100, height: 100)
                             .cornerRadius(20)
-                            .onDisappear{
-                                tempImageURL = nil
-                            }
                     }
                 }
                 
-                
-                
-                Section(header: Text(LocalizedStringKey("Steps"))) {
-                    Button(LocalizedStringKey("Add Step")) {
+                Section(header: Text("Steps")) {
+                    Button("Add Step") {
                         navigateToAddStep = true
                     }
-                    .navigationDestination(isPresented: $navigateToAddStep) {
-                        AddStepView()
-                    }
-                    
                     
                     ForEach(Array(getSteps().enumerated()), id: \.offset) { index, step in
                         VStack(alignment: .leading) {
-                            if activityToEdit != nil || isEditing {
-                                // Editable description
-                                TextField(LocalizedStringKey("Step Description"), text: Binding(
+                            if activityToEdit != nil || editUlang {
+                                TextField("Step Description", text: Binding(
                                     get: { step.description },
                                     set: { newDescription in
                                         activityManager.updateStepDescription(description: newDescription, at: index)
                                     }
                                 ))
                                 
-                                // Button to change image
-                                Button(LocalizedStringKey("Change Step Image")) {
+                                Button("Change Step Image") {
                                     selectedStepIndex = index
-                                    showImagePicker = true
+                                    showStepImagePicker = true
                                 }
-                                .sheet(isPresented: $showImagePicker) {
-                                    ImagePicker(imageURL: $tempImageURL)
+                                .sheet(isPresented: $showStepImagePicker) {
+                                    ImagePicker(imageURL: $tempStepImageURL) // Use tempStepImageURL here
                                         .onDisappear {
-                                            if let selectedURL = tempImageURL {
+                                            if let selectedURL = tempStepImageURL, let index = selectedStepIndex {
                                                 activityManager.setStepImage(image: selectedURL.path, at: index)
+                                                tempStepImageURL = nil // Clear after use
+                                                selectedStepIndex = nil
                                             }
                                         }
                                 }
                                 
-                                // Show current image if available
                                 if let uiImage = UIImage(contentsOfFile: step.image) {
                                     Image(uiImage: uiImage)
                                         .resizable()
@@ -129,24 +113,25 @@ struct AddActivityView: View {
                                         .frame(width: 100, height: 100)
                                         .cornerRadius(20)
                                 } else {
-                                    Text(LocalizedStringKey("Image not available"))
+                                    Text("Image not available")
                                 }
                             } else {
-                                // Non-editable step view
                                 Text(step.description)
                                 if let uiImage = UIImage(contentsOfFile: step.image) {
                                     Image(uiImage: uiImage)
                                         .resizable()
                                         .scaledToFit()
                                         .frame(width: 100, height: 100)
-                                        .cornerRadius(20)
                                 }
                             }
                         }
                         .padding(.vertical, 5)
                     }
-                    
                 }
+            }
+           
+            .navigationDestination(isPresented: $navigateToAddStep) {
+                AddStepView()
             }
             .navigationBarTitle(activityToEdit != nil ? "Edit Activity" : "Add New Activity", displayMode: .inline)
             .navigationBarItems(
@@ -156,10 +141,20 @@ struct AddActivityView: View {
                 trailing: Button(isEditing ? "Save" : "Done") {
                     saveOrUpdateActivity()
                     dismiss()
+                    isEditing = false
                 }
             )
         }
-        
+        .onAppear {
+            if let activity = activityToEdit {
+                activityManager.activity = activity
+                activityName = activity.name
+                tempImageURL = URL(fileURLWithPath: activityToEdit!.image)
+            }
+        }
+        .onDisappear {
+            activityManager.activity = Activity(id: UUID(), name: "new activity", image: "", ruangan: Ruangan(id: UUID(), name: ""), sequence: [])
+        }
     }
     
     private func getSteps() -> [Step] {
@@ -193,6 +188,8 @@ struct AddActivityView: View {
         dismiss()
     }
 }
+
+
 
 
 struct AddStepView: View {
@@ -290,6 +287,7 @@ struct AddStepView: View {
         activityManager.addStep(step)
     }
 }
+
 
 
 
