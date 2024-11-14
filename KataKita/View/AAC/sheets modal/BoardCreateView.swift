@@ -17,12 +17,7 @@ struct BoardCreateView: View {
                 Color(hex: "BDD4CE", transparency: 1) // Background color for the whole view
                     .ignoresSafeArea()
                 
-                VStack(spacing: 20) {
-                    Text("Buat Board Baru")
-                        .font(.system(size: 24, weight: .bold))
-                        .foregroundColor(.white)
-                        .padding(.top, 20)
-                        .padding(.bottom, 10)
+                   
                     
                     VStack(spacing: 16) {
                         // Nama Board Section
@@ -111,6 +106,7 @@ struct BoardCreateView: View {
                                 }
                             }
                         }
+                        Spacer()
                     }
                     .padding()
                     .background(Color("D6E3DF")) // Inner card background
@@ -118,6 +114,13 @@ struct BoardCreateView: View {
                     .padding(.horizontal)
                     
                     Spacer()
+                
+            }
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    Text("Tambah Board Baru")
+                        .foregroundColor(.white)
+                        .font(.headline)
                 }
             }
             .navigationBarItems(

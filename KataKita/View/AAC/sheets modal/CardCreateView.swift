@@ -59,61 +59,133 @@ struct CardCreateView: View {
     
     var body: some View {
         NavigationStack {
-            Form {
-                Section {
-                    if !navigateFromImage {
-                        TextField("Tambah Kata Baru", text: $textToSpeak)
-                            .onChange(of: textToSpeak) { newValue in
-                                textToSpeak = newValue.lowercased()
-                                navigatesFromImage = false
-                                filteredAssets = filterAssets(by: textToSpeak, for: viewModel.userProfile.gender)
-                            }
-                        
-                    }
-                }
+            ZStack {
+                Color(hex: "BDD4CE", transparency: 1) // Background color for the whole view
+                    .ignoresSafeArea()
                 
-                HStack {
-                    if let stickerURL = stickerManager.stickerImage,
-                       let stickerImage = UIImage(contentsOfFile: stickerURL.path) {
-                        // Display the sticker image if available
-                        Image(uiImage: stickerImage)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 50, height: 50)
-                            .cornerRadius(20)
-                            .onAppear {
-                                guard let data = stickerImage.pngData() else {
-                                    return
+                VStack(spacing: 20) {
+                        Section {
+                            VStack{
+                                if !navigateFromImage {
+                                    VStack(alignment: .leading, spacing: 4) {
+                                        Text("NAMA ICON")
+                                            .font(.caption)
+                                            .foregroundColor(.white)
+                                        VStack(alignment: .leading, spacing: 4) {
+                                            TextField("Tambah Kata Baru", text: $textToSpeak)
+                                                .onChange(of: textToSpeak) { newValue in
+                                                    textToSpeak = newValue.lowercased()
+                                                    navigatesFromImage = false
+                                                    filteredAssets = filterAssets(by: textToSpeak, for: viewModel.userProfile.gender)
+                                                }
+                                        }
+                                        .padding()
+                                        .background(Color.white)
+                                        .cornerRadius(10)
+                                        .shadow(radius: 1)
+                                    }
                                 }
-                                self.type = .image(data)
-                                isImageType = true
-                            }
-                    } else if let imageURL = originalImageManager.imageFromLocal, let uiImage = UIImage(contentsOfFile: imageURL.path) {
-                        // Fallback to image from local if sticker is not set
-                        Image(uiImage: uiImage)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 50, height: 50)
-                            .cornerRadius(20)
-                            .onAppear {
-                                guard let data = uiImage.pngData() else {
-                                    return
-                                }
-                                self.type = .image(data)
-                                isImageType = true
-                            }
-                    } else {
-                        // Display icons if no image is selected
-                        if !filteredAssets.isEmpty {
-                            VStack(alignment: .leading) {
-                                HStack {
-                                    ForEach(filteredAssets.prefix(3), id: \.self) { assetName in
-                                        CustomButtonSearch(
-                                            icon: getDisplayIcon(for: assetName),
-                                            text: getDisplayText(for: assetName),
+                                
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 20)
+                                        .fill(Color.white)
+                                        .shadow(color: Color.gray.opacity(0.3), radius: 10, x: 0, y: 5)
+                                        .frame(height: 130)
+                                    
+                                    HStack {
+                                        if let stickerURL = stickerManager.stickerImage,
+                                           let stickerImage = UIImage(contentsOfFile: stickerURL.path) {
+                                            // Display the sticker image if available
+                                            Image(uiImage: stickerImage)
+                                                .resizable()
+                                                .scaledToFit()
+                                                .frame(width: 50, height: 50)
+                                                .cornerRadius(20)
+                                                .onAppear {
+                                                    guard let data = stickerImage.pngData() else {
+                                                        return
+                                                    }
+                                                    self.type = .image(data)
+                                                    isImageType = true
+                                                }
+                                        } else if let imageURL = originalImageManager.imageFromLocal,
+                                                  let uiImage = UIImage(contentsOfFile: imageURL.path) {
+                                            // Fallback to image from local if sticker is not set
+                                            Image(uiImage: uiImage)
+                                                .resizable()
+                                                .scaledToFit()
+                                                .frame(width: 50, height: 50)
+                                                .cornerRadius(20)
+                                                .onAppear {
+                                                    guard let data = uiImage.pngData() else {
+                                                        return
+                                                    }
+                                                    self.type = .image(data)
+                                                    isImageType = true
+                                                }
+                                        } else {
+                                            // Display icons if no image is selected
+                                            if !filteredAssets.isEmpty {
+                                                VStack(alignment: .leading) {
+                                                    HStack {
+                                                        ForEach(filteredAssets.prefix(3), id: \.self) { assetName in
+                                                            CustomButtonSearch(
+                                                                icon: getDisplayIcon(for: assetName),
+                                                                text: getDisplayText(for: assetName),
+                                                                width: 100,
+                                                                height: 100,
+                                                                font: 20,
+                                                                iconWidth: 50,
+                                                                iconHeight: 50,
+                                                                bgColor: "#FFFFFF",
+                                                                bgTransparency: 1.0,
+                                                                fontColor: "#000000",
+                                                                fontTransparency: 1.0,
+                                                                cornerRadius: 20,
+                                                                isSystemImage: assetName.contains("person.fill"),
+                                                                action: {
+                                                                    navigatesFromImage = true
+                                                                    textToSpeak = assetName
+                                                                    if textToSpeak.hasPrefix("GIRL_") {
+                                                                        textToSpeak = textToSpeak.replacingOccurrences(of: "GIRL_", with: "")
+                                                                        isGender = true
+                                                                    } else if textToSpeak.hasPrefix("BOY_") {
+                                                                        textToSpeak = textToSpeak.replacingOccurrences(of: "BOY_", with: "")
+                                                                        isGender = true
+                                                                    }
+                                                                    else {
+                                                                        isGender = false
+                                                                    }
+                                                                    filteredAssets = [assetName]
+                                                                    isImageType = false
+                                                                }
+                                                            )
+                                                        }
+                                                    }
+                                                }
+                                            } else if !textToSpeak.isEmpty {
+                                                CustomButtonSearch(
+                                                    text: textToSpeak,
+                                                    width: 100,
+                                                    height: 100,
+                                                    font: 20,
+                                                    bgColor: "#FFFFFF",
+                                                    bgTransparency: 1.0,
+                                                    fontColor: "#000000",
+                                                    fontTransparency: 1.0,
+                                                    cornerRadius: 20,
+                                                    action: {
+                                                        navigatesFromImage = true
+                                                    }
+                                                )
+                                            }
+                                        }
+                                        
+                                        CustomButton(
+                                            icon: "plus",
                                             width: 100,
                                             height: 100,
-                                            font: 20,
+                                            font: 40,
                                             iconWidth: 50,
                                             iconHeight: 50,
                                             bgColor: "#FFFFFF",
@@ -121,86 +193,61 @@ struct CardCreateView: View {
                                             fontColor: "#000000",
                                             fontTransparency: 1.0,
                                             cornerRadius: 20,
-                                            isSystemImage: assetName.contains("person.fill"),
+                                            isSystemImage: true,
                                             action: {
-                                                navigatesFromImage = true
-                                                textToSpeak = assetName
-                                                if textToSpeak.hasPrefix("GIRL_") {
-                                                    textToSpeak = textToSpeak.replacingOccurrences(of: "GIRL_", with: "")
-                                                    isGender = true
-                                                } else if textToSpeak.hasPrefix("BOY_") {
-                                                    textToSpeak = textToSpeak.replacingOccurrences(of: "BOY_", with: "")
-                                                    isGender = true
-                                                }
-                                                else {
-                                                    isGender = false
-                                                }
-                                                filteredAssets = [assetName]
-                                                isImageType = false
+                                                showingAddImageView = true
+                                                navigatesFromImage = false
                                             }
                                         )
+                                        .opacity(navigatesFromImage ? 0 : 1)
                                     }
                                 }
                             }
-                        } else if !textToSpeak.isEmpty {
-                            CustomButtonSearch(
-                                text: textToSpeak,
-                                width: 100,
-                                height: 100,
-                                font: 20,
-                                bgColor: "#FFFFFF",
-                                bgTransparency: 1.0,
-                                fontColor: "#000000",
-                                fontTransparency: 1.0,
-                                cornerRadius: 20,
-                                action: {
-                                    navigatesFromImage = true
+                            .padding(.horizontal)
+                            
+                            
+                            VStack{
+                                Section(header:
+                                            HStack {
+                                    Text("PILIH KATEGORI")
+                                        .font(.footnote)
+                                        .foregroundColor(.white)
+                                    Spacer() // Pushes the text to the left
                                 }
-                            )
-                        }
-                    }
-                    
-                    CustomButton(
-                        icon: "plus",
-                        width: 100,
-                        height: 100,
-                        font: 40,
-                        iconWidth: 50,
-                        iconHeight: 50,
-                        bgColor: "#FFFFFF",
-                        bgTransparency: 1.0,
-                        fontColor: "#000000",
-                        fontTransparency: 1.0,
-                        cornerRadius: 20,
-                        isSystemImage: true,
-                        action: {
-                            showingAddImageView = true
-                            navigatesFromImage = false
-                        }
-                    )
-                    .opacity(navigatesFromImage ? 0 : 1)
-                }
-                
-                Section(header: Text("Pilih Kategori")) {
-                    Picker("Kategori", selection: $selectedCategory) {
-                        ForEach(Category.allCases, id: \.self) { category in
-                            Label {
-                                Text(category.rawValue)
-                                    .foregroundColor(.primary)
-                            } icon: {
-                                Circle()
-                                    .fill(category.getColor())
-                                    .frame(width: 10, height: 10)
+                                    .padding(.leading) // Optional: Adds some padding to the left
+                                ) {
+                                    Picker("Kategori", selection: $selectedCategory) {
+                                        ForEach(Category.allCases, id: \.self) { category in
+                                            Text(category.rawValue)
+                                                .tag(category)
+                                        }
+                                    }
+                                    .pickerStyle(.menu)
+                                    .frame(maxWidth: .infinity)
+                                    .padding()
+                                    .background(Color.white)
+                                    .cornerRadius(10)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 10)
+                                            .stroke(Color(UIColor.systemGray4), lineWidth: 1)
+                                    )
+                                    .accentColor(.blue) // Sets the selected text color to blue
+                                    .padding(.horizontal)
+                                }
                             }
-                            .tag(category)
                         }
+                    
+                    Spacer()
                     }
-                    .pickerStyle(.inline) // Use inline or another style if needed
-                }
-            }
-            .onAppear {
                 
             }
+                        .toolbar {
+                            ToolbarItem(placement: .principal) {
+                                Text("Tambah Icon Baru")
+                                    .foregroundColor(.white)
+                                    .font(.headline)
+                            }
+                        }
             .navigationDestination(isPresented: $showingAddImageView) {
                 AddImageCardView(
                     selectedColumnIndexValue: $selectedColumnIndexValue,
