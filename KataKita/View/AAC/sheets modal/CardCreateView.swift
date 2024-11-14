@@ -267,10 +267,7 @@ struct CardCreateView: View {
     
     private func handleDoneAction() {
         // Check if it's a sticker
-        if stickerManager.stickerImage == nil && !isImageType {
-            selectedIcon = textToSpeak.lowercased()
-            self.type = .icon(selectedIcon)
-        }
+        
 
         // Handle the card creation
         
@@ -316,10 +313,12 @@ struct CardCreateView: View {
         else {
             textToSpeak = NSLocalizedString(textToSpeak, comment: "")
         }
-        
+        if stickerManager.stickerImage == nil && !isImageType {
+            selectedIcon = textToSpeak.lowercased()
+            self.type = .icon(selectedIcon)
+        }
         print("icon " + textToSpeak)
 
-        // Add card to board
         boardManager.addCard(Card(name: textToSpeak, category: selectedCategory, type: self.type), column: selectedColumnIndexValue)
 
         // Reset the image state after the card has been added
