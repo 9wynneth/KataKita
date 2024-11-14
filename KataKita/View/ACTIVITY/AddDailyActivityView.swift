@@ -19,6 +19,8 @@ struct AddDailyActivityView: View {
     @State private var selectedDayString: Int = 0
     @Binding var toggleOn: Bool
     @State private var activityToEdit: Activity?
+    @State private var editUlang = false
+
     
     // Viewport size
     private let viewPortWidth: CGFloat = UIScreen.main.bounds.width - 100
@@ -324,11 +326,22 @@ struct AddDailyActivityView: View {
         )
         .navigationBarBackButtonHidden(true)
         .sheet(isPresented: $isAdd){
-            AddActivityView()
-        }
-        .sheet(isPresented: $showEditActivityView){
-            AddActivityView(activityToEdit: selectedActivity, isEditing: true)
-        }
+                    AddActivityView(activityToEdit: $selectedActivity, editUlang: $editUlang)
+                        .onDisappear{
+                            print("Remove Selected Activity")
+                            selectedActivity = nil
+                            editUlang = false
+                        }
+                }
+                .sheet(isPresented: $showEditActivityView){
+                    AddActivityView(activityToEdit: $selectedActivity, editUlang: $editUlang)
+                        .onDisappear{
+                            print("Remove Selected Activity")
+                            selectedActivity = nil
+                            editUlang = false
+                        }
+
+                }
         
     }
   
