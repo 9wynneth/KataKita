@@ -240,45 +240,57 @@ struct BoardCreateView: View {
         }
         
         var body: some View {
-            VStack {
-                TextField("Cari Icon", text: $searchText)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding()
+            
+            ZStack
+            {
+                Color(hex: "BDD4CE", transparency: 1) // Background color for the whole view
+                    .ignoresSafeArea()
                 
-                ScrollView {
-                    LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 16), count: 3), spacing: 16) {
-                        ForEach(filteredIcons, id: \.self) { icon in
-                            Button(action: {
-                                selectedIcon = icon
-                                dismiss()
-                            }) {
-                                CustomButtonBoard(
-                                    icon: (getDisplayIcon(for: icon)),
-                                    text: (getDisplayText(for: icon)),
-                                    width: 150,
-                                    height: 150,
-                                    font: 40,
-                                    iconWidth: 75,
-                                    iconHeight: 75,
-                                    bgColor: "#FFFFFF",
-                                    bgTransparency: 1.0,
-                                    fontColor: "#000000",
-                                    fontTransparency: 1.0,
-                                    cornerRadius: 20,
-                                    isSystemImage: icon.contains("person.fill")) {
-                                        selectedIcon = icon
-                                        dismiss()
-                                    }
+                
+                VStack {
+                    TextField("Cari Icon", text: $searchText)
+                        .padding(.horizontal, 16) // Add padding inside the text field
+                        .padding(.vertical, 8) // Adjust vertical padding for height
+                        .background(Color.white) // Set background color
+                        .cornerRadius(16) // Make the corners rounded
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 16)
+                                .stroke(Color(red: 0.86, green: 0.92, blue: 0.89), lineWidth: 2) // Set border color and width
+                        )
+                        .padding(.horizontal) // Add horizontal padding outside the text field
+
+                    
+                    ScrollView {
+                        LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 16), count: 3), spacing: 16) {
+                            ForEach(filteredIcons, id: \.self) { icon in
+                                Button(action: {
+                                    selectedIcon = icon
+                                    dismiss()
+                                }) {
+                                    CustomButtonBoard(
+                                        icon: (getDisplayIcon(for: icon)),
+                                        text: (getDisplayText(for: icon)),
+                                        width: 150,
+                                        height: 150,
+                                        font: 40,
+                                        iconWidth: 75,
+                                        iconHeight: 75,
+                                        bgColor: "#FFFFFF",
+                                        bgTransparency: 1.0,
+                                        fontColor: "#000000",
+                                        fontTransparency: 1.0,
+                                        cornerRadius: 20,
+                                        isSystemImage: icon.contains("person.fill")) {
+                                            selectedIcon = icon
+                                            dismiss()
+                                        }
+                                }
                             }
                         }
+                        .padding()
                     }
-                    .padding()
                 }
             }
-            
-            
-            
-            .navigationBarTitle("Cari Icon", displayMode: .inline)
         }
         
         private func getDisplayText(for icon: String) -> String {
