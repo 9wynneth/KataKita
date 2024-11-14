@@ -519,13 +519,16 @@ struct AACCard: View {
                     .frame(width: 50, height: 50)
             }
             
-            Text(
-                LocalizedStringKey(self.card.name)
-            )
-            .foregroundStyle(.black)
-            .font(.system(size: 14))
-            .lineLimit(1)
-            .minimumScaleFactor(0.5)
+            if ["Hitam", "Cokelat", "Oranye", "Merah", "Ungu", "Pink", "Biru", "Hijau", "Kuning", "Putih"].contains(card.name) {
+                Text("") 
+            } else {
+                Text(LocalizedStringKey(card.name))
+                    .foregroundStyle(Color.black)
+                    .font(.system(size: 14))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.5)
+            }
+            
         }
         .frame(width: 80, height: 80)
         .background(
