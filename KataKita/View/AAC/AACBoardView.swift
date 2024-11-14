@@ -231,6 +231,7 @@ struct AACBoardCard: View {
         Button {
             f()
             SpeechManager.shared.speakCardAAC(self.card.name)
+            print(self.card.type)
 
         } label: {
             VStack(spacing: 10) { // Reduced spacing between Image and Text
