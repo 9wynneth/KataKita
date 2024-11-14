@@ -39,7 +39,7 @@ struct BoardCreateView: View {
                                 .foregroundColor(.white)
                             
                             HStack {
-                                Text("Icon yang dipilih :")
+                                Text(LocalizedStringKey("Icon yang dipilih :"))
                                     .foregroundColor(.black)
                                 Spacer()
                                 NavigationLink(destination: SearchIconView(selectedIcon: $selectedIcon)) {
@@ -118,7 +118,7 @@ struct BoardCreateView: View {
             }
             .toolbar {
                 ToolbarItem(placement: .principal) {
-                    Text("Tambah Board Baru")
+                    Text(LocalizedStringKey("Tambah Board Baru"))
                         .foregroundColor(.white)
                         .font(.headline)
                 }
@@ -248,7 +248,7 @@ struct BoardCreateView: View {
                 
                 
                 VStack {
-                    TextField("Cari Icon", text: $searchText)
+                    TextField(LocalizedStringKey("Cari Icon"), text: $searchText)
                         .padding(.horizontal, 16) // Add padding inside the text field
                         .padding(.vertical, 8) // Adjust vertical padding for height
                         .background(Color.white) // Set background color

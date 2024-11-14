@@ -68,11 +68,11 @@ struct CardCreateView: View {
                             VStack{
                                 if !navigateFromImage {
                                     VStack(alignment: .leading, spacing: 4) {
-                                        Text("NAMA ICON")
+                                        Text(LocalizedStringKey("NAMA ICON"))
                                             .font(.caption)
                                             .foregroundColor(.white)
                                         VStack(alignment: .leading, spacing: 4) {
-                                            TextField("Tambah Kata Baru", text: $textToSpeak)
+                                            TextField(LocalizedStringKey("Tambah Kata Baru"), text: $textToSpeak)
                                                 .onChange(of: textToSpeak) { newValue in
                                                     textToSpeak = newValue.lowercased()
                                                     navigatesFromImage = false
@@ -209,7 +209,7 @@ struct CardCreateView: View {
                             VStack{
                                 Section(header:
                                             HStack {
-                                    Text("PILIH KATEGORI")
+                                    Text(LocalizedStringKey("PILIH KATEGORI"))
                                         .font(.footnote)
                                         .foregroundColor(.white)
                                     Spacer() // Pushes the text to the left
@@ -243,7 +243,7 @@ struct CardCreateView: View {
             }
                         .toolbar {
                             ToolbarItem(placement: .principal) {
-                                Text("Tambah Icon Baru")
+                                Text(LocalizedStringKey("Tambah Icon Baru"))
                                     .foregroundColor(.white)
                                     .font(.headline)
                             }
@@ -444,7 +444,7 @@ struct SearchIconsView: View {
     
     var body: some View {
         VStack {
-            TextField("Cari Icon", text: $searchText)
+            TextField(LocalizedStringKey("Cari Icon"), text: $searchText)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding()
 
@@ -478,7 +478,7 @@ struct SearchIconsView: View {
                 .padding()
             }
         }
-        .navigationBarTitle("Cari Icon", displayMode: .inline)
+        .navigationBarTitle(LocalizedStringKey("Cari Icon"), displayMode: .inline)
     }
     
     private func getDisplayText(for icon: String) -> String {

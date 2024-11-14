@@ -32,7 +32,7 @@ struct AddImageCardView: View {
         NavigationStack {
             Form {
                 Section {
-                    Button("Choose Image...") {
+                    Button(LocalizedStringKey("Choose Image...")) {
                         showImagePicker = true
                     }
                     .sheet(isPresented: $showImagePicker) {
@@ -46,7 +46,7 @@ struct AddImageCardView: View {
                             }
                     }
 
-                    Button("Take Photo...") {
+                    Button(LocalizedStringKey("Take Photo...")) {
                         showCamera = true
                     }
                     .sheet(isPresented: $showCamera) {
@@ -61,7 +61,7 @@ struct AddImageCardView: View {
                     }
 
                     if isLoading {
-                        ProgressView("Processing...")
+                        ProgressView(LocalizedStringKey("Processing..."))
                     } else if let stickerURL = stickerManager.stickerImage,
                                 let stickerImage = UIImage(contentsOfFile: stickerURL.path) {
                         Image(uiImage: stickerImage)
@@ -101,7 +101,7 @@ struct AddImageCardView: View {
                     }
                 }
             }
-            .navigationBarTitle("Add Image", displayMode: .inline)
+            .navigationBarTitle(LocalizedStringKey("Add Image"), displayMode: .inline)
             .navigationBarItems(
                 trailing: Button(LocalizedStringKey("Selesai")) {
                     if originalImageManager.imageFromLocal != nil {
