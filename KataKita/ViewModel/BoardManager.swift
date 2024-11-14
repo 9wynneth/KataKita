@@ -202,7 +202,7 @@ class BoardManager {
                     ],
                     [
                         Card(name: "baju", category: .NOUN, type: .icon("baju")),
-                        Card(name: "celana pendek", category: .NOUN, type: .icon("celana pendek")),
+                        Card(name: "celana", category: .NOUN, type: .icon("celana pendek")),
                         Card(name: "air", category: .NOUN, type: .icon("air")),
                         Card(name: "gelas", category: .NOUN, type: .icon("gelas")),
                         Card(name: "lemari", category: .NOUN, type: .icon("lemari")),

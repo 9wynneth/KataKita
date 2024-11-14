@@ -349,6 +349,7 @@ struct BetterAACView: View {
                 VStack(spacing: screenHeight * 0.015) {
                     ForEach(Array(colorCards.enumerated()), id: \.offset) { index, color in
                         Button {
+                            SpeechManager.shared.speakCardAAC(color.name)
                             if !self.aacViewModel.addCard(color) {
                                 showAlert = true
                                 hasSpoken = false
@@ -372,8 +373,8 @@ struct BetterAACView: View {
                             Alert(
                                 title: Text("Kotak Kata Penuh"),
                                 message: Text(
-//                                    "Kamu hanya bisa memilih \(self.aacViewModel.cards.count) kata. Hapus kata yang sudah dipilih untuk memilih kata baru."
-                                    "Kamu hanya bisa memilih 10 kata. Hapus kata yang sudah dipilih untuk memilih kata baru."
+                                    "Kamu hanya bisa memilih \(self.aacViewModel.cards.count) kata. Hapus kata yang sudah dipilih untuk memilih kata baru."
+//                                    "Kamu hanya bisa memilih 10 kata. Hapus kata yang sudah dipilih untuk memilih kata baru."
                                 ),
                                 dismissButton: .default(
                                     Text("OK"),
@@ -524,9 +525,19 @@ struct AACCard: View {
             .foregroundStyle(.black)
             .font(.system(size: 14))
             .lineLimit(1)
+            .minimumScaleFactor(0.5)
         }
         .frame(width: 80, height: 80)
-        .background(Color.clear)
+        .background(
+                        Color(hex: {
+                            if let type = card.type, case let .color(hex) = type {
+                                return hex
+                            } else {
+                                return "FFFFFF" // Default color if none is found
+                            }
+                        }(), transparency: 1)
+                    )
+        .cornerRadius(8)
         
     }
 }
