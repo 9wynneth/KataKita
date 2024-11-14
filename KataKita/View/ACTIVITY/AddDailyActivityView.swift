@@ -10,6 +10,7 @@ import SwiftUI
 struct AddDailyActivityView: View {
     @Environment(ScheduleManager.self) private var scheduleManager
     @Environment(ActivitiesManager.self) private var activitiesManager
+    @Environment(StateManager.self) private var stateManager
     
     @Environment(\.dismiss) var dismiss
     @State private var showEditActivityView = false
@@ -179,6 +180,9 @@ struct AddDailyActivityView: View {
                                             activity,
                                             number: index + 1,
                                             delete: {
+                                                if index < self.stateManager.index {
+                                                    self.stateManager.index -= 1
+                                                }
                                                 self.scheduleManager.removeActivity(
                                                     index: index, day: self.day)
                                             }
@@ -204,6 +208,7 @@ struct AddDailyActivityView: View {
                             Spacer()
                             Button {
                                 self.scheduleManager.removeAll(self.day)
+                                self.stateManager.reset()
                             } label: {
                                 RoundedRectangle(cornerRadius: 10)
                                     .fill(
@@ -275,9 +280,8 @@ struct AddDailyActivityView: View {
                             .fill(Color(hex: "E0E0E1", transparency: 1.0))
                     )
                     
-                    ScrollView {
+                    ScrollView() {
                         LazyVStack(spacing: 0) {
-                            
                             ForEach(Array(filteredActivities.enumerated()),
                                     id: \.offset) { index, activity in
                                 HStack {

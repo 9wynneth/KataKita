@@ -17,7 +17,7 @@ class SpeechManager {
         stopSpeech()
         
         let localizedName = NSLocalizedString(card.name, comment: "Concatenated text for speech synthesis")
-        let languageCode = Locale.current.languageCode
+        let languageCode = Locale.current.language.languageCode?.identifier
         let voiceLanguage = languageCode == "id" ? "id-ID" : "en-AU"
         
         let utterance = AVSpeechUtterance(string: localizedName)
@@ -32,7 +32,7 @@ class SpeechManager {
         
         let fullText = cards.map { NSLocalizedString($0.name, comment: "Card name for speech synthesis") }.joined(separator: ", ")
         
-        let languageCode = Locale.current.languageCode
+        let languageCode = Locale.current.language.languageCode?.identifier
         let voiceLanguage = languageCode == "id" ? "id-ID" : "en-AU"
         
         let utterance = AVSpeechUtterance(string: fullText)

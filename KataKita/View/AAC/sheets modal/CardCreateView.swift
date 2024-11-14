@@ -73,8 +73,8 @@ struct CardCreateView: View {
                                             weight: "regular")
                                         VStack(alignment: .leading, spacing: 4) {
                                             TextField(LocalizedStringKey("Tambah Kata Baru"), text: $textToSpeak)
-                                                .onChange(of: textToSpeak) { newValue in
-                                                    textToSpeak = newValue.lowercased()
+                                                .onChange(of: textToSpeak) {
+                                                    textToSpeak = textToSpeak.lowercased()
                                                     navigatesFromImage = false
                                                     filteredAssets = filterAssets(by: textToSpeak, for: viewModel.userProfile.gender)
                                                 }
@@ -271,7 +271,7 @@ struct CardCreateView: View {
 
         // Handle the card creation
         
-        if Locale.current.languageCode == "en" {
+        if Locale.current.language.languageCode?.identifier == "en" {
             if viewModel.userProfile.gender == true {
                 if AllAssets.shared.genderAssets.contains(selectedIcon.lowercased()) {
                     selectedIcon = "GIRL_" + selectedIcon.uppercased()
@@ -290,10 +290,9 @@ struct CardCreateView: View {
         else {
             selectedIcon = NSLocalizedString(selectedIcon, comment: "")
         }
-        let color = selectedCategory
 
         // Localize only when displaying in SwiftUI
-        if Locale.current.languageCode == "en" {
+        if Locale.current.language.languageCode?.identifier == "en" {
             let localizedIcon = NSLocalizedString(textToSpeak.uppercased(), comment: "")
             if viewModel.userProfile.gender == true {
                 if AllAssets.shared.genderAssets.contains(textToSpeak.lowercased()) {
@@ -330,7 +329,7 @@ struct CardCreateView: View {
     }
     
     private func getDisplayText(for icon: String) -> String {
-        if Locale.current.languageCode == "en" {
+        if Locale.current.language.languageCode?.identifier == "en" {
             let localizedIcon = NSLocalizedString(icon, comment: "")
             let localizedIcon2 = NSLocalizedString(localizedIcon, comment: "")
             if viewModel.userProfile.gender == true {
@@ -372,7 +371,8 @@ struct CardCreateView: View {
     }
     
     private func getDisplayIcon(for icon: String) -> String {
-        if Locale.current.languageCode == "en" {
+        let lang = Locale.current.language.languageCode?.identifier ?? "id"
+        if lang == "en" {
             let localizedIcon = NSLocalizedString(icon.uppercased(), comment: "")
             if viewModel.userProfile.gender == true {
                 if AllAssets.shared.genderAssets.contains(icon) {
@@ -482,7 +482,7 @@ struct SearchIconsView: View {
     }
     
     private func getDisplayText(for icon: String) -> String {
-        if Locale.current.languageCode == "en" {
+        if Locale.current.language.languageCode?.identifier == "en" {
             let localizedIcon = NSLocalizedString(icon, comment: "")
             let localizedIcon2 = NSLocalizedString(localizedIcon, comment: "")
             if viewModel.userProfile.gender == true {
@@ -524,7 +524,7 @@ struct SearchIconsView: View {
     }
     
     private func getDisplayIcon(for icon: String) -> String {
-        if Locale.current.languageCode == "en" {
+        if Locale.current.language.languageCode?.identifier == "en" {
             let localizedIcon = NSLocalizedString(icon.uppercased(), comment: "")
             if viewModel.userProfile.gender == true {
                 if AllAssets.shared.genderAssets.contains(icon) {

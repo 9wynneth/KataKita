@@ -32,8 +32,8 @@ struct CardUpdateView: View {
                 Section {
                     if !navigateFromImage {
                         TextField("Tambah Kata Baru", text: $textToSpeak)
-                            .onChange(of: textToSpeak) { newValue in
-                                textToSpeak = newValue.lowercased()
+                            .onChange(of: textToSpeak) {
+                                textToSpeak = textToSpeak.lowercased()
                                 navigatesFromImage = false
                                 filteredAssets = filterAssets(by: textToSpeak, for: viewModel.userProfile.gender)
                             }
@@ -199,7 +199,7 @@ struct CardUpdateView: View {
 
         // Handle the card creation
         
-        if Locale.current.languageCode == "en" {
+        if Locale.current.language.languageCode?.identifier == "en" {
             if viewModel.userProfile.gender == true {
                 if AllAssets.shared.genderAssets.contains(selectedIcon.lowercased()) {
                     selectedIcon = "GIRL_" + selectedIcon.uppercased()
@@ -221,7 +221,7 @@ struct CardUpdateView: View {
         let color = selectedCategory
 
         // Localize only when displaying in SwiftUI
-        if Locale.current.languageCode == "en" {
+        if Locale.current.language.languageCode?.identifier == "en" {
             if viewModel.userProfile.gender == true {
                 if AllAssets.shared.genderAssets.contains(textToSpeak.lowercased()) {
                     selectedIcon = "GIRL_" + textToSpeak.uppercased()
@@ -255,7 +255,7 @@ struct CardUpdateView: View {
     }
     
     private func getDisplayText(for icon: String) -> String {
-        if Locale.current.languageCode == "en" {
+        if Locale.current.language.languageCode?.identifier == "en" {
             let localizedIcon = NSLocalizedString(icon.lowercased(), comment: "")
             if AllAssets.shared.genderAssets.contains(icon.lowercased()) {
                 return localizedIcon
@@ -285,7 +285,7 @@ struct CardUpdateView: View {
     }
     
     private func getDisplayIcon(for icon: String) -> String {
-        if Locale.current.languageCode == "en" {
+        if Locale.current.language.languageCode?.identifier == "en" {
             if viewModel.userProfile.gender == true {
                 if AllAssets.shared.genderAssets.contains(icon.lowercased()) {
                     return "GIRL_" + icon.uppercased()

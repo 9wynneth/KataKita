@@ -231,7 +231,7 @@ struct AACBoardCard: View {
         Button {
             f()
             SpeechManager.shared.speakCardAAC(self.card.name)
-            print(self.card.type)
+            print(self.card.type!)
 
         } label: {
             VStack(spacing: 10) { // Reduced spacing between Image and Text
@@ -245,7 +245,7 @@ struct AACBoardCard: View {
                     Icon(icon, (self.width / 2, self.height / 2))
                 } else {
                     Color.clear
-                        .frame(width: self.width, height: self.height / 2)
+                        .frame(width: abs(self.width), height: abs(self.height / 2))
                 }
                 
                 TextContent(
@@ -256,7 +256,7 @@ struct AACBoardCard: View {
                     weight: "medium"
                 )
             }
-            .frame(width: self.width, height: self.height)
+            .frame(width: abs(self.width), height: abs(self.height))
             .background(
                 Group {
                     if case let .color(color) = self.card.type {

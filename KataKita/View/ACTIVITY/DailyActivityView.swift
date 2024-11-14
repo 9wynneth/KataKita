@@ -207,8 +207,7 @@ struct DailyActivityView: View {
                         LazyVStack (alignment: .center, spacing: 0) {
                             ForEach(Array(self.extractActivity.enumerated()), id: \.offset) { index, activity in
                                 if self.stateManager.index <= index {
-                                    
-                                    if let uiImage = UIImage(contentsOfFile: activity.image) {
+                                    if UIImage(contentsOfFile: activity.image) != nil {
                                         // The image was loaded from a file path, so it's not a system image
                                         ActivityCard(
                                             icon: activity.image,  // File path as string
@@ -557,14 +556,12 @@ struct DailyActivityView: View {
                 }
             }
             
-        NavigationLink(
-            destination: destinationForSelectedRuangan(),
-            isActive: $shouldNavigate
-        ) {
-            EmptyView()
-        }
-            
-            
+//        NavigationLink(
+//            destination: destinationForSelectedRuangan(),
+//            isActive: $shouldNavigate
+//        ) {
+//            EmptyView()
+//        }
     }
         .onDisappear{
             SpeechManager.shared.stopSpeech()

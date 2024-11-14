@@ -25,7 +25,7 @@ struct Icon: View {
             .antialiased(true)
             .resizable()
             .scaledToFit()
-            .frame(width: self.width, height: self.height)
+            .frame(width: abs(self.width), height: abs(self.height))
     }
     
     private func resolveIcon(_ icon: String) -> String {

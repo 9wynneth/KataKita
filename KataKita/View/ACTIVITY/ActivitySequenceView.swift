@@ -16,13 +16,9 @@ struct ActivitySequenceView: View {
     @Binding var selectedActivity: String
     @State private var buttonDoneCliked: Bool = false
     
-    
     var body: some View {
-        let items = Array(1...10).map { "\($0)"}
-        
         VStack {
-            
-            ScrollView{
+            ScrollView {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 200))]) {
                     ForEach(0..<steps.count, id: \.self) { index in
                         ActivityCard(
@@ -56,36 +52,4 @@ struct ActivitySequenceView: View {
             
         }
     }
-//    let speechSynthesizer = AVSpeechSynthesizer()
-//    
-//    // Speak function
-//    func speakText(_ text: String) {
-//        let localizedText = NSLocalizedString(text, comment: "")
-//
-//        // Detect device language
-//        let languageCode = Locale.current.languageCode
-//        let voiceLanguage = languageCode == "id" ? "id-ID" : "en-AU" // Set voice language based on device language
-//        
-//        // Create the speech utterance
-//        let utterance = AVSpeechUtterance(string: localizedText)
-//        utterance.voice = AVSpeechSynthesisVoice(language: voiceLanguage) // Set the language accordingly
-//        utterance.rate = 0.5 // Set the speech rate
-//
-//        // Speak the text
-//        speechSynthesizer.speak(utterance)
-//    }
-
-    
 }
-
-
-//#Preview {
-//    ActivitySequenceView(steps: [
-//        "Ambil sikat gigi",
-//        "Ambil pasta gigi",
-//        "Tuangkan pasta gigi",
-//        "Mulai menyikat gigi",
-//        "Kumur air",
-//        "Selesai"
-//    ])
-//}

@@ -55,7 +55,7 @@ struct CustomButtonSearch: View {
                 
                 if let icon = icon, !icon.isEmpty {
                     let localizedIcon = NSLocalizedString(icon, comment: "")
-                    if Locale.current.languageCode == "en" {
+                    if Locale.current.language.languageCode?.identifier == "en" {
                         if icon.hasPrefix("GIRL_") {
                             Image(icon.uppercased()) // Use the localized name here
                                 .antialiased(true)

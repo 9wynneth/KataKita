@@ -410,24 +410,10 @@ struct BetterAACView: View {
             Color(hex: "BDD4CE", transparency: 1.0)
                 .ignoresSafeArea()
         )
-        // MARK: Add board form
-        .overlay(
-            Group {
-                if self.addingBoard {
-
-                } else {
-                    EmptyView()
-                }
-            }
-        )
+        
         // MARK: Add card form
         .overlay(
             Group {
-                if let colIndex = self.addingCard {
-
-                } else {
-                    EmptyView()
-                }
                 if isAskPassword {
                     VStack {
                         SecurityView()

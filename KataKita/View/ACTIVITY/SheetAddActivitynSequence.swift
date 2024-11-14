@@ -39,7 +39,7 @@ struct AddActivityView: View {
             Form {
                 Section(header: Text("Activity Details")) {
                     TextField("Enter Activity Name", text: $activityName)
-                        .onChange(of: activityName) { newName in
+                        .onChange(of: activityName) { oldName, newName in   //MARK: Tanyain ke ce fanny besok!!!
                             activityManager.setName(name: newName)
                         }
                     

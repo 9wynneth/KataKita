@@ -71,11 +71,10 @@ struct AddImageCardView: View {
                             .cornerRadius(20)
                             .onAppear{
                                 gambar = "sticker"
-                                print(gambar)
                             }
-                            .onChange(of: stickerManager.stickerImage) { newSticker in
+                            .onChange(of: stickerManager.stickerImage) {
                                     // Trigger any logic when the sticker image is updated
-                                    if newSticker != nil {
+                                    if stickerManager.stickerImage != nil {
                                         gambar = "sticker"
                                         print("Sticker updated")
                                     }
@@ -91,7 +90,6 @@ struct AddImageCardView: View {
                                 if stickerManager.stickerImage == nil, let imagePath = originalImageManager.imageFromLocal, let uiImage = UIImage(contentsOfFile: imagePath.path) {
                                     createSticker(from: uiImage)
                                     gambar = "original"
-                                    print(gambar)
                                 }
                             }
 
