@@ -89,7 +89,7 @@ class BoardManager {
                     
                 ],
                 name: "Ruang Makan",
-                icon: "PIRING",
+                icon: "PIRING SENDOK",
                 gridSize: Grid(row: 5, column: 8 )
             ),
             Board(
@@ -153,7 +153,7 @@ class BoardManager {
                     ]
                 ],
                 name: "Ruang Belajar",
-                icon: "BUKU",
+                icon: "PAPAN TULIS",
                 gridSize: Grid(row: 5, column: 8)
             ),
             Board(
@@ -391,7 +391,7 @@ class BoardManager {
                     [
                         Card(name: "youtube", category: .NOUN, type: .icon("youtube")),
                         Card(name: "permainan", category: .NOUN, type: .icon("permainan")),
-                        Card(name: "snack", category: .NOUN, type: .icon("piring")),
+                        Card(name: "sofa", category: .NOUN, type: .icon("sofa")),
                         Card(name: "lampu", category: .NOUN, type: .icon("lampu")),
                         Card(name: "netflix", category: .NOUN, type: .icon("netflix")),
                     ],
@@ -399,7 +399,7 @@ class BoardManager {
                         Card(name: "mobil", category: .NOUN, type: .icon("mobil")),
                         Card(name: "bola", category: .NOUN, type: .icon("bola")),
                         Card(name: "air", category: .NOUN, type: .icon("gelas")),
-                        Card(name: "snack", category: .NOUN, type: .icon("manis"))
+                        Card(name: "snack", category: .NOUN, type: .icon("kue kering"))
                     ],
                 ],
                 name: "Ruang Keluarga",
