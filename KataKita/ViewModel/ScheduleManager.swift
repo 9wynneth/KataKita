@@ -11,136 +11,84 @@ import Foundation
 
 @Observable
 class ScheduleManager {
-    var schedules: [Schedule]
-    
-    init(_ schedules: [Schedule] = [
-        Schedule(id: UUID(), day: .MONDAY([])),
-        Schedule(id: UUID(), day: .TUESDAY([])),
-        Schedule(id: UUID(), day: .WEDNESDAY([])),
-        Schedule(id: UUID(), day: .THURSDAY([])),
-        Schedule(id: UUID(), day: .FRIDAY([])),
-        Schedule(id: UUID(), day: .SATURDAY([])),
-        Schedule(id: UUID(), day: .SUNDAY([]))
-    ]) {
-        self.schedules = schedules
+    var schedule: Schedule {
+        didSet {
+            print(schedule)
+            guard let data = try? JSONEncoder().encode(self.schedule) else {
+                return
+            }
+            let defaults = UserDefaults.standard
+            defaults.set(data, forKey: "schedule")
+        }
     }
     
-    func addActivity(_ activity: Activity, day: Day) {
-        var newDay = day;
-        if case var .MONDAY(activities) = day {
-            activities.append(activity)
-            newDay = .MONDAY(activities)
-        }
-        if case var .TUESDAY(activities) = day {
-            activities.append(activity)
-            newDay = .TUESDAY(activities)
-        }
-        if case var .WEDNESDAY(activities) = day {
-            activities.append(activity)
-            newDay = .WEDNESDAY(activities)
-        }
-        if case var .THURSDAY(activities) = day {
-            activities.append(activity)
-            newDay = .THURSDAY(activities)
-        }
-        if case var .FRIDAY(activities) = day {
-            activities.append(activity)
-            newDay = .FRIDAY(activities)
-        }
-        if case var .SATURDAY(activities) = day {
-            activities.append(activity)
-            newDay = .SATURDAY(activities)
-        }
-        if case var .SUNDAY(activities) = day {
-            activities.append(activity)
-            newDay = .SUNDAY(activities)
-        }
-        updateDay(newDay)
+    init() {
+        self.schedule = Schedule()
     }
     
-    func removeActivity(index: Int, day: Day) {
-        var newDay = day;
-        if case var .MONDAY(activities) = day {
-            if(activities.count > index) {
-                activities.remove(at: index)
+    func load() {
+        let defaults = UserDefaults.standard
+        if let raw = defaults.object(forKey: "schedule") as? Data {
+            guard let schedule = try? JSONDecoder().decode(Schedule.self, from: raw) else {
+                return
             }
-            newDay = .MONDAY(activities)
+            self.schedule = schedule
+        } else {
+            self.schedule = Schedule()
         }
-        if case var .TUESDAY(activities) = day {
-            if(activities.count > index) {
-                activities.remove(at: index)
-            }
-            newDay = .TUESDAY(activities)
-        }
-        if case var .WEDNESDAY(activities) = day {
-            if(activities.count > index) {
-                activities.remove(at: index)
-            }
-            newDay = .WEDNESDAY(activities)
-        }
-        if case var .THURSDAY(activities) = day {
-            if(activities.count > index) {
-                activities.remove(at: index)
-            }
-            newDay = .THURSDAY(activities)
-        }
-        if case var .FRIDAY(activities) = day {
-            if(activities.count > index) {
-                activities.remove(at: index)
-            }
-            newDay = .FRIDAY(activities)
-        }
-        if case var .SATURDAY(activities) = day {
-            if(activities.count > index) {
-                activities.remove(at: index)
-            }
-            newDay = .SATURDAY(activities)
-        }
-        if case var .SUNDAY(activities) = day {
-            if(activities.count > index) {
-                activities.remove(at: index)
-            }
-            newDay = .SUNDAY(activities)
-        }
-        updateDay(newDay)
     }
     
-    func removeAll(_ day: Day) {
-        var newDay = day;
-        if case var .MONDAY(activities) = day {
-            activities.removeAll()
-            newDay = .MONDAY(activities)
+    func addActivity(_ id: UUID, day: Day) {
+        if case .SUNDAY = day {
+            self.schedule.sunday.append(id)
+        } else if case .MONDAY = day {
+            self.schedule.monday.append(id)
+        } else if case .TUESDAY = day {
+            self.schedule.tuesday.append(id)
+        } else if case .WEDNESDAY = day {
+            self.schedule.wednesday.append(id)
+        } else if case .THURSDAY = day {
+            self.schedule.thursday.append(id)
+        } else if case .FRIDAY = day {
+            self.schedule.friday.append(id)
+        } else if case .SATURDAY = day {
+            self.schedule.saturday.append(id)
         }
-        if case var .TUESDAY(activities) = day {
-            activities.removeAll()
-            newDay = .TUESDAY(activities)
-        }
-        if case var .WEDNESDAY(activities) = day {
-            activities.removeAll()
-            newDay = .WEDNESDAY(activities)
-        }
-        if case var .THURSDAY(activities) = day {
-            activities.removeAll()
-            newDay = .THURSDAY(activities)
-        }
-        if case var .FRIDAY(activities) = day {
-            activities.removeAll()
-            newDay = .FRIDAY(activities)
-        }
-        if case var .SATURDAY(activities) = day {
-            activities.removeAll()
-            newDay = .SATURDAY(activities)
-        }
-        if case var .SUNDAY(activities) = day {
-            activities.removeAll()
-            newDay = .SUNDAY(activities)
-        }
-        updateDay(newDay)
     }
     
-    private func updateDay(_ day: Day) {
-        if let index = self.schedules.firstIndex(where: {$0.day == day}) {
-            self.schedules[index].day = day
+    func removeActivity(_ index: Int, day: Day) {
+        if case .SUNDAY = day {
+            self.schedule.sunday.remove(at: index)
+        } else if case .MONDAY = day {
+            self.schedule.monday.remove(at: index)
+        } else if case .TUESDAY = day {
+            self.schedule.tuesday.remove(at: index)
+        } else if case .WEDNESDAY = day {
+            self.schedule.wednesday.remove(at: index)
+        } else if case .THURSDAY = day {
+            self.schedule.thursday.remove(at: index)
+        } else if case .FRIDAY = day {
+            self.schedule.friday.remove(at: index)
+        } else if case .SATURDAY = day {
+            self.schedule.saturday.remove(at: index)
+        }
+    }
+    
+    func removeActivities(day: Day) {
+        if case .SUNDAY = day {
+            self.schedule.sunday.removeAll()
+        } else if case .MONDAY = day {
+            self.schedule.monday.removeAll()
+        } else if case .TUESDAY = day {
+            self.schedule.tuesday.removeAll()
+        } else if case .WEDNESDAY = day {
+            self.schedule.wednesday.removeAll()
+        } else if case .THURSDAY = day {
+            self.schedule.thursday.removeAll()
+        } else if case .FRIDAY = day {
+            self.schedule.friday.removeAll()
+        } else if case .SATURDAY = day {
+            self.schedule.saturday.removeAll()
         }
     }
 }

@@ -35,27 +35,30 @@ struct CardUpdateView: View {
                 Color(hex: "BDD4CE", transparency: 1) // Background color for the whole view
                     .ignoresSafeArea()
                 
-                VStack(spacing: 20) {
-                    Section {
-                        VStack{
-                            if !navigateFromImage {
-                                VStack(alignment: .leading, spacing: 4) {
-                                    TextContent(
-                                        text: "NAMA ICON", size: 15, color: "FFFFFF", transparency: 1.0,
-                                        weight: "regular")
-                                    VStack(alignment: .leading, spacing: 4) {
-                                        TextField(LocalizedStringKey("Tambah Kata Baru"), text: $textToSpeak)
-                                            .onChange(of: textToSpeak) {
-                                                textToSpeak = textToSpeak.lowercased()
-                                                navigatesFromImage = false
-                                                filteredAssets = filterAssets(by: textToSpeak, for: viewModel.userProfile.gender)
-                                            }
-                                    }
-                                    .padding()
-                                    .background(Color.white)
-                                    .cornerRadius(10)
-                                    .shadow(radius: 1)
-                                }
+                HStack {
+                    if let data = stickerManager.stickerImage,
+                       let uiImage = UIImage(data: data) {
+                        // Display the sticker image if available
+                        Image(uiImage: uiImage)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 50, height: 50)
+                            .cornerRadius(20)
+                            .onAppear {
+                                self.type = .image(data)
+                                isImageType = true
+                                print("STICKER")
+                            }
+                    } else if let data = originalImageManager.imageFromLocal, let uiImage = UIImage(data: data) {
+                        // Fallback to image from local if sticker is not set
+                        Image(uiImage: uiImage)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 50, height: 50)
+                            .cornerRadius(20)
+                            .onAppear {
+                                self.type = .image(data)
+                                isImageType = true
                             }
                             
                             ZStack {

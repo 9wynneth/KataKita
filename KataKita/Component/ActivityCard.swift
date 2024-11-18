@@ -8,118 +8,134 @@
 import SwiftUI
 
 struct ActivityCard: View {
-    let icon: String?
-    let nomor: String
-    let text: String?
-    let font: Int
-    let width: Int
-    let height: Int
-    let iconWidth: Int?
-    let iconHeight: Int?
-    let bgColor: String
-    let bgTransparency: Double
-    let fontColor: String
-    let fontTransparency: Double
-    let cornerRadius: CGFloat
-    let isSystemImage: Bool
-    let action: (() -> Void)?
+    let activity: Activity
+    
+    let width: CGFloat
+    let height: CGFloat
+    
+    let number: String?
+    let f: (() -> Void)?
 
-    init(icon: String? = nil,nomor: String, text: String? = nil, width: Int, height: Int, font: Int, iconWidth: Int? = nil, iconHeight: Int? = nil, bgColor: String, bgTransparency: Double, fontColor: String, fontTransparency: Double, cornerRadius: CGFloat, isSystemImage: Bool = true, action: (() -> Void)? = nil) {
-        self.icon = icon
-        self.nomor = nomor
-        self.text = text
-        self.width = width
-        self.height = height
-        self.font = font
-        self.iconWidth = iconWidth
-        self.iconHeight = iconHeight
-        self.bgColor = bgColor
-        self.bgTransparency = bgTransparency
-        self.fontColor = fontColor
-        self.fontTransparency = fontTransparency
-        self.cornerRadius = cornerRadius
-        self.isSystemImage = isSystemImage
-        self.action = action
+    init(_ activity: Activity, size: (CGFloat, CGFloat) = (50, 50), number: String? = nil, f: (() -> Void)? = nil) {
+        self.activity = activity
+        self.number = number
+        self.width = size.0
+        self.height = size.1
+        self.f = f
     }
 
     var body: some View {
         Button(action: {
-            action?()
+            if let f = self.f {
+                f()
+            }
         }) {
             VStack {
-                HStack {
-                    Text(LocalizedStringKey(nomor))
-                        .font(.system(size: CGFloat(font), weight: .medium))
-                        .foregroundColor(Color(hex: fontColor, transparency: fontTransparency))
-                        .padding(.leading,8)
-                        .padding(.top,8)
-                        
+                if let number = self.number {
+                    HStack {
+                        Text(LocalizedStringKey(number))
+                            .font(.system(size: 14, weight: .medium))
+                            .foregroundColor(Color(hex: "000000", transparency: 1))
+                            .padding(EdgeInsets(top: 8, leading: 8, bottom: 0, trailing: 0))
+                            
+                        Spacer()
+                    }
                     Spacer()
                 }
-                Spacer()
+
                 VStack(spacing: 4) {
-                    Spacer()
-                    if let icon = icon, !icon.isEmpty {
-                        if isSystemImage {
-                            // If it's a system image, use the systemName initializer
-                            Image(systemName: icon)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: CGFloat(iconWidth ?? 24), height: CGFloat(iconHeight ?? 24))
-                                .foregroundColor(Color(hex: fontColor, transparency: fontTransparency))
-                                .padding(.trailing, 8)
-                        } else {
-                            // First, attempt to load the image from a file path
-                            if let uiImage = UIImage(contentsOfFile: icon) {
-                                Image(uiImage: uiImage)  // Use the loaded UIImage if it's a valid file path
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: CGFloat(iconWidth ?? 24), height: CGFloat(iconHeight ?? 24))
-                                    .padding(.trailing, 8)
-                            } else {
-                                // If the file path is invalid or it's actually an asset image, load from assets
-                                Image(icon)
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: CGFloat(iconWidth ?? 24), height: CGFloat(iconHeight ?? 24))
-                                    .padding(.trailing, 8)
-                            }
-                        }
+                    if case let .image(data) = self.activity.type, let uiImage = UIImage(data: data) {
+                        Image(uiImage: uiImage)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: self.width / 2, height: self.height / 2)
+                    } else if case let .icon(icon) = self.activity.type {
+                        Icon(icon, (self.width / 2, self.height / 2))
                     }
 
-
-                    
-                    if let text = text, !text.isEmpty {
-                        TextContent(
-                            text: text,
-                            size: Int(CGFloat(font)),
-                            color: fontColor,
-                            transparency: fontTransparency,
-                            weight: "medium"
-                        )
-                        .padding(2)
-                        .multilineTextAlignment(.center)
-                        .lineLimit(2)
-                        .minimumScaleFactor(0.5)  
-                        .allowsTightening(true)
-   
-                    }
-                    
-                    Spacer()
-                }.padding(.top,-15)
-                Spacer()
+                    TextContent(
+                        text: self.activity.name,
+                        size: 14,
+                        color: "000000",
+                        transparency: 1,
+                        weight: "medium"
+                    )
+                    .padding(2)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(2)
+                }
             }
+            .frame(width: self.width, height: self.height)
         }
         .buttonStyle(PlainButtonStyle())
-        .frame(width: CGFloat(width), height: CGFloat(height))
-        .background(Color(hex: bgColor, transparency: bgTransparency))
-        .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
-        .shadow(color: Color(hex: "000000", transparency: 0.1), radius:10)
-
     }
 }
 
-// if it's image set isSystemImage to false , but if it's sfsymbols set it to true
-#Preview {
-    ActivityCard(icon: "ball", nomor: "1", text: "Ambil sikat gigimu dan taru di dalam", width: 260, height: 150, font: 15, iconWidth: 50, iconHeight: 50, bgColor: "#000000", bgTransparency: 1.0, fontColor: "#ffffff", fontTransparency: 1.0, cornerRadius: 20, isSystemImage: false)
+struct StepCard: View {
+    let step: Step
+    
+    let width: CGFloat
+    let height: CGFloat
+    
+    let number: String?
+    let f: (() -> Void)?
+
+    init(_ step: Step, size: (CGFloat, CGFloat) = (50, 50), number: String? = nil, f: (() -> Void)? = nil) {
+        self.step = step
+        self.number = number
+        self.width = size.0
+        self.height = size.1
+        self.f = f
+    }
+
+    var body: some View {
+        Button(action: {
+            if let f = self.f {
+                f()
+            }
+        }) {
+            VStack {
+                if let number = self.number {
+                    HStack {
+                        Text(LocalizedStringKey(number))
+                            .font(.system(size: 14, weight: .medium))
+                            .foregroundColor(Color(hex: "000000", transparency: 1))
+                            .padding(EdgeInsets(top: 8, leading: 8, bottom: 0, trailing: 0))
+                            
+                        Spacer()
+                    }
+                    Spacer()
+                }
+
+                VStack(spacing: 4) {
+                    if case let .image(data) = self.step.type, let uiImage = UIImage(data: data) {
+                        Image(uiImage: uiImage)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: self.width / 2, height: self.height / 2)
+                    } else if case let .icon(icon) = self.step.type {
+                        Icon(icon, (self.width / 2, self.height / 2))
+                    }
+
+                    TextContent(
+                        text: self.step.description,
+                        size: 14,
+                        color: "000000",
+                        transparency: 1,
+                        weight: "medium"
+                    )
+                    .padding(2)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(2)
+                }
+            }
+            .padding(10)
+            .frame(height: self.height)
+            .background(
+                RoundedRectangle(cornerRadius: 10)
+                    .fill(.white)
+            )
+        }
+        .buttonStyle(PlainButtonStyle())
+    }
 }

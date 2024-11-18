@@ -6,16 +6,8 @@
 //
 
 import SwiftUI
-import SwiftData
 
 struct ContentView: View {
-    
-    @Environment(ScheduleManager.self) private var scheduleManager
-    @Environment(ActivitiesManager.self) private var activitiesManager
-    @Environment(SecurityManager.self) private var securityManager
-    @Environment(BoardManager.self) private var boardManager
-
-    @Query private var items: [Item]
     @State private var selectedSegment = 0
     
     var body: some View {
@@ -24,14 +16,12 @@ struct ContentView: View {
                 Text("JADWAL").tag(2)
                 Text("AAC").tag(0)
                 Text("PECS").tag(1)
-
             }
             .pickerStyle(SegmentedPickerStyle())
             .frame(width: 500)
             
             if self.selectedSegment == 0 {
                 BetterAACView()
-                    
             } else if self.selectedSegment == 1 {
                 PECSView()
             } else {
@@ -39,10 +29,7 @@ struct ContentView: View {
             }
         }
         .frame(alignment: .topLeading)
-        .background(
-            Color(hex: "BDD4CE", transparency: 1.0)
-                .ignoresSafeArea()
-        )
+        .background(Color(hex: "BDD4CE", transparency: 1.0).ignoresSafeArea())
     }
 }
 

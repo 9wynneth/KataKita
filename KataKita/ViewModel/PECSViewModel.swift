@@ -12,10 +12,28 @@ import Foundation
 
 @Observable
 class PECSViewModel {
-    var cards: [[Card]]
+    var cards: [[Card]] {
+        didSet {
+            guard let data = try? JSONEncoder().encode(self.cards) else {
+                return
+            }
+
+            let defaults = UserDefaults.standard
+            defaults.set(data, forKey: "pecs")
+        }
+    }
     
     init(cards: [[Card]] = [[], [], [], [], []]) {
         self.cards = cards
+    }
+    
+    func load() {
+        let defaults = UserDefaults.standard
+
+        if let raw = defaults.object(forKey: "pecs") as? Data {
+            guard let cards = try? JSONDecoder().decode([[Card]].self, from: raw) else { return }
+            self.cards = cards
+        }
     }
     
     func reset() {

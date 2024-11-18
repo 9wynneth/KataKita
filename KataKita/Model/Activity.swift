@@ -7,23 +7,37 @@
 
 import Foundation
 import UIKit
+import SwiftData
 
-struct Step {
-    var image: String
+struct Step: Codable {
+    var type: ActivityType?
     var description: String
 }
 
-struct Activity: Identifiable {
+@Model
+class Activity: Identifiable {
     var id: UUID
     var name: String
-    var image: String // Optional
-    var ruangan: Ruangan
-    var sequence: [Step]   // Activities consist of many steps (Sequence)!
-    var isCompleted: Bool?
+    var type: ActivityType?
+    var sequence: [Step]
+    
+    init(name: String, type: ActivityType? = nil, sequence: [Step]) {
+        self.id = UUID()
+        self.name = name
+        self.type = type
+        self.sequence = sequence
+    }
 }
 
-struct Ruangan: Identifiable {
-    let id: UUID
-    let name: String
+enum ActivityType: Codable, Equatable {
+    case icon(String)
+    case image(Data)
     
+    static func == (lhs: ActivityType, rhs: ActivityType) -> Bool {
+        switch (lhs, rhs) {
+            case (.icon(_), .icon(_)): return true
+            case (.image(_), .image(_)): return true
+            default: return false
+        }
+    }
 }
