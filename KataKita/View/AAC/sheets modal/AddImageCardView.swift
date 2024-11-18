@@ -6,21 +6,28 @@ import CoreImage.CIFilterBuiltins
 struct AddImageCardView: View {
     @State private var showImagePicker = false
     @State private var showCamera = false
+    @State private var showingSymbolsView = false
+    @State private var showAACSettings = true
+    @State private var navigateToAddButton = false
     @Environment(StickerImageManager.self) var stickerManager
     @State private var isLoading = false
-    @State private var tempImageURL: URL?
+    @State private var gambar: String? = ""
+
     
     @Environment(\.dismiss) var dismiss
     @Binding var selectedColumnIndexValue: Int
     @Binding var CardName: String
     @Environment(OriginalImageManager.self) var originalImageManager
     @State private var tempImage: Data?
-  
+
+
     init(selectedColumnIndexValue: Binding<Int>, CardName: Binding<String>) {
         self._selectedColumnIndexValue = selectedColumnIndexValue
         self._CardName = CardName
     }
-    
+
+    private var processingQueue = DispatchQueue(label: "ProcessingQueue")
+
     var body: some View {
         NavigationStack {
             Form {
@@ -31,6 +38,7 @@ struct AddImageCardView: View {
                     .sheet(isPresented: self.$showImagePicker) {
                         ImagePicker(self.$tempImage)
                             .onDisappear {
+                                // Update the image URL after selection and clear the sticker image
                                 if let data = self.tempImage {
                                     self.originalImageManager.imageFromLocal = data
                                     self.stickerManager.stickerImage = nil // Reset the sticker when new image is chosen
@@ -44,6 +52,7 @@ struct AddImageCardView: View {
                     .sheet(isPresented: self.$showCamera) {
                         ImagePicker($tempImage, .camera)
                             .onDisappear {
+                                // Update the image URL after capture and clear the sticker image
                                 if let data = self.tempImage {
                                     self.originalImageManager.imageFromLocal = data
                                     self.stickerManager.stickerImage = nil // Reset the sticker when new photo is taken
@@ -53,23 +62,34 @@ struct AddImageCardView: View {
 
                     if self.isLoading {
                         ProgressView(LocalizedStringKey("Processing..."))
-                    } else if let data = self.stickerManager.stickerImage, let uiImage = UIImage(data: data) {
-                        Image(uiImage: uiImage)
+                    } else if let data = self.stickerManager.stickerImage, let uIImage = UIImage(data: data) {
+                        Image(uiImage: uIImage)
                             .resizable()
                             .scaledToFit()
-                            .frame(width: 200, height: 200)
+                            .frame(width: 100, height: 100)
                             .cornerRadius(20)
+                            .onAppear{
+                                self.gambar = "sticker"
+                            }
+                            .onChange(of: self.stickerManager.stickerImage) {
+                                if self.stickerManager.stickerImage != nil {
+                                    self.gambar = "sticker"
+                                }
+                            }
                     } else if let data = self.originalImageManager.imageFromLocal, let uiImage = UIImage(data: data) {
                         Image(uiImage: uiImage)
                             .resizable()
                             .scaledToFit()
-                            .frame(width: 200, height: 200)
+                            .frame(width: 100, height: 100)
                             .cornerRadius(20)
                             .onAppear {
-                                if self.stickerManager.stickerImage == nil {
+                                // If it's a new image, create a sticker from it, otherwise do nothing
+                                if self.stickerManager.stickerImage == nil, let data = self.originalImageManager.imageFromLocal, let uiImage = UIImage(data: data) {
                                     self.createSticker(from: uiImage)
+                                    self.gambar = "original"
                                 }
                             }
+
                     } else {
                         Text("No image selected")
                             .foregroundColor(.red)
@@ -84,6 +104,7 @@ struct AddImageCardView: View {
                     }
                 }
             )
+          
         }
     }
 
@@ -94,12 +115,13 @@ struct AddImageCardView: View {
             return
         }
 
-        isLoading = true
+        isLoading = true // Start loading
 
-        DispatchQueue.global(qos: .userInitiated).async {
+        processingQueue.async {
             guard let maskImage = self.subjectMaskImage(from: inputCIImage) else {
                 DispatchQueue.main.async {
                     self.isLoading = false
+                    // Fallback to original image: Save the image as a file and assign the URL to stickerManager
                     self.stickerManager.stickerImage = self.saveImageToTemporaryFile(image)
                     print("Failed to create mask image")
                 }
@@ -116,8 +138,13 @@ struct AddImageCardView: View {
         }
     }
 
+    // Helper function to save UIImage to a temporary file and return the URL
     private func saveImageToTemporaryFile(_ image: UIImage) -> Data? {
-        return image.pngData()
+        guard let data = image.pngData() else {
+            print("Failed to get image data")
+            return nil
+        }
+        return data
     }
 
     private func subjectMaskImage(from inputImage: CIImage) -> CIImage? {
@@ -142,23 +169,24 @@ struct AddImageCardView: View {
         filter.inputImage = image
         filter.maskImage = mask
         filter.backgroundImage = CIImage.empty()
-        return filter.outputImage ?? image
+        return filter.outputImage!
     }
 
     private func render(ciImage: CIImage) -> UIImage {
-        let context = CIContext()
-        guard let cgImage = context.createCGImage(ciImage, from: ciImage.extent) else {
+        guard let cgImage = CIContext(options: nil).createCGImage(ciImage, from: ciImage.extent) else {
             fatalError("Failed to render CGImage")
         }
         return UIImage(cgImage: cgImage)
     }
 }
 
+// MARK: - ImagePicker Helper (Modified to Save Path as URL)
 struct ImagePicker: UIViewControllerRepresentable {
     @Binding var imageData: Data?
+    
     private let sourceType: UIImagePickerController.SourceType
     
-    init(_ data: Binding<Data?>, _ source: UIImagePickerController.SourceType = .photoLibrary) {
+    init( _ data: Binding<Data?>, _ source: UIImagePickerController.SourceType = .photoLibrary) {
         self._imageData = data
         self.sourceType = source
     }
@@ -184,15 +212,37 @@ struct ImagePicker: UIViewControllerRepresentable {
             self.parent = parent
         }
 
-        func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
-            if let uiImage = info[.originalImage] as? UIImage, let data = uiImage.pngData() {
-                parent.imageData = data
+        func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+            if let uiImage = info[.originalImage] as? UIImage {
+                // Fix orientation if needed
+                let fixedImage = fixOrientation(of: uiImage)
+
+                // Save the fixed image to a temporary file and set the imageURL to the URL path
+                if let data = fixedImage.pngData() {
+                    self.parent.imageData = data
+                }
             }
+            print("Dismiss on Get Image")
             picker.dismiss(animated: true)
         }
 
         func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+            print("Dismiss on Cancel")
             picker.dismiss(animated: true)
+        }
+
+        // Helper function to fix image orientation
+        private func fixOrientation(of image: UIImage) -> UIImage {
+            if image.imageOrientation == .up {
+                return image // No need to fix
+            }
+
+            UIGraphicsBeginImageContextWithOptions(image.size, false, image.scale)
+            image.draw(in: CGRect(origin: .zero, size: image.size))
+            let fixedImage = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+
+            return fixedImage ?? image // Fallback to the original image if something goes wrong
         }
     }
 }

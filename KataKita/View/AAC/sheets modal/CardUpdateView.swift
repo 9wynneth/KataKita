@@ -10,31 +10,40 @@ struct CardUpdateView: View {
     @State private var isGender = false
     @Environment(StickerImageManager.self) var stickerManager
     @Environment(OriginalImageManager.self) var originalImageManager
-
+    
+    
     @Binding var navigateFromImage: Bool
     @Binding var selectedColumnIndexValue: Int
     @Binding var showAACSettings: Bool
-
+    
     @State private var name = ""
     @State private var category = Category.CORE
     @State private var type: CardType? = nil
-
+    
     @State private var isImageType = false
     @State private var selectedCategory: Category = .CORE
     @State private var filteredAssets: [String] = []
     @Environment(ProfileViewModel.self) private var viewModel
     @Environment(BoardManager.self) private var boardManager
-
+    
     var body: some View {
         NavigationStack {
-            ZStack {
-                Color(hex: "BDD4CE", transparency: 1)
-                    .ignoresSafeArea()
-
-                VStack {
+            Form {
+                Section {
+                    if !navigateFromImage {
+                        TextField("Tambah Kata Baru", text: $textToSpeak)
+                            .onChange(of: textToSpeak) {
+                                textToSpeak = textToSpeak.lowercased()
+                                navigatesFromImage = false
+                                filteredAssets = filterAssets(by: textToSpeak, for: viewModel.userProfile.gender)
+                            }
+                    }
+                }
+                
+                HStack {
                     if let data = stickerManager.stickerImage,
                        let uiImage = UIImage(data: data) {
-                        // Display sticker image
+                        // Display the sticker image if available
                         Image(uiImage: uiImage)
                             .resizable()
                             .scaledToFit()
@@ -43,10 +52,10 @@ struct CardUpdateView: View {
                             .onAppear {
                                 self.type = .image(data)
                                 isImageType = true
+                                print("STICKER")
                             }
-                    } else if let data = originalImageManager.imageFromLocal,
-                              let uiImage = UIImage(data: data) {
-                        // Display local image
+                    } else if let data = originalImageManager.imageFromLocal, let uiImage = UIImage(data: data) {
+                        // Fallback to image from local if sticker is not set
                         Image(uiImage: uiImage)
                             .resizable()
                             .scaledToFit()
@@ -57,40 +66,46 @@ struct CardUpdateView: View {
                                 isImageType = true
                             }
                     } else {
-                        // Display filtered icons
+                        // Display icons if no image is selected
                         if !filteredAssets.isEmpty {
-                            HStack {
-                                ForEach(filteredAssets.prefix(3), id: \.self) { assetName in
-                                    CustomButtonSearch(
-                                        icon: getDisplayIcon(for: assetName),
-                                        text: getDisplayText(for: assetName),
-                                        width: 100,
-                                        height: 100,
-                                        font: 20,
-                                        iconWidth: 50,
-                                        iconHeight: 50,
-                                        bgColor: "#FFFFFF",
-                                        bgTransparency: 1.0,
-                                        fontColor: "#000000",
-                                        fontTransparency: 1.0,
-                                        cornerRadius: 20,
-                                        isSystemImage: assetName.contains("person.fill"),
-                                        action: {
-                                            navigatesFromImage = true
-                                            textToSpeak = assetName
-                                            if textToSpeak.hasPrefix("GIRL_") {
-                                                textToSpeak = textToSpeak.replacingOccurrences(of: "GIRL_", with: "")
-                                                isGender = true
-                                            } else if textToSpeak.hasPrefix("BOY_") {
-                                                textToSpeak = textToSpeak.replacingOccurrences(of: "BOY_", with: "")
-                                                isGender = true
-                                            } else {
-                                                isGender = false
+                            VStack(alignment: .leading) {
+                                HStack {
+                                    ForEach(filteredAssets.prefix(3), id: \.self) { assetName in
+                                        CustomButtonSearch(
+                                            icon: getDisplayIcon(for: assetName),
+                                            text: getDisplayText(for: assetName),
+                                            width: 100,
+                                            height: 100,
+                                            font: 20,
+                                            iconWidth: 50,
+                                            iconHeight: 50,
+                                            bgColor: "#FFFFFF",
+                                            bgTransparency: 1.0,
+                                            fontColor: "#000000",
+                                            fontTransparency: 1.0,
+                                            cornerRadius: 20,
+                                            isSystemImage: assetName.contains("person.fill"),
+                                            action: {
+                                                navigatesFromImage = true
+                                                textToSpeak = assetName
+                                                if textToSpeak.hasPrefix("GIRL_") {
+                                                    textToSpeak = textToSpeak.replacingOccurrences(of: "GIRL_", with: "")
+                                                    isGender = true
+                                                } else if textToSpeak.hasPrefix("BOY_") {
+                                                    textToSpeak = textToSpeak.replacingOccurrences(of: "BOY_", with: "")
+                                                    isGender = true
+                                                }
+                                                else {
+                                                    isGender = false
+                                                }
+                                                filteredAssets = [assetName]
+                                                isImageType = false
                                             }
-                                            filteredAssets = [assetName]
-                                            isImageType = false
+                                        )
+                                        .onAppear {
+                                            print("INI YAAA " + getDisplayText(for: assetName) + "OKEE " + assetName)
                                         }
-                                    )
+                                    }
                                 }
                             }
                         } else if !textToSpeak.isEmpty {
@@ -110,7 +125,7 @@ struct CardUpdateView: View {
                             )
                         }
                     }
-
+                    
                     CustomButton(
                         icon: "plus",
                         width: 100,
@@ -130,38 +145,27 @@ struct CardUpdateView: View {
                         }
                     )
                     .opacity(navigatesFromImage ? 0 : 1)
-
-                    Spacer()
-
-                    CustomButton(
-                        text: "SELESAI",
-                        width: 350,
-                        height: 50,
-                        font: 16,
-                        bgColor: "#013C5A",
-                        bgTransparency: 1.0,
-                        fontColor: "#ffffff",
-                        fontTransparency: 1.0,
-                        cornerRadius: 30
-                    ) {
-                        if !textToSpeak.isEmpty {
-                            handleDoneAction()
-                            showAACSettings = false
+                }
+                
+                Section(header: Text("Pilih Kategori")) {
+                    Picker("Kategori", selection: $selectedCategory) {
+                        ForEach(Category.allCases, id: \.self) { category in
+                            Label {
+                                Text(category.rawValue)
+                                    .foregroundColor(.primary)
+                            } icon: {
+                                Circle()
+                                    .fill(category.getColor())
+                                    .frame(width: 10, height: 10)
+                            }
+                            .tag(category)
                         }
                     }
-                    .padding(.bottom, 20)
+                    .pickerStyle(.inline) // Use inline or another style if needed
                 }
             }
-            .toolbar {
-                ToolbarItem(placement: .principal) {
-                    TextContent(
-                        text: "Tambah Icon Baru",
-                        size: 25,
-                        color: "FFFFFF",
-                        transparency: 1.0,
-                        weight: "medium"
-                    )
-                }
+            .onAppear {
+                
             }
             .navigationDestination(isPresented: $showingAddImageView) {
                 AddImageCardView(
@@ -169,13 +173,24 @@ struct CardUpdateView: View {
                     CardName: $textToSpeak
                 )
             }
+            .navigationBarItems(
+                trailing: Button(LocalizedStringKey("Selesai")) {
+                    if !textToSpeak.isEmpty {
+                        handleDoneAction()
+                        showAACSettings = false
+                    }
+                }
+            )
         }
     }
-
+    
     private func handleDoneAction() {
         // Check if it's a sticker
-        
-        
+        if stickerManager.stickerImage == nil && !isImageType {
+            selectedIcon = textToSpeak.lowercased()
+            self.type = .icon(selectedIcon)
+        }
+
         // Handle the card creation
         
         if Locale.current.language.languageCode?.identifier == "en" {
@@ -197,20 +212,20 @@ struct CardUpdateView: View {
         else {
             selectedIcon = NSLocalizedString(selectedIcon, comment: "")
         }
-        
+        let color = selectedCategory
+
         // Localize only when displaying in SwiftUI
         if Locale.current.language.languageCode?.identifier == "en" {
-            let localizedIcon = NSLocalizedString(textToSpeak.uppercased(), comment: "")
             if viewModel.userProfile.gender == true {
                 if AllAssets.shared.genderAssets.contains(textToSpeak.lowercased()) {
-                    textToSpeak = "GIRL_" + localizedIcon.uppercased()
+                    selectedIcon = "GIRL_" + textToSpeak.uppercased()
                 } else {
                     textToSpeak = NSLocalizedString(textToSpeak, comment: "")
                 }
             }
             else {
                 if AllAssets.shared.genderAssets.contains(textToSpeak.lowercased()) {
-                    textToSpeak = "BOY_" + localizedIcon.uppercased()
+                    selectedIcon = "BOY_" + textToSpeak.uppercased()
                 } else {
                     textToSpeak = NSLocalizedString(textToSpeak, comment: "")
                 }
@@ -219,41 +234,29 @@ struct CardUpdateView: View {
         else {
             textToSpeak = NSLocalizedString(textToSpeak, comment: "")
         }
-        if stickerManager.stickerImage == nil && !isImageType {
-            selectedIcon = textToSpeak.lowercased()
-            self.type = .icon(selectedIcon)
-        }
-        print("icon " + textToSpeak)
-        
+
+        print("Handling done action: Icon: \(selectedIcon), Text: \(textToSpeak), Background Color: \(color)")
+
+        // Add card to board
         boardManager.addCard(Card(name: textToSpeak, category: selectedCategory, type: self.type), column: selectedColumnIndexValue)
-        
+
         // Reset the image state after the card has been added
         originalImageManager.imageFromLocal = nil
         stickerManager.stickerImage = nil  // Clear the sticker image after it's added
-        
+
         // Dismiss the view
         self.addingCard = nil
     }
-
+    
     private func getDisplayText(for icon: String) -> String {
         if Locale.current.language.languageCode?.identifier == "en" {
-            let localizedIcon = NSLocalizedString(icon, comment: "")
-            let localizedIcon2 = NSLocalizedString(localizedIcon, comment: "")
-            if viewModel.userProfile.gender == true {
-                if icon.hasPrefix("GIRL_") {
-                    return localizedIcon2
-                } else {
-                    return icon
-                    
-                }
+            let localizedIcon = NSLocalizedString(icon.lowercased(), comment: "")
+            if AllAssets.shared.genderAssets.contains(icon.lowercased()) {
+                return localizedIcon
             }
             else {
-                if icon.hasPrefix("BOY_") {
-                    return localizedIcon2
-                } else {
-                    return icon
-                    
-                }
+                return icon
+                
             }
         }
         else {
@@ -262,7 +265,6 @@ struct CardUpdateView: View {
                     return icon.replacingOccurrences(of: "GIRL_", with: "")
                 } else {
                     return icon
-                    
                 }
             }
             else {
@@ -274,24 +276,20 @@ struct CardUpdateView: View {
                 }
             }
         }
-        
     }
-
+    
     private func getDisplayIcon(for icon: String) -> String {
-        let lang = Locale.current.language.languageCode?.identifier ?? "id"
-        if lang == "en" {
-            let localizedIcon = NSLocalizedString(icon.uppercased(), comment: "")
+        if Locale.current.language.languageCode?.identifier == "en" {
             if viewModel.userProfile.gender == true {
-                if AllAssets.shared.genderAssets.contains(icon) {
-                    return "GIRL_" + localizedIcon
+                if AllAssets.shared.genderAssets.contains(icon.lowercased()) {
+                    return "GIRL_" + icon.uppercased()
                 } else {
                     return icon
-                    
                 }
             }
             else {
-                if AllAssets.shared.genderAssets.contains(icon) {
-                    return "BOY_" + localizedIcon
+                if AllAssets.shared.genderAssets.contains(icon.lowercased()) {
+                    return "BOY_" + icon.uppercased()
                 } else {
                     return icon
                     
@@ -300,16 +298,15 @@ struct CardUpdateView: View {
         }
         else {
             if viewModel.userProfile.gender == true {
-                if AllAssets.shared.genderAssets.contains(icon) {
-                    return "GIRL_" + icon
+                if AllAssets.shared.genderAssets.contains(icon.lowercased()) {
+                    return "GIRL_" + icon.uppercased()
                 } else {
                     return icon
-                    
                 }
             }
             else {
-                if AllAssets.shared.genderAssets.contains(icon) {
-                    return "BOY_" + icon
+                if AllAssets.shared.genderAssets.contains(icon.lowercased()) {
+                    return "BOY_" + icon.uppercased()
                 } else {
                     return icon
                     
