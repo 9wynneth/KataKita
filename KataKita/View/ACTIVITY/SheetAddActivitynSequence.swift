@@ -1,4 +1,4 @@
-//
+// sheet
 //  AddActivityView.swift
 //  KataKita
 //
@@ -8,12 +8,16 @@
 import SwiftUI
 import UIKit
 
-
 struct AddActivityView: View {
     // @Environment(ActivityManager.self) private var activityManager
     @Environment(ActivitiesManager.self) private var activitiesManager
-    
+    @Environment(ProfileViewModel.self) private var viewModel
+    @Environment(\.dismiss) var dismiss
+
     @State private var activityManager = ActivityManager()
+    @State private var textToSpeak: String = ""
+    @State private var isGender = false
+    @State private var navigatesFromImage = false
 
     @State private var stepDescription = ""
     @State private var showImagePicker = false
@@ -29,42 +33,86 @@ struct AddActivityView: View {
     @State private var tempImage: Data? // Used only for activity image
     @State private var tempStepImage: Data? // Separate for step images
     @State private var selectedStepIndex: Int?
+    @State private var filteredAssets: [String] = []
     
     let viewPortWidth = UIScreen.main.bounds.width
     let viewPortHeight = UIScreen.main.bounds.height
-    
-    @Environment(\.dismiss) var dismiss
-    
+
     var body: some View {
         NavigationStack {
             Form {
                 // MARK: ActivityType.image Picker
                 Section(header: Text("Activity Details")) {
-                    TextField("Enter Activity Name", text: self.$activityName)
+                    TextField(LocalizedStringKey("Tambah Kata Baru"), text: $activityName)
+                        .onChange(of: activityName) {
+                            activityName = activityName.lowercased()
+                            navigatesFromImage = false
+                            filteredAssets = filterAssets(by: activityName, for: viewModel.userProfile.gender)
+                        }
+                    if !filteredAssets.isEmpty {
+                        VStack(alignment: .leading) {
+                            HStack {
+                                ForEach(filteredAssets.prefix(3), id: \.self) { assetName in
+                                    CustomButtonSearch(
+                                        icon: getDisplayIcon(for: assetName),
+                                        text: getDisplayText(for: assetName),
+                                        width: 100,
+                                        height: 100,
+                                        font: 20,
+                                        iconWidth: 50,
+                                        iconHeight: 50,
+                                        bgColor: "#FFFFFF",
+                                        bgTransparency: 1.0,
+                                        fontColor: "#000000",
+                                        fontTransparency: 1.0,
+                                        cornerRadius: 20,
+                                        isSystemImage: assetName.contains("person.fill"),
+                                        action: {
+                                            self.activityManager.setType(.icon(getDisplayIcon(for: assetName)))
+                                            self.activityName = assetName
+                                            if self.activityName.hasPrefix("GIRL_") {
+                                                self.activityName = self.activityName.replacingOccurrences(of: "GIRL_", with: "")
+                                                self.isGender = true
+                                            } else if textToSpeak.hasPrefix("BOY_") {
+                                                self.activityName = self.activityName.replacingOccurrences(of: "BOY_", with: "")
+                                                self.isGender = true
+                                            }
+                                            else {
+                                                self.isGender = false
+                                            }
+                                            self.filteredAssets = [assetName]
+                                        }
+                                    )
+                                }
+                            }
+                        }
+                    } else if !textToSpeak.isEmpty {
+                        CustomButtonSearch(
+                            text: textToSpeak,
+                            width: 100,
+                            height: 100,
+                            font: 20,
+                            bgColor: "#FFFFFF",
+                            bgTransparency: 1.0,
+                            fontColor: "#000000",
+                            fontTransparency: 1.0,
+                            cornerRadius: 20,
+                            action: {
+                                navigatesFromImage = true
+                            }
+                        )
+                    }
+                    
                     
                     Button("Take Photo...") {
                         self.showCamera = true
                     }
-                    .sheet(isPresented: self.$showCamera) {
-                        ImagePicker(self.$tempImage, .camera)
-                            .onDisappear {
-                                if let data = self.tempImage {
-                                    self.activityManager.setType(.image(data))
-                                }
-                            }
-                    }
+
                     
                     Button("Choose Activity Image...") {
                         self.showImagePicker = true
                     }
-                    .sheet(isPresented: self.$showImagePicker) {
-                        ImagePicker(self.$tempImage)
-                            .onDisappear {
-                                if let data = self.tempImage {
-                                    self.activityManager.setType(.image(data))
-                                }
-                            }
-                    }
+
                     
                     if let data = self.tempImage, let uiImage = UIImage(data: data) {
                         Image(uiImage: uiImage)
@@ -95,16 +143,7 @@ struct AddActivityView: View {
                                     self.selectedStepIndex = index
                                     self.showStepImagePicker = true
                                 }
-                                .sheet(isPresented: self.$showStepImagePicker) {
-                                    ImagePicker(self.$tempStepImage) // Use tempStepImageURL here
-                                        .onDisappear {
-                                            if let data = self.tempStepImage, let index = self.selectedStepIndex {
-                                                self.activityManager.setStepType(.image(data), at: index)
-                                                self.tempStepImage = nil // Clear after use
-                                                self.selectedStepIndex = nil
-                                            }
-                                        }
-                                }
+
                                 
                                 if case let .image(data) = step.type {
                                     if let uiImage = UIImage(data: data) {
@@ -141,6 +180,42 @@ struct AddActivityView: View {
                     }
                 }
             }
+            .onAppear {
+                print("Filtered Assets: \(filteredAssets)")
+            }
+
+            .sheet(isPresented: self.$showCamera) {
+                ImagePicker(self.$tempImage, .camera)
+                    .onDisappear {
+                        if let data = self.tempImage {
+                            self.activityManager.setType(.image(data))
+                        }
+                    }
+                
+            }
+            .sheet(isPresented: self.$showImagePicker) {
+                ImagePicker(self.$tempImage)
+                    .onDisappear {
+                        if let data = self.tempImage {
+                            self.activityManager.setType(.image(data))
+                        }
+                    }
+            }
+            .sheet(isPresented: self.$showStepImagePicker) {
+                ImagePicker(self.$tempStepImage) // Use tempStepImageURL here
+                    .onChange(of: self.tempStepImage) {
+                        if let data = self.tempStepImage {
+                            self.activityManager.setStepType(.image(data), at: self.selectedStepIndex!)
+                        }
+                    }
+                    .onDisappear {
+                        if let data = self.tempStepImage, let index = self.selectedStepIndex {
+                            self.activityManager.setStepType(.image(data), at: index)
+                            self.tempStepImage = nil // Clear after use
+                            self.selectedStepIndex = nil
+                        }
+                    }
+            }
             .navigationDestination(isPresented: self.$navigateToAddStep) {
                 AddStepView(self.$activityManager)
             }
@@ -172,7 +247,45 @@ struct AddActivityView: View {
             self.activityManager.activity = Activity(name: "new activity", sequence: [])
         }
     }
-    
+    private func getDisplayIcon(for icon: String) -> String {
+        let lang = Locale.current.language.languageCode?.identifier ?? "id"
+        if lang == "en" {
+            let localizedIcon = NSLocalizedString(icon.uppercased(), comment: "")
+            if viewModel.userProfile.gender == true {
+                if AllAssets.shared.genderAssets.contains(icon) {
+                    return "GIRL_" + localizedIcon
+                } else {
+                    return icon
+                    
+                }
+            }
+            else {
+                if AllAssets.shared.genderAssets.contains(icon) {
+                    return "BOY_" + localizedIcon
+                } else {
+                    return icon
+                    
+                }
+            }
+        } else {
+            if viewModel.userProfile.gender == true {
+                if AllAssets.shared.genderAssets.contains(icon) {
+                    return "GIRL_" + icon
+                } else {
+                    return icon
+                    
+                }
+            }
+            else {
+                if AllAssets.shared.genderAssets.contains(icon) {
+                    return "BOY_" + icon
+                } else {
+                    return icon
+                    
+                }
+            }
+        }
+    }
     private func getSteps() -> [Step] {
         return activityManager.activity.sequence
     }
@@ -196,7 +309,51 @@ struct AddActivityView: View {
         // self.activityManager.resetSteps()
         self.dismiss()
     }
+    
+    private func getDisplayText(for icon: String) -> String {
+        if Locale.current.language.languageCode?.identifier == "en" {
+            let localizedIcon = NSLocalizedString(icon, comment: "")
+            let localizedIcon2 = NSLocalizedString(localizedIcon, comment: "")
+            if viewModel.userProfile.gender == true {
+                if icon.hasPrefix("GIRL_") {
+                    return localizedIcon2
+                } else {
+                    return icon
+                    
+                }
+            }
+            else {
+                if icon.hasPrefix("BOY_") {
+                    return localizedIcon2
+                } else {
+                    return icon
+                    
+                }
+            }
+        }
+        else {
+            if viewModel.userProfile.gender == true {
+                if icon.hasPrefix("GIRL_") {
+                    return icon.replacingOccurrences(of: "GIRL_", with: "")
+                } else {
+                    return icon
+                    
+                }
+            }
+            else {
+                if icon.hasPrefix("BOY_") {
+                    return icon.replacingOccurrences(of: "BOY_", with: "")
+                } else {
+                    return icon
+                    
+                }
+            }
+        }
+        
+    }
 }
+
+
 
 struct AddStepView: View {
     @Environment(\.dismiss) var dismiss

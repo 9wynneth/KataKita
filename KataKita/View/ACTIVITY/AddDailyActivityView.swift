@@ -45,7 +45,15 @@ struct AddDailyActivityView: View {
             case .SATURDAY: self.scheduleManager.schedule.saturday
         }
         
-        return self.activitiesManager.activities.filter({ ids.contains($0.id) })
+        var activities = [Activity]()
+        
+        for id in ids {
+            if let activity = self.activitiesManager.activities.first(where: { $0.id == id }) {
+                activities.append(activity)
+            }
+        }
+        
+        return activities
     }
     var day: Day {
         switch self.selectedDayString {
@@ -288,7 +296,7 @@ struct AddDailyActivityView: View {
                                             selectedActivity = self.activitiesManager.activities[index]
                                             showEditActivityView = true
                                         }
-                                    ) 
+                                    )
                                 }
 
                             }

@@ -34,6 +34,7 @@ struct BetterAACView: View {
     @Environment(StickerImageManager.self) var stickerManager
     @Environment(OriginalImageManager.self) var originalImageManager
 
+    @State private var editingCard: (Int, Int) = (-1, -1)
     @State private var addingCard: Int? = nil
     @State private var addingBoard = false
     @State private var editing = false
@@ -48,7 +49,7 @@ struct BetterAACView: View {
     @State private var showprofile = false
     @State private var isAskPassword = false
     
-    @State static var navigateFromImage = false
+    @State private var navigateFromImage = false
     @State private var selectedCategoryColor: String = "#FFFFFF"
     @State private var selectedColumnIndexValue: Int = -1
 
@@ -237,8 +238,6 @@ struct BetterAACView: View {
                             id = board.id
                             SpeechManager.shared.speakCardAAC(board.name)
                         }
-                            
-
                     }
                     if self.editing {
                         Button {
@@ -328,20 +327,26 @@ struct BetterAACView: View {
                     AACBoardView(
                         board,
                         editing: self.$editing,
-                            add: { colIndex in
-                                BetterAACView.navigateFromImage = false
-                                selectedColumnIndexValue = colIndex
-                                stickerManager.clearStickerImage()
-                                originalImageManager.clearImageFromLocal()
-                                showAACSettings = true
-                                self.addingCard = colIndex
-                            },
+                        add: { colIndex in
+                            navigateFromImage = false
+                            selectedColumnIndexValue = colIndex
+                            stickerManager.clearStickerImage()
+                            originalImageManager.clearImageFromLocal()
+                            showAACSettings = true
+                            self.addingCard = colIndex
+                        },
                         del: { colIndex, rowIndex in
                             self.id = UUID()
                             self.id = board.id
-                            print("remove \(colIndex) \(rowIndex)")
-                            boardManager.removeCard(
-                                column: colIndex, row: rowIndex)
+                            self.boardManager.selectId(board.id)
+                            self.boardManager.removeCard(column: colIndex, row: rowIndex)
+                        },
+                        edit: { colIndex, rowIndex in
+                            self.editingCard = (colIndex, rowIndex)
+                            print(self.editingCard)
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                self.showAACSettings = true
+                            }
                         }
                     )
                 }
@@ -410,8 +415,6 @@ struct BetterAACView: View {
             Color(hex: "BDD4CE", transparency: 1.0)
                 .ignoresSafeArea()
         )
-        
-        // MARK: Add card form
         .overlay(
             Group {
                 if isAskPassword {
@@ -430,18 +433,17 @@ struct BetterAACView: View {
         )
         .onAppear {
             if let firstBoard = boardManager.boards.first {
-                id = firstBoard.id
+                self.id = firstBoard.id
             }
         }
         .onChange(of: id) {
-            boardManager.selectId(id)
+            self.boardManager.selectId(id)
             
             // Get the board name based on the id
             if let boardName = boardManager.selectedName(for: id) {
                 SpeechManager.shared.speakCardAAC(boardName)
             }
         }
-
         .onChange(of: securityManager.isCorrect) {
             if securityManager.isCorrect {
                 // Password is correct; toggle and reset values
@@ -460,10 +462,17 @@ struct BetterAACView: View {
         }
         .sheet(isPresented: $showAACSettings) {
             CardCreateView(
-                navigateFromImage: BetterAACView.$navigateFromImage,
-                selectedColumnIndexValue: $selectedColumnIndexValue,
-                showAACSettings: $showAACSettings
+                self.$navigateFromImage,
+                self.$selectedColumnIndexValue,
+                self.$showAACSettings,
+                self.$editingCard
             )
+            .onAppear {
+                print("ENTOD: \(self.editingCard)")
+            }
+            .onDisappear {
+                self.editingCard = (-1, -1)
+            }
         }
         .sheet(isPresented: $showprofile) {
             SettingsView()
@@ -506,7 +515,7 @@ struct AACCard: View {
             }
             
             if ["Hitam", "Cokelat", "Oranye", "Merah", "Ungu", "Pink", "Biru", "Hijau", "Kuning", "Putih"].contains(card.name) {
-                Text("") 
+                Text("")
             } else {
                 Text(LocalizedStringKey(card.name))
                     .foregroundStyle(Color.black)
@@ -518,14 +527,14 @@ struct AACCard: View {
         }
         .frame(width: 80, height: 80)
         .background(
-                        Color(hex: {
-                            if let type = card.type, case let .color(hex) = type {
-                                return hex
-                            } else {
-                                return "FFFFFF" // Default color if none is found
-                            }
-                        }(), transparency: 1)
-                    )
+            Color(hex: {
+                if let type = card.type, case let .color(hex) = type {
+                    return hex
+                } else {
+                    return "FFFFFF" // Default color if none is found
+                }
+            }(), transparency: 1)
+        )
         .cornerRadius(8)
         
     }

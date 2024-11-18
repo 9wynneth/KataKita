@@ -294,14 +294,6 @@ struct PECSView: View {
                 }
             }
         )
-        .onAppear {
-            let defaults = UserDefaults.standard
-
-            if let raw = defaults.object(forKey: "pecs") as? Data {
-                guard let cards = try? JSONDecoder().decode([[Card]].self, from: raw) else { return }
-                self.pecsViewModel.cards = cards
-            }
-        }
         .onTapGesture {
             isAskPassword = false
         }
@@ -321,12 +313,6 @@ struct PECSView: View {
         .onChange(of: self.pecsViewModel.cards, initial: true) {
             self.childCards = self.pecsViewModel.cards
             
-            guard let data = try? JSONEncoder().encode(self.pecsViewModel.cards) else {
-                return
-            }
-
-            let defaults = UserDefaults.standard
-            defaults.set(data, forKey: "pecs")
         }
         .sheet(isPresented: $isAddCard) {
             ZStack {

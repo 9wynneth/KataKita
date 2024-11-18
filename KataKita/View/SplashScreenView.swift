@@ -18,6 +18,7 @@ struct SplashScreen: View {
     @State private var scheduleManager: ScheduleManager
     @State private var stateManager: StateManager
     @State private var profileManager: ProfileViewModel
+    @State private var pecsViewModel: PECSViewModel
 
     // Track if the splash screen is visible
     @State private var isActive = true
@@ -38,6 +39,7 @@ struct SplashScreen: View {
         self._scheduleManager = State(initialValue: ScheduleManager())
         self._stateManager  = State(initialValue: StateManager())
         self._profileManager = State(initialValue: ProfileViewModel())
+        self._pecsViewModel = State(initialValue: PECSViewModel())
     }
 
     var body: some View {
@@ -126,10 +128,12 @@ struct SplashScreen: View {
         .environment(self.scheduleManager)
         .environment(self.stateManager)
         .environment(self.profileManager)
+        .environment(self.pecsViewModel)
         .onAppear {
             self.profileManager.load()
             self.scheduleManager.load()
             self.stateManager.load()
+            self.pecsViewModel.load()
             
             if !self.boarded {
                 self.boardManager.populate()
@@ -148,6 +152,7 @@ struct SplashScreen: View {
             }
         }
     }
+    
     private func animateSequence() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             withAnimation(.easeIn(duration: 0.3)) {

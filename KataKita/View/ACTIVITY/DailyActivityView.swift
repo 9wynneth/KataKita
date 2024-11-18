@@ -42,6 +42,10 @@ struct DailyActivityView: View {
     }
 
     var activities: [Activity] {
+        if self.toggleOn {
+            return []
+        }
+        
         let ids = switch self.day {
             case .SUNDAY: self.scheduleManager.schedule.sunday
             case .MONDAY: self.scheduleManager.schedule.monday
@@ -52,8 +56,17 @@ struct DailyActivityView: View {
             case .SATURDAY: self.scheduleManager.schedule.saturday
         }
         
-        return self.activitiesManager.activities.filter({ ids.contains($0.id) })
+        var activities = [Activity]()
+        
+        for id in ids {
+            if let activity = self.activitiesManager.activities.first(where: { $0.id == id }) {
+                activities.append(activity)
+            }
+        }
+        
+        return activities
     }
+    
     var steps: [Step] {
         return self.activities[safe: self.stateManager.index]?.sequence ?? []
     }
@@ -145,10 +158,14 @@ struct DailyActivityView: View {
                                     if self.stateManager.index <= index {
                                         ActivityCard(
                                             activity,
-                                            size: ((self.viewPortWidth * 0.75 - 290) / 4, self.viewPortWidth * (180 / 1210.0))
+                                            size: (self.viewPortWidth * 0.25 - 60, self.viewPortWidth * (180 / 1210.0))
                                         ) {
                                             SpeechManager.shared.speakCardAAC(activity.name)
                                         }
+                                        .background(
+                                            RoundedRectangle(cornerRadius: 20)
+                                                .fill(Color(hex: "BDD4CE", transparency: self.stateManager.index == index ? 1.0 : 0.0))
+                                        )
                                     } else {
                                         EmptyView()
                                     }
@@ -331,23 +348,17 @@ struct DailyActivityView: View {
                 .frame(maxWidth: .infinity, alignment: .topLeading)
             }
             .frame(maxWidth: .infinity, alignment: .top)
-            .onAppear {
-                if let activity = self.activities[safe: self.stateManager.index] {
-                    SpeechManager.shared.speakCardAAC(activity.name)
-                }
-            }
             .opacity(toggleOn ? 0 : 1)
             .rotation3DEffect(
                 .degrees(toggleOn ? 180 : 0),
                 axis: (x: 0.0, y: 1.0, z: 0.0)
             )
-            .animation(.easeInOut(duration: 0.6), value: toggleOn)
+            .animation(.easeInOut(duration: 0.5), value: toggleOn)
 
             AddDailyActivityView(toggleOn: $toggleOn)
             .opacity(toggleOn ? 1 : 0)
             .rotation3DEffect(.degrees(toggleOn ? 0 : -180), axis: (x: 0.0, y: 1.0, z: 0.0))
-            .animation(
-                .easeInOut(duration: 0.6), value: toggleOn)
+            .animation(.easeInOut(duration: 0.5), value: toggleOn)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(Color.white.ignoresSafeArea())
@@ -368,12 +379,23 @@ struct DailyActivityView: View {
                 }
             }
         )
+        .onAppear {
+            if let activity = self.activities[safe: self.stateManager.index] {
+                SpeechManager.shared.speakCardAAC(activity.name)
+            }
+        }
         .onChange(of: securityManager.isCorrect) {
             if securityManager.isCorrect {
                 // Password is correct; toggle and reset values
                 toggleOn.toggle()
                 isAskPassword = false
                 securityManager.isCorrect = false
+            }
+        }
+        .onChange(of: self.toggleOn) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                // force self.steps to reevaluate
+                
             }
         }
         .onDisappear {

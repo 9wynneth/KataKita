@@ -13,6 +13,7 @@ import Foundation
 class ScheduleManager {
     var schedule: Schedule {
         didSet {
+            print(schedule)
             guard let data = try? JSONEncoder().encode(self.schedule) else {
                 return
             }

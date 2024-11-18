@@ -194,6 +194,7 @@ struct ImagePicker: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> UIImagePickerController {
         let picker = UIImagePickerController()
         picker.delegate = context.coordinator
+        picker.allowsEditing = true
         picker.sourceType = self.sourceType
         return picker
     }
@@ -221,10 +222,12 @@ struct ImagePicker: UIViewControllerRepresentable {
                     self.parent.imageData = data
                 }
             }
+            print("Dismiss on Get Image")
             picker.dismiss(animated: true)
         }
 
         func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+            print("Dismiss on Cancel")
             picker.dismiss(animated: true)
         }
 
