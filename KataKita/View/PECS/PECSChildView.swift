@@ -10,10 +10,11 @@ import SwiftUI
 struct PECSChildView: View {
     @Environment(ProfileViewModel.self) private var viewModel
     @Environment(PECSViewModel.self) private var pecsViewModel
-    
+
     @Binding var cards: [[Card]]
     
     let f: (Card?) -> Void
+    
 
     @State private var width: CGFloat = 0.0
     @State private var height: CGFloat = 0.0
@@ -31,12 +32,12 @@ struct PECSChildView: View {
     }
     
     var backgrounds: [Color] {
-        var a: [Color] = []
-        for col in self.pecsViewModel.cards {
-            a.append(getBackgroundColor(for: col))
+            var a: [Color] = []
+            for col in self.pecsViewModel.cards {
+                a.append(getBackgroundColor(for: col))
+            }
+            return a
         }
-        return a
-    }
     
     var body: some View {
         HStack(alignment: .top, spacing: 20) {

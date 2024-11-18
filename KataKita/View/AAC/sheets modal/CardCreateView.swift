@@ -77,7 +77,7 @@ struct CardCreateView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                Color(hex: "BDD4CE", transparency: 1)  // Background color for the whole view
+                Color(hex: "BDD4CE", transparency: 1)  
                     .ignoresSafeArea()
                 
                 VStack(spacing: 20) {
