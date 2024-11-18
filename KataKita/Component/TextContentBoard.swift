@@ -23,17 +23,17 @@ struct TextContentBoard: View {
     }
     
     var body: some View {
-        if Locale.current.languageCode == "en" {
+        if Locale.current.language.languageCode?.identifier == "en" {
             if AllAssets.shared.genderAssets.contains(text.lowercased())
             {
-                var styledText: Text = Text(((text).lowercased()))
+                let styledText: Text = Text(((text).lowercased()))
                     .font(Font.custom("MADECarvingSoftPERSONALUSE-\(mapFontWeight(weight))", size: CGFloat(size)))
                     .foregroundColor(Color(hex: color, transparency: transparency))
                 
                 return styledText
             }
             else {
-                var styledText: Text = Text((text).lowercased())
+                let styledText: Text = Text((text).lowercased())
                     .font(Font.custom("MADECarvingSoftPERSONALUSE-\(mapFontWeight(weight))", size: CGFloat(size)))
                     .foregroundColor(Color(hex: color, transparency: transparency))
                 
@@ -42,7 +42,7 @@ struct TextContentBoard: View {
         }
         else
         {
-            var styledText: Text = Text((text).lowercased())
+            let styledText: Text = Text((text).lowercased())
                 .font(Font.custom("MADECarvingSoftPERSONALUSE-\(mapFontWeight(weight))", size: CGFloat(size)))
                 .foregroundColor(Color(hex: color, transparency: transparency))
             

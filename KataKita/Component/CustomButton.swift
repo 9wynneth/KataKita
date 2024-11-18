@@ -89,7 +89,7 @@ struct CustomButton: View {
                 
                 Spacer()
             }
-            .frame(width: CGFloat(width), height: CGFloat(height))
+            .frame(width: abs(CGFloat(width)), height: abs(CGFloat(height)))
             .background(Color(hex: bgColor, transparency: bgTransparency))
             .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
             .overlay(

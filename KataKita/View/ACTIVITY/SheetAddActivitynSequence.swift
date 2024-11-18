@@ -1,4 +1,4 @@
-//
+// sheet
 //  AddActivityView.swift
 //  KataKita
 //
@@ -8,66 +8,113 @@
 import SwiftUI
 import UIKit
 
-
 struct AddActivityView: View {
-    @Environment(ActivityManager.self) private var activityManager
+    // @Environment(ActivityManager.self) private var activityManager
     @Environment(ActivitiesManager.self) private var activitiesManager
-    @Environment(StateManager.self) private var stateManager
+    @Environment(ProfileViewModel.self) private var viewModel
+    @Environment(\.dismiss) var dismiss
+
+    @State private var activityManager = ActivityManager()
+    @State private var textToSpeak: String = ""
+    @State private var isGender = false
+    @State private var navigatesFromImage = false
 
     @State private var stepDescription = ""
     @State private var showImagePicker = false
     @State private var showStepImagePicker = false // Separate state for step image picker
-    @State private var tempImageURL: URL? // Used only for activity image
-    @State private var tempStepImageURL: URL? // Separate for step images
     @State private var activityName = ""
     @State private var navigateToAddStep = false
     @State private var showCamera = false
-    var stepIndex: Int?
-    @State private var selectedStepIndex: Int?
-    @Binding var activityToEdit: Activity?
     @State var isEditing: Bool = false
     
+    @Binding var activityToEdit: Activity?
     @Binding var editUlang: Bool
+    
+    @State private var tempImage: Data? // Used only for activity image
+    @State private var tempStepImage: Data? // Separate for step images
+    @State private var selectedStepIndex: Int?
+    @State private var filteredAssets: [String] = []
     
     let viewPortWidth = UIScreen.main.bounds.width
     let viewPortHeight = UIScreen.main.bounds.height
-    
-    @Environment(\.dismiss) var dismiss
-    
+
     var body: some View {
         NavigationStack {
             Form {
+                // MARK: ActivityType.image Picker
                 Section(header: Text("Activity Details")) {
-                    TextField("Enter Activity Name", text: $activityName)
-                        .onChange(of: activityName) { newName in
-                            activityManager.setName(name: newName)
+                    TextField(LocalizedStringKey("Tambah Kata Baru"), text: $activityName)
+                        .onChange(of: activityName) {
+                            activityName = activityName.lowercased()
+                            navigatesFromImage = false
+                            filteredAssets = filterAssets(by: activityName, for: viewModel.userProfile.gender)
                         }
+                    if !filteredAssets.isEmpty {
+                        VStack(alignment: .leading) {
+                            HStack {
+                                ForEach(filteredAssets.prefix(3), id: \.self) { assetName in
+                                    CustomButtonSearch(
+                                        icon: getDisplayIcon(for: assetName),
+                                        text: getDisplayText(for: assetName),
+                                        width: 100,
+                                        height: 100,
+                                        font: 20,
+                                        iconWidth: 50,
+                                        iconHeight: 50,
+                                        bgColor: "#FFFFFF",
+                                        bgTransparency: 1.0,
+                                        fontColor: "#000000",
+                                        fontTransparency: 1.0,
+                                        cornerRadius: 20,
+                                        isSystemImage: assetName.contains("person.fill"),
+                                        action: {
+                                            self.activityManager.setType(.icon(getDisplayIcon(for: assetName)))
+                                            self.activityName = assetName
+                                            if self.activityName.hasPrefix("GIRL_") {
+                                                self.activityName = self.activityName.replacingOccurrences(of: "GIRL_", with: "")
+                                                self.isGender = true
+                                            } else if textToSpeak.hasPrefix("BOY_") {
+                                                self.activityName = self.activityName.replacingOccurrences(of: "BOY_", with: "")
+                                                self.isGender = true
+                                            }
+                                            else {
+                                                self.isGender = false
+                                            }
+                                            self.filteredAssets = [assetName]
+                                        }
+                                    )
+                                }
+                            }
+                        }
+                    } else if !textToSpeak.isEmpty {
+                        CustomButtonSearch(
+                            text: textToSpeak,
+                            width: 100,
+                            height: 100,
+                            font: 20,
+                            bgColor: "#FFFFFF",
+                            bgTransparency: 1.0,
+                            fontColor: "#000000",
+                            fontTransparency: 1.0,
+                            cornerRadius: 20,
+                            action: {
+                                navigatesFromImage = true
+                            }
+                        )
+                    }
+                    
                     
                     Button("Take Photo...") {
-                        showCamera = true
+                        self.showCamera = true
                     }
-                    .sheet(isPresented: $showCamera) {
-                        ImagePicker(sourceType: .camera, imageURL: $tempImageURL)
-                            .onDisappear {
-                                if let selectedURL = tempImageURL {
-                                    activityManager.setImage(image: selectedURL.path)
-                                }
-                            }
-                    }
+
                     
                     Button("Choose Activity Image...") {
-                        showImagePicker = true
+                        self.showImagePicker = true
                     }
-                    .sheet(isPresented: $showImagePicker) {
-                        ImagePicker(imageURL: $tempImageURL)
-                            .onDisappear {
-                                if let selectedURL = tempImageURL {
-                                    activityManager.setImage(image: selectedURL.path)
-                                }
-                            }
-                    }
+
                     
-                    if let imageURL = tempImageURL, let uiImage = UIImage(contentsOfFile: imageURL.path) {
+                    if let data = self.tempImage, let uiImage = UIImage(data: data) {
                         Image(uiImage: uiImage)
                             .resizable()
                             .scaledToFit()
@@ -76,52 +123,56 @@ struct AddActivityView: View {
                     }
                 }
                 
+                // MARK: Sequence
                 Section(header: Text("Steps")) {
                     Button("Add Step") {
-                        navigateToAddStep = true
+                        self.navigateToAddStep = true
                     }
                     
-                    ForEach(Array(getSteps().enumerated()), id: \.offset) { index, step in
+                    ForEach(Array(self.getSteps().enumerated()), id: \.offset) { index, step in
                         VStack(alignment: .leading) {
-                            if activityToEdit != nil || editUlang {
+                            if self.activityToEdit != nil || self.editUlang {
                                 TextField("Step Description", text: Binding(
                                     get: { step.description },
                                     set: { newDescription in
-                                        activityManager.updateStepDescription(description: newDescription, at: index)
+                                        self.activityManager.setStepDescription(description: newDescription, at: index)
                                     }
                                 ))
                                 
                                 Button("Change Step Image") {
-                                    selectedStepIndex = index
-                                    showStepImagePicker = true
+                                    self.selectedStepIndex = index
+                                    self.showStepImagePicker = true
                                 }
-                                .sheet(isPresented: $showStepImagePicker) {
-                                    ImagePicker(imageURL: $tempStepImageURL) // Use tempStepImageURL here
-                                        .onDisappear {
-                                            if let selectedURL = tempStepImageURL, let index = selectedStepIndex {
-                                                activityManager.setStepImage(image: selectedURL.path, at: index)
-                                                tempStepImageURL = nil // Clear after use
-                                                selectedStepIndex = nil
-                                            }
-                                        }
-                                }
+
                                 
-                                if let uiImage = UIImage(contentsOfFile: step.image) {
-                                    Image(uiImage: uiImage)
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: 100, height: 100)
-                                        .cornerRadius(20)
+                                if case let .image(data) = step.type {
+                                    if let uiImage = UIImage(data: data) {
+                                        Image(uiImage: uiImage)
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: 100, height: 100)
+                                            .cornerRadius(20)
+                                    }
+                                } else if case let .icon(icon) = step.type {
+                                    Icon(icon, (100, 100))
                                 } else {
                                     Text("Image not available")
                                 }
                             } else {
                                 Text(step.description)
-                                if let uiImage = UIImage(contentsOfFile: step.image) {
-                                    Image(uiImage: uiImage)
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: 100, height: 100)
+                                
+                                if case let .image(data) = step.type {
+                                    if let uiImage = UIImage(data: data) {
+                                        Image(uiImage: uiImage)
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: 100, height: 100)
+                                            .cornerRadius(20)
+                                    }
+                                } else if case let .icon(icon) = step.type {
+                                    Icon(icon, (100, 100))
+                                } else {
+                                    Text("Image not available")
                                 }
                             }
                         }
@@ -129,34 +180,112 @@ struct AddActivityView: View {
                     }
                 }
             }
-           
-            .navigationDestination(isPresented: $navigateToAddStep) {
-                AddStepView()
+            .onAppear {
+                print("Filtered Assets: \(filteredAssets)")
             }
-            .navigationBarTitle(activityToEdit != nil ? "Edit Activity" : "Add New Activity", displayMode: .inline)
+
+            .sheet(isPresented: self.$showCamera) {
+                ImagePicker(self.$tempImage, .camera)
+                    .onDisappear {
+                        if let data = self.tempImage {
+                            self.activityManager.setType(.image(data))
+                        }
+                    }
+                
+            }
+            .sheet(isPresented: self.$showImagePicker) {
+                ImagePicker(self.$tempImage)
+                    .onDisappear {
+                        if let data = self.tempImage {
+                            self.activityManager.setType(.image(data))
+                        }
+                    }
+            }
+            .sheet(isPresented: self.$showStepImagePicker) {
+                ImagePicker(self.$tempStepImage) // Use tempStepImageURL here
+                    .onChange(of: self.tempStepImage) {
+                        if let data = self.tempStepImage {
+                            self.activityManager.setStepType(.image(data), at: self.selectedStepIndex!)
+                        }
+                    }
+                    .onDisappear {
+                        if let data = self.tempStepImage, let index = self.selectedStepIndex {
+                            self.activityManager.setStepType(.image(data), at: index)
+                            self.tempStepImage = nil // Clear after use
+                            self.selectedStepIndex = nil
+                        }
+                    }
+            }
+            .navigationDestination(isPresented: self.$navigateToAddStep) {
+                AddStepView(self.$activityManager)
+            }
+            .navigationBarTitle(self.activityToEdit != nil ? "Edit Activity" : "Add New Activity", displayMode: .inline)
             .navigationBarItems(
-                leading: Button(isEditing ? "Cancel" : "Edit") {
-                    isEditing.toggle()
+                leading: Button(self.isEditing ? "Cancel" : "Edit") {
+                    self.isEditing.toggle()
                 },
-                trailing: Button(isEditing ? "Save" : "Done") {
-                    saveOrUpdateActivity()
-                    dismiss()
-                    isEditing = false
+                trailing: Button(self.isEditing ? "Save" : "Done") {
+                    self.isEditing = false
+                    self.saveOrUpdateActivity()
+                    self.dismiss()
                 }
             )
         }
+        .onChange(of: self.activityName) {
+            self.activityManager.setName(self.activityName)
+        }
         .onAppear {
-            if let activity = activityToEdit {
-                activityManager.activity = activity
-                activityName = activity.name
-                tempImageURL = URL(fileURLWithPath: activityToEdit!.image)
+            if let activity = self.activityToEdit {
+                self.activityManager.activity = activity
+                self.activityName = activity.name
+                if case let .image(data) = activity.type {
+                    self.tempImage = data
+                }
             }
         }
         .onDisappear {
-            activityManager.activity = Activity(id: UUID(), name: "new activity", image: "", ruangan: Ruangan(id: UUID(), name: ""), sequence: [])
+            self.activityManager.activity = Activity(name: "new activity", sequence: [])
         }
     }
-    
+    private func getDisplayIcon(for icon: String) -> String {
+        let lang = Locale.current.language.languageCode?.identifier ?? "id"
+        if lang == "en" {
+            let localizedIcon = NSLocalizedString(icon.uppercased(), comment: "")
+            if viewModel.userProfile.gender == true {
+                if AllAssets.shared.genderAssets.contains(icon) {
+                    return "GIRL_" + localizedIcon
+                } else {
+                    return icon
+                    
+                }
+            }
+            else {
+                if AllAssets.shared.genderAssets.contains(icon) {
+                    return "BOY_" + localizedIcon
+                } else {
+                    return icon
+                    
+                }
+            }
+        } else {
+            if viewModel.userProfile.gender == true {
+                if AllAssets.shared.genderAssets.contains(icon) {
+                    return "GIRL_" + icon
+                } else {
+                    return icon
+                    
+                }
+            }
+            else {
+                if AllAssets.shared.genderAssets.contains(icon) {
+                    return "BOY_" + icon
+                } else {
+                    return icon
+                    
+                }
+            }
+        }
+    }
     private func getSteps() -> [Step] {
         return activityManager.activity.sequence
     }
@@ -164,127 +293,170 @@ struct AddActivityView: View {
     private func saveOrUpdateActivity() {
         guard !activityName.isEmpty else { return }
         
-        if let activityToEdit = activityToEdit {
-            let updatedActivity = Activity(
-                id: activityToEdit.id,
-                name: activityName,
-                image: activityManager.activity.image,
-                ruangan: Ruangan(id: UUID(), name: "Room 1"),
-                sequence: activityManager.activity.sequence
-            )
-            activitiesManager.updateActivity(updatedActivity)
+        if let activityToEdit = self.activityToEdit {
+            activityToEdit.name = self.activityName
+            activityToEdit.type = self.activityManager.activity.type
+            activityToEdit.sequence = self.activityManager.activity.sequence
+            self.activitiesManager.updateActivity(activityToEdit)
         } else {
-            let newActivity = Activity(
-                id: UUID(),
-                name: activityName,
-                image: activityManager.activity.image,
-                ruangan: Ruangan(id: UUID(), name: "Room 1"),
-                sequence: activityManager.activity.sequence
-            )
-            activitiesManager.addActivity(newActivity)
+            self.activitiesManager.addActivity(Activity(
+                name: self.activityName,
+                type: self.activityManager.activity.type,
+                sequence: self.activityManager.activity.sequence
+            ))
         }
         
-        activityManager.resetSteps()
-        dismiss()
+        // self.activityManager.resetSteps()
+        self.dismiss()
+    }
+    
+    private func getDisplayText(for icon: String) -> String {
+        if Locale.current.language.languageCode?.identifier == "en" {
+            let localizedIcon = NSLocalizedString(icon, comment: "")
+            let localizedIcon2 = NSLocalizedString(localizedIcon, comment: "")
+            if viewModel.userProfile.gender == true {
+                if icon.hasPrefix("GIRL_") {
+                    return localizedIcon2
+                } else {
+                    return icon
+                    
+                }
+            }
+            else {
+                if icon.hasPrefix("BOY_") {
+                    return localizedIcon2
+                } else {
+                    return icon
+                    
+                }
+            }
+        }
+        else {
+            if viewModel.userProfile.gender == true {
+                if icon.hasPrefix("GIRL_") {
+                    return icon.replacingOccurrences(of: "GIRL_", with: "")
+                } else {
+                    return icon
+                    
+                }
+            }
+            else {
+                if icon.hasPrefix("BOY_") {
+                    return icon.replacingOccurrences(of: "BOY_", with: "")
+                } else {
+                    return icon
+                    
+                }
+            }
+        }
+        
     }
 }
 
 
 
-
 struct AddStepView: View {
-    @Environment(ActivityManager.self) private var activityManager
-    
-    @State private var stepDescription = ""
-    @State private var stepImageURL: URL?
-    @State private var showImagePicker = false
     @Environment(\.dismiss) var dismiss
     
-    var stepIndex: Int? // Pass this if you're editing an existing step
-    
+    @Binding var activityManager: ActivityManager
+
+    @State private var stepDescription = ""
+    @State private var stepImage: Data?
     @State private var showCamera = false
+    @State private var showImagePicker = false
+
+    let stepIndex: Int? // Pass this if you're editing an existing step
+    
+    init(_ manager: Binding<ActivityManager>,stepIndex: Int? = nil) {
+        self._activityManager = manager
+        self.stepIndex = stepIndex
+    }
     
     var body: some View {
         Form {
             Section(header: Text("Step Details")) {
-                TextField("Enter Step Description", text: $stepDescription)
+                TextField("Enter Step Description", text: self.$stepDescription)
                 
                 Button("Take Photo...") {
-                    showCamera = true
+                    self.showCamera = true
                 }
-                .sheet(isPresented: $showCamera) {
-                    ImagePicker(sourceType: .camera, imageURL: $stepImageURL)
+                .sheet(isPresented: self.$showCamera) {
+                    ImagePicker(self.$stepImage, .camera)
                         .onDisappear {
-                            if let selectedURL = stepImageURL {
+                            if let data = self.stepImage {
                                 if let index = stepIndex {
-                                    activityManager.setStepImage(image: selectedURL.path, at: index)
+                                    self.activityManager.setStepType(.image(data), at: index)
                                 } else {
-                                    addStep(imageURL: selectedURL)
+                                    self.addStep(data)
                                 }
                             }
                         }
                 }
                 
                 Button("Choose Step Image...") {
-                    showImagePicker = true
+                    self.showImagePicker = true
                 }
-                .sheet(isPresented: $showImagePicker) {
-                    ImagePicker(imageURL: $stepImageURL)
+                .sheet(isPresented: self.$showImagePicker) {
+                    ImagePicker(self.$stepImage)
                 }
                 
-                if let imageURL = stepImageURL, let uiImage = UIImage(contentsOfFile: imageURL.path) {
+                if let data = self.stepImage, let uiImage = UIImage(data: data) {
                     Image(uiImage: uiImage)
                         .resizable()
                         .scaledToFit()
                         .frame(width: 100, height: 100)
                         .cornerRadius(20)
                 } else {
-                    Text("")
+                    Text("Image not available")
                 }
             }
             
             Section {
                 Button(stepIndex == nil ? "Add Step" : "Update Step") {
-                    saveStep(imageURL: stepImageURL)
-                    stepDescription = ""
-                    stepImageURL = nil
+                    self.saveStep(self.stepImage)
+                    self.stepDescription = ""
+                    self.stepImage = nil
                 }
             }
         }
         .onAppear {
             if let index = stepIndex {
-                let step = activityManager.activity.sequence[index]
-                stepDescription = step.description
-                stepImageURL = URL(fileURLWithPath: step.image)
+                if let step = self.activityManager.activity.sequence[safe: index] {
+                    self.stepDescription = step.description
+                    if case let .image(data) = step.type {
+                        self.stepImage = data
+                    }
+                }
             }
         }
         .navigationBarTitle(stepIndex == nil ? "Add Step" : "Edit Step", displayMode: .inline)
         .navigationBarItems(trailing: Button("Save") {
-            saveStep(imageURL: stepImageURL)
-            dismiss()
+            self.saveStep(self.stepImage)
+            self.dismiss()
         })
     }
     
-    private func saveStep(imageURL: URL?) {
-        guard !stepDescription.isEmpty else { return }
+    private func saveStep(_ data: Data?) {
+        guard !self.stepDescription.isEmpty else { return }
         
-        let step = Step(image: imageURL?.path ?? "", description: stepDescription)
+        let type: ActivityType? = if let data { .image(data) } else { nil }
+        let step = Step(type: type, description: self.stepDescription)
         
-        if let index = stepIndex {
+        if let index = self.stepIndex {
             // Update existing step
-            activityManager.updateStep(step, at: index)
+            self.activityManager.setStep(step, at: index)
         } else {
             // Add new step
-            activityManager.addStep(step)
+            self.activityManager.addStep(step)
         }
     }
     
-    private func addStep(imageURL: URL?) {
-        guard !stepDescription.isEmpty else { return }
+    private func addStep(_ data: Data) {
+        guard !self.stepDescription.isEmpty else { return }
         
-        let step = Step(image: stepImageURL?.path ?? "", description: stepDescription)
+        let step = Step(type: .image(data), description: self.stepDescription)
         
-        activityManager.addStep(step)
+        self.activityManager.addStep(step)
     }
 }
 

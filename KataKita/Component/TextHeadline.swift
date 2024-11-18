@@ -23,7 +23,7 @@ struct TextHeadline: View {
     }
     
     var body: some View {
-            var styledText: Text = Text(LocalizedStringKey(text))
+        let styledText: Text = Text(LocalizedStringKey(text))
             .font(Font.custom("agency", size: CGFloat(size)))
                 .foregroundColor(Color(hex: color, transparency: transparency))
                 .fontWeight(mapFontWeight(weight))

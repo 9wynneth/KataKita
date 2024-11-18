@@ -18,7 +18,7 @@ struct AddImageCardView: View {
     @Binding var selectedColumnIndexValue: Int
     @Binding var CardName: String
     @Environment(OriginalImageManager.self) var originalImageManager
-    @State private var tempImageURL: URL?
+    @State private var tempImage: Data?
 
 
     init(selectedColumnIndexValue: Binding<Int>, CardName: Binding<String>) {
@@ -33,54 +33,50 @@ struct AddImageCardView: View {
             Form {
                 Section {
                     Button(LocalizedStringKey("Choose Image...")) {
-                        showImagePicker = true
+                        self.showImagePicker = true
                     }
-                    .sheet(isPresented: $showImagePicker) {
-                        ImagePicker(imageURL: $tempImageURL)
+                    .sheet(isPresented: self.$showImagePicker) {
+                        ImagePicker(self.$tempImage)
                             .onDisappear {
                                 // Update the image URL after selection and clear the sticker image
-                                if let selectedURL = tempImageURL {
-                                    originalImageManager.imageFromLocal = selectedURL
-                                    stickerManager.stickerImage = nil // Reset the sticker when new image is chosen
+                                if let data = self.tempImage {
+                                    self.originalImageManager.imageFromLocal = data
+                                    self.stickerManager.stickerImage = nil // Reset the sticker when new image is chosen
                                 }
                             }
                     }
 
                     Button(LocalizedStringKey("Take Photo...")) {
-                        showCamera = true
+                        self.showCamera = true
                     }
-                    .sheet(isPresented: $showCamera) {
-                        ImagePicker(sourceType: .camera, imageURL: $tempImageURL)
+                    .sheet(isPresented: self.$showCamera) {
+                        ImagePicker($tempImage, .camera)
                             .onDisappear {
                                 // Update the image URL after capture and clear the sticker image
-                                if let selectedURL = tempImageURL {
-                                    originalImageManager.imageFromLocal = selectedURL
-                                    stickerManager.stickerImage = nil // Reset the sticker when new photo is taken
+                                if let data = self.tempImage {
+                                    self.originalImageManager.imageFromLocal = data
+                                    self.stickerManager.stickerImage = nil // Reset the sticker when new photo is taken
                                 }
                             }
                     }
 
-                    if isLoading {
+                    if self.isLoading {
                         ProgressView(LocalizedStringKey("Processing..."))
-                    } else if let stickerURL = stickerManager.stickerImage,
-                                let stickerImage = UIImage(contentsOfFile: stickerURL.path) {
-                        Image(uiImage: stickerImage)
+                    } else if let data = self.stickerManager.stickerImage, let uIImage = UIImage(data: data) {
+                        Image(uiImage: uIImage)
                             .resizable()
                             .scaledToFit()
                             .frame(width: 100, height: 100)
                             .cornerRadius(20)
                             .onAppear{
-                                gambar = "sticker"
-                                print(gambar)
+                                self.gambar = "sticker"
                             }
-                            .onChange(of: stickerManager.stickerImage) { newSticker in
-                                    // Trigger any logic when the sticker image is updated
-                                    if newSticker != nil {
-                                        gambar = "sticker"
-                                        print("Sticker updated")
-                                    }
+                            .onChange(of: self.stickerManager.stickerImage) {
+                                if self.stickerManager.stickerImage != nil {
+                                    self.gambar = "sticker"
                                 }
-                    } else if let imagePath = originalImageManager.imageFromLocal, let uiImage = UIImage(contentsOfFile: imagePath.path) {
+                            }
+                    } else if let data = self.originalImageManager.imageFromLocal, let uiImage = UIImage(data: data) {
                         Image(uiImage: uiImage)
                             .resizable()
                             .scaledToFit()
@@ -88,10 +84,9 @@ struct AddImageCardView: View {
                             .cornerRadius(20)
                             .onAppear {
                                 // If it's a new image, create a sticker from it, otherwise do nothing
-                                if stickerManager.stickerImage == nil, let imagePath = originalImageManager.imageFromLocal, let uiImage = UIImage(contentsOfFile: imagePath.path) {
-                                    createSticker(from: uiImage)
-                                    gambar = "original"
-                                    print(gambar)
+                                if self.stickerManager.stickerImage == nil, let data = self.originalImageManager.imageFromLocal, let uiImage = UIImage(data: data) {
+                                    self.createSticker(from: uiImage)
+                                    self.gambar = "original"
                                 }
                             }
 
@@ -104,8 +99,8 @@ struct AddImageCardView: View {
             .navigationBarTitle(LocalizedStringKey("Add Image"), displayMode: .inline)
             .navigationBarItems(
                 trailing: Button(LocalizedStringKey("Selesai")) {
-                    if originalImageManager.imageFromLocal != nil {
-                        dismiss()
+                    if self.originalImageManager.imageFromLocal != nil {
+                        self.dismiss()
                     }
                 }
             )
@@ -144,24 +139,13 @@ struct AddImageCardView: View {
     }
 
     // Helper function to save UIImage to a temporary file and return the URL
-    private func saveImageToTemporaryFile(_ image: UIImage) -> URL? {
+    private func saveImageToTemporaryFile(_ image: UIImage) -> Data? {
         guard let data = image.pngData() else {
             print("Failed to get image data")
             return nil
         }
-        
-        let filename = UUID().uuidString + ".png"
-        let path = FileManager.default.temporaryDirectory.appendingPathComponent(filename)
-        
-        do {
-            try data.write(to: path)
-            return path // Return the URL of the saved file
-        } catch {
-            print("Failed to save image: \(error)")
-            return nil
-        }
+        return data
     }
-
 
     private func subjectMaskImage(from inputImage: CIImage) -> CIImage? {
         let handler = VNImageRequestHandler(ciImage: inputImage)
@@ -198,13 +182,20 @@ struct AddImageCardView: View {
 
 // MARK: - ImagePicker Helper (Modified to Save Path as URL)
 struct ImagePicker: UIViewControllerRepresentable {
-    var sourceType: UIImagePickerController.SourceType = .photoLibrary
-    @Binding var imageURL: URL?
+    @Binding var imageData: Data?
+    
+    private let sourceType: UIImagePickerController.SourceType
+    
+    init( _ data: Binding<Data?>, _ source: UIImagePickerController.SourceType = .photoLibrary) {
+        self._imageData = data
+        self.sourceType = source
+    }
 
     func makeUIViewController(context: Context) -> UIImagePickerController {
         let picker = UIImagePickerController()
         picker.delegate = context.coordinator
-        picker.sourceType = sourceType
+        picker.allowsEditing = true
+        picker.sourceType = self.sourceType
         return picker
     }
 
@@ -228,16 +219,15 @@ struct ImagePicker: UIViewControllerRepresentable {
 
                 // Save the fixed image to a temporary file and set the imageURL to the URL path
                 if let data = fixedImage.pngData() {
-                    let filename = UUID().uuidString + ".png"
-                    let path = FileManager.default.temporaryDirectory.appendingPathComponent(filename)
-                    try? data.write(to: path)
-                    parent.imageURL = path
+                    self.parent.imageData = data
                 }
             }
+            print("Dismiss on Get Image")
             picker.dismiss(animated: true)
         }
 
         func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+            print("Dismiss on Cancel")
             picker.dismiss(animated: true)
         }
 

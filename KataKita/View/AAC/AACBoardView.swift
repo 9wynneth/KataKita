@@ -27,6 +27,7 @@ struct AACBoardView: View {
     private let spacing: CGFloat
     private let add: ((Int) -> Void)?
     private let del: ((Int, Int) -> Void)?
+    private let edit: ((Int, Int) -> Void)?
     private let speechSynthesizer: AVSpeechSynthesizer
 
     var cellWidth: CGFloat {
@@ -44,7 +45,8 @@ struct AACBoardView: View {
         spacing: CGFloat = 10,
         editing: Binding<Bool> = Binding.constant(false),
         add: ((Int) -> Void)? = nil,
-        del: ((Int, Int) -> Void)? = nil
+        del: ((Int, Int) -> Void)? = nil,
+        edit: ((Int, Int) -> Void)? = nil
     ) {
         self.board = board
         self.pecs = pecs
@@ -52,6 +54,7 @@ struct AACBoardView: View {
         self._editing = editing
         self.add = add
         self.del = del
+        self.edit = edit
         self.speechSynthesizer = .init()
     }
 
@@ -78,13 +81,17 @@ struct AACBoardView: View {
                                 ) {
                                     if self.pecs {
                                         self.pecsViewModel.cardHandler(row)
-                                
-                                    }
-                                    else {
-                                        if !self.aacViewModel.addCard(row) {
+                                    } else {
+                                        if self.editing {
+                                            if let edit = self.edit {
+                                                edit(colIndex, rowIndex)
+                                            }
+                                        } else if !self.aacViewModel.addCard(row) {
                                             self.showAlert = true
                                             self.hasSpoken = false
                                             SpeechManager.shared.speakCardAAC("Kotak Kata Penuh")
+                                        } else {
+                                            SpeechManager.shared.speakCardAAC(row.name)
                                         }
                                     }
                                 }
@@ -230,9 +237,6 @@ struct AACBoardCard: View {
     var body: some View {
         Button {
             f()
-            SpeechManager.shared.speakCardAAC(self.card.name)
-            print(self.card.type)
-
         } label: {
             VStack(spacing: 10) { // Reduced spacing between Image and Text
                 if case let .image(data) = self.card.type {
@@ -245,7 +249,7 @@ struct AACBoardCard: View {
                     Icon(icon, (self.width / 2, self.height / 2))
                 } else {
                     Color.clear
-                        .frame(width: self.width, height: self.height / 2)
+                        .frame(width: abs(self.width), height: abs(self.height / 2))
                 }
                 
                 TextContent(
@@ -256,7 +260,7 @@ struct AACBoardCard: View {
                     weight: "medium"
                 )
             }
-            .frame(width: self.width, height: self.height)
+            .frame(width: abs(self.width), height: abs(self.height))
             .background(
                 Group {
                     if case let .color(color) = self.card.type {

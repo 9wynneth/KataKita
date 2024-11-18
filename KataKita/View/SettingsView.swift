@@ -99,15 +99,15 @@ struct SettingsView: View {
             name = viewModel.userProfile.name
             sound = viewModel.userProfile.sound
         }
-        .onChange(of: name) { newValue in
-            viewModel.userProfile.name = newValue
+        .onChange(of: name) {
+            viewModel.userProfile.name = name
         }
-        .onChange(of: gender) { newValue in
-            viewModel.userProfile.gender = newValue
+        .onChange(of: gender) {
+            viewModel.userProfile.gender = gender
             viewModel.updateProfile(name: name, gender: gender, sound: sound)
         }
-        .onChange(of: sound) { newValue in
-            viewModel.userProfile.sound = newValue
+        .onChange(of: sound) {
+            viewModel.userProfile.sound = sound
         }
         .onReceive(
             NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)
