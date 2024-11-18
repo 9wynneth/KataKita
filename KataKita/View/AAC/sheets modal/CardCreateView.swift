@@ -77,7 +77,7 @@ struct CardCreateView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                Color(hex: "BDD4CE", transparency: 1)  // Background color for the whole view
+                Color(hex: "BDD4CE", transparency: 1)  
                     .ignoresSafeArea()
                 
                 VStack(spacing: 20) {
@@ -133,6 +133,7 @@ struct CardCreateView: View {
                                                 self.isImageType = true
                                             }
                                             .onTapGesture {
+                                                self.type = nil
                                                 self.stickerManager.stickerImage = nil
                                             }
                                     } else if let data = self.originalImageManager.imageFromLocal, let uiImage = UIImage(data: data) {
@@ -147,6 +148,7 @@ struct CardCreateView: View {
                                                 self.isImageType = true
                                             }
                                             .onTapGesture {
+                                                self.type = nil
                                                 self.originalImageManager.imageFromLocal = nil
                                             }
                                     } else {
@@ -317,6 +319,8 @@ struct CardCreateView: View {
             let board = self.boardManager.boards.first(where: { $0.id == self.boardManager.selectedID }),
             var card = board.cards[safe: self.location.0]?[safe: self.location.1]
         {
+            card.name = ""
+            card.type = nil
             card.name = self.textToSpeak
             card.category = self.selectedCategory
             card.type = self.type

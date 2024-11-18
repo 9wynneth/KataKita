@@ -9,10 +9,12 @@ import SwiftUI
 
 struct PECSChildView: View {
     @Environment(ProfileViewModel.self) private var viewModel
-    
+    @Environment(PECSViewModel.self) private var pecsViewModel
+
     @Binding var cards: [[Card]]
     
     let f: (Card?) -> Void
+    
 
     @State private var width: CGFloat = 0.0
     @State private var height: CGFloat = 0.0
@@ -28,6 +30,14 @@ struct PECSChildView: View {
         self._cards = cards
         self.f = f
     }
+    
+    var backgrounds: [Color] {
+            var a: [Color] = []
+            for col in self.pecsViewModel.cards {
+                a.append(getBackgroundColor(for: col))
+            }
+            return a
+        }
     
     var body: some View {
         HStack(alignment: .top, spacing: 20) {
@@ -52,7 +62,7 @@ struct PECSChildView: View {
                 .background(
                     GeometryReader { geometry in
                         RoundedRectangle(cornerRadius: 10)
-                            .fill(getBackgroundColor(for: column))
+                            .fill(self.backgrounds[safe: i] ?? Color(hex: "D9D9D9", transparency: 0.4))
                             .onAppear {
                                 self.width = geometry.frame(in: .global).width
                                 self.height = geometry.frame(in: .global).height

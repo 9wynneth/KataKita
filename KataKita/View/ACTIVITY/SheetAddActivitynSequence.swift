@@ -13,12 +13,12 @@ struct AddActivityView: View {
     @Environment(ActivitiesManager.self) private var activitiesManager
     @Environment(ProfileViewModel.self) private var viewModel
     @Environment(\.dismiss) var dismiss
-
+    
     @State private var activityManager = ActivityManager()
     @State private var textToSpeak: String = ""
     @State private var isGender = false
     @State private var navigatesFromImage = false
-
+    
     @State private var stepDescription = ""
     @State private var showImagePicker = false
     @State private var showStepImagePicker = false // Separate state for step image picker
@@ -37,199 +37,331 @@ struct AddActivityView: View {
     
     let viewPortWidth = UIScreen.main.bounds.width
     let viewPortHeight = UIScreen.main.bounds.height
-
+    
     var body: some View {
         NavigationStack {
-            Form {
-                // MARK: ActivityType.image Picker
-                Section(header: Text("Activity Details")) {
-                    TextField(LocalizedStringKey("Tambah Kata Baru"), text: $activityName)
-                        .onChange(of: activityName) {
-                            activityName = activityName.lowercased()
-                            navigatesFromImage = false
-                            filteredAssets = filterAssets(by: activityName, for: viewModel.userProfile.gender)
-                        }
-                    if !filteredAssets.isEmpty {
-                        VStack(alignment: .leading) {
-                            HStack {
-                                ForEach(filteredAssets.prefix(3), id: \.self) { assetName in
-                                    CustomButtonSearch(
-                                        icon: getDisplayIcon(for: assetName),
-                                        text: getDisplayText(for: assetName),
-                                        width: 100,
-                                        height: 100,
-                                        font: 20,
-                                        iconWidth: 50,
-                                        iconHeight: 50,
-                                        bgColor: "#FFFFFF",
-                                        bgTransparency: 1.0,
-                                        fontColor: "#000000",
-                                        fontTransparency: 1.0,
-                                        cornerRadius: 20,
-                                        isSystemImage: assetName.contains("person.fill"),
-                                        action: {
-                                            self.activityManager.setType(.icon(getDisplayIcon(for: assetName)))
-                                            self.activityName = assetName
-                                            if self.activityName.hasPrefix("GIRL_") {
-                                                self.activityName = self.activityName.replacingOccurrences(of: "GIRL_", with: "")
-                                                self.isGender = true
-                                            } else if textToSpeak.hasPrefix("BOY_") {
-                                                self.activityName = self.activityName.replacingOccurrences(of: "BOY_", with: "")
-                                                self.isGender = true
-                                            }
-                                            else {
-                                                self.isGender = false
-                                            }
-                                            self.filteredAssets = [assetName]
+            ZStack {
+                Color(hex: "BDD4CE", transparency: 1)
+                    .ignoresSafeArea()
+                VStack {
+                    // MARK: ActivityType.image Picker
+                    //                Section(header: Text("Activity Details"))
+                    ScrollView {
+                        
+                        VStack(alignment: .leading, spacing: 4) {
+                            TextContent(
+                                text: "ACTIVITY DETAILS",
+                                size: 15,
+                                color: "FFFFFF",
+                                transparency: 1.0,
+                                weight: "regular"
+                            )
+                            .padding(.horizontal)
+                            VStack(alignment: .leading, spacing: 4) {
+                                TextField(LocalizedStringKey("Tambah Kata Baru"), text: $activityName)
+                                    .onChange(of: activityName) {
+                                        activityName = activityName.lowercased()
+                                        navigatesFromImage = false
+                                        filteredAssets = filterAssets(by: activityName, for: viewModel.userProfile.gender)
+                                    }
+                            }
+                            .padding()
+                            .background(Color.white)
+                            .cornerRadius(10)
+                            .shadow(radius: 1)
+                            .padding(.horizontal)
+                            
+                            
+                            if !filteredAssets.isEmpty {
+                                VStack(alignment: .center) {
+                                    HStack {
+                                        Spacer()
+                                        ForEach(filteredAssets.prefix(3), id: \.self) { assetName in
+                                            CustomButtonSearch(
+                                                icon: getDisplayIcon(for: assetName),
+                                                text: getDisplayText(for: assetName),
+                                                width: 100,
+                                                height: 100,
+                                                font: 20,
+                                                iconWidth: 50,
+                                                iconHeight: 50,
+                                                bgColor: "#FFFFFF",
+                                                bgTransparency: 1.0,
+                                                fontColor: "#000000",
+                                                fontTransparency: 1.0,
+                                                cornerRadius: 20,
+                                                isSystemImage: assetName.contains("person.fill"),
+                                                action: {
+                                                    self.activityManager.setType(.icon(getDisplayIcon(for: assetName)))
+                                                    self.activityName = assetName
+                                                    if self.activityName.hasPrefix("GIRL_") {
+                                                        self.activityName = self.activityName.replacingOccurrences(of: "GIRL_", with: "")
+                                                        self.isGender = true
+                                                    } else if textToSpeak.hasPrefix("BOY_") {
+                                                        self.activityName = self.activityName.replacingOccurrences(of: "BOY_", with: "")
+                                                        self.isGender = true
+                                                    }
+                                                    else {
+                                                        self.isGender = false
+                                                    }
+                                                    self.filteredAssets = [assetName]
+                                                }
+                                            )
                                         }
-                                    )
+                                        Spacer()
+                                    }
+                                    .padding(.horizontal)
+                                }
+                                .padding()
+                                .background(Color.white)
+                                .cornerRadius(10)
+                                .shadow(radius: 1)
+                                .padding(.horizontal)
+
+                                
+                            } else if !textToSpeak.isEmpty {
+                                VStack {
+                                    HStack {
+                                        Spacer()
+                                        CustomButtonSearch(
+                                            text: textToSpeak,
+                                            width: 100,
+                                            height: 100,
+                                            font: 20,
+                                            bgColor: "#FFFFFF",
+                                            bgTransparency: 1.0,
+                                            fontColor: "#000000",
+                                            fontTransparency: 1.0,
+                                            cornerRadius: 20,
+                                            action: {
+                                                navigatesFromImage = true
+                                            }
+                                        )
+                                        Spacer()
+                                    }
+                                    .padding(.horizontal)
+
+                                }
+                                .padding()
+                                .background(Color.white)
+                                .cornerRadius(10)
+                                .shadow(radius: 1)
+                                .padding(.horizontal)
+
+                            }
+                            
+                            VStack(spacing: 12) {
+                                //                            Button("Take Photo...") {
+                                //                                self.showCamera = true
+                                //                            }
+                                HStack {
+                                    Button(action: { self.showCamera = true }) {
+                                        HStack {
+                                            Text("Take Photo")
+                                                .foregroundColor(.blue)
+                                            Spacer()
+                                            Image(systemName: "camera")
+                                                .foregroundColor(.black)
+                                        }
+                                    }
+                                }
+                                
+                                Divider()
+                                
+                                //                            Button("Choose Activity Image...") {
+                                //                                self.showImagePicker = true
+                                //                            }
+                                HStack {
+                                    Button(action: { self.showImagePicker = true }) {
+                                        HStack {
+                                            Text("Choose Activity Image")
+                                                .foregroundColor(.blue)
+                                            Spacer()
+                                            Image(systemName: "photo")
+                                                .foregroundColor(.black)
+                                        }
+                                    }
                                 }
                             }
-                        }
-                    } else if !textToSpeak.isEmpty {
-                        CustomButtonSearch(
-                            text: textToSpeak,
-                            width: 100,
-                            height: 100,
-                            font: 20,
-                            bgColor: "#FFFFFF",
-                            bgTransparency: 1.0,
-                            fontColor: "#000000",
-                            fontTransparency: 1.0,
-                            cornerRadius: 20,
-                            action: {
-                                navigatesFromImage = true
+                            .padding()
+                            .background(Color.white)
+                            .cornerRadius(12)
+                            .shadow(radius: 1)
+                            .padding(.horizontal)
+                            
+                            HStack {
+                                Spacer()
+                                if let data = self.tempImage, let uiImage = UIImage(data: data) {
+                                    Image(uiImage: uiImage)
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 100, height: 100)
+                                        .cornerRadius(20)
+                                }
+                                Spacer()
                             }
-                        )
+                        }
+                        
+                        // MARK: Sequence
+//                        Section(header: Text("Steps")) {
+                        VStack(alignment: .leading, spacing: 4) {
+                            
+                            TextContent(
+                                text: "STEP DETAILS",
+                                size: 15,
+                                color: "FFFFFF",
+                                transparency: 1.0,
+                                weight: "regular"
+                            )
+                            .padding(.horizontal)
+                            VStack(alignment: .leading, spacing: 4) {
+                                
+                            HStack {
+                                Button(action: { self.navigateToAddStep = true }) {
+                                    HStack {
+                                        Text("Add step")
+                                            .foregroundColor(.blue)
+                                        Spacer()
+                                        Image(systemName: "plus.app")
+                                            .foregroundColor(.black)
+                                    }
+                                }
+                            }
+                            
+                            //                            Button("Add Step") {
+                            //                                self.navigateToAddStep = true
+                            //                            }
+                            Divider()
+                            ForEach(Array(self.getSteps().enumerated()), id: \.offset) { index, step in
+                                VStack(alignment: .leading) {
+                                    if self.activityToEdit != nil || self.editUlang || self.isEditing {
+                                        TextField("Step Description", text: Binding(
+                                            get: { step.description },
+                                            set: { newDescription in
+                                                self.activityManager.setStepDescription(description: newDescription, at: index)
+                                            }
+                                        ))
+                                        
+                                        Button("Change Step Image") {
+                                            self.selectedStepIndex = index
+                                            self.showStepImagePicker = true
+                                        }
+                                        
+                                        
+                                        if case let .image(data) = step.type {
+                                            if let uiImage = UIImage(data: data) {
+                                                Image(uiImage: uiImage)
+                                                    .resizable()
+                                                    .scaledToFit()
+                                                    .frame(width: 100, height: 100)
+                                                    .cornerRadius(20)
+                                            }
+                                        } else if case let .icon(icon) = step.type {
+                                            Icon(icon, (100, 100))
+                                        } else {
+                                            Text("Image not available")
+                                        }
+                                    } else {
+                                        Text(step.description)
+                                        
+                                        if case let .image(data) = step.type {
+                                            if let uiImage = UIImage(data: data) {
+                                                Image(uiImage: uiImage)
+                                                    .resizable()
+                                                    .scaledToFit()
+                                                    .frame(width: 100, height: 100)
+                                                    .cornerRadius(20)
+                                            }
+                                        } else if case let .icon(icon) = step.type {
+                                            Icon(icon, (100, 100))
+                                        } else {
+                                            Text("Image not available")
+                                        }
+                                    }
+                                    Divider()
+                                }
+                                .padding(.vertical, 5)
+                            }
+                        }
+                            .padding()
+                            .background(Color.white)
+                            .cornerRadius(10)
+                            .shadow(radius: 1)
+                            .padding(.horizontal)
+                            
+                        }
+                       
+                        Spacer()
                     }
-                    
-                    
-                    Button("Take Photo...") {
-                        self.showCamera = true
+                    CustomButton(text: "SELESAI", width: 350, height: 50, font: 16, bgColor: "#013C5A", bgTransparency: 1.0, fontColor: "#ffffff", fontTransparency: 1.0, cornerRadius: 30){
+                        self.isEditing = false
+                        self.saveOrUpdateActivity()
+                        self.dismiss()
                     }
-
-                    
-                    Button("Choose Activity Image...") {
-                        self.showImagePicker = true
-                    }
-
-                    
-                    if let data = self.tempImage, let uiImage = UIImage(data: data) {
-                        Image(uiImage: uiImage)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 100, height: 100)
-                            .cornerRadius(20)
-                    }
+                        .padding(.bottom)
+                }
+                .padding(10)
+                .onAppear {
+                    print("Filtered Assets: \(filteredAssets)")
                 }
                 
-                // MARK: Sequence
-                Section(header: Text("Steps")) {
-                    Button("Add Step") {
-                        self.navigateToAddStep = true
-                    }
-                    
-                    ForEach(Array(self.getSteps().enumerated()), id: \.offset) { index, step in
-                        VStack(alignment: .leading) {
-                            if self.activityToEdit != nil || self.editUlang {
-                                TextField("Step Description", text: Binding(
-                                    get: { step.description },
-                                    set: { newDescription in
-                                        self.activityManager.setStepDescription(description: newDescription, at: index)
-                                    }
-                                ))
-                                
-                                Button("Change Step Image") {
-                                    self.selectedStepIndex = index
-                                    self.showStepImagePicker = true
-                                }
-
-                                
-                                if case let .image(data) = step.type {
-                                    if let uiImage = UIImage(data: data) {
-                                        Image(uiImage: uiImage)
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(width: 100, height: 100)
-                                            .cornerRadius(20)
-                                    }
-                                } else if case let .icon(icon) = step.type {
-                                    Icon(icon, (100, 100))
-                                } else {
-                                    Text("Image not available")
-                                }
-                            } else {
-                                Text(step.description)
-                                
-                                if case let .image(data) = step.type {
-                                    if let uiImage = UIImage(data: data) {
-                                        Image(uiImage: uiImage)
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(width: 100, height: 100)
-                                            .cornerRadius(20)
-                                    }
-                                } else if case let .icon(icon) = step.type {
-                                    Icon(icon, (100, 100))
-                                } else {
-                                    Text("Image not available")
-                                }
+                .sheet(isPresented: self.$showCamera) {
+                    ImagePicker(self.$tempImage, .camera)
+                        .onDisappear {
+                            if let data = self.tempImage {
+                                self.activityManager.setType(.image(data))
                             }
                         }
-                        .padding(.vertical, 5)
+                    
+                }
+                .sheet(isPresented: self.$showImagePicker) {
+                    ImagePicker(self.$tempImage)
+                        .onDisappear {
+                            if let data = self.tempImage {
+                                self.activityManager.setType(.image(data))
+                            }
+                        }
+                }
+                .sheet(isPresented: self.$showStepImagePicker) {
+                    ImagePicker(self.$tempStepImage) // Use tempStepImageURL here
+                        .onChange(of: self.tempStepImage) {
+                            if let data = self.tempStepImage {
+                                self.activityManager.setStepType(.image(data), at: self.selectedStepIndex!)
+                            }
+                        }
+                        .onDisappear {
+                            if let data = self.tempStepImage, let index = self.selectedStepIndex {
+                                self.activityManager.setStepType(.image(data), at: index)
+                                self.tempStepImage = nil // Clear after use
+                                self.selectedStepIndex = nil
+                            }
+                        }
+                }
+                .navigationDestination(isPresented: self.$navigateToAddStep) {
+                    AddStepView(self.$activityManager)
+                }
+//                .navigationBarTitle(self.activityToEdit != nil ? "Edit Activity" : "Add New Activity", displayMode: .inline)
+                .navigationBarItems(
+                    leading: self.activityToEdit == nil ? Button(self.isEditing ? "Cancel" : "Edit") {
+                        self.isEditing.toggle()
+                    } : nil
+//                    ,
+//                    trailing: Button(self.isEditing ? "Save" : "Done") {
+//                        self.isEditing = false
+//                        self.saveOrUpdateActivity()
+//                        self.dismiss()
+//                    }
+                )
+                .toolbar {
+                    ToolbarItem(placement: .principal) {
+                        
+                        TextContent(
+                            text: self.activityToEdit != nil ? "Edit Activity" : "Add New Activity", size: 25, color: "FFFFFF",
+                            transparency: 1.0,
+                            weight: "medium")
                     }
                 }
             }
-            .onAppear {
-                print("Filtered Assets: \(filteredAssets)")
-            }
-
-            .sheet(isPresented: self.$showCamera) {
-                ImagePicker(self.$tempImage, .camera)
-                    .onDisappear {
-                        if let data = self.tempImage {
-                            self.activityManager.setType(.image(data))
-                        }
-                    }
-                
-            }
-            .sheet(isPresented: self.$showImagePicker) {
-                ImagePicker(self.$tempImage)
-                    .onDisappear {
-                        if let data = self.tempImage {
-                            self.activityManager.setType(.image(data))
-                        }
-                    }
-            }
-            .sheet(isPresented: self.$showStepImagePicker) {
-                ImagePicker(self.$tempStepImage) // Use tempStepImageURL here
-                    .onChange(of: self.tempStepImage) {
-                        if let data = self.tempStepImage {
-                            self.activityManager.setStepType(.image(data), at: self.selectedStepIndex!)
-                        }
-                    }
-                    .onDisappear {
-                        if let data = self.tempStepImage, let index = self.selectedStepIndex {
-                            self.activityManager.setStepType(.image(data), at: index)
-                            self.tempStepImage = nil // Clear after use
-                            self.selectedStepIndex = nil
-                        }
-                    }
-            }
-            .navigationDestination(isPresented: self.$navigateToAddStep) {
-                AddStepView(self.$activityManager)
-            }
-            .navigationBarTitle(self.activityToEdit != nil ? "Edit Activity" : "Add New Activity", displayMode: .inline)
-            .navigationBarItems(
-                leading: Button(self.isEditing ? "Cancel" : "Edit") {
-                    self.isEditing.toggle()
-                },
-                trailing: Button(self.isEditing ? "Save" : "Done") {
-                    self.isEditing = false
-                    self.saveOrUpdateActivity()
-                    self.dismiss()
-                }
-            )
         }
         .onChange(of: self.activityName) {
             self.activityManager.setName(self.activityName)
@@ -359,12 +491,12 @@ struct AddStepView: View {
     @Environment(\.dismiss) var dismiss
     
     @Binding var activityManager: ActivityManager
-
+    
     @State private var stepDescription = ""
     @State private var stepImage: Data?
     @State private var showCamera = false
     @State private var showImagePicker = false
-
+    
     let stepIndex: Int? // Pass this if you're editing an existing step
     
     init(_ manager: Binding<ActivityManager>,stepIndex: Int? = nil) {
@@ -373,51 +505,126 @@ struct AddStepView: View {
     }
     
     var body: some View {
-        Form {
-            Section(header: Text("Step Details")) {
-                TextField("Enter Step Description", text: self.$stepDescription)
-                
-                Button("Take Photo...") {
-                    self.showCamera = true
-                }
-                .sheet(isPresented: self.$showCamera) {
-                    ImagePicker(self.$stepImage, .camera)
-                        .onDisappear {
-                            if let data = self.stepImage {
-                                if let index = stepIndex {
-                                    self.activityManager.setStepType(.image(data), at: index)
-                                } else {
-                                    self.addStep(data)
+        ZStack {
+            Color(hex: "BDD4CE", transparency: 1)
+                .ignoresSafeArea()
+            
+            VStack (alignment: .leading) {
+                //            Section(header: Text("Step Details")) {
+                VStack(alignment: .leading, spacing: 4) {
+                    TextContent(
+                        text: "STEPS",
+                        size: 15,
+                        color: "FFFFFF",
+                        transparency: 1.0,
+                        weight: "regular"
+                    )
+                    .padding(.horizontal)
+                    VStack(alignment: .leading, spacing: 10) {
+                    TextField("Enter Step Description", text: self.$stepDescription)
+                            .padding(.bottom, 5)
+                    
+//                    Button("Take Photo...") {
+//                        self.showCamera = true
+//                    }
+                        HStack {
+                            Button(action: { self.showCamera = true }) {
+                                HStack {
+                                    Text("Take Photo")
+                                        .foregroundColor(.blue)
+                                    Spacer()
+                                    Image(systemName: "camera")
+                                        .foregroundColor(.black)
                                 }
                             }
                         }
+                    .sheet(isPresented: self.$showCamera) {
+                        ImagePicker(self.$stepImage, .camera)
+                            .onDisappear {
+                                if let data = self.stepImage {
+                                    if let index = stepIndex {
+                                        self.activityManager.setStepType(.image(data), at: index)
+                                    } else {
+                                        self.addStep(data)
+                                    }
+                                }
+                            }
+                    }
+                    
+                        Divider()
+                        
+//                    Button("Choose Step Image...") {
+//                        self.showImagePicker = true
+//                    }
+                        HStack {
+                            Button(action: { self.showImagePicker = true }) {
+                                HStack {
+                                    Text("Choose Step Image")
+                                        .foregroundColor(.blue)
+                                    Spacer()
+                                    Image(systemName: "photo")
+                                        .foregroundColor(.black)
+                                }
+                            }
+                        }
+                    .sheet(isPresented: self.$showImagePicker) {
+                        ImagePicker(self.$stepImage)
+                    }
+                    
+                    if let data = self.stepImage, let uiImage = UIImage(data: data) {
+                        Image(uiImage: uiImage)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 100, height: 100)
+                            .cornerRadius(20)
+                    } else {
+                        Text("Image not available")
+                    }
                 }
+                .padding()
+                .background(Color.white)
+                .cornerRadius(10)
+                .shadow(radius: 1)
+                .padding(.horizontal)
                 
-                Button("Choose Step Image...") {
-                    self.showImagePicker = true
+                VStack {
+//                    Button(stepIndex == nil ? "Add Step" : "Update Step") {
+//                        self.saveStep(self.stepImage)
+//                        self.stepDescription = ""
+//                        self.stepImage = nil
+//                    }
+                    
+                    Button(action: { self.saveStep(self.stepImage)
+                        self.stepDescription = ""
+                        self.stepImage = nil }) {
+                        HStack {
+                            Text(stepIndex == nil ? "Add Step" : "Update Step")
+                                .foregroundColor(.blue)
+                            Spacer()
+                            Image(systemName: "plus.app")
+                                .foregroundColor(.black)
+                        }
+                    }
                 }
-                .sheet(isPresented: self.$showImagePicker) {
-                    ImagePicker(self.$stepImage)
-                }
-                
-                if let data = self.stepImage, let uiImage = UIImage(data: data) {
-                    Image(uiImage: uiImage)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 100, height: 100)
-                        .cornerRadius(20)
-                } else {
-                    Text("Image not available")
-                }
+                .padding()
+                .background(Color.white)
+                .cornerRadius(10)
+                .shadow(radius: 1)
+                .padding(.horizontal)
+                    Spacer()
             }
-            
-            Section {
-                Button(stepIndex == nil ? "Add Step" : "Update Step") {
-                    self.saveStep(self.stepImage)
-                    self.stepDescription = ""
-                    self.stepImage = nil
+                Spacer()
+                HStack {
+                    Spacer()
+                    CustomButton(text: "SELESAI", width: 350, height: 50, font: 16, bgColor: "#013C5A", bgTransparency: 1.0, fontColor: "#ffffff", fontTransparency: 1.0, cornerRadius: 30)
+                    {
+                        self.saveStep(self.stepImage)
+                        self.dismiss()
+                    }
+                    Spacer()
                 }
-            }
+                .padding(.bottom)
+
         }
         .onAppear {
             if let index = stepIndex {
@@ -429,11 +636,21 @@ struct AddStepView: View {
                 }
             }
         }
-        .navigationBarTitle(stepIndex == nil ? "Add Step" : "Edit Step", displayMode: .inline)
-        .navigationBarItems(trailing: Button("Save") {
-            self.saveStep(self.stepImage)
-            self.dismiss()
-        })
+//        .navigationBarTitle(stepIndex == nil ? "Add Step" : "Edit Step", displayMode: .inline)
+//        .navigationBarItems(trailing: Button("Save") {
+//            self.saveStep(self.stepImage)
+//            self.dismiss()
+//        })
+        .toolbar {
+            ToolbarItem(placement: .principal) {
+                
+                TextContent(
+                    text: stepIndex == nil ? "Add Step" : "Edit Step", size: 25, color: "FFFFFF",
+                    transparency: 1.0,
+                    weight: "medium")
+            }
+        }
+    }
     }
     
     private func saveStep(_ data: Data?) {
