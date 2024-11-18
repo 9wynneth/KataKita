@@ -30,36 +30,64 @@ struct AddImageCardView: View {
 
     var body: some View {
         NavigationStack {
-            Form {
-                Section {
-                    Button(LocalizedStringKey("Choose Image...")) {
-                        self.showImagePicker = true
-                    }
-                    .sheet(isPresented: self.$showImagePicker) {
-                        ImagePicker(self.$tempImage)
-                            .onDisappear {
-                                // Update the image URL after selection and clear the sticker image
-                                if let data = self.tempImage {
-                                    self.originalImageManager.imageFromLocal = data
-                                    self.stickerManager.stickerImage = nil // Reset the sticker when new image is chosen
+            ZStack{
+                Color(hex: "BDD4CE", transparency: 1) // Background color for the whole view
+                    .ignoresSafeArea()
+                
+            VStack {
+                VStack(spacing: 12) {
+                        HStack {
+                            Button(action: { showImagePicker = true }) {
+                                HStack {
+                                    Text("Pilih Gambar")
+                                        .foregroundColor(.blue)
+                                    Spacer()
+                                    Image(systemName: "photo")
+                                        .foregroundColor(.black)
                                 }
                             }
-                    }
-
-                    Button(LocalizedStringKey("Take Photo...")) {
-                        self.showCamera = true
-                    }
-                    .sheet(isPresented: self.$showCamera) {
-                        ImagePicker($tempImage, .camera)
-                            .onDisappear {
-                                // Update the image URL after capture and clear the sticker image
-                                if let data = self.tempImage {
-                                    self.originalImageManager.imageFromLocal = data
-                                    self.stickerManager.stickerImage = nil // Reset the sticker when new photo is taken
+                            .sheet(isPresented: $showImagePicker) {
+                                ImagePicker(self.$tempImage)
+                                    .onDisappear {
+                                        // Update the image URL after selection and clear the sticker image
+                                        if let data = self.tempImage {
+                                            self.originalImageManager.imageFromLocal = data
+                                            self.stickerManager.stickerImage = nil // Reset the sticker when new image is chosen
+                                        }
+                                    }
+                            }
+                        }
+                        
+                        Divider()
+                        
+                        HStack {
+                            Button(action: { showCamera = true }) {
+                                HStack {
+                                    Text("Ambil Foto")
+                                        .foregroundColor(.blue)
+                                    Spacer()
+                                    Image(systemName: "camera")
+                                        .foregroundColor(.black)
                                 }
                             }
+                            .sheet(isPresented: $showCamera) {
+                                ImagePicker($tempImage, .camera)
+                                    .onDisappear {
+                                        // Update the image URL after capture and clear the sticker image
+                                        if let data = self.tempImage {
+                                            self.originalImageManager.imageFromLocal = data
+                                            self.stickerManager.stickerImage = nil // Reset the sticker when new photo is taken
+                                        }
+                                    }
+                            }
+                        }
                     }
-
+                    .padding()
+                    .background(Color.white)
+                    .cornerRadius(12)
+                    .shadow(radius: 4)
+                    .padding(.horizontal)
+                    
                     if self.isLoading {
                         ProgressView(LocalizedStringKey("Processing..."))
                     } else if let data = self.stickerManager.stickerImage, let uIImage = UIImage(data: data) {
@@ -89,21 +117,30 @@ struct AddImageCardView: View {
                                     self.gambar = "original"
                                 }
                             }
-
+                        
                     } else {
                         Text("No image selected")
                             .foregroundColor(.red)
                     }
+                    
+                    Spacer()
+                    
+                    CustomButton(text: "SELESAI", width: 350, height: 50, font: 16, bgColor: "#013C5A", bgTransparency: 1.0, fontColor: "#ffffff", fontTransparency: 1.0, cornerRadius: 30) {
+                        if originalImageManager.imageFromLocal != nil {
+                            dismiss()
+                        }
+                    }
+                    .padding(.bottom, 20)
+                
+            }
+        }
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    TextContent(
+                        text: "Tambah Gambar", size: 25, color: "FFFFFF", transparency: 1.0,
+                        weight: "medium")
                 }
             }
-            .navigationBarTitle(LocalizedStringKey("Add Image"), displayMode: .inline)
-            .navigationBarItems(
-                trailing: Button(LocalizedStringKey("Selesai")) {
-                    if self.originalImageManager.imageFromLocal != nil {
-                        self.dismiss()
-                    }
-                }
-            )
           
         }
     }

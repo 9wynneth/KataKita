@@ -163,8 +163,17 @@ struct CardUpdateView: View {
                     }
                     .pickerStyle(.inline) // Use inline or another style if needed
                 }
-            }
-            .onAppear {
+                
+                Spacer()
+                
+                
+                CustomButton(text: "SELESAI", width: 350, height: 50, font: 16, bgColor: "#013C5A", bgTransparency: 1.0, fontColor: "#ffffff", fontTransparency: 1.0, cornerRadius: 30) {
+                    if !textToSpeak.isEmpty {
+                        handleDoneAction()
+                        showAACSettings = false
+                    }
+                }
+                .padding(.bottom, 20)
                 
             }
             .navigationDestination(isPresented: $showingAddImageView) {
@@ -173,14 +182,6 @@ struct CardUpdateView: View {
                     CardName: $textToSpeak
                 )
             }
-            .navigationBarItems(
-                trailing: Button(LocalizedStringKey("Selesai")) {
-                    if !textToSpeak.isEmpty {
-                        handleDoneAction()
-                        showAACSettings = false
-                    }
-                }
-            )
         }
     }
     
