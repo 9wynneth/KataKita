@@ -129,10 +129,12 @@ struct CardCreateView: View {
                                             .frame(width: 50, height: 50)
                                             .cornerRadius(20)
                                             .onAppear {
+                                                print("COK")
                                                 self.type = .image(data)
                                                 self.isImageType = true
                                             }
                                             .onTapGesture {
+                                                self.type = nil
                                                 self.stickerManager.stickerImage = nil
                                             }
                                     } else if let data = self.originalImageManager.imageFromLocal, let uiImage = UIImage(data: data) {
@@ -143,10 +145,12 @@ struct CardCreateView: View {
                                             .frame(width: 50, height: 50)
                                             .cornerRadius(20)
                                             .onAppear {
+                                                print("COK2")
                                                 self.type = .image(data)
                                                 self.isImageType = true
                                             }
                                             .onTapGesture {
+                                                self.type = nil
                                                 self.originalImageManager.imageFromLocal = nil
                                             }
                                     } else {
@@ -317,6 +321,8 @@ struct CardCreateView: View {
             let board = self.boardManager.boards.first(where: { $0.id == self.boardManager.selectedID }),
             var card = board.cards[safe: self.location.0]?[safe: self.location.1]
         {
+            card.name = ""
+            card.type = nil
             card.name = self.textToSpeak
             card.category = self.selectedCategory
             card.type = self.type
@@ -335,7 +341,6 @@ struct CardCreateView: View {
                 column: selectedColumnIndexValue
             )
         }
-        
 
         // Reset the image state after the card has been added
         originalImageManager.imageFromLocal = nil

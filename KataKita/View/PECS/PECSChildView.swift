@@ -9,6 +9,7 @@ import SwiftUI
 
 struct PECSChildView: View {
     @Environment(ProfileViewModel.self) private var viewModel
+    @Environment(PECSViewModel.self) private var pecsViewModel
     
     @Binding var cards: [[Card]]
     
@@ -27,6 +28,14 @@ struct PECSChildView: View {
     init(_ cards: Binding<[[Card]]>, f: @escaping (Card?) -> Void) {
         self._cards = cards
         self.f = f
+    }
+    
+    var backgrounds: [Color] {
+        var a: [Color] = []
+        for col in self.pecsViewModel.cards {
+            a.append(getBackgroundColor(for: col))
+        }
+        return a
     }
     
     var body: some View {
@@ -52,7 +61,7 @@ struct PECSChildView: View {
                 .background(
                     GeometryReader { geometry in
                         RoundedRectangle(cornerRadius: 10)
-                            .fill(getBackgroundColor(for: column))
+                            .fill(self.backgrounds[safe: i] ?? Color(hex: "D9D9D9", transparency: 0.4))
                             .onAppear {
                                 self.width = geometry.frame(in: .global).width
                                 self.height = geometry.frame(in: .global).height
@@ -73,16 +82,6 @@ struct PECSChildView: View {
             // Default background color if no cards exist in the column
             return Color(hex: "D9D9D9", transparency: 0.4)
         }
-    }
-    
-    private func genderHandler(_ name: String) -> String {
-        if AllAssets.shared.genderAssets.contains(name) {
-            if self.viewModel.userProfile.gender {
-                return "GIRL_"
-            }
-            return "BOY_"
-        }
-        return ""
     }
 }
 
