@@ -84,16 +84,6 @@ struct PECSChildView: View {
             return Color(hex: "D9D9D9", transparency: 0.4)
         }
     }
-    
-    private func genderHandler(_ name: String) -> String {
-        if AllAssets.shared.genderAssets.contains(name) {
-            if self.viewModel.userProfile.gender {
-                return "GIRL_"
-            }
-            return "BOY_"
-        }
-        return ""
-    }
 }
 
 struct PECSChildCard: View {

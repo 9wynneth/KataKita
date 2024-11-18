@@ -129,6 +129,7 @@ struct CardCreateView: View {
                                             .frame(width: 50, height: 50)
                                             .cornerRadius(20)
                                             .onAppear {
+                                                print("COK")
                                                 self.type = .image(data)
                                                 self.isImageType = true
                                             }
@@ -144,6 +145,7 @@ struct CardCreateView: View {
                                             .frame(width: 50, height: 50)
                                             .cornerRadius(20)
                                             .onAppear {
+                                                print("COK2")
                                                 self.type = .image(data)
                                                 self.isImageType = true
                                             }
@@ -208,26 +210,27 @@ struct CardCreateView: View {
                                             )
                                         }
                                     }
-                                    
-                                    CustomButton(
-                                        icon: "plus",
-                                        width: 100,
-                                        height: 100,
-                                        font: 40,
-                                        iconWidth: 50,
-                                        iconHeight: 50,
-                                        bgColor: "#FFFFFF",
-                                        bgTransparency: 1.0,
-                                        fontColor: "#000000",
-                                        fontTransparency: 1.0,
-                                        cornerRadius: 20,
-                                        isSystemImage: true,
-                                        action: {
-                                            showingAddImageView = true
-                                            navigatesFromImage = false
-                                        }
-                                    )
-                                    .opacity(navigatesFromImage ? 0 : 1)
+                                    if self.stickerManager.stickerImage == nil && self.originalImageManager.imageFromLocal == nil {
+                                        CustomButton(
+                                            icon: "plus",
+                                            width: 100,
+                                            height: 100,
+                                            font: 40,
+                                            iconWidth: 50,
+                                            iconHeight: 50,
+                                            bgColor: "#FFFFFF",
+                                            bgTransparency: 1.0,
+                                            fontColor: "#000000",
+                                            fontTransparency: 1.0,
+                                            cornerRadius: 20,
+                                            isSystemImage: true,
+                                            action: {
+                                                showingAddImageView = true
+                                                navigatesFromImage = false
+                                            }
+                                        )
+                                        .opacity(!navigatesFromImage ? 1 : 0)
+                                    }
                                 }
                             }
                         }
@@ -339,7 +342,6 @@ struct CardCreateView: View {
                 column: selectedColumnIndexValue
             )
         }
-        
 
         // Reset the image state after the card has been added
         originalImageManager.imageFromLocal = nil
