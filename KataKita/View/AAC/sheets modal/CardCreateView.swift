@@ -286,14 +286,6 @@ struct CardCreateView: View {
                     CardName: $textToSpeak
                 )
             }
-            .navigationBarItems(
-                trailing: Button(LocalizedStringKey("Selesai")) {
-                    if !textToSpeak.isEmpty {
-                        handleDoneAction()
-                        showAACSettings = false
-                    }
-                }
-            )
         }
         .onAppear {
             print(self.location)
@@ -339,7 +331,7 @@ struct CardCreateView: View {
         // Reset the image state after the card has been added
         originalImageManager.imageFromLocal = nil
         stickerManager.stickerImage = nil  // Clear the sticker image after it's added
-
+        
         // Dismiss the view
         self.addingCard = nil
     }
@@ -421,7 +413,6 @@ struct CardCreateView: View {
             }
         }
     }
-
 }
 
 // Updated SearchIconView
@@ -431,7 +422,7 @@ struct SearchIconsView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var searchText = ""
     @Environment(ProfileViewModel.self) private var viewModel
-
+    
     // Step 1: Fetch all assets localized to the user's language
     var localizedAssets: [(original: String, localized: String)] {
         let allAssets =
@@ -462,7 +453,7 @@ struct SearchIconsView: View {
             TextField(LocalizedStringKey("Cari Icon"), text: $searchText)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding()
-
+            
             ScrollView {
                 LazyVGrid(
                     columns: Array(

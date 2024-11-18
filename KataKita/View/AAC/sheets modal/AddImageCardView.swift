@@ -6,28 +6,21 @@ import CoreImage.CIFilterBuiltins
 struct AddImageCardView: View {
     @State private var showImagePicker = false
     @State private var showCamera = false
-    @State private var showingSymbolsView = false
-    @State private var showAACSettings = true
-    @State private var navigateToAddButton = false
     @Environment(StickerImageManager.self) var stickerManager
     @State private var isLoading = false
-    @State private var gambar: String? = ""
-
+    @State private var tempImageURL: URL?
     
     @Environment(\.dismiss) var dismiss
     @Binding var selectedColumnIndexValue: Int
     @Binding var CardName: String
     @Environment(OriginalImageManager.self) var originalImageManager
     @State private var tempImage: Data?
-
-
+  
     init(selectedColumnIndexValue: Binding<Int>, CardName: Binding<String>) {
         self._selectedColumnIndexValue = selectedColumnIndexValue
         self._CardName = CardName
     }
-
-    private var processingQueue = DispatchQueue(label: "ProcessingQueue")
-
+    
     var body: some View {
         NavigationStack {
             Form {
@@ -58,6 +51,16 @@ struct AddImageCardView: View {
                                     self.stickerManager.stickerImage = nil // Reset the sticker when new photo is taken
                                 }
                             }
+                            .sheet(isPresented: $showCamera) {
+                                ImagePicker(sourceType: .camera, imageURL: $tempImageURL)
+                                    .onDisappear {
+                                        if let selectedURL = tempImageURL {
+                                            originalImageManager.imageFromLocal = selectedURL
+                                            stickerManager.stickerImage = nil
+                                        }
+                                    }
+                            }
+                        }
                     }
 
                     if self.isLoading {
@@ -66,7 +69,7 @@ struct AddImageCardView: View {
                         Image(uiImage: uIImage)
                             .resizable()
                             .scaledToFit()
-                            .frame(width: 100, height: 100)
+                            .frame(width: 200, height: 200)
                             .cornerRadius(20)
                             .onAppear{
                                 self.gambar = "sticker"
@@ -80,7 +83,7 @@ struct AddImageCardView: View {
                         Image(uiImage: uiImage)
                             .resizable()
                             .scaledToFit()
-                            .frame(width: 100, height: 100)
+                            .frame(width: 200, height: 200)
                             .cornerRadius(20)
                             .onAppear {
                                 // If it's a new image, create a sticker from it, otherwise do nothing
@@ -89,7 +92,6 @@ struct AddImageCardView: View {
                                     self.gambar = "original"
                                 }
                             }
-
                     } else {
                         Text("No image selected")
                             .foregroundColor(.red)
@@ -102,6 +104,7 @@ struct AddImageCardView: View {
                     if self.originalImageManager.imageFromLocal != nil {
                         self.dismiss()
                     }
+                    .padding(.bottom, 20)
                 }
             )
           
@@ -176,9 +179,9 @@ struct AddImageCardView: View {
         guard let cgImage = CIContext(options: nil).createCGImage(ciImage, from: ciImage.extent) else {
             fatalError("Failed to render CGImage")
         }
-        return UIImage(cgImage: cgImage)
     }
 }
+
 
 // MARK: - ImagePicker Helper (Modified to Save Path as URL)
 struct ImagePicker: UIViewControllerRepresentable {
