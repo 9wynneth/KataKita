@@ -460,16 +460,33 @@ class BoardManager {
     
     //MARK: CRUD Card
     func addCard(_ card: Card, column: Int) {
-        guard let id = self.selectedID else { return } // clausal guard in CPP
-        if let index = self.boards.firstIndex(where: {$0.id == id} ) {
-            self.boards[index].cards[column].append(card)
-            do {
-                try self.model.save()
-            } catch {
-                print("SAVE ERROR")
+        guard let id = self.selectedID else { return } // Pastikan ada ID board yang dipilih
+        if let index = self.boards.firstIndex(where: { $0.id == id }) {
+            var updatedCard = card
+
+            // Lokalize hanya jika tipe adalah .icon dan tidak diawali dengan "GIRL_" atau "BOY_"
+            if case let .icon(iconName) = card.type,
+               !iconName.hasPrefix("GIRL_"),
+               !iconName.hasPrefix("BOY_") {
+                let localizedIconName = NSLocalizedString(iconName.lowercased(), comment: "")
+                updatedCard.type = .icon(localizedIconName)
             }
+
+            // Tambahkan kartu yang sudah di-update ke kolom yang sesuai
+            self.boards[index].cards[column].append(updatedCard)
+            print("Card added: Name = \(updatedCard.name), Icon = \(updatedCard.type ?? .icon("No Icon"))")
+            do {
+                try self.model.save() // Simpan perubahan ke model
+            } catch {
+                print("Error saving model: \(error)")
+            }
+        } else {
+            print("Board with selected ID not found!")
         }
     }
+
+
+
     
     func updateCard(column: Int, row: Int, updatedCard: Card) {
         guard let id = self.selectedID else { return } // Ensure there's a selected board

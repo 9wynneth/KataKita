@@ -382,6 +382,7 @@ struct CardCreateView: View {
         // Dismiss the view
         self.addingCard = nil
         self.showAACSettings = false
+        print("INI TEXT TO SPEAKKK: \(textToSpeak)")
     }
 
     private func getDisplayText(for icon: String) -> String {
