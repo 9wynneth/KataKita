@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		10595EF52CEC25190068B1D1 /* ParentModeTip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10595EF42CEC25190068B1D1 /* ParentModeTip.swift */; };
 		1E2640932CE25774009AA5BC /* SheetAddActivitynSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E2640922CE25774009AA5BC /* SheetAddActivitynSequence.swift */; };
 		1E5863742CB637C00080373A /* TextHeadline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5863732CB637B90080373A /* TextHeadline.swift */; };
 		1E5863782CB63C640080373A /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5863772CB63C600080373A /* CustomButton.swift */; };
@@ -118,6 +119,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		10595EF42CEC25190068B1D1 /* ParentModeTip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentModeTip.swift; sourceTree = "<group>"; };
 		1E2640922CE25774009AA5BC /* SheetAddActivitynSequence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetAddActivitynSequence.swift; sourceTree = "<group>"; };
 		1E5863732CB637B90080373A /* TextHeadline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextHeadline.swift; sourceTree = "<group>"; };
 		1E5863772CB63C600080373A /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
@@ -315,6 +317,7 @@
 				9B831DE12CDE82390065536F /* TextContentSearch.swift */,
 				9B831DE32CDE86AC0065536F /* CustomButtonBoard.swift */,
 				9B831DE52CDE86BB0065536F /* TextContentBoard.swift */,
+				10595EF42CEC25190068B1D1 /* ParentModeTip.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -576,6 +579,7 @@
 				1EA097D32CD9B2D900B76917 /* PECSChildView.swift in Sources */,
 				9B831C582CDAF0470065536F /* CustomIcon.swift in Sources */,
 				1EA097D12CD9B2B500B76917 /* PECSParentView.swift in Sources */,
+				10595EF52CEC25190068B1D1 /* ParentModeTip.swift in Sources */,
 				1E2640932CE25774009AA5BC /* SheetAddActivitynSequence.swift in Sources */,
 				1EEC6EF02CDDC73D0012965C /* SplashScreenView.swift in Sources */,
 				DAE313052CB85677001DD0A0 /* ScheduleManager.swift in Sources */,
@@ -792,7 +796,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"KataKita/Preview Content\"";
-				DEVELOPMENT_TEAM = PZ26635X44;
+				DEVELOPMENT_TEAM = NLFHS29F76;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = KataKita/Info.plist;
@@ -831,7 +835,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"KataKita/Preview Content\"";
-				DEVELOPMENT_TEAM = PZ26635X44;
+				DEVELOPMENT_TEAM = NLFHS29F76;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = KataKita/Info.plist;
