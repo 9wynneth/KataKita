@@ -312,7 +312,7 @@ struct CardCreateView: View {
                 print(board)
                 if let card = board.cards[safe: self.location.0]?[safe: self.location.1] {
                     print(card)
-                    self.textToSpeak = card.name
+                    self.textToSpeak = NSLocalizedString(card.name, comment: "")
                     self.selectedCategory = card.category
                     if case let .image(image) = card.type {
                         self.stickerManager.stickerImage = image
