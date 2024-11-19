@@ -3,14 +3,9 @@ import SwiftUI
 func filterAssets(by input: String, for gender: Bool?) -> [String] {
     let lang = Locale.current.language.languageCode?.identifier ?? "id"
     // Determine the asset set based on device language
-    let assets =
-        lang == "id" ? AllAssets.shared.assets : AllAssets.shared.englishAssets
-    let girlAssets =
-        lang == "id"
-        ? AllAssets.shared.girlAssets : AllAssets.shared.genderAssets
-    let boyAssets =
-        lang == "id"
-        ? AllAssets.shared.boyAssets : AllAssets.shared.genderAssets
+    let assets = lang == "id" ? AllAssets.shared.assets : AllAssets.shared.englishAssets
+    let girlAssets = lang == "id" ? AllAssets.shared.girlAssets : AllAssets.shared.genderAssets
+    let boyAssets = lang == "id" ? AllAssets.shared.boyAssets : AllAssets.shared.genderAssets
     let genderAssets = AllAssets.shared.genderAssets
     if let gender = gender {
         if gender {
@@ -27,7 +22,7 @@ func filterAssets(by input: String, for gender: Bool?) -> [String] {
             if !filteredBoyAssets.isEmpty { return filteredBoyAssets }
         }
     }
-
+    
     // If no gender-specific match is found, fall back to general assets
     return (assets + genderAssets).filter {
         $0.lowercased().starts(with: input.lowercased())
@@ -331,6 +326,27 @@ struct CardCreateView: View {
     }
 
     private func handleDoneAction() {
+        if Locale.current.languageCode == "en" {
+            let localizedIcon = NSLocalizedString(textToSpeak.uppercased(), comment: "")
+            if viewModel.userProfile.gender == true {
+                if AllAssets.shared.genderAssets.contains(textToSpeak.lowercased()) {
+                    textToSpeak = "GIRL_" + localizedIcon.uppercased()
+                } else {
+                    textToSpeak = NSLocalizedString(textToSpeak, comment: "")
+                }
+            }
+            else {
+                if AllAssets.shared.genderAssets.contains(textToSpeak.lowercased()) {
+                    textToSpeak = "BOY_" + localizedIcon.uppercased()
+                } else {
+                    textToSpeak = NSLocalizedString(textToSpeak, comment: "")
+                }
+            }
+        }
+        else {
+            textToSpeak = NSLocalizedString(textToSpeak, comment: "")
+        }
+        
         if
             let board = self.boardManager.boards.first(where: { $0.id == self.boardManager.selectedID }),
             var card = board.cards[safe: self.location.0]?[safe: self.location.1]
@@ -369,7 +385,7 @@ struct CardCreateView: View {
     }
 
     private func getDisplayText(for icon: String) -> String {
-        if Locale.current.language.languageCode?.identifier == "en" {
+        if Locale.current.languageCode == "en" {
             let localizedIcon = NSLocalizedString(icon, comment: "")
             let localizedIcon2 = NSLocalizedString(localizedIcon, comment: "")
             if viewModel.userProfile.gender == true {
@@ -377,70 +393,74 @@ struct CardCreateView: View {
                     return localizedIcon2
                 } else {
                     return icon
-
+                    
                 }
-            } else {
+            }
+            else {
                 if icon.hasPrefix("BOY_") {
                     return localizedIcon2
                 } else {
                     return icon
-
+                    
                 }
             }
-        } else {
+        }
+        else {
             if viewModel.userProfile.gender == true {
                 if icon.hasPrefix("GIRL_") {
                     return icon.replacingOccurrences(of: "GIRL_", with: "")
                 } else {
                     return icon
-
+                    
                 }
-            } else {
+            }
+            else {
                 if icon.hasPrefix("BOY_") {
                     return icon.replacingOccurrences(of: "BOY_", with: "")
                 } else {
                     return icon
-
+                    
                 }
             }
         }
-
+        
     }
 
     private func getDisplayIcon(for icon: String) -> String {
-        let lang = Locale.current.language.languageCode?.identifier ?? "id"
-        if lang == "en" {
-            let localizedIcon = NSLocalizedString(
-                icon.uppercased(), comment: "")
+        if Locale.current.languageCode == "en" {
+            let localizedIcon = NSLocalizedString(icon.uppercased(), comment: "")
             if viewModel.userProfile.gender == true {
                 if AllAssets.shared.genderAssets.contains(icon) {
                     return "GIRL_" + localizedIcon
                 } else {
                     return icon
-
+                    
                 }
-            } else {
+            }
+            else {
                 if AllAssets.shared.genderAssets.contains(icon) {
                     return "BOY_" + localizedIcon
                 } else {
                     return icon
-
+                    
                 }
             }
-        } else {
+        }
+        else {
             if viewModel.userProfile.gender == true {
                 if AllAssets.shared.genderAssets.contains(icon) {
                     return "GIRL_" + icon
                 } else {
                     return icon
-
+                    
                 }
-            } else {
+            }
+            else {
                 if AllAssets.shared.genderAssets.contains(icon) {
                     return "BOY_" + icon
                 } else {
                     return icon
-
+                    
                 }
             }
         }
@@ -458,15 +478,12 @@ struct SearchIconsView: View {
 
     // Step 1: Fetch all assets localized to the user's language
     var localizedAssets: [(original: String, localized: String)] {
-        let allAssets =
-            AllAssets.shared.assets + AllAssets.shared.boyEnglishAssets
-            + AllAssets.shared.boyAssets + AllAssets.shared.girlAssets
-            + AllAssets.shared.genderAssets + AllAssets.shared.girlEnglishAssets
+        let allAssets = AllAssets.shared.assets + AllAssets.shared.boyEnglishAssets + AllAssets.shared.boyAssets + AllAssets.shared.girlAssets + AllAssets.shared.genderAssets + AllAssets.shared.girlEnglishAssets
         return allAssets.map { asset in
             (original: asset, localized: NSLocalizedString(asset, comment: ""))
         }
     }
-
+    
     // Step 2: Filter assets by localized names matching the English input
     var filteredIcons: [(original: String, localized: String)] {
         if searchText.isEmpty {
@@ -474,13 +491,12 @@ struct SearchIconsView: View {
         } else {
             // Filter based on localized names in Indonesian that match English input
             return localizedAssets.filter { _, localized in
-                let englishTerm = NSLocalizedString(
-                    localized, tableName: "Localizable", comment: "")
+                let englishTerm = NSLocalizedString(localized, tableName: "Localizable", comment: "")
                 return englishTerm.localizedCaseInsensitiveContains(searchText)
             }
         }
     }
-
+    
     var body: some View {
         VStack {
             TextField(LocalizedStringKey("Cari Icon"), text: $searchText)
@@ -488,11 +504,7 @@ struct SearchIconsView: View {
                 .padding()
 
             ScrollView {
-                LazyVGrid(
-                    columns: Array(
-                        repeating: GridItem(.flexible(), spacing: 16), count: 3),
-                    spacing: 16
-                ) {
+                LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 16), count: 3), spacing: 16) {
                     ForEach(filteredIcons, id: \.original) { icon in
                         Button(action: {
                             selectedIcon = icon.original
@@ -511,24 +523,21 @@ struct SearchIconsView: View {
                                 fontColor: "#000000",
                                 fontTransparency: 1.0,
                                 cornerRadius: 20,
-                                isSystemImage: icon.original.contains(
-                                    "person.fill")
-                            ) {
-                                selectedIcon = icon.localized
-                                dismiss()
-                            }
+                                isSystemImage: icon.original.contains("person.fill")) {
+                                    selectedIcon = icon.localized
+                                    dismiss()
+                                }
                         }
                     }
                 }
                 .padding()
             }
         }
-        .navigationBarTitle(
-            LocalizedStringKey("Cari Icon"), displayMode: .inline)
+        .navigationBarTitle(LocalizedStringKey("Cari Icon"), displayMode: .inline)
     }
-
+    
     private func getDisplayText(for icon: String) -> String {
-        if Locale.current.language.languageCode?.identifier == "en" {
+        if Locale.current.languageCode == "en" {
             let localizedIcon = NSLocalizedString(icon, comment: "")
             let localizedIcon2 = NSLocalizedString(localizedIcon, comment: "")
             if viewModel.userProfile.gender == true {
@@ -536,56 +545,60 @@ struct SearchIconsView: View {
                     return localizedIcon2
                 } else {
                     return icon
-
+                    
                 }
-            } else {
+            }
+            else {
                 if icon.hasPrefix("BOY_") {
                     return localizedIcon2
                 } else {
                     return icon
-
+                    
                 }
             }
-        } else {
+        }
+        else {
             if viewModel.userProfile.gender == true {
                 if icon.hasPrefix("GIRL_") {
                     return icon.replacingOccurrences(of: "GIRL_", with: "")
                 } else {
                     return icon
-
+                    
                 }
-            } else {
+            }
+            else {
                 if icon.hasPrefix("BOY_") {
                     return icon.replacingOccurrences(of: "BOY_", with: "")
                 } else {
                     return icon
-
+                    
                 }
             }
         }
-
+        
     }
-
+    
     private func getDisplayIcon(for icon: String) -> String {
-        if Locale.current.language.languageCode?.identifier == "en" {
-            let localizedIcon = NSLocalizedString(
-                icon.uppercased(), comment: "")
+        if Locale.current.languageCode == "en" {
+            let localizedIcon = NSLocalizedString(icon.uppercased(), comment: "")
             if viewModel.userProfile.gender == true {
                 if AllAssets.shared.genderAssets.contains(icon) {
                     return "GIRL_" + localizedIcon
                 } else {
                     return icon
-
+                    
                 }
-            } else {
+            }
+            else {
                 if AllAssets.shared.genderAssets.contains(icon) {
                     return "BOY_" + localizedIcon
                 } else {
                     return icon
-
+                    
                 }
             }
-        } else {
+        }
+        else {
             return icon
         }
     }

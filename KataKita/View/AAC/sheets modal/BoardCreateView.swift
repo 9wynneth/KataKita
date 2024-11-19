@@ -116,7 +116,7 @@ struct BoardCreateView: View {
                                 let gridColumns = totalgrid == 20 || totalgrid == 28 ? 4 : 5
                                 let localizedIcon = NSLocalizedString(selectedIcon.uppercased(), comment: "")
                                 let localizedIcon2 = NSLocalizedString(selectedIcon, comment: "")
-                                if Locale.current.language.languageCode?.identifier == "en" {
+                                if Locale.current.languageCode == "en" {
                                     if viewModel.userProfile.gender == true {
                                         selectedIcon = selectedIcon.hasPrefix("GIRL_") ? localizedIcon : localizedIcon2
                                     } else {
@@ -158,7 +158,7 @@ struct BoardCreateView: View {
     }
     
     private func getDisplayText(for icon: String) -> String {
-        if Locale.current.language.languageCode?.identifier == "en" {
+        if Locale.current.languageCode == "en" {
             let localizedIcon = NSLocalizedString(icon, comment: "")
             let localizedIcon2 = NSLocalizedString(localizedIcon, comment: "")
             return (viewModel.userProfile.gender && icon.hasPrefix("GIRL_")) || (!viewModel.userProfile.gender && icon.hasPrefix("BOY_")) ? localizedIcon2 : icon
@@ -168,7 +168,7 @@ struct BoardCreateView: View {
     }
     
     private func getDisplayIcon(for icon: String) -> String {
-        return Locale.current.language.languageCode?.identifier == "en" && ((viewModel.userProfile.gender && icon.hasPrefix("GIRL_")) || (!viewModel.userProfile.gender && icon.hasPrefix("BOY_"))) ? NSLocalizedString(icon.uppercased(), comment: "") : icon
+        return Locale.current.languageCode == "en" && ((viewModel.userProfile.gender && icon.hasPrefix("GIRL_")) || (!viewModel.userProfile.gender && icon.hasPrefix("BOY_"))) ? NSLocalizedString(icon.uppercased(), comment: "") : icon
     }
 
 
@@ -296,7 +296,7 @@ struct BoardCreateView: View {
         }
         
         private func getDisplayText(for icon: String) -> String {
-            if Locale.current.language.languageCode?.identifier == "en" {
+            if Locale.current.languageCode == "en" {
                 let localizedIcon = NSLocalizedString(icon, comment: "")
                 let localizedIcon2 = NSLocalizedString(localizedIcon, comment: "")
                 if viewModel.userProfile.gender == true {
@@ -338,7 +338,7 @@ struct BoardCreateView: View {
         }
         
         private func getDisplayIcon(for icon: String) -> String {
-            if Locale.current.language.languageCode?.identifier == "en" {
+            if Locale.current.languageCode == "en" {
                 let localizedIcon = NSLocalizedString(icon.uppercased(), comment: "")
                 if viewModel.userProfile.gender == true {
                     if icon.hasPrefix("GIRL_") {
