@@ -4,22 +4,21 @@ import Vision
 import CoreImage.CIFilterBuiltins
 
 struct AddImageCardView: View {
+    @Environment(StickerImageManager.self) var stickerManager
+    @Environment(OriginalImageManager.self) var originalImageManager
+    @Environment(\.dismiss) var dismiss
+    
+    @Binding var selectedColumnIndexValue: Int
+    @Binding var CardName: String
+    
     @State private var showImagePicker = false
     @State private var showCamera = false
     @State private var showingSymbolsView = false
     @State private var showAACSettings = true
     @State private var navigateToAddButton = false
-    @Environment(StickerImageManager.self) var stickerManager
     @State private var isLoading = false
     @State private var gambar: String? = ""
-
-    
-    @Environment(\.dismiss) var dismiss
-    @Binding var selectedColumnIndexValue: Int
-    @Binding var CardName: String
-    @Environment(OriginalImageManager.self) var originalImageManager
     @State private var tempImage: Data?
-
 
     init(selectedColumnIndexValue: Binding<Int>, CardName: Binding<String>) {
         self._selectedColumnIndexValue = selectedColumnIndexValue
@@ -37,7 +36,11 @@ struct AddImageCardView: View {
             VStack {
                 VStack(spacing: 12) {
                         HStack {
-                            Button(action: { showImagePicker = true }) {
+                            Button(action: {
+                                showImagePicker = true
+                                self.stickerManager.stickerImage = nil
+                                self.originalImageManager.imageFromLocal = nil
+                            }) {
                                 HStack {
                                     Text("Pilih Gambar")
                                         .foregroundColor(.blue)
@@ -61,7 +64,11 @@ struct AddImageCardView: View {
                         Divider()
                         
                         HStack {
-                            Button(action: { showCamera = true }) {
+                            Button(action: {
+                                showCamera = true
+                                self.stickerManager.stickerImage = nil
+                                self.originalImageManager.imageFromLocal = nil
+                            }) {
                                 HStack {
                                     Text("Ambil Foto")
                                         .foregroundColor(.blue)
@@ -98,6 +105,7 @@ struct AddImageCardView: View {
                             .cornerRadius(20)
                             .onAppear{
                                 self.gambar = "sticker"
+                                self.stickerManager.stickerImage = data
                             }
                             .onChange(of: self.stickerManager.stickerImage) {
                                 if self.stickerManager.stickerImage != nil {

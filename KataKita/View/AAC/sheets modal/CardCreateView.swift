@@ -130,13 +130,16 @@ struct CardCreateView: View {
                                             .frame(width: 50, height: 50)
                                             .cornerRadius(20)
                                             .onAppear {
-                                                print("COK")
-                                                self.type = .image(data)
-                                                self.isImageType = true
+                                                if !self.showingAddImageView {
+                                                    print("COKlook")
+                                                    self.type = .image(data)
+                                                    self.isImageType = true
+                                                }
                                             }
                                             .onTapGesture {
                                                 self.type = nil
                                                 self.stickerManager.stickerImage = nil
+                                                self.originalImageManager.imageFromLocal = nil
                                             }
                                     } else if let data = self.originalImageManager.imageFromLocal, let uiImage = UIImage(data: data) {
                                         // Fallback to image from local if sticker is not set
@@ -146,13 +149,16 @@ struct CardCreateView: View {
                                             .frame(width: 50, height: 50)
                                             .cornerRadius(20)
                                             .onAppear {
-                                                print("COK2")
-                                                self.type = .image(data)
-                                                self.isImageType = true
+                                                if !self.showingAddImageView {
+                                                    print("COK2")
+                                                    self.type = .image(data)
+                                                    self.isImageType = true
+                                                }
                                             }
                                             .onTapGesture {
                                                 self.type = nil
                                                 self.originalImageManager.imageFromLocal = nil
+                                                self.stickerManager.stickerImage = nil
                                             }
                                     } else {
                                         // Display icons if no image is selected
@@ -226,14 +232,12 @@ struct CardCreateView: View {
                                             cornerRadius: 20,
                                             isSystemImage: true,
                                             action: {
+                                                self.type = nil
                                                 showingAddImageView = true
                                                 navigatesFromImage = false
                                             }
                                         )
                                         .opacity(!navigatesFromImage ? 1 : 0)
-//=======
-//                                        .opacity(navigatesFromImage ? 0 : 1)
-//>>>>>>> Stashed changes
                                     }
                                 }
                             }
@@ -283,7 +287,6 @@ struct CardCreateView: View {
                     CustomButton(text: "SELESAI", width: 350, height: 50, font: 16, bgColor: "#013C5A", bgTransparency: 1.0, fontColor: "#ffffff", fontTransparency: 1.0, cornerRadius: 30) {
                         if !textToSpeak.isEmpty {
                             handleDoneAction()
-                            showAACSettings = false
                         }
                     }
                     .padding(.bottom, 20)
@@ -303,6 +306,9 @@ struct CardCreateView: View {
                     selectedColumnIndexValue: $selectedColumnIndexValue,
                     CardName: $textToSpeak
                 )
+                .onAppear {
+                    self.type = nil
+                }
             }
         }
         .onAppear {
@@ -331,9 +337,12 @@ struct CardCreateView: View {
         {
             card.name = ""
             card.type = nil
+            
             card.name = self.textToSpeak
-            card.category = self.selectedCategory
             card.type = self.type
+            
+            card.category = self.selectedCategory
+            
             self.boardManager.updateCard(
                 column: self.location.0,
                 row: self.location.1,
@@ -354,9 +363,9 @@ struct CardCreateView: View {
         originalImageManager.imageFromLocal = nil
         stickerManager.stickerImage = nil  // Clear the sticker image after it's added
         
-
         // Dismiss the view
         self.addingCard = nil
+        self.showAACSettings = false
     }
 
     private func getDisplayText(for icon: String) -> String {
