@@ -422,7 +422,7 @@ struct BetterAACView: View {
                         SecurityView()
                     }
                     .frame(width: screenWidth, height: screenHeight + 50)
-                    .background(Color.gray.opacity(0.3))
+                    .background(Color.gray.opacity(0.5))
                     .onTapGesture {
                         isAskPassword = false
                         self.editing.toggle()

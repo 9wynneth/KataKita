@@ -371,7 +371,7 @@ struct DailyActivityView: View {
                     .frame(
                         width: viewPortWidth, height: viewPortHeight + 50
                     )
-                    .background(Color.gray.opacity(0.3))
+                    .background(Color.gray.opacity(0.5))
                     .onTapGesture {
                         isAskPassword = false
                     }

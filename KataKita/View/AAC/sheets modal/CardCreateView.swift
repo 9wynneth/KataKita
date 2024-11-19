@@ -123,6 +123,7 @@ struct CardCreateView: View {
                                 HStack {
                                     if let data = self.stickerManager.stickerImage, let uIImage = UIImage(data: data) {
                                         // Display the sticker image if available
+                                        
                                         Image(uiImage: uIImage)
                                             .resizable()
                                             .scaledToFit()
@@ -230,6 +231,9 @@ struct CardCreateView: View {
                                             }
                                         )
                                         .opacity(!navigatesFromImage ? 1 : 0)
+//=======
+//                                        .opacity(navigatesFromImage ? 0 : 1)
+//>>>>>>> Stashed changes
                                     }
                                 }
                             }
@@ -315,6 +319,9 @@ struct CardCreateView: View {
                 }
             }
         }
+        .onDisappear{
+            
+        }
     }
 
     private func handleDoneAction() {
@@ -346,6 +353,7 @@ struct CardCreateView: View {
         // Reset the image state after the card has been added
         originalImageManager.imageFromLocal = nil
         stickerManager.stickerImage = nil  // Clear the sticker image after it's added
+        
 
         // Dismiss the view
         self.addingCard = nil

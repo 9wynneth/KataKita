@@ -64,6 +64,7 @@ struct PECSView: View {
                     PECSChildView(self.$childCards) { draggingChild in
                         self.draggingChild = draggingChild
                     }
+                    .opacity(toggleOn ? 0 : 1)
                     .rotation3DEffect(
                         .degrees(toggleOn ? 180 : 0),
                         axis: (x: 0.0, y: 1.0, z: 0.0)
@@ -294,7 +295,7 @@ struct PECSView: View {
                         SecurityView()
                     }
                     .frame(width: screenWidth, height: screenHeight + 50)
-                    .background(Color.gray.opacity(0.3))
+                    .background(Color.gray.opacity(0.5))
                     .onTapGesture {
                         isAskPassword = false
                     }

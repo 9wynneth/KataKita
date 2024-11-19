@@ -20,6 +20,9 @@ class StickerImageManager {
     func clearStickerImage() {
         stickerImage = nil
     }
+    func getStickerImage() -> Data? {
+           return stickerImage
+       }
 }
 
 @Observable
