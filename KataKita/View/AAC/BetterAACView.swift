@@ -8,6 +8,7 @@
 import AVFoundation
 import SwiftUI
 import Combine
+import TipKit
 
 class SharedMaxCards: ObservableObject {
     @Published var maxWidth: CGFloat
@@ -26,6 +27,8 @@ class SharedMaxCards: ObservableObject {
 }
 
 struct BetterAACView: View {
+    var parentModeTip: ParentModeTip = ParentModeTip()
+    
     @Environment(SecurityManager.self) private var securityManager
     @Environment(BoardManager.self) private var boardManager
     @Environment(AACViewModel.self) private var aacViewModel
@@ -48,6 +51,7 @@ struct BetterAACView: View {
     @State private var showAACSettings = false
     @State private var showprofile = false
     @State private var isAskPassword = false
+    @State private var isPresented = true
     
     @State private var navigateFromImage = false
     @State private var selectedCategoryColor: String = "#FFFFFF"
@@ -317,6 +321,9 @@ struct BetterAACView: View {
                         }
 
                     }
+                    .popoverTip(parentModeTip, arrowEdge: .top)
+                    .tipViewStyle(HeadlineTipViewStyle())
+                    
                 }
             }
             .padding(.top, 15)
@@ -542,4 +549,39 @@ struct AACCard: View {
 
 #Preview {
     BetterAACView()
+}
+
+struct HeadlineTipViewStyle: TipViewStyle {
+    func makeBody(configuration: TipViewStyle.Configuration) -> some View {
+        VStack(alignment: .leading) {
+            HStack {
+                Text ("PARENT MODE").font(.system(.headline).smallCaps())
+                Spacer()
+                Button(action: { configuration.tip.invalidate(reason: .tipClosed) }) {
+                    Image(systemName: "xmark").scaledToFit()
+                }
+            }
+            
+            Divider().frame(height: 1.0)
+            
+            HStack(alignment: .top) {
+                configuration.image?
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 48.0, height: 48.0)
+                
+                VStack(alignment: .leading, spacing: 8.0) {
+                    configuration.title?.font(.headline)
+                    configuration.message?.font(.subheadline)
+                    
+                    ForEach(configuration.actions) { action in
+                        Button(action: action.handler) {
+                            action.label().foregroundStyle(.blue)
+                        }
+                    }
+                }
+            }
+        }
+        .padding()
+    }
 }

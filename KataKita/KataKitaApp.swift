@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftData
+import TipKit
 
 extension Date {
     func dayNumberOfWeek() -> Int {
@@ -59,6 +60,17 @@ struct KataKitaApp: App {
     var body: some Scene {
         WindowGroup {
             SplashScreen(self.model.mainContext)
+                .task {
+                    do {
+                        try Tips.resetDatastore()
+                        try Tips.configure([
+                            .displayFrequency(.immediate),
+                            .datastoreLocation(.applicationDefault)
+                        ])
+                    } catch {
+                        print("Error initializing TipKit: \(error.localizedDescription)")
+                    }
+                }
         }
         .modelContainer(self.model)
         .environment(self.activityManager)
