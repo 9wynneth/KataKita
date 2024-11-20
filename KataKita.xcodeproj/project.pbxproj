@@ -67,7 +67,6 @@
 		DA34C38A2CD338FD00ADD738 /* BoardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA34C3892CD338F800ADD738 /* BoardManager.swift */; };
 		DA534F962CE3C5C600D55BAE /* Icon.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA534F952CE3C5C300D55BAE /* Icon.swift */; };
 		DA534F982CE3D67700D55BAE /* AACViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA534F972CE3D66F00D55BAE /* AACViewModel.swift */; };
-		DA7D4DCB2CEADF7C002F05FF /* AddEditActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7D4DCA2CEADF77002F05FF /* AddEditActivityView.swift */; };
 		DADB2B4D2CD3EAF20049838B /* AACBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADB2B4C2CD3EAEA0049838B /* AACBoardView.swift */; };
 		DADB2B592CD6999B0049838B /* BetterAACView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADB2B582CD699960049838B /* BetterAACView.swift */; };
 		DAE1E7822CBAF59A00F5F9D1 /* SettingActivityCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE1E7812CBAF57F00F5F9D1 /* SettingActivityCard.swift */; };
@@ -176,7 +175,6 @@
 		DA34C3892CD338F800ADD738 /* BoardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardManager.swift; sourceTree = "<group>"; };
 		DA534F952CE3C5C300D55BAE /* Icon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icon.swift; sourceTree = "<group>"; };
 		DA534F972CE3D66F00D55BAE /* AACViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AACViewModel.swift; sourceTree = "<group>"; };
-		DA7D4DCA2CEADF77002F05FF /* AddEditActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEditActivityView.swift; sourceTree = "<group>"; };
 		DADB2B4C2CD3EAEA0049838B /* AACBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AACBoardView.swift; sourceTree = "<group>"; };
 		DADB2B582CD699960049838B /* BetterAACView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetterAACView.swift; sourceTree = "<group>"; };
 		DAE1E7812CBAF57F00F5F9D1 /* SettingActivityCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingActivityCard.swift; sourceTree = "<group>"; };
@@ -367,7 +365,6 @@
 		1EA097CC2CD9B0BF00B76917 /* ACTIVITY */ = {
 			isa = PBXGroup;
 			children = (
-				DA7D4DCA2CEADF77002F05FF /* AddEditActivityView.swift */,
 				1E2640922CE25774009AA5BC /* SheetAddActivitynSequence.swift */,
 				1EEC6EF12CDE642C0012965C /* SettingActivityView.swift */,
 				DAE313002CB8375C001DD0A0 /* AddDailyActivityView.swift */,
@@ -591,7 +588,6 @@
 				DAE1E7942CC0474400F5F9D1 /* StateManager.swift in Sources */,
 				1EA097CF2CD9B28100B76917 /* PECSView.swift in Sources */,
 				1EEC6EF22CDE64340012965C /* SettingActivityView.swift in Sources */,
-				DA7D4DCB2CEADF7C002F05FF /* AddEditActivityView.swift in Sources */,
 				DAE1E7822CBAF59A00F5F9D1 /* SettingActivityCard.swift in Sources */,
 				1ECB57392CD9C2FB009291E8 /* Profile.swift in Sources */,
 				9B831C112CDA934A0065536F /* ProfileViewModel.swift in Sources */,
@@ -796,7 +792,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"KataKita/Preview Content\"";
-				DEVELOPMENT_TEAM = NLFHS29F76;
+				DEVELOPMENT_TEAM = V82QRJ28YB;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = KataKita/Info.plist;
@@ -835,7 +831,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"KataKita/Preview Content\"";
-				DEVELOPMENT_TEAM = NLFHS29F76;
+				DEVELOPMENT_TEAM = V82QRJ28YB;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = KataKita/Info.plist;

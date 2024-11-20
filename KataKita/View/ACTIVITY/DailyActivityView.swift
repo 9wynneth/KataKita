@@ -76,21 +76,29 @@ struct DailyActivityView: View {
     var isCompleted: Bool {
         return self.activities.count <= self.stateManager.index
     }
+  
 
     var body: some View {
+        let userName = viewModel.userProfile.name.isEmpty ?
+                 NSLocalizedString("defaultYou", comment: "Default name for 'you'") :
+                 viewModel.userProfile.name
+
+             let localizedActivity = String(format: NSLocalizedString("userActivityKey", comment: ""), userName)
+
         ZStack {
             VStack(spacing: 0) {
                 // MARK: - Header
                 HStack {
                     VStack(alignment: .leading) {
+                      
                         TextHeadline(
-                            text:
-                                "Kegiatan \(self.viewModel.userProfile.name.isEmpty ? "kamu" : self.viewModel.userProfile.name)",
+                            text: localizedActivity,
                             size: 36,
                             color: "Black",
                             transparency: 1.0,
                             weight: "Light"
                         )
+
                         TextContent(
                             text: "Hari \(self.day.toString()),",
                             size: 24,

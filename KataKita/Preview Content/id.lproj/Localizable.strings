@@ -420,3 +420,5 @@
 "Take Photo..." = "Ambil Foto...";
 "Processing..." = "Sedang di Proses...";
 "Add Image" = "Tambah Gambar";
+userActivityKey = "Kegiatan %@";
+defaultYou = "kamu";

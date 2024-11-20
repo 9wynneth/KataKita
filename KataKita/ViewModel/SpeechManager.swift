@@ -8,7 +8,7 @@
 import AVFoundation
 
 class SpeechManager {
-    static let shared = SpeechManager()  // Singleton instance
+    static let shared = SpeechManager()
     let synthesizer = AVSpeechSynthesizer()
     
     private init() {}  

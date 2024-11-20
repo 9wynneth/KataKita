@@ -556,7 +556,9 @@ struct HeadlineTipViewStyle: TipViewStyle {
     func makeBody(configuration: TipViewStyle.Configuration) -> some View {
         VStack(alignment: .leading) {
             HStack {
-                Text ("PARENT MODE").font(.system(.headline).smallCaps())
+                let localizedName = NSLocalizedString("MODE ORANG TUA", comment: "Concatenated text for speech synthesis")
+                
+                Text ("\(localizedName)").font(.system(.headline).smallCaps())
                 Spacer()
                 Button(action: { configuration.tip.invalidate(reason: .tipClosed) }) {
                     Image(systemName: "xmark").scaledToFit()

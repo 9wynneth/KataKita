@@ -51,7 +51,8 @@ struct AllAssets {
         "youtube", "menggambar", "mendengar",
          "gelap", "terang", "talenan",
         "mendengar", "buku cerita", "menggambar", "mendengar", "gelap",
-        "terang",
+        "terang", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10",
+        "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"
     ]
 
     let englishAssets: [String] = [
@@ -98,7 +99,8 @@ struct AllAssets {
         "trash can", "trolley", "hat", "truck", "postman", "close", "money",
         "snake", "virus", "frying pan", "color", "youtube",
          "draw", "listen", "dark",
-        "bright", "cutting board", "story book",
+        "bright", "cutting board", "story book", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10",
+        "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"
     ]
 
     let boyAssets: [String] = [

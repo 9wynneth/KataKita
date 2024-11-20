@@ -44,7 +44,7 @@ struct SettingsView: View {
                                 .foregroundColor(.gray)
                             
                             TextContent(
-                                text: name.isEmpty ? "Your Kid's Name" : name, size: 35, color: "000000", transparency: 1.0,
+                                text: name.isEmpty ? "Kid's Name" : name, size: 35, color: "000000", transparency: 1.0,
                                 weight: "regular")
                             Spacer()
                         }
