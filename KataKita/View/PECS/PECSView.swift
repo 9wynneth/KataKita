@@ -16,6 +16,8 @@ enum DraggingState {
 }
 
 struct PECSView: View {
+    var parentModeTip: ParentModeTip = ParentModeTip()
+    
     @Environment(PECSViewModel.self) var pecsViewModel
     @Environment(SecurityManager.self) var securityManager
     @Environment(ProfileViewModel.self) private var viewModel
@@ -110,10 +112,13 @@ struct PECSView: View {
                             color: .black.opacity(0.14), radius: 4,
                             x: 0, y: 2
                         )
+                        .popoverTip(parentModeTip, arrowEdge: .top)
+                        .tipViewStyle(HeadlineTipViewStyle())
                         .offset(x: self.toggleOn ? 18 : -18)
                         .padding(24)
                         .animation(.spring(duration: 0.25), value: self.toggleOn)
                     }
+
                     .onTapGesture {
                         if !self.toggleOn {
                             isAskPassword = true
@@ -124,6 +129,7 @@ struct PECSView: View {
                         }
                     }
                     .animation(.spring(duration: 0.25), value: toggleOn)
+
                     
                     //TODO: nanti masukin asset refresh
                     

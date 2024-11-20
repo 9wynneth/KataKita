@@ -318,6 +318,7 @@ struct BetterAACView: View {
                             isAskPassword = false
                         } else {
                             isAskPassword = true
+                            parentModeTip.invalidate(reason: .actionPerformed)
                         }
 
                     }
