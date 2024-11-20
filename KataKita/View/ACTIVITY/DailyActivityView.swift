@@ -9,6 +9,8 @@ import SwiftUI
 
 ///
 struct DailyActivityView: View {
+    var parentModeTip: ParentModeTip = ParentModeTip()
+    
     @Environment(ScheduleManager.self) private var scheduleManager
     @Environment(ActivitiesManager.self) private var activitiesManager
     @Environment(ProfileViewModel.self) private var viewModel
@@ -115,6 +117,8 @@ struct DailyActivityView: View {
                             color: .black.opacity(0.14), radius: 4,
                             x: 0, y: 2
                         )
+                        .popoverTip(parentModeTip, arrowEdge: .top)
+                        .tipViewStyle(HeadlineTipViewStyle())
                         .offset(x: self.toggleOn ? 18 : -18)
                         .padding(24)
                         .animation(
