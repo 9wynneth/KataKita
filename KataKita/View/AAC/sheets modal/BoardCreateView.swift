@@ -450,7 +450,22 @@ struct BoardCreateView: View {
                 }
             }
             else {
-                return icon
+                if viewModel.userProfile.gender == true {
+                    if AllAssets.shared.genderAssets.contains(icon) {
+                        return "GIRL_" + icon
+                    } else {
+                        return icon
+                        
+                    }
+                }
+                else {
+                    if AllAssets.shared.genderAssets.contains(icon) {
+                        return "BOY_" + icon
+                    } else {
+                        return icon
+                        
+                    }
+                }
             }
         }
     }
