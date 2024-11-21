@@ -12,7 +12,8 @@ struct AddDailyActivityView: View {
     @Environment(ActivitiesManager.self) private var activitiesManager
     @Environment(StateManager.self) private var stateManager
     @Environment(\.dismiss) var dismiss
-    
+    @Environment(ProfileViewModel.self) private var viewModel
+
     @Binding var toggleOn: Bool
     
     @State private var showEditActivityView = false
@@ -77,12 +78,18 @@ struct AddDailyActivityView: View {
     }
 
     var body: some View {
+        let userName = viewModel.userProfile.name.isEmpty ?
+                 NSLocalizedString("defaultYou", comment: "Default name for 'you'") :
+                 viewModel.userProfile.name
+
+        let localizedActivity = String(format: NSLocalizedString("userActivityKey", comment: ""), userName)
+
         VStack(alignment: .leading, spacing: 0) {
             // MARK: - Header
             HStack {
                 VStack(alignment: .leading) {
                     TextHeadline(
-                        text: "Bank aktivitas",
+                        text: "\(localizedActivity)",
                         size: 36,
                         color: "Black",
                         transparency: 1.0,

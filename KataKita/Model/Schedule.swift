@@ -17,17 +17,23 @@ enum Day: String, Equatable {
     case FRIDAY
     case SATURDAY
     
-    func toString() -> String {
-        switch self {
-            case .SUNDAY: return "Minggu"
-            case .MONDAY: return "Senin"
-            case .TUESDAY: return "Selasa"
-            case .WEDNESDAY: return "Rabu"
-            case .THURSDAY: return "Kamis"
-            case .FRIDAY: return "Jumat"
-            case .SATURDAY: return "Sabtu"
-        }
-    }
+    func localizedString() -> String {
+           let locale = Locale.current.languageCode // Fetch the current language code
+           switch locale {
+           case "id":
+               switch self {
+                   case .SUNDAY: return "Hari Minggu"
+                   case .MONDAY: return "Hari Senin"
+                   case .TUESDAY: return "Hari Selasa"
+                   case .WEDNESDAY: return "Hari Rabu"
+                   case .THURSDAY: return "Hari Kamis"
+                   case .FRIDAY: return "Hari Jumat"
+                   case .SATURDAY: return "Hari Sabtu"
+               }
+           default: // Default to English
+               return self.rawValue.capitalized // Capitalize the raw value for English
+           }
+       }
 }
 
 struct Schedule: Codable {

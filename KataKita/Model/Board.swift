@@ -51,7 +51,7 @@ enum Category: String, Codable, CaseIterable {
             case .ADJECTIVE:
                 return "D4F3FF"
             case .CONJUNCTION:
-                return "FFFFFF"
+                return "F2F2F2"
         }
     }
 }

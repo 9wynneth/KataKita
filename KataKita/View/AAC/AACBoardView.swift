@@ -78,7 +78,8 @@ struct AACBoardView: View {
                                 AACBoardCard(
                                     row,
                                     (cellWidth, cellHeight)
-                                ) {
+                                )
+                                {
                                     if self.pecs {
                                         self.pecsViewModel.cardHandler(row)
                                     } else {
@@ -95,6 +96,7 @@ struct AACBoardView: View {
                                         }
                                     }
                                 }
+
                                 
                                 if self.editing {
                                     AACBoardDeleteButton() {
@@ -245,6 +247,7 @@ struct AACBoardCard: View {
                         .scaledToFit()
                         .frame(width: self.width / 2, height: self.height / 2)
                         .cornerRadius(13)
+                    
                 } else if case let .icon(icon) = self.card.type {
                     Icon(icon, (self.width / 2, self.height / 2))
                 } else {
@@ -265,17 +268,20 @@ struct AACBoardCard: View {
                 Group {
                     if case let .color(color) = self.card.type {
                         Color(hex: color, transparency: 1)
+                        
                     } else {
                         Color(hex: self.card.category.getColorString(), transparency: 1)
                     }
                 }
                 .opacity(0.65)
+
             )
 //            .onTapGesture {
 //                SpeechManager.shared.speakCardAAC(self.card.name)
 //
 //            }
             .cornerRadius(13)
+
         }
     }
 }

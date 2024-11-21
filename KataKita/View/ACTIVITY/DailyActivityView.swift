@@ -83,7 +83,7 @@ struct DailyActivityView: View {
                  NSLocalizedString("defaultYou", comment: "Default name for 'you'") :
                  viewModel.userProfile.name
 
-             let localizedActivity = String(format: NSLocalizedString("userActivityKey", comment: ""), userName)
+        let localizedActivity = String(format: NSLocalizedString("userActivityKey", comment: ""), userName)
 
         ZStack {
             VStack(spacing: 0) {
@@ -100,7 +100,7 @@ struct DailyActivityView: View {
                         )
 
                         TextContent(
-                            text: "Hari \(self.day.toString())",
+                            text: "\(self.day.localizedString())",
                             size: 24,
                             color: "Black",
                             transparency: 1.0,
