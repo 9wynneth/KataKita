@@ -344,7 +344,9 @@ struct AddActivityView: View {
                 .navigationBarItems(
                     leading: self.activityToEdit == nil ? Button(self.isEditing ? "Cancel" : "Edit") {
                         self.isEditing.toggle()
-                    } : nil
+                    }    .foregroundColor(.white) // Atur warna teks menjadi putih
+
+                    : nil
 //                    ,
 //                    trailing: Button(self.isEditing ? "Save" : "Done") {
 //                        self.isEditing = false
@@ -357,6 +359,23 @@ struct AddActivityView: View {
                         
                         TextContent(
                             text: self.activityToEdit != nil ? "Edit Activity" : "Add New Activity", size: 25, color: "FFFFFF",
+                            transparency: 1.0,
+                            weight: "medium")
+                    }
+                }
+            }
+        }
+        .navigationBarBackButtonHidden(true) // Sembunyikan tombol "Back" bawaan
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button(action: { dismiss() }) {
+                    HStack{
+                        Image(systemName: "chevron.backward")
+                            .foregroundColor(.white) // Atur warna putih
+                            .font(.system(size: 20, weight: .medium))
+                        
+                        TextContent(
+                            text: "Kembali", size: 20, color: "FFFFFF",
                             transparency: 1.0,
                             weight: "medium")
                     }
@@ -651,6 +670,23 @@ struct AddStepView: View {
             }
         }
     }
+        .navigationBarBackButtonHidden(true) // Sembunyikan tombol "Back" bawaan
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button(action: { dismiss() }) {
+                    HStack{
+                        Image(systemName: "chevron.backward")
+                            .foregroundColor(.white) // Atur warna putih
+                            .font(.system(size: 20, weight: .medium))
+                        
+                        TextContent(
+                            text: "Kembali", size: 20, color: "FFFFFF",
+                            transparency: 1.0,
+                            weight: "medium")
+                    }
+                }
+            }
+        }
     }
     
     private func saveStep(_ data: Data?) {
