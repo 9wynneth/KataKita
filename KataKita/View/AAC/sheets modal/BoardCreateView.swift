@@ -262,16 +262,16 @@ struct BoardCreateView: View {
             let lang = Locale.current.language.languageCode?.identifier ?? "id"
             if viewModel.userProfile.gender == true {
                 if lang == "id" {
-                    return AllAssets.shared.assets + AllAssets.shared.genderAssets
+                    return AllAssets.shared.assets + AllAssets.shared.genderIndoAssets
                 } else {
-                    return AllAssets.shared.englishAssets + AllAssets.shared.genderAssets
+                    return AllAssets.shared.englishAssets + AllAssets.shared.genderEnglishAssets
                 }
             }
             else {
                 if lang == "id" {
-                    return AllAssets.shared.assets + AllAssets.shared.genderAssets
+                    return AllAssets.shared.assets + AllAssets.shared.genderIndoAssets
                 } else {
-                    return AllAssets.shared.englishAssets + AllAssets.shared.genderAssets
+                    return AllAssets.shared.englishAssets + AllAssets.shared.genderEnglishAssets
                 }
             }
         }

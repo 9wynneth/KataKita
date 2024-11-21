@@ -4,9 +4,9 @@ func filterAssets(by input: String, for gender: Bool?) -> [String] {
     let lang = Locale.current.language.languageCode?.identifier ?? "id"
     // Determine the asset set based on device language
     let assets = lang == "id" ? AllAssets.shared.assets : AllAssets.shared.englishAssets
-    let girlAssets = lang == "id" ? AllAssets.shared.girlAssets : AllAssets.shared.genderAssets
-    let boyAssets = lang == "id" ? AllAssets.shared.boyAssets : AllAssets.shared.genderAssets
-    let genderAssets = AllAssets.shared.genderAssets
+    let girlAssets = lang == "id" ? AllAssets.shared.girlAssets : AllAssets.shared.genderEnglishAssets
+    let boyAssets = lang == "id" ? AllAssets.shared.boyAssets : AllAssets.shared.genderEnglishAssets
+    let genderAssets = lang == "id" ? AllAssets.shared.genderIndoAssets : AllAssets.shared.genderEnglishAssets
     if let gender = gender {
         if gender {
             // Filter for girl-specific assets with "GIRL_" prefix
