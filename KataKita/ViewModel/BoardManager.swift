@@ -268,7 +268,7 @@ class BoardManager {
                         Card(name: "bantal", category: .NOUN, type: .icon("bantal")),
     //                        Card(name: "guling", category: .NOUN, type: .icon("guling")),
     //                        Card(name: "selimut", category: .NOUN, type: .icon("selimut")),
-    //                        Card(name: "buku cerita", category: .NOUN, type: .icon("buku cerita")),
+                            Card(name: "buku cerita", category: .NOUN, type: .icon("buku cerita")),
                     ],
                     [
                         Card(name: "meja", category: .NOUN, type: .icon("meja")),
