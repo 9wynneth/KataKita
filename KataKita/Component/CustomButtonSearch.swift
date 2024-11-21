@@ -80,9 +80,9 @@ struct CustomButtonSearch: View {
                                 .frame(width: CGFloat(iconWidth ?? 24), height: CGFloat(iconHeight ?? 24))
                                 .foregroundColor(Color(hex: fontColor, transparency: fontTransparency))
                                 .onAppear()
-                            {
-                                print("localization: \(localizedIcon)")
-                            }
+//                            {
+//                                print("localization: \(localizedIcon)")
+//                            }
                         }
                     }
                     else {
@@ -116,9 +116,9 @@ struct CustomButtonSearch: View {
                 
                 Spacer()
             }
-            .onAppear(){
-                print("coba cek icon" + String(icon ?? ""))
-            }
+//            .onAppear(){
+//                print("coba cek icon" + String(icon ?? ""))
+//            }
             .frame(width: CGFloat(width), height: CGFloat(height))
             .background(Color(hex: bgColor, transparency: bgTransparency))
             .clipShape(RoundedRectangle(cornerRadius: cornerRadius))

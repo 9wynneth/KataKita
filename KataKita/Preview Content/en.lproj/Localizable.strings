@@ -143,7 +143,7 @@
 "ktp" = "id card";
 "kuas" = "paintbrush";
 "kucing" = "cat";
-"kuda" = "horse";
+"zebra" = "zebra";
 "kue" = "cake";
 "kue kering" = "cookie";
 "kunci" = "key";
@@ -590,7 +590,7 @@
 "id card" = "ktp";
 "paintbrush" = "kuas";
 "cat" = "kucing";
-"horse" = "kuda";
+"zebra" = "zebra";
 "cake" = "kue";
 "cookie" = "kue kering";
 "key" = "kunci";
@@ -917,7 +917,7 @@
 
 
 "JADWAL" = "SCHEDULE";
-"Kegiatan Kamu" = "Your Activity";
+"Kegiatan Kamu" = "Today's Activity";
 "Hari" = "Day";
 "Hari Senin," = "Monday,";
 "Hari Selasa," = "Tuesday,";
@@ -998,7 +998,7 @@
 "SELESAI" = "DONE";
 "tidur" = "sleep";
 userActivityKey = "%@'s Activity";
-defaultYou = "Your";
+defaultYou = "Today";
 "Nama Buah Hati" = "Kid's Name";
 "potong" = "chop";
 "celana" = "short";

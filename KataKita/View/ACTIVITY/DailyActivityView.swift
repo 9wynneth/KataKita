@@ -100,7 +100,7 @@ struct DailyActivityView: View {
                         )
 
                         TextContent(
-                            text: "Hari \(self.day.toString()),",
+                            text: "Hari \(self.day.toString())",
                             size: 24,
                             color: "Black",
                             transparency: 1.0,
