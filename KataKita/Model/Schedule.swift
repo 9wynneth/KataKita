@@ -18,22 +18,32 @@ enum Day: String, Equatable {
     case SATURDAY
     
     func localizedString() -> String {
-           let locale = Locale.current.languageCode // Fetch the current language code
-           switch locale {
-           case "id":
-               switch self {
-                   case .SUNDAY: return "Hari Minggu"
-                   case .MONDAY: return "Hari Senin"
-                   case .TUESDAY: return "Hari Selasa"
-                   case .WEDNESDAY: return "Hari Rabu"
-                   case .THURSDAY: return "Hari Kamis"
-                   case .FRIDAY: return "Hari Jumat"
-                   case .SATURDAY: return "Hari Sabtu"
-               }
-           default: // Default to English
-               return self.rawValue.capitalized // Capitalize the raw value for English
-           }
-       }
+        let locale = Locale.current.languageCode // Fetch the current language code
+        switch locale {
+        case "id": // Indonesian localization
+            switch self {
+            case .SUNDAY: return "Hari Minggu"
+            case .MONDAY: return "Hari Senin"
+            case .TUESDAY: return "Hari Selasa"
+            case .WEDNESDAY: return "Hari Rabu"
+            case .THURSDAY: return "Hari Kamis"
+            case .FRIDAY: return "Hari Jumat"
+            case .SATURDAY: return "Hari Sabtu"
+            }
+        case "zh": // Chinese localization
+            switch self {
+            case .SUNDAY: return "星期日"
+            case .MONDAY: return "星期一"
+            case .TUESDAY: return "星期二"
+            case .WEDNESDAY: return "星期三"
+            case .THURSDAY: return "星期四"
+            case .FRIDAY: return "星期五"
+            case .SATURDAY: return "星期六"
+            }
+        default: // Default to English
+            return self.rawValue.capitalized // Capitalize the raw value for English
+        }
+    }
 }
 
 struct Schedule: Codable {
