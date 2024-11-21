@@ -368,6 +368,23 @@ struct BoardCreateView: View {
                     }
                 }
             }
+            .navigationBarBackButtonHidden(true) // Sembunyikan tombol "Back" bawaan
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button(action: { dismiss() }) {
+                        HStack{
+                            Image(systemName: "chevron.backward")
+                                .foregroundColor(.white) // Atur warna putih
+                                .font(.system(size: 20, weight: .medium))
+                            
+                            TextContent(
+                                text: "Kembali", size: 20, color: "FFFFFF",
+                                transparency: 1.0,
+                                weight: "medium")
+                        }
+                    }
+                }
+            }
         }
         
         private func getDisplayText(for icon: String) -> String {

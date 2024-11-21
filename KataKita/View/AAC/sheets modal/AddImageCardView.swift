@@ -42,7 +42,7 @@ struct AddImageCardView: View {
                                 self.originalImageManager.imageFromLocal = nil
                             }) {
                                 HStack {
-                                    Text("Pilih Gambar")
+                                    Text(LocalizedStringKey("Pilih Gambar"))
                                         .foregroundColor(.blue)
                                     Spacer()
                                     Image(systemName: "photo")
@@ -70,7 +70,7 @@ struct AddImageCardView: View {
                                 self.originalImageManager.imageFromLocal = nil
                             }) {
                                 HStack {
-                                    Text("Ambil Foto")
+                                    Text(LocalizedStringKey("Ambil Foto"))
                                         .foregroundColor(.blue)
                                     Spacer()
                                     Image(systemName: "camera")
@@ -149,7 +149,23 @@ struct AddImageCardView: View {
                         weight: "medium")
                 }
             }
-          
+            .navigationBarBackButtonHidden(true) // Sembunyikan tombol "Back" bawaan
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button(action: { dismiss() }) {
+                        HStack{
+                            Image(systemName: "chevron.backward")
+                                .foregroundColor(.white) // Atur warna putih
+                                .font(.system(size: 20, weight: .medium))
+                            
+                            TextContent(
+                                text: "Kembali", size: 20, color: "FFFFFF",
+                                transparency: 1.0,
+                                weight: "medium")
+                        }
+                    }
+                }
+            }
         }
     }
 
