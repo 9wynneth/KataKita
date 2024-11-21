@@ -139,6 +139,18 @@ struct AllAssets {
         "BOY_SLEEPY", "BOY_ITCHY", "BOY_WATCH TV",
     ]
 
+    let genderIndoAssets: [String] = [
+        "ambil", "buang", "dia", "bermain", "dimana", "duduk", "iya", "kamu",
+        "kapan", "kita", "makan", "mau", "membaca", "mengangkat", "mengunyah",
+        "minum", "sakit", "saya", "siapa", "suka", "tidak mau", "tidak suka", "menonton tv", "mengantuk",
+        "tidak", "gatal",
+    ]
+    
+    let genderEnglishAssets: [String] = [
+        "take", "throw", "she", "play", "where", "sit", "yes", "you",
+        "when", "we", "eat", "want", "read", "lift", "chew", "drink", "sick", "i", "who", "like", "dont want", "dont like", "no", "sleepy", "itchy", "watch tv",
+    ]
+    
     let genderAssets: [String] = [
         "ambil", "buang", "dia", "bermain", "dimana", "duduk", "iya", "kamu",
         "kapan", "kita", "makan", "mau", "membaca", "mengangkat", "mengunyah",
