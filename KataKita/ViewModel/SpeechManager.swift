@@ -18,7 +18,16 @@ class SpeechManager {
         
         let localizedName = NSLocalizedString(card.name, comment: "Concatenated text for speech synthesis")
         let languageCode = Locale.current.language.languageCode?.identifier
-        let voiceLanguage = languageCode == "id" ? "id-ID" : "en-AU"
+        let voiceLanguage: String
+
+        switch languageCode {
+        case "id":
+            voiceLanguage = "id-ID"
+        case "zh":
+            voiceLanguage = "zh-CN"
+        default:
+            voiceLanguage = "en-AU"
+        }
         
         let utterance = AVSpeechUtterance(string: localizedName)
         utterance.voice = AVSpeechSynthesisVoice(language: voiceLanguage)
@@ -33,7 +42,16 @@ class SpeechManager {
         let fullText = cards.map { NSLocalizedString($0.name, comment: "Card name for speech synthesis") }.joined(separator: ", ")
         
         let languageCode = Locale.current.language.languageCode?.identifier
-        let voiceLanguage = languageCode == "id" ? "id-ID" : "en-AU"
+        let voiceLanguage: String
+
+        switch languageCode {
+        case "id":
+            voiceLanguage = "id-ID"
+        case "zh":
+            voiceLanguage = "zh-CN"
+        default:
+            voiceLanguage = "en-AU"
+        }
         
         let utterance = AVSpeechUtterance(string: fullText)
         utterance.voice = AVSpeechSynthesisVoice(language: voiceLanguage)
@@ -48,7 +66,16 @@ class SpeechManager {
         let localizedText = NSLocalizedString(text, comment: "")
         // Memeriksa bahasa perangkat
         let lang = Locale.current.language.languageCode?.identifier ?? "id"
-        let voiceLanguage = lang == "id" ? "id-ID" : "en-AU"
+        let voiceLanguage: String
+
+        switch lang {
+        case "id":
+            voiceLanguage = "id-ID"
+        case "zh":
+            voiceLanguage = "zh-CN"
+        default:
+            voiceLanguage = "en-AU"
+        }
         
         let utterance = AVSpeechUtterance(string: localizedText)
         utterance.voice = AVSpeechSynthesisVoice(language: voiceLanguage)
@@ -66,7 +93,17 @@ class SpeechManager {
         }
         
         let lang = Locale.current.language.languageCode?.identifier ?? "id"
-        let voiceLanguage = lang == "id" ? "id-ID" : "en-AU"
+        let voiceLanguage: String
+
+        switch lang {
+        case "id":
+            voiceLanguage = "id-ID"
+        case "zh":
+            voiceLanguage = "zh-CN"
+        default:
+            voiceLanguage = "en-AU"
+        }
+
         
         let utterance = AVSpeechUtterance(string: fullText)
         utterance.voice = AVSpeechSynthesisVoice(language: voiceLanguage)
