@@ -62,7 +62,6 @@ struct KataKitaApp: App {
             SplashScreen(self.model.mainContext)
                 .task {
                     do {
-                        try Tips.resetDatastore()
                         try Tips.configure([
                             .displayFrequency(.immediate),
                             .datastoreLocation(.applicationDefault)

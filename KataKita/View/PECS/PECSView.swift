@@ -16,7 +16,7 @@ enum DraggingState {
 }
 
 struct PECSView: View {
-    var parentModeTip: ParentModeTip = ParentModeTip()
+    var parentModeTip: ParentModeTipPECS = ParentModeTipPECS()
     
     @Environment(PECSViewModel.self) var pecsViewModel
     @Environment(SecurityManager.self) var securityManager
@@ -126,6 +126,7 @@ struct PECSView: View {
                             self.toggleOn.toggle()
                             droppedCards = [nil, nil, nil, nil, nil, nil, nil]
                             restoreDeletedCards()
+                            parentModeTip.invalidate(reason: .actionPerformed)
                         }
                     }
                     .animation(.spring(duration: 0.25), value: toggleOn)

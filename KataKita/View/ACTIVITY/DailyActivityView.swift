@@ -9,7 +9,7 @@ import SwiftUI
 
 ///
 struct DailyActivityView: View {
-    var parentModeTip: ParentModeTip = ParentModeTip()
+    var parentModeTip: ParentModeTipSchedule = ParentModeTipSchedule()
     
     @Environment(ScheduleManager.self) private var scheduleManager
     @Environment(ActivitiesManager.self) private var activitiesManager
@@ -137,6 +137,7 @@ struct DailyActivityView: View {
                             self.isAskPassword = true
                         } else {
                             self.toggleOn.toggle()
+                            parentModeTip.invalidate(reason: .actionPerformed)
                         }
                     }
                     .animation(
