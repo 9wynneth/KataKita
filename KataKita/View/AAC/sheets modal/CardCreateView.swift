@@ -2,11 +2,30 @@ import SwiftUI
 
 func filterAssets(by input: String, for gender: Bool?) -> [String] {
     let lang = Locale.current.language.languageCode?.identifier ?? "id"
+
     // Determine the asset set based on device language
-    let assets = lang == "id" ? AllAssets.shared.assets : AllAssets.shared.englishAssets
-    let girlAssets = lang == "id" ? AllAssets.shared.girlAssets : AllAssets.shared.genderEnglishAssets
-    let boyAssets = lang == "id" ? AllAssets.shared.boyAssets : AllAssets.shared.genderEnglishAssets
-    let genderAssets = lang == "id" ? AllAssets.shared.genderIndoAssets : AllAssets.shared.genderEnglishAssets
+    let assets: [String]
+    let girlAssets: [String]
+    let boyAssets: [String]
+    let genderAssets: [String]
+
+    if lang == "id" {
+        assets = AllAssets.shared.assets
+        girlAssets = AllAssets.shared.girlAssets
+        boyAssets = AllAssets.shared.boyAssets
+        genderAssets = AllAssets.shared.genderIndoAssets
+    } else if lang == "zh" {
+        assets = AllAssets.shared.cinaAssets
+        girlAssets = AllAssets.shared.girlCinaAssets
+        boyAssets = AllAssets.shared.boyCinaAssets
+        genderAssets = AllAssets.shared.genderCinaAssets
+    } else {
+        assets = AllAssets.shared.englishAssets
+        girlAssets = AllAssets.shared.genderEnglishAssets
+        boyAssets = AllAssets.shared.genderEnglishAssets
+        genderAssets = AllAssets.shared.genderEnglishAssets
+    }
+
     if let gender = gender {
         if gender {
             // Filter for girl-specific assets with "GIRL_" prefix
@@ -443,6 +462,25 @@ struct CardCreateView: View {
                     return "BOY_" + localizedIcon
                 } else {
                     return icon
+                    
+                }
+            }
+        }
+        else if Locale.current.languageCode == "zh" {
+            let localizedIcon = NSLocalizedString(icon.uppercased(), comment: "")
+            if viewModel.userProfile.gender == true {
+                if AllAssets.shared.genderAssets.contains(icon) {
+                    return "GIRL_" + localizedIcon
+                } else {
+                    return localizedIcon
+                    
+                }
+            }
+            else {
+                if AllAssets.shared.genderAssets.contains(icon) {
+                    return "BOY_" + localizedIcon
+                } else {
+                    return localizedIcon
                     
                 }
             }

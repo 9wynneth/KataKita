@@ -182,7 +182,6 @@ struct BoardCreateView: View {
     private func getDisplayText(for icon: String) -> String {
         if Locale.current.languageCode == "en" {
             let localizedIcon = NSLocalizedString(icon, comment: "")
-            let localizedIcon2 = NSLocalizedString(localizedIcon, comment: "")
             if viewModel.userProfile.gender == true {
                 if icon.hasPrefix("GIRL_") {
                     return localizedIcon.replacingOccurrences(of: "GIRL_", with: "")
@@ -200,6 +199,26 @@ struct BoardCreateView: View {
                 }
             }
         }
+        else if Locale.current.languageCode == "zh" {
+            let localizedIcon = NSLocalizedString(icon, comment: "")
+            if viewModel.userProfile.gender == true {
+                if icon.hasPrefix("GIRL_") {
+                    return localizedIcon.replacingOccurrences(of: "GIRL_", with: "")
+                } else {
+                    return localizedIcon
+                    
+                }
+            }
+            else {
+                if icon.hasPrefix("BOY_") {
+                    return localizedIcon.replacingOccurrences(of: "BOY_", with: "")
+                } else {
+                    return localizedIcon
+                    
+                }
+            }
+        }
+
         else {
             if viewModel.userProfile.gender == true {
                 if icon.hasPrefix("GIRL_") {
@@ -241,6 +260,26 @@ struct BoardCreateView: View {
                 }
             }
         }
+        else if Locale.current.languageCode == "zh" {
+            let localizedIcon = NSLocalizedString(icon.uppercased(), comment: "")
+            if viewModel.userProfile.gender == true {
+                if AllAssets.shared.genderAssets.contains(icon) {
+                    return "GIRL_" + localizedIcon
+                } else {
+                    return icon
+                    
+                }
+            }
+            else {
+                if AllAssets.shared.genderAssets.contains(icon) {
+                    return "BOY_" + localizedIcon
+                } else {
+                    return icon
+                    
+                }
+            }
+        }
+
         else {
             return icon
         }
@@ -263,14 +302,20 @@ struct BoardCreateView: View {
             if viewModel.userProfile.gender == true {
                 if lang == "id" {
                     return AllAssets.shared.assets + AllAssets.shared.genderIndoAssets
-                } else {
+                } else if lang == "zh" {
+                    return AllAssets.shared.cinaAssets + AllAssets.shared.genderCinaAssets
+                }
+                else {
                     return AllAssets.shared.englishAssets + AllAssets.shared.genderEnglishAssets
                 }
             }
             else {
                 if lang == "id" {
                     return AllAssets.shared.assets + AllAssets.shared.genderIndoAssets
-                } else {
+                } else if lang == "zh" {
+                    return AllAssets.shared.cinaAssets + AllAssets.shared.genderCinaAssets
+                }
+                else {
                     return AllAssets.shared.englishAssets + AllAssets.shared.genderEnglishAssets
                 }
             }
@@ -408,6 +453,25 @@ struct BoardCreateView: View {
                     }
                 }
             }
+            else if Locale.current.languageCode == "zh" {
+                let localizedIcon = NSLocalizedString(icon, comment: "")
+                if viewModel.userProfile.gender == true {
+                    if AllAssets.shared.genderAssets.contains(icon) {
+                        return icon
+                    } else {
+                        return icon
+                        
+                    }
+                }
+                else {
+                    if AllAssets.shared.genderAssets.contains(icon) {
+                        return icon
+                    } else {
+                        return icon
+                        
+                    }
+                }
+            }
             else {
                 if viewModel.userProfile.gender == true {
                     if icon.hasPrefix("GIRL_") {
@@ -445,6 +509,25 @@ struct BoardCreateView: View {
                         return "BOY_" + localizedIcon
                     } else {
                         return icon
+                        
+                    }
+                }
+            }
+            else if Locale.current.languageCode == "zh" {
+                let localizedIcon = NSLocalizedString(icon.uppercased(), comment: "")
+                if viewModel.userProfile.gender == true {
+                    if AllAssets.shared.genderAssets.contains(icon) {
+                        return "GIRL_" + localizedIcon
+                    } else {
+                        return localizedIcon
+                        
+                    }
+                }
+                else {
+                    if AllAssets.shared.genderAssets.contains(icon) {
+                        return "BOY_" + localizedIcon
+                    } else {
+                        return localizedIcon
                         
                     }
                 }
