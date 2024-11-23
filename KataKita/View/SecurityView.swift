@@ -23,7 +23,8 @@ struct SecurityView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            Text("Enter \(String(format: "%d", randomFourDigitNumber))")
+            Text(String(format: NSLocalizedString("Enter %d", comment: "Prompt for entering a four-digit number"), randomFourDigitNumber))
+
                 .font(.system(size: 30, weight: .bold))
                 .foregroundColor(.black)
                 .padding(.bottom, 3)
