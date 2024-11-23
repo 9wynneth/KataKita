@@ -411,6 +411,8 @@
 
 "Pengaturan" = "Settings";
 "PROFIL PENGGUNA" = "USER PROFILE";
+"Profil pengguna" = "User profile";
+
 "Nama" = "Name";
 "Jenis Kelamin" = "Gender";
 "Aplikasi" = "Application";
@@ -821,6 +823,7 @@
 "LEARN" = "BELAJAR";
 "Settings" = "Pengaturan";
 "USER PROFILE" = "PROFIL PENGGUNA";
+"Profil pengguna" = "User profile";
 "Name" = "Nama";
 "Gender" = "Jenis Kelamin";
 "Application" = "Aplikasi";
