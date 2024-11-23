@@ -40,6 +40,23 @@ struct TextContentBoard: View {
                 return styledText
             }
         }
+        else         if Locale.current.language.languageCode?.identifier == "zh" {
+            if AllAssets.shared.genderAssets.contains(text.lowercased())
+            {
+                let styledText: Text = Text(((text).lowercased()))
+                    .font(Font.custom("MADECarvingSoftPERSONALUSE-\(mapFontWeight(weight))", size: CGFloat(size)))
+                    .foregroundColor(Color(hex: color, transparency: transparency))
+                
+                return styledText
+            }
+            else {
+                let styledText: Text = Text((text).lowercased())
+                    .font(Font.custom("MADECarvingSoftPERSONALUSE-\(mapFontWeight(weight))", size: CGFloat(size)))
+                    .foregroundColor(Color(hex: color, transparency: transparency))
+                
+                return styledText
+            }
+        }
         else
         {
             let styledText: Text = Text((text).lowercased())
