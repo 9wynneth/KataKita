@@ -62,7 +62,7 @@ struct AddCardModalView: View {
                             .opacity(id == board.id ? 1 : 0)
                             .frame(maxHeight: .infinity)
                             if let icon = board.icon {
-                                Image(icon)
+                                Image(resolveIcon(for: icon))
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: 50)
