@@ -243,7 +243,7 @@ struct BetterAACView: View {
                             SpeechManager.shared.speakCardAAC(board.name)
                         }
                     }
-                    if self.editing {
+                    if self.editing && self.boardManager.boards.count < 10 {
                         Button {
                             self.addingBoard = true
                             boardName = ""
