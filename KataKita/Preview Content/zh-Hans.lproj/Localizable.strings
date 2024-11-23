@@ -17,7 +17,7 @@
 "ayam" = "鸡";
 "ayam goreng" = "炸鸡";
 "babi" = "猪";
-"bagaimana" = "怎么";
+"bagaimana" = "怎么样";
 "baju" = "衣服";
 "bak mandi" = "浴缸";
 "balok" = "积木";
@@ -69,7 +69,7 @@
 "di dalam" = "在里面";
 "di luar" = "在外面";
 "di samping" = "在旁边";
-"dia" = "他/她";
+"dia" = "他";
 "dimana" = "在哪里";
 "dingin" = "冷";
 "dokter" = "医生";
@@ -137,7 +137,7 @@
 "ktp" = "身份证";
 "kuas" = "刷子";
 "kucing" = "猫";
-"kuda" = "马";
+"zebra" = "斑马";
 "kue" = "蛋糕";
 "kue kering" = "饼干";
 "kunci" = "钥匙";
@@ -193,7 +193,7 @@
 "panas" = "热";
 "panci" = "锅";
 "panggangan" = "烤箱";
-"papan tulis" = "白板/黑板";
+"papan tulis" = "黑板";
 "pasta gigi" = "牙膏";
 "paus" = "鲸鱼";
 "pelari" = "跑步者";
@@ -282,13 +282,15 @@
 "warnai" = "上色";
 "ya" = "是";
 "youtube" = "油管";
+"lampu lalu lintas" = "交通灯";
+"lampu tidur" = "夜灯";
 
 "GIRL_AMBIL" = "GIRL_拿";
 "GIRL_BUANG" = "GIRL_丢";
 "GIRL_DIA" = "GIRL_她";
 "GIRL_BERMAIN" = "GIRL_玩";
 "GIRL_DIMANA" = "GIRL_哪里";
-"GIRL_DUDUK" = "GIRL_坐下";
+"GIRL_DUDUK" = "GIRL_坐";
 "GIRL_IYA" = "GIRL_是";
 "GIRL_KAMU" = "GIRL_你";
 "GIRL_KAPAN" = "GIRL_什么时候";
@@ -303,7 +305,7 @@
 "GIRL_SAYA" = "GIRL_我";
 "GIRL_SIAPA" = "GIRL_谁";
 "GIRL_SUKA" = "GIRL_喜欢";
-"GIRL_TIDAK MAU" = "GIRL_不想";
+"GIRL_TIDAK MAU" = "GIRL_不要";
 "GIRL_TIDAK SUKA" = "GIRL_不喜欢";
 "GIRL_TIDAK" = "GIRL_不";
 
@@ -312,7 +314,7 @@
 "BOY_BUANG" = "BOY_丢";
 "BOY_DIA" = "BOY_他";
 "BOY_DIMANA" = "BOY_哪里";
-"BOY_DUDUK" = "BOY_坐下";
+"BOY_DUDUK" = "BOY_坐";
 "BOY_IYA" = "BOY_是";
 "BOY_KAMU" = "BOY_你";
 "BOY_KAPAN" = "BOY_什么时候";
@@ -327,16 +329,16 @@
 "BOY_SAYA" = "BOY_我";
 "BOY_SIAPA" = "BOY_谁";
 "BOY_SUKA" = "BOY_喜欢";
-"BOY_TIDAK MAU" = "BOY_不想";
+"BOY_TIDAK MAU" = "BOY_不要";
 "BOY_TIDAK SUKA" = "BOY_不喜欢";
 "BOY_TIDAK" = "BOY_不";
 
 "ambil" = "拿";
 "buang" = "丢";
-"dia" = "他/她";
+"dia" = "他";
 "bermain" = "玩";
 "dimana" = "哪里";
-"duduk" = "坐下";
+"duduk" = "坐";
 "iya" = "是";
 "kamu" = "你";
 "kapan" = "什么时候";
@@ -351,9 +353,11 @@
 "saya" = "我";
 "siapa" = "谁";
 "suka" = "喜欢";
-"tidak mau" = "不想";
+"tidak mau" = "不要";
 "tidak suka" = "不喜欢";
 "tidak" = "不";
+"jam" = "时钟";
+"komputer" = "计算机";
 
 "RUANG MAKAN" = "餐厅";
 "RUANG BELAJAR" = "学习室";
@@ -362,6 +366,13 @@
 "DAPUR" = "厨房";
 "RUANG KELUARGA" = "客厅";
 "BELAJAR" = "学习";
+"Ruang Makan" = "餐厅";
+"Ruang Belajar" = "学习室";
+"Kamar Mandi" = "浴室";
+"Kamar Tidur" = "卧室";
+"Ruang Keluarga" = "客厅";
+"Dapur" = "厨房";
+
 
 "Pengaturan" = "设置";
 "PROFIL PENGGUNA" = "用户资料";
@@ -404,6 +415,19 @@
 "Hijau" = "绿色";
 "Kuning" = "黄色";
 "Putih" = "白色";
+
+
+//"1"= "一";
+//"2" = "二";
+//"3" = "三";
+//"4" = "四";
+//"5" =  "五";
+//"6" = "六";
+//"7" = "七";
+//"8" = "八";
+//"9" =  "九";
+//"10" = "十";
+
 
 "Kotak Kata Penuh" = "词框已满";
 "Kamu hanya bisa memilih 10 kata. Hapus kata yang sudah dipilih untuk memilih kata baru." = "你只能选择10个词。删除已选词语以选择新的词语。";
@@ -448,7 +472,7 @@ defaultYou = "今天";
 "Daftar Aktivitas" = "活动列表";
 
 "Pipis" = "小便";
-"Makan" = "吃饭";
+"Makan" = "吃";
 "Cuci Tangan" = "洗手";
 "Cuci Piring" = "洗碗";
 "Mewarnai" = "涂色";
@@ -505,6 +529,18 @@ defaultYou = "今天";
 "Cari Icon" = "搜索图标";
 "SELESAI" = "完成";
 "tidur" = "睡觉";
+
+"hapus" = "删除";
+"Hapus" = "删除";
+"delete" = "删除";
+"Delete" = "删除";
+"Reset" = "重置";
+"Kid's Name" = "孩子的名字";
+"Profil pengguna" = "用户档案";
+"Enter" = "输入";
+
+"CORE" = "核心";
+
 //
 //userActivityKey = "%@ 的活动";
 //defaultYou = "今天";
@@ -520,6 +556,23 @@ defaultYou = "今天";
 "Ambil Foto" = "拍照";
 
 
+
+//"一" = "1";
+//"二" = "2";
+//"三" = "3";
+//"四" = "4";
+//"五" = "5";
+//"六" = "6";
+//"七" = "7";
+//"八" = "8";
+//"九" = "9";
+//"十" = "10";
+
+
+"交通灯" = "lampu lalu lintas";
+"计算机" = "komputer";
+"时钟" = "jam";
+"怎么样" = "bagaimana";
 "你好" = "GreetingTitle";
 "水" = "air";
 "地址" = "alamat";
@@ -590,7 +643,7 @@ defaultYou = "今天";
 "在里面" = "di dalam";
 "在外面" = "di luar";
 "在旁边" = "di samping";
-"他/她" = "dia";
+"他" = "dia";
 "在哪里" = "dimana";
 "冷" = "dingin";
 "医生" = "dokter";
@@ -658,7 +711,7 @@ defaultYou = "今天";
 "身份证" = "ktp";
 "刷子" = "kuas";
 "猫" = "kucing";
-"马" = "kuda";
+"斑马" = "zebra";
 "蛋糕" = "kue";
 "饼干" = "kue kering";
 "钥匙" = "kunci";
@@ -714,7 +767,7 @@ defaultYou = "今天";
 "热" = "panas";
 "锅" = "panci";
 "烤箱" = "panggangan";
-"白板/黑板" = "papan tulis";
+"黑板" = "papan tulis";
 "牙膏" = "pasta gigi";
 "鲸鱼" = "paus";
 "跑步者" = "pelari";
@@ -803,4 +856,59 @@ defaultYou = "今天";
 "上色" = "warnai";
 "是" = "ya";
 "油管" = "youtube";
+"输入" = "Enter";
+"夜灯" = "lampu tidur";
+"画画" = "menggambar";
+"听" = "mendengar" ;
+"切菜板" = "talenan";
+"暗" = "gelap";
+"亮" = "terang" ;
+
+"GIRL_拿" = "GIRL_AMBIL";
+"GIRL_丢" = "GIRL_BUANG";
+"GIRL_她" = "GIRL_DIA";
+"GIRL_玩" = "GIRL_BERMAIN";
+"GIRL_哪里" = "GIRL_DIMANA";
+"GIRL_坐" = "GIRL_DUDUK";
+"GIRL_是" = "GIRL_IYA";
+"GIRL_你" = "GIRL_KAMU";
+"GIRL_什么时候" = "GIRL_KAPAN";
+"GIRL_我们" = "GIRL_KITA";
+"GIRL_吃" = "GIRL_MAKAN";
+"GIRL_要" = "GIRL_MAU";
+"GIRL_读" = "GIRL_MEMBACA";
+"GIRL_抬起" = "GIRL_MENGANGKAT";
+"GIRL_咀嚼" = "GIRL_MENGUNYAH";
+"GIRL_喝" = "GIRL_MINUM";
+"GIRL_痛" = "GIRL_SAKIT";
+"GIRL_我" = "GIRL_SAYA";
+"GIRL_谁" = "GIRL_SIAPA";
+"GIRL_喜欢" = "GIRL_SUKA";
+"GIRL_不要" = "GIRL_TIDAK MAU";
+"GIRL_不喜欢" = "GIRL_TIDAK SUKA";
+"GIRL_不" = "GIRL_TIDAK";
+
+"BOY_拿" = "BOY_AMBIL";
+"BOY_玩" = "BOY_BERMAIN";
+"BOY_丢" = "BOY_BUANG";
+"BOY_他" = "BOY_DIA";
+"BOY_哪里" = "BOY_DIMANA";
+"BOY_坐" = "BOY_DUDUK";
+"BOY_是" = "BOY_IYA";
+"BOY_你" = "BOY_KAMU";
+"BOY_什么时候" = "BOY_KAPAN";
+"BOY_我们" = "BOY_KITA";
+"BOY_吃" = "BOY_MAKAN";
+"BOY_要" = "BOY_MAU";
+"BOY_读" = "BOY_MEMBACA";
+"BOY_抬起" = "BOY_MENGANGKAT";
+"BOY_咀嚼" = "BOY_MENGUNYAH";
+"BOY_喝" = "BOY_MINUM";
+"BOY_痛" = "BOY_SAKIT";
+"BOY_我" = "BOY_SAYA";
+"BOY_谁" = "BOY_SIAPA";
+"BOY_喜欢" = "BOY_SUKA";
+"BOY_不要" = "BOY_TIDAK MAU";
+"BOY_不喜欢" = "BOY_TIDAK SUKA";
+"BOY_不" = "BOY_TIDAK";
 

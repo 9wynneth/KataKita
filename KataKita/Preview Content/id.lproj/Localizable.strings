@@ -362,6 +362,8 @@
 "tidak suka" = "tidak suka";
 "tidak" = "tidak";
 
+"Enter"; "Masukkan";
+
 
 "RUANG MAKAN" = "RUANG MAKAN";
 "RUANG BELAJAR" = "RUANG BELAJAR";
@@ -422,3 +424,4 @@
 "Add Image" = "Tambah Gambar";
 userActivityKey = "Kegiatan %@";
 defaultYou = "kamu";
+"Masukkan" = "Enter";

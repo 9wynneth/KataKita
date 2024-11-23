@@ -476,7 +476,7 @@ struct BetterAACView: View {
                 self.$editingCard
             )
             .onAppear {
-                print("ENTOD: \(self.editingCard)")
+                print("\(self.editingCard)")
             }
             .onDisappear {
                 self.editingCard = (-1, -1)

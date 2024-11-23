@@ -19,6 +19,7 @@ struct SplashScreen: View {
     @State private var stateManager: StateManager
     @State private var profileManager: ProfileViewModel
     @State private var pecsViewModel: PECSViewModel
+    private let audioPlayerHelper = AudioPlayerHelper()
 
     // Track if the splash screen is visible
     @State private var isActive = true
@@ -74,6 +75,9 @@ struct SplashScreen: View {
                             .scaledToFit()
                             .frame(width: 800, height: 800)
                             .padding(.top, 180)
+                            .onAppear{
+                                audioPlayerHelper.playSound(named: "makkata_sound")
+                            }
                     }
                     
                     // Asset line appearing from bottom to top of makkata1

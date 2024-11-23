@@ -145,7 +145,6 @@ struct CardCreateView: View {
                                             .cornerRadius(20)
                                             .onAppear {
                                                 if !self.showingAddImageView {
-                                                    print("COKlook")
                                                     self.type = .image(data)
                                                     self.isImageType = true
                                                 }
@@ -164,7 +163,6 @@ struct CardCreateView: View {
                                             .cornerRadius(20)
                                             .onAppear {
                                                 if !self.showingAddImageView {
-                                                    print("COK2")
                                                     self.type = .image(data)
                                                     self.isImageType = true
                                                 }

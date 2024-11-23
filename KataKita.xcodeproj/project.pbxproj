@@ -13,6 +13,7 @@
 		1E5863782CB63C640080373A /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5863772CB63C600080373A /* CustomButton.swift */; };
 		1E58637C2CB681130080373A /* ActivityCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E58637B2CB6810E0080373A /* ActivityCard.swift */; };
 		1E5863812CB6B9B30080373A /* CustomButtonSide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5863802CB6B9A70080373A /* CustomButtonSide.swift */; };
+		1E5BC7752CF19FF8005365DB /* AudioPlayerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5BC7742CF19FEF005365DB /* AudioPlayerHelper.swift */; };
 		1E84D8972CB4D99A0078B648 /* KataKitaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E84D8962CB4D99A0078B648 /* KataKitaApp.swift */; };
 		1E84D8992CB4D99A0078B648 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E84D8982CB4D99A0078B648 /* ContentView.swift */; };
 		1E84D89B2CB4D99A0078B648 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E84D89A2CB4D99A0078B648 /* Item.swift */; };
@@ -125,6 +126,7 @@
 		1E58637B2CB6810E0080373A /* ActivityCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityCard.swift; sourceTree = "<group>"; };
 		1E5863802CB6B9A70080373A /* CustomButtonSide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtonSide.swift; sourceTree = "<group>"; };
 		1E5BC76D2CEF1F07005365DB /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		1E5BC7742CF19FEF005365DB /* AudioPlayerHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerHelper.swift; sourceTree = "<group>"; };
 		1E84D8932CB4D99A0078B648 /* KataKita.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KataKita.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1E84D8962CB4D99A0078B648 /* KataKitaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KataKitaApp.swift; sourceTree = "<group>"; };
 		1E84D8982CB4D99A0078B648 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -408,6 +410,7 @@
 		DAE312F92CB833D6001DD0A0 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				1E5BC7742CF19FEF005365DB /* AudioPlayerHelper.swift */,
 				DA534F972CE3D66F00D55BAE /* AACViewModel.swift */,
 				1EEC6E5D2CDCDBA20012965C /* SpeechManager.swift */,
 				1ECB573A2CD9C325009291E8 /* PECSViewModel.swift */,
@@ -597,6 +600,7 @@
 				9B3EBEC52CC8ADA8009F448E /* AllAssets.swift in Sources */,
 				DAE313072CB86921001DD0A0 /* ActivitiesManager.swift in Sources */,
 				1EBBC2342CB78EF200673D97 /* DailyActivityView.swift in Sources */,
+				1E5BC7752CF19FF8005365DB /* AudioPlayerHelper.swift in Sources */,
 				9B831DE62CDE86BB0065536F /* TextContentBoard.swift in Sources */,
 				DA534F962CE3C5C600D55BAE /* Icon.swift in Sources */,
 				9B831DE02CDE82270065536F /* CustomButtonSearch.swift in Sources */,
