@@ -65,7 +65,7 @@ class SpeechManager {
         // Menggunakan NSLocalizedString untuk mendapatkan string yang dilokalkan
         let localizedText = NSLocalizedString(text, comment: "")
         // Memeriksa bahasa perangkat
-        let lang = Locale.current.language.languageCode?.identifier ?? "id"
+        let lang = Locale.current.language.languageCode?.identifier
         let voiceLanguage: String
 
         switch lang {
@@ -92,7 +92,7 @@ class SpeechManager {
             fullText += "\(localizedName) "
         }
         
-        let lang = Locale.current.language.languageCode?.identifier ?? "id"
+        let lang = Locale.current.language.languageCode?.identifier
         let voiceLanguage: String
 
         switch lang {

@@ -362,6 +362,23 @@ struct CardCreateView: View {
                 }
             }
         }
+        else         if Locale.current.languageCode == "zh" {
+            let localizedIcon = NSLocalizedString(textToSpeak.uppercased(), comment: "")
+            if viewModel.userProfile.gender == true {
+                if AllAssets.shared.genderAssets.contains(textToSpeak.lowercased()) {
+                    textToSpeak = "GIRL_" + localizedIcon.uppercased()
+                } else {
+                    textToSpeak = NSLocalizedString(textToSpeak, comment: "")
+                }
+            }
+            else {
+                if AllAssets.shared.genderAssets.contains(textToSpeak.lowercased()) {
+                    textToSpeak = "BOY_" + localizedIcon.uppercased()
+                } else {
+                    textToSpeak = NSLocalizedString(textToSpeak, comment: "")
+                }
+            }
+        }
         else {
             textToSpeak = NSLocalizedString(textToSpeak, comment: "")
         }
@@ -406,6 +423,26 @@ struct CardCreateView: View {
 
     private func getDisplayText(for icon: String) -> String {
         if Locale.current.languageCode == "en" {
+            let localizedIcon = NSLocalizedString(icon, comment: "")
+            let localizedIcon2 = NSLocalizedString(localizedIcon, comment: "")
+            if viewModel.userProfile.gender == true {
+                if icon.hasPrefix("GIRL_") {
+                    return localizedIcon2
+                } else {
+                    return icon
+                    
+                }
+            }
+            else {
+                if icon.hasPrefix("BOY_") {
+                    return localizedIcon2
+                } else {
+                    return icon
+                    
+                }
+            }
+        }
+        else         if Locale.current.languageCode == "zh" {
             let localizedIcon = NSLocalizedString(icon, comment: "")
             let localizedIcon2 = NSLocalizedString(localizedIcon, comment: "")
             if viewModel.userProfile.gender == true {
@@ -472,7 +509,7 @@ struct CardCreateView: View {
                 if AllAssets.shared.genderAssets.contains(icon) {
                     return "GIRL_" + localizedIcon
                 } else {
-                    return localizedIcon
+                    return icon
                     
                 }
             }
@@ -480,7 +517,7 @@ struct CardCreateView: View {
                 if AllAssets.shared.genderAssets.contains(icon) {
                     return "BOY_" + localizedIcon
                 } else {
-                    return localizedIcon
+                    return icon
                     
                 }
             }
@@ -596,6 +633,26 @@ struct SearchIconsView: View {
                 }
             }
         }
+        else         if Locale.current.languageCode == "zh" {
+            let localizedIcon = NSLocalizedString(icon, comment: "")
+            let localizedIcon2 = NSLocalizedString(localizedIcon, comment: "")
+            if viewModel.userProfile.gender == true {
+                if icon.hasPrefix("GIRL_") {
+                    return localizedIcon2
+                } else {
+                    return icon
+                    
+                }
+            }
+            else {
+                if icon.hasPrefix("BOY_") {
+                    return localizedIcon2
+                } else {
+                    return icon
+                    
+                }
+            }
+        }
         else {
             if viewModel.userProfile.gender == true {
                 if icon.hasPrefix("GIRL_") {
@@ -619,6 +676,25 @@ struct SearchIconsView: View {
     
     private func getDisplayIcon(for icon: String) -> String {
         if Locale.current.languageCode == "en" {
+            let localizedIcon = NSLocalizedString(icon.uppercased(), comment: "")
+            if viewModel.userProfile.gender == true {
+                if AllAssets.shared.genderAssets.contains(icon) {
+                    return "GIRL_" + localizedIcon
+                } else {
+                    return icon
+                    
+                }
+            }
+            else {
+                if AllAssets.shared.genderAssets.contains(icon) {
+                    return "BOY_" + localizedIcon
+                } else {
+                    return icon
+                    
+                }
+            }
+        }
+        else         if Locale.current.languageCode == "zh" {
             let localizedIcon = NSLocalizedString(icon.uppercased(), comment: "")
             if viewModel.userProfile.gender == true {
                 if AllAssets.shared.genderAssets.contains(icon) {

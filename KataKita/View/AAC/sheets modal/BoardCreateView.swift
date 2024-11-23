@@ -142,6 +142,30 @@ struct BoardCreateView: View {
                                         }
                                     }
                                 }
+                                else if Locale.current.languageCode == "zh" {
+                                    if viewModel.userProfile.gender == true
+                                    {
+                                        if AllAssets.shared.girlAssets.contains(selectedIcon)
+                                        {
+                                            selectedIcon = selectedIcon
+                                        }
+                                        else
+                                        {
+                                            selectedIcon = localizedIcon2
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if AllAssets.shared.boyAssets.contains(selectedIcon)
+                                        {
+                                            selectedIcon = selectedIcon
+                                        }
+                                        else
+                                        {
+                                            selectedIcon = localizedIcon2
+                                        }
+                                    }
+                                }
                                 else
                                 {
                                     selectedIcon = getDisplayIcon(for: selectedIcon)
@@ -205,7 +229,7 @@ struct BoardCreateView: View {
                 if icon.hasPrefix("GIRL_") {
                     return localizedIcon.replacingOccurrences(of: "GIRL_", with: "")
                 } else {
-                    return localizedIcon
+                    return icon
                     
                 }
             }
@@ -213,7 +237,7 @@ struct BoardCreateView: View {
                 if icon.hasPrefix("BOY_") {
                     return localizedIcon.replacingOccurrences(of: "BOY_", with: "")
                 } else {
-                    return localizedIcon
+                    return icon
                     
                 }
             }
@@ -455,6 +479,7 @@ struct BoardCreateView: View {
             }
             else if Locale.current.languageCode == "zh" {
                 let localizedIcon = NSLocalizedString(icon, comment: "")
+                let localizedIcon2 = NSLocalizedString(localizedIcon, comment: "")
                 if viewModel.userProfile.gender == true {
                     if AllAssets.shared.genderAssets.contains(icon) {
                         return icon
@@ -519,7 +544,7 @@ struct BoardCreateView: View {
                     if AllAssets.shared.genderAssets.contains(icon) {
                         return "GIRL_" + localizedIcon
                     } else {
-                        return localizedIcon
+                        return icon
                         
                     }
                 }
@@ -527,7 +552,7 @@ struct BoardCreateView: View {
                     if AllAssets.shared.genderAssets.contains(icon) {
                         return "BOY_" + localizedIcon
                     } else {
-                        return localizedIcon
+                        return icon
                         
                     }
                 }

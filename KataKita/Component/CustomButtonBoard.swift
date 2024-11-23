@@ -79,10 +79,32 @@ struct CustomButtonBoard: View {
                                 .scaledToFit()
                                 .frame(width: CGFloat(iconWidth ?? 24), height: CGFloat(iconHeight ?? 24))
                                 .foregroundColor(Color(hex: fontColor, transparency: fontTransparency))
-                                .onAppear()
-//                            {
-//                                print("localization: \(localizedIcon)")
-//                            }
+                        }
+                    }
+                    else                     if Locale.current.language.languageCode?.identifier == "zh" {
+                        if icon.hasPrefix("GIRL_") {
+                            Image(icon.uppercased()) // Use the localized name here
+                                .antialiased(true)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: CGFloat(iconWidth ?? 24), height: CGFloat(iconHeight ?? 24))
+                                .foregroundColor(Color(hex: fontColor, transparency: fontTransparency))
+                        }
+                        else if icon.hasPrefix("BOY_") {
+                            Image(icon.uppercased()) // Use the localized name here
+                                .antialiased(true)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: CGFloat(iconWidth ?? 24), height: CGFloat(iconHeight ?? 24))
+                                .foregroundColor(Color(hex: fontColor, transparency: fontTransparency))
+                        }
+                        else {
+                            Image(localizedIcon.uppercased()) // Use the localized name here
+                                .antialiased(true)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: CGFloat(iconWidth ?? 24), height: CGFloat(iconHeight ?? 24))
+                                .foregroundColor(Color(hex: fontColor, transparency: fontTransparency))
                         }
                     }
                     else {
@@ -116,9 +138,6 @@ struct CustomButtonBoard: View {
                 
                 Spacer()
             }
-//            .onAppear(){
-//                print("coba cek icon" + String(icon ?? ""))
-//            }
             .frame(width: CGFloat(width), height: CGFloat(height))
             .background(Color(hex: bgColor, transparency: bgTransparency))
             .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
