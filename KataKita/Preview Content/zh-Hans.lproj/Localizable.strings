@@ -570,6 +570,7 @@ defaultYou = "今天";
 //"八" = "8";
 //"九" = "9";
 //"十" = "10";
+
 "看电视" = "menonton tv";
 "痒" = "gatal";
 "困" = "mengantuk" ;
@@ -988,3 +989,4 @@ defaultYou = "今天";
 "不要" = "tidak mau";
 "不喜欢" = "tidak suka";
 "不" = "tidak";
+"Enter %d" = "放入 %d";

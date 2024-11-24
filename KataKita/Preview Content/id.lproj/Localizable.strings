@@ -425,3 +425,4 @@
 userActivityKey = "Kegiatan %@";
 defaultYou = "kamu";
 "Masukkan" = "Enter";
+"Enter %d" = "Masukkan %d";
