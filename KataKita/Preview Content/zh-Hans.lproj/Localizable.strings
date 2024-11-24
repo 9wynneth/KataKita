@@ -475,6 +475,7 @@ defaultYou = "今天";
 "Daftar Aktivitas" = "活动列表";
 
 "Pipis" = "小便";
+"pipis" = "小便";
 "Makan" = "吃";
 "Cuci Tangan" = "洗手";
 "Cuci Piring" = "洗碗";
@@ -990,3 +991,6 @@ defaultYou = "今天";
 "不喜欢" = "tidak suka";
 "不" = "tidak";
 "Enter %d" = "放入 %d";
+
+"snack" = "零食";
+"零食" = "snack";
