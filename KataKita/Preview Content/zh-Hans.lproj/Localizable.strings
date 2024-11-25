@@ -994,3 +994,18 @@ defaultYou = "今天";
 
 "snack" = "零食";
 "零食" = "snack";
+
+"Edit" = "编辑";
+"ACTIVITY DETAILS" = "活动详情";
+"Take Photo" = "拍照";
+"Choose Activity Image" = "选择活动图片";
+"STEP DETAILS" = "步骤详情";
+"Add step" = "添加步骤";
+"Add New Activity" = "添加新活动";
+"Add Step" = "添加步骤";
+"STEPS" = "步骤";
+"Enter Step Description" = "输入步骤描述";
+"Choose Step Image" = "选择步骤图片";
+"Image not available" = "图片不可用";
+"Edit Activity" = "编辑活动";
+"Change Step Image" = "更改步骤图片";
