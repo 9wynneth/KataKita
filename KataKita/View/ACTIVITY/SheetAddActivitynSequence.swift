@@ -93,7 +93,7 @@ struct AddActivityView: View {
                                                 isSystemImage: assetName.contains("person.fill"),
                                                 action: {
                                                     self.activityManager.setType(.icon(getDisplayIcon(for: assetName)))
-                                                    self.activityName = assetName
+                                                    self.activityName = getDisplayText(for: assetName)
                                                     if self.activityName.hasPrefix("GIRL_") {
                                                         self.activityName = self.activityName.replacingOccurrences(of: "GIRL_", with: "")
                                                         self.isGender = true
@@ -399,8 +399,7 @@ struct AddActivityView: View {
         }
     }
     private func getDisplayIcon(for icon: String) -> String {
-        let lang = Locale.current.language.languageCode?.identifier ?? "id"
-        if lang == "en" {
+        if Locale.current.languageCode == "en" {
             let localizedIcon = NSLocalizedString(icon.uppercased(), comment: "")
             if viewModel.userProfile.gender == true {
                 if AllAssets.shared.genderAssets.contains(icon) {
@@ -418,10 +417,12 @@ struct AddActivityView: View {
                     
                 }
             }
-        } else {
+        }
+        else         if Locale.current.languageCode == "zh" {
+            let localizedIcon = NSLocalizedString(icon.uppercased(), comment: "")
             if viewModel.userProfile.gender == true {
                 if AllAssets.shared.genderAssets.contains(icon) {
-                    return "GIRL_" + icon
+                    return "GIRL_" + localizedIcon
                 } else {
                     return icon
                     
@@ -429,12 +430,15 @@ struct AddActivityView: View {
             }
             else {
                 if AllAssets.shared.genderAssets.contains(icon) {
-                    return "BOY_" + icon
+                    return "BOY_" + localizedIcon
                 } else {
                     return icon
                     
                 }
             }
+        }
+        else {
+            return icon
         }
     }
     private func getSteps() -> [Step] {
@@ -462,7 +466,27 @@ struct AddActivityView: View {
     }
     
     private func getDisplayText(for icon: String) -> String {
-        if Locale.current.language.languageCode?.identifier == "en" {
+        if Locale.current.languageCode == "en" {
+            let localizedIcon = NSLocalizedString(icon, comment: "")
+            let localizedIcon2 = NSLocalizedString(localizedIcon, comment: "")
+            if viewModel.userProfile.gender == true {
+                if icon.hasPrefix("GIRL_") {
+                    return localizedIcon2
+                } else {
+                    return icon
+                    
+                }
+            }
+            else {
+                if icon.hasPrefix("BOY_") {
+                    return localizedIcon2
+                } else {
+                    return icon
+                    
+                }
+            }
+        }
+        else         if Locale.current.languageCode == "zh" {
             let localizedIcon = NSLocalizedString(icon, comment: "")
             let localizedIcon2 = NSLocalizedString(localizedIcon, comment: "")
             if viewModel.userProfile.gender == true {
