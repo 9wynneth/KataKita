@@ -406,7 +406,7 @@
 "mendengar" = "mendengar";
 
 "Kotak Kata Penuh" = "Kotak Kata Penuh";
-"Kamu hanya bisa memilih 10 kata. Hapus kata yang sudah dipilih untuk memilih kata baru." = "Kamu hanya bisa memilih 10 kata. Hapus kata yang sudah dipilih untuk memilih kata baru.";
+"word_limit_message" = "Kamu hanya bisa memilih %d kata. Hapus kata yang sudah dipilih untuk memilih kata baru.";
 
 "Hitam" = "Hitam";
 "Cokelat" = "Cokelat";
