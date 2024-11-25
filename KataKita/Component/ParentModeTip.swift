@@ -24,7 +24,7 @@ struct ParentModeTip: Tip {
 }
 
 struct ParentModeTipPECS: Tip {
-    let localizedName = NSLocalizedString("Dengan menekan tombol ini, Anda dapat menyesuaikan papan AAC sesuai dengan kebutuhan anak Anda.", comment: "Concatenated text for speech synthesis")
+    let localizedName = NSLocalizedString("Dengan menekan tombol ini, Anda dapat menyesuaikan PECS sesuai dengan kebutuhan anak Anda.", comment: "Concatenated text for speech synthesis")
     
     var title: Text {
         Text("")
@@ -39,7 +39,7 @@ struct ParentModeTipPECS: Tip {
 }
 
 struct ParentModeTipSchedule: Tip {
-    let localizedName = NSLocalizedString("Dengan menekan tombol ini, Anda dapat menyesuaikan papan AAC sesuai dengan kebutuhan anak Anda.", comment: "Concatenated text for speech synthesis")
+    let localizedName = NSLocalizedString("Dengan menekan tombol ini, Anda dapat menyesuaikan jadwal sesuai dengan kebutuhan anak Anda.", comment: "Concatenated text for speech synthesis")
     
     var title: Text {
         Text("")
