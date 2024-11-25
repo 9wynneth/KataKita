@@ -433,7 +433,7 @@
 
 
 "Kotak Kata Penuh" = "词框已满";
-"Kamu hanya bisa memilih 10 kata. Hapus kata yang sudah dipilih untuk memilih kata baru." = "你只能选择10个词。删除已选词语以选择新的词语。";
+"word_limit_message" = "你只能选择%d个词。删除已选的词后才能选择新词。";
 
 "Choose Image..." = "选择图片...";
 "Take Photo..." = "拍照...";

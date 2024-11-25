@@ -386,8 +386,7 @@ struct BetterAACView: View {
                             Alert(
                                 title: Text("Kotak Kata Penuh"),
                                 message: Text(
-                                    "Kamu hanya bisa memilih \(self.aacViewModel.cards.count) kata. Hapus kata yang sudah dipilih untuk memilih kata baru."
-//                                    "Kamu hanya bisa memilih 10 kata. Hapus kata yang sudah dipilih untuk memilih kata baru."
+                                    String(format: NSLocalizedString("word_limit_message", comment: "Message indicating the word selection limit"), self.aacViewModel.cards.count)
                                 ),
                                 dismissButton: .default(
                                     Text("OK"),
