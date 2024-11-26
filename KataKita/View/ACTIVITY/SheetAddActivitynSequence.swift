@@ -92,8 +92,11 @@ struct AddActivityView: View {
                                                 cornerRadius: 20,
                                                 isSystemImage: assetName.contains("person.fill"),
                                                 action: {
-                                                    self.activityManager.setType(.icon(getDisplayIcon(for: assetName)))
-                                                    self.activityName = getDisplayText(for: assetName)
+                                                    
+                                                    
+                                                    let localizedIcon = NSLocalizedString(assetName.uppercased(), comment: "")
+                                                    self.activityManager.setType(.icon(getDisplayIcon(for: localizedIcon)))
+                                                    self.activityName = assetName
                                                     if self.activityName.hasPrefix("GIRL_") {
                                                         self.activityName = self.activityName.replacingOccurrences(of: "GIRL_", with: "")
                                                         self.isGender = true
@@ -117,7 +120,7 @@ struct AddActivityView: View {
                                 .cornerRadius(10)
                                 .shadow(radius: 1)
                                 .padding(.horizontal)
-
+                                
                                 
                             } else if !textToSpeak.isEmpty {
                                 VStack {
@@ -140,14 +143,14 @@ struct AddActivityView: View {
                                         Spacer()
                                     }
                                     .padding(.horizontal)
-
+                                    
                                 }
                                 .padding()
                                 .background(Color.white)
                                 .cornerRadius(10)
                                 .shadow(radius: 1)
                                 .padding(.horizontal)
-
+                                
                             }
                             
                             VStack(spacing: 12) {
@@ -203,7 +206,7 @@ struct AddActivityView: View {
                         }
                         
                         // MARK: Sequence
-//                        Section(header: Text("Steps")) {
+                        //                        Section(header: Text("Steps")) {
                         VStack(alignment: .leading, spacing: 4) {
                             
                             TextContent(
@@ -216,73 +219,73 @@ struct AddActivityView: View {
                             .padding(.horizontal)
                             VStack(alignment: .leading, spacing: 4) {
                                 
-                            HStack {
-                                Button(action: { self.navigateToAddStep = true }) {
-                                    HStack {
-                                        Text("Add step")
-                                            .foregroundColor(.blue)
-                                        Spacer()
-                                        Image(systemName: "plus.app")
-                                            .foregroundColor(.black)
-                                    }
-                                }
-                            }
-                            
-                            //                            Button("Add Step") {
-                            //                                self.navigateToAddStep = true
-                            //                            }
-                            Divider()
-                            ForEach(Array(self.getSteps().enumerated()), id: \.offset) { index, step in
-                                VStack(alignment: .leading) {
-                                    if self.activityToEdit != nil || self.editUlang || self.isEditing {
-                                        TextField("Step Description", text: Binding(
-                                            get: { step.description },
-                                            set: { newDescription in
-                                                self.activityManager.setStepDescription(description: newDescription, at: index)
-                                            }
-                                        ))
-                                        
-                                        Button("Change Step Image") {
-                                            self.selectedStepIndex = index
-                                            self.showStepImagePicker = true
-                                        }
-                                        
-                                        
-                                        if case let .image(data) = step.type {
-                                            if let uiImage = UIImage(data: data) {
-                                                Image(uiImage: uiImage)
-                                                    .resizable()
-                                                    .scaledToFit()
-                                                    .frame(width: 100, height: 100)
-                                                    .cornerRadius(20)
-                                            }
-                                        } else if case let .icon(icon) = step.type {
-                                            Icon(icon, (100, 100))
-                                        } else {
-                                            Text("Image not available")
-                                        }
-                                    } else {
-                                        Text(step.description)
-                                        
-                                        if case let .image(data) = step.type {
-                                            if let uiImage = UIImage(data: data) {
-                                                Image(uiImage: uiImage)
-                                                    .resizable()
-                                                    .scaledToFit()
-                                                    .frame(width: 100, height: 100)
-                                                    .cornerRadius(20)
-                                            }
-                                        } else if case let .icon(icon) = step.type {
-                                            Icon(icon, (100, 100))
-                                        } else {
-                                            Text("Image not available")
+                                HStack {
+                                    Button(action: { self.navigateToAddStep = true }) {
+                                        HStack {
+                                            Text("Add step")
+                                                .foregroundColor(.blue)
+                                            Spacer()
+                                            Image(systemName: "plus.app")
+                                                .foregroundColor(.black)
                                         }
                                     }
-                                    Divider()
                                 }
-                                .padding(.vertical, 5)
+                                
+                                //                            Button("Add Step") {
+                                //                                self.navigateToAddStep = true
+                                //                            }
+                                Divider()
+                                ForEach(Array(self.getSteps().enumerated()), id: \.offset) { index, step in
+                                    VStack(alignment: .leading) {
+                                        if self.activityToEdit != nil || self.editUlang || self.isEditing {
+                                            TextField("Step Description", text: Binding(
+                                                get: { step.description },
+                                                set: { newDescription in
+                                                    self.activityManager.setStepDescription(description: newDescription, at: index)
+                                                }
+                                            ))
+                                            
+                                            Button("Change Step Image") {
+                                                self.selectedStepIndex = index
+                                                self.showStepImagePicker = true
+                                            }
+                                            
+                                            
+                                            if case let .image(data) = step.type {
+                                                if let uiImage = UIImage(data: data) {
+                                                    Image(uiImage: uiImage)
+                                                        .resizable()
+                                                        .scaledToFit()
+                                                        .frame(width: 100, height: 100)
+                                                        .cornerRadius(20)
+                                                }
+                                            } else if case let .icon(icon) = step.type {
+                                                Icon(icon, (100, 100))
+                                            } else {
+                                                Text("Image not available")
+                                            }
+                                        } else {
+                                            Text(step.description)
+                                            
+                                            if case let .image(data) = step.type {
+                                                if let uiImage = UIImage(data: data) {
+                                                    Image(uiImage: uiImage)
+                                                        .resizable()
+                                                        .scaledToFit()
+                                                        .frame(width: 100, height: 100)
+                                                        .cornerRadius(20)
+                                                }
+                                            } else if case let .icon(icon) = step.type {
+                                                Icon(icon, (100, 100))
+                                            } else {
+                                                Text("Image not available")
+                                            }
+                                        }
+                                        Divider()
+                                    }
+                                    .padding(.vertical, 5)
+                                }
                             }
-                        }
                             .padding()
                             .background(Color.white)
                             .cornerRadius(10)
@@ -290,7 +293,7 @@ struct AddActivityView: View {
                             .padding(.horizontal)
                             
                         }
-                       
+                        
                         Spacer()
                     }
                     CustomButton(text: "SELESAI", width: 350, height: 50, font: 16, bgColor: "#013C5A", bgTransparency: 1.0, fontColor: "#ffffff", fontTransparency: 1.0, cornerRadius: 30){
@@ -298,7 +301,7 @@ struct AddActivityView: View {
                         self.saveOrUpdateActivity()
                         self.dismiss()
                     }
-                        .padding(.bottom)
+                    .padding(.bottom)
                 }
                 .padding(10)
                 .onAppear {
@@ -340,19 +343,19 @@ struct AddActivityView: View {
                 .navigationDestination(isPresented: self.$navigateToAddStep) {
                     AddStepView(self.$activityManager)
                 }
-//                .navigationBarTitle(self.activityToEdit != nil ? "Edit Activity" : "Add New Activity", displayMode: .inline)
+                //                .navigationBarTitle(self.activityToEdit != nil ? "Edit Activity" : "Add New Activity", displayMode: .inline)
                 .navigationBarItems(
                     leading: self.activityToEdit == nil ? Button(self.isEditing ? "Cancel" : "Edit") {
                         self.isEditing.toggle()
                     }    .foregroundColor(.white) // Atur warna teks menjadi putih
-
+                    
                     : nil
-//                    ,
-//                    trailing: Button(self.isEditing ? "Save" : "Done") {
-//                        self.isEditing = false
-//                        self.saveOrUpdateActivity()
-//                        self.dismiss()
-//                    }
+                    //                    ,
+                    //                    trailing: Button(self.isEditing ? "Save" : "Done") {
+                    //                        self.isEditing = false
+                    //                        self.saveOrUpdateActivity()
+                    //                        self.dismiss()
+                    //                    }
                 )
                 .toolbar {
                     ToolbarItem(placement: .principal) {
@@ -388,7 +391,7 @@ struct AddActivityView: View {
         .onAppear {
             if let activity = self.activityToEdit {
                 self.activityManager.activity = activity
-                self.activityName = activity.name
+                self.activityName = NSLocalizedString(activity.name, comment: "")
                 if case let .image(data) = activity.type {
                     self.tempImage = data
                 }
@@ -448,6 +451,44 @@ struct AddActivityView: View {
     private func saveOrUpdateActivity() {
         guard !activityName.isEmpty else { return }
         
+        if Locale.current.languageCode == "en" {
+            let localizedIcon = NSLocalizedString(self.activityName.uppercased(), comment: "")
+            if viewModel.userProfile.gender == true {
+                if AllAssets.shared.genderAssets.contains(self.activityName.lowercased()) {
+                    self.activityName = "GIRL_" + localizedIcon.uppercased()
+                } else {
+                    self.activityName = NSLocalizedString(self.activityName, comment: "")
+                }
+            }
+            else {
+                if AllAssets.shared.genderAssets.contains(self.activityName.lowercased()) {
+                    self.activityName = "BOY_" + localizedIcon.uppercased()
+                } else {
+                    self.activityName = NSLocalizedString(self.activityName, comment: "")
+                }
+            }
+        }
+        else         if Locale.current.languageCode == "zh" {
+            let localizedIcon = NSLocalizedString(self.activityName.uppercased(), comment: "")
+            if viewModel.userProfile.gender == true {
+                if AllAssets.shared.genderAssets.contains(self.activityName.lowercased()) {
+                    self.activityName = "GIRL_" + localizedIcon.uppercased()
+                } else {
+                    self.activityName = NSLocalizedString(self.activityName, comment: "")
+                }
+            }
+            else {
+                if AllAssets.shared.genderAssets.contains(self.activityName.lowercased()) {
+                    self.activityName = "BOY_" + localizedIcon.uppercased()
+                } else {
+                    self.activityName = NSLocalizedString(self.activityName, comment: "")
+                }
+            }
+        }
+        else {
+            self.activityName = NSLocalizedString(self.activityName, comment: "")
+        }
+        
         if let activityToEdit = self.activityToEdit {
             activityToEdit.name = self.activityName
             activityToEdit.type = self.activityManager.activity.type
@@ -460,7 +501,6 @@ struct AddActivityView: View {
                 sequence: self.activityManager.activity.sequence
             ))
         }
-        
         // self.activityManager.resetSteps()
         self.dismiss()
     }
@@ -527,7 +567,6 @@ struct AddActivityView: View {
         
     }
 }
-
 
 
 struct AddStepView: View {
