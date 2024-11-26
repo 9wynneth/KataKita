@@ -92,7 +92,10 @@ struct AddActivityView: View {
                                                 cornerRadius: 20,
                                                 isSystemImage: assetName.contains("person.fill"),
                                                 action: {
-                                                    self.activityManager.setType(.icon(getDisplayIcon(for: assetName)))
+                                                    
+                                                    
+                                                    let localizedIcon = NSLocalizedString(assetName.uppercased(), comment: "")
+                                                    self.activityManager.setType(.icon(getDisplayIcon(for: localizedIcon)))
                                                     self.activityName = assetName
                                                     if self.activityName.hasPrefix("GIRL_") {
                                                         self.activityName = self.activityName.replacingOccurrences(of: "GIRL_", with: "")
@@ -388,7 +391,7 @@ struct AddActivityView: View {
         .onAppear {
             if let activity = self.activityToEdit {
                 self.activityManager.activity = activity
-                self.activityName = activity.name
+                self.activityName = NSLocalizedString(activity.name, comment: "")
                 if case let .image(data) = activity.type {
                     self.tempImage = data
                 }
