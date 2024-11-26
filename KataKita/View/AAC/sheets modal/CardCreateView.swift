@@ -385,12 +385,9 @@ struct CardCreateView: View {
             let board = self.boardManager.boards.first(where: { $0.id == self.boardManager.selectedID }),
             var card = board.cards[safe: self.location.0]?[safe: self.location.1]
         {
-            card.name = ""
-            card.type = nil
             
             card.name = self.textToSpeak
             card.type = self.type
-            
             card.category = self.selectedCategory
             
             self.boardManager.updateCard(
@@ -398,7 +395,9 @@ struct CardCreateView: View {
                 row: self.location.1,
                 updatedCard: card
             )
-        } else {
+        }
+        else
+        {
             self.boardManager.addCard(
                 Card(
                     name: self.textToSpeak,
@@ -416,7 +415,7 @@ struct CardCreateView: View {
         // Dismiss the view
         self.addingCard = nil
         self.showAACSettings = false
-        print("INI TEXT TO SPEAKKK: \(textToSpeak)")
+        
     }
 
     private func getDisplayText(for icon: String) -> String {
