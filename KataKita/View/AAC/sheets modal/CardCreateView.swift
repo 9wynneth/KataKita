@@ -193,18 +193,20 @@ struct CardCreateView: View {
                                                             cornerRadius: 20,
                                                             isSystemImage: assetName.contains("person.fill"),
                                                             action: {
+                                                                let localizedIcon = NSLocalizedString(assetName, comment: "")
                                                                 if
                                                                     let board = self.boardManager.boards.first(where: { $0.id == self.boardManager.selectedID }),
                                                                     var card = board.cards[safe: self.location.0]?[safe: self.location.1]
                                                                 {
-                                                                    let localizedIcon = NSLocalizedString(assetName.uppercased(), comment: "")
+                                                                   
                                                                     self.type = .icon(getDisplayIcon(for: localizedIcon))
                                                                 }
                                                                 else {
                                                                     
                                                                     self.type = .icon(getDisplayIcon(for: assetName))
                                                                 }
-                                                                
+                                                                print("self.type assetname " + (getDisplayIcon(for: assetName)))
+                                                                print("self.type localizedIcon " + (getDisplayIcon(for: localizedIcon)))
                                                                 navigatesFromImage = true
                                                                 textToSpeak = assetName
                                                                 if textToSpeak.hasPrefix("GIRL_") {
