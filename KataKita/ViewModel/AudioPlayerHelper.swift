@@ -13,7 +13,7 @@ class AudioPlayerHelper: NSObject, AVAudioPlayerDelegate {
 
     func playSound(named name: String, completion: (() -> Void)? = nil) {
         guard let dataAsset = NSDataAsset(name: name) else {
-            print("Could not find the sound asset for \(name).")
+
             return
         }
         do {
