@@ -94,7 +94,8 @@ struct AddActivityView: View {
                                                 action: {
                                                     
                                                     
-                                                    let localizedIcon = NSLocalizedString(assetName.uppercased(), comment: "")
+                                                    let localizedIcon = NSLocalizedString(assetName, comment: "")
+                                                    
                                                     self.activityManager.setType(.icon(getDisplayIcon(for: localizedIcon)))
                                                     self.activityName = assetName
                                                     if self.activityName.hasPrefix("GIRL_") {
@@ -304,9 +305,6 @@ struct AddActivityView: View {
                     .padding(.bottom)
                 }
                 .padding(10)
-                .onAppear {
-                    print("Filtered Assets: \(filteredAssets)")
-                }
                 
                 .sheet(isPresented: self.$showCamera) {
                     ImagePicker(self.$tempImage, .camera)
@@ -386,12 +384,13 @@ struct AddActivityView: View {
             }
         }
         .onChange(of: self.activityName) {
-            self.activityManager.setName(self.activityName)
+//            self.activityManager.setName(self.activityName)
         }
         .onAppear {
             if let activity = self.activityToEdit {
                 self.activityManager.activity = activity
-                self.activityName = NSLocalizedString(activity.name, comment: "")
+                self.activityName = activity.name
+                activityName = NSLocalizedString(activity.name, comment: "")
                 if case let .image(data) = activity.type {
                     self.tempImage = data
                 }

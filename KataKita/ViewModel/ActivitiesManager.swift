@@ -35,28 +35,28 @@ class ActivitiesManager {
                 type: .icon("TOILET"),
                 sequence: [
                     Step(type: .icon("CELANA PENDEK"), description: "Buka celana"),
-                    Step(type: nil, description: "Duduk di toilet"),
-                    Step(type: nil, description: "Buang air kecil"),
-                    Step(type: nil, description: "Bersihkan daerah kemaluan pakai tisu"),
-                    Step(type: nil, description: "Pakai celana kembali"),
-                    Step(type: nil, description: "Siram toilet"),
-                    Step(type: nil, description: "Ambil sabun"),
-                    Step(type: nil, description: "Cuci tangan dengan sabun"),
-                    Step(type: nil, description: "Keringkan tangan")
+                    Step(type: .icon("toilet"), description: "Duduk di toilet"),
+                    Step(type: .icon("toilet"), description: "Buang air kecil"),
+                    Step(type: .icon("toilet"), description: "Bersihkan daerah kemaluan pakai tisu"),
+                    Step(type: .icon("CELANA PENDEK"), description: "Pakai celana kembali"),
+                    Step(type: .icon("air"), description: "Siram toilet"),
+                    Step(type: .icon("sabun"), description: "Ambil sabun"),
+                    Step(type: .icon("cuci tangan"), description: "Cuci tangan dengan sabun"),
+                    Step(type: .icon("handuk"), description: "Keringkan tangan")
                 ]
             ),
             Activity(
                 name: "Makan",
                 type: .icon("boy_makan"),
                 sequence: [
-                    Step(type: nil, description: "Ambil piring"),
-                    Step(type: nil, description: "Ambil sendok dan garpu"),
-                    Step(type: nil, description: "Duduk di meja makan"),
-                    Step(type: nil, description: "Berdoa sebelum makan"),
-                    Step(type: nil, description: "Mulai makan sampai habis"),
-                    Step(type: .icon("MINUM"), description: "Minum air putih setelah makan"),
-                    Step(type: nil, description: "Lap mulut setelah habis makan"),
-                    Step(type: nil, description: "Kembalikan sendok, garpu, dan piring pada tempatnya")
+                    Step(type: .icon("piring"), description: "Ambil piring"),
+                    Step(type: .icon("piring sendok"), description: "Ambil sendok dan garpu"),
+                    Step(type: .icon("DUDUK DI MEJA BELAJAR"), description: "Duduk di meja makan"),
+                    Step(type: .icon("ALKITAB"), description: "Berdoa sebelum makan"),
+                    Step(type: .icon("GIRL_MAKAN"), description: "Mulai makan sampai habis"),
+                    Step(type: .icon("BOY_MINUM"), description: "Minum air putih setelah makan"),
+                    Step(type: .icon("handuk"), description: "Lap mulut setelah habis makan"),
+                    Step(type: .icon("PIRING SENDOK"), description: "Kembalikan sendok, garpu, dan piring pada tempatnya")
                 ]
             ),
             Activity(
@@ -64,29 +64,24 @@ class ActivitiesManager {
                 type: .icon("cuci tangan"),
                 sequence: [
                     Step(type: .icon("keran"), description: "Buka keran air"),
-                    Step(type: nil, description: "Basahi tangan dengan air"),
-                    Step(type: nil, description: "Ambil sabun"),
-                    Step(type: nil, description: "Gosok sabun di tangan kiri"),
-                    Step(type: nil, description: "Gosok sabun di tangan kanan"),
-                    Step(type: nil, description: "Bilas sabun dengan air"),
-                    Step(type: nil, description: "Keringkan tangan")
+                    Step(type: .icon("air"), description: "Basahi tangan dengan air"),
+                    Step(type: .icon("sabun"), description: "Ambil sabun"),
+                    Step(type: .icon("cuci tangan"), description: "Gosok sabun di tangan kiri"),
+                    Step(type: .icon("cuci tangan"), description: "Gosok sabun di tangan kanan"),
+                    Step(type: .icon("air"), description: "Bilas sabun dengan air"),
+                    Step(type: .icon("handuk"), description: "Keringkan tangan")
                 ]
             ),
             Activity(
                 name: "Cuci Piring",
                 type: .icon("piring"),
                 sequence: [
-                    Step(type: nil, description: "Ambil piring dan sendok garpu kotor"),
-                    Step(type: nil, description: "Basahilah dengan air"),
-                    Step(type: nil, description: "Ambil spon dan beri sabun"),
-                    Step(type: nil, description: "Gosok piring dan sendok garpu dengan sabun dan spon"),
-                    Step(type: nil, description: "Bilas semua dengan air bersih"),
-                    Step(type: nil, description: "Letakkan di tempat pengeringan"),
-                    Step(type: nil, description: "Basahilah dengan air"),
-                    Step(type: nil, description: "Ambil spon dan beri sabun"),
-                    Step(type: nil, description: "Gosok piring dan sendok garpu dengan sabun dan spon"),
-                    Step(type: nil, description: "Bilas semua dengan air bersih"),
-                    Step(type: nil, description: "Letakkan di tempat pengeringan")
+                    Step(type: .icon("piring sendok"), description: "Ambil piring dan sendok garpu kotor"),
+                    Step(type: .icon("air"), description: "Basahilah dengan air"),
+                    Step(type: .icon("sabun"), description: "Ambil spon dan beri sabun"),
+                    Step(type: .icon("cuci piring"), description: "Gosok piring dan sendok garpu dengan sabun dan spon"),
+                    Step(type: .icon("air"), description: "Bilas semua dengan air bersih"),
+                    Step(type: .icon("handuk"), description: "Letakkan di tempat pengeringan")
                 ]
             ),
             Activity(
@@ -99,7 +94,7 @@ class ActivitiesManager {
                     Step(type: .icon("buka buku dan alat pewarna"), description: "Buka buku dan siapkan alat pewarna"),
                     Step(type: .icon("mewarnai"), description: "Mulai mewarnai tugas yang diberikan"),
                     Step(type: .icon("rapikan alat dan buku"), description: "Setelah selesai, rapikan alat mewarnai"),
-                    Step(type: .icon("kembalikan ke tempat asalnya"), description: "Kembalikan peralatan pada tempatnya")
+                    Step(type: .icon("ambil buku"), description: "Kembalikan peralatan pada tempatnya")
                 ]
             )
         ]
